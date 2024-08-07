@@ -7,6 +7,7 @@ import AddBankCard from '../ux/popup/AddBankCard';
 import { getUserData } from '../../store/userDataManager'; // Импортируйте функцию
 import ProfileMenu from '../ux/popup/ProfileMenu';
 import { useTranslation } from 'react-i18next';
+import { scale } from 'react-native-size-matters'
 
 function ProfileScreen() {
   const navigation = useNavigation();
@@ -134,7 +135,7 @@ function ProfileScreen() {
           <>
             <View>
               <View style={[styles.infoContainer, { justifyContent: 'space-between' }]}>
-                <View style={{ flexDirection: 'row', display: 'flex' }}>
+                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
                   <Image source={{ uri: `https://aqtas.ru/images/photoUsers/${userData.photoUser}` }} style={styles.photo} />
                   <View>
                     <Text style={styles.infoText}>{t('greetings-title')},</Text>
@@ -143,10 +144,10 @@ function ProfileScreen() {
                 </View>
                 <View style={{ flexDirection: 'row', display: 'flex' }}>
                   <TouchableOpacity onPress={togglePushMessage}>
-                    <Feather name={isPush ? 'bell' : 'bell-off'} size={28} color="black" />
+                    <Feather name={isPush ? 'bell' : 'bell-off'} size={scale(20)} color="black" />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={toggleShowMenu} style={{ left: 0 }}>
-                    <Entypo name="dots-three-vertical" size={28} color="black" />
+                    <Entypo name="dots-three-vertical" size={scale(20)} color="black" />
                   </TouchableOpacity>
                 </View>
               </View>

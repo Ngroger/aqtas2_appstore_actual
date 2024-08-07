@@ -4,6 +4,7 @@ import styles from '../../styles/BussinesScreenStyles';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import { scale } from 'react-native-size-matters';
 
 function BussinesScreen() {
     const navigation = useNavigation();
@@ -28,7 +29,7 @@ function BussinesScreen() {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
-                <MaterialIcons name="arrow-back-ios" size={24} color="black" />
+                <MaterialIcons name="arrow-back-ios" size={scale(24)} color="black" />
                 <Text style={styles.title}>{t('bussines-profile-button')}</Text>
             </TouchableOpacity>
             <View>
@@ -39,7 +40,7 @@ function BussinesScreen() {
                         style={styles.button}
                     >
                         <Text style={styles.buttonText}>{button.title}</Text>
-                        <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
+                        <MaterialIcons name="arrow-forward-ios" size={scale(24)} color="#95E5FF" />
                     </TouchableOpacity>
                 ))}
             </View>

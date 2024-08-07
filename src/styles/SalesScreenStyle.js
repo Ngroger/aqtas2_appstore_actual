@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
+import { ScaledSheet } from "react-native-size-matters";
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     container: {
         width: '100%',
         height: '100%',
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24
     },
     title: {
-        fontSize: 36,
+        fontSize: '28@ms',
         fontFamily: 'Cambria'
     },
     sale: {
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     },
     noDataText: {
         fontFamily: 'Cambria',
-        fontSize: 24,
+        fontSize: '24@ms',
         color: '#BDBDBD',
         textAlign: 'center',
         marginTop: '100%',
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     },
     textLoad: {
         fontFamily: 'Cambria',
-        fontSize: 16,
+        fontSize: '16@ms',
         marginTop: 10,
         color: '#BDBDBD'
     },

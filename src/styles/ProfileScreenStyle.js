@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     container: {
         backgroundColor: '#fff',
         width: '100%',
@@ -21,14 +21,14 @@ const styles = StyleSheet.create({
         paddingVertical: 16
     },
     photo: {
-        width: 50,
-        height: 50,
+        width: '40@vs',
+        height: '40@vs',
         borderRadius: 100,
         margin: 3
     },
     infoText: {
         fontFamily: 'Cambria',
-        fontSize: 24,
+        fontSize: '24@ms',
         left: 10
     },
     sale: {
@@ -57,33 +57,34 @@ const styles = StyleSheet.create({
     profileButton: {
         borderWidth: 1,
         borderColor: '#95E5FF',
-        padding: 12,
+        padding: '12@msr',
         marginTop: 16,
         borderRadius: 15
     },
     profileButtonText: {
         fontFamily: 'Cambria',
-        fontSize: 20
+        fontSize: '20@ms'
     },
     faq: {
-        width: 80,
-        height: 80
+        width: '60@vs',
+        height: '60@vs'
     },
     faqButton: {
         backgroundColor: '#95E5FF',
         borderRadius: 15,
-        padding: 16,
+        padding: '16@msr',
         display: 'flex',
         flexDirection: 'row',
-        marginTop: 16
+        marginTop: 16,
+        alignItems: 'center',
+        paddingRight: '24@msr'
     },
     faqText: {
         color: '#fff',
         fontFamily: 'Cambria',
-        fontSize: 18,
-        width: 200,
+        fontSize: '18@ms',
+        flex: 1,
         left: 20,
-        top: 10
     },
     loadingIndicatorContainer: {
         width: '100%',
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     },
     textLoad: {
         fontFamily: 'Cambria',
-        fontSize: 16,
+        fontSize: '16@ms',
         marginTop: 10,
         color: '#BDBDBD'
     },

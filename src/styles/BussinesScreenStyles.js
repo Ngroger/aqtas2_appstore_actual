@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     container: {
         width: '100%',
         height: '100%',
@@ -14,13 +14,13 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     title: {
-        fontSize: 28,
+        fontSize: '28@ms',
         fontFamily: 'Cambria'
     },
     button: {
         borderWidth: 1,
         borderColor: '#95E5FF',
-        padding: 12,
+        padding: '12@msr',
         marginTop: 16,
         borderRadius: 15,
         flexDirection: 'row',
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontFamily: 'Cambria',
-        fontSize: 20
+        fontSize: '20@ms'
     },
 });
 
