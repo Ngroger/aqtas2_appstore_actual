@@ -14,7 +14,7 @@
     "ios": {
       "bundleIdentifier": "com.bogdandev3444456.aqtas",
       "buildNumber": "1.0.0",
-      "icon": "./ios/AppIcon.appiconset/icon-1024.png",
+      "icon": "./assets/icon.png",
       "infoPlist": {
         "CFBundleIconFiles": [
           "icon-20",
