@@ -2,7 +2,7 @@
   "expo": {
     "name": "AQTas",
     "slug": "aqtas",
-    "version": "2.4.4",
+    "version": "2.4.8",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -13,7 +13,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.bogdandev3444456.aqtas",
-      "buildNumber": "1.0.1",
+      "buildNumber": "2.1.1",
       "icon": "./assets/icon.png",
       "infoPlist": {
         "CFBundleIconFiles": [
@@ -62,7 +62,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#95E5FF"
       },
-      "versionCode": 13,
+      "versionCode": 17,
       "package": "com.bogdandev3444456.aqtas"
     },
     "web": {

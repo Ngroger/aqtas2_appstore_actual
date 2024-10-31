@@ -6,19 +6,21 @@ import { View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
-function SuccessOrder({ onClose }) {
+function SuccessOrder({ clearCart, updatedCart, onClose }) {
     const [animation] = useState(new Animated.Value(0));
     const navigation = useNavigation();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     useEffect(() => {
         Animated.timing(animation, {
             toValue: 1,
-            duration: 1000, // 1000 миллисекунд (1 секунд) для эмуляции загрузки
+            duration: 5000, // 1000 миллисекунд (1 секунд) для эмуляции загрузки
             easing: Easing.linear,
             useNativeDriver: false, // обязательно установите false для анимации ширины
         }).start(() => {
             if (onClose) {
+                clearCart();
+                updatedCart();
                 onClose();
             }
         });

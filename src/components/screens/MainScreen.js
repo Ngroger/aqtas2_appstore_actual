@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, ScrollView, ActivityIndicator, StatusBar } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput, ScrollView, ActivityIndicator, StatusBar, Alert } from 'react-native';
 import styles from '../../styles/MainScreenStyle';
-import { EvilIcons, AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 import Swiper from 'react-native-swiper'
 import { useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native';
@@ -21,7 +21,7 @@ function MainScreen() {
     const [isSizeSelect, setIsSizeSelector] = useState(false);
     const [productId, setProductId] = useState();
     const [selectedProduct, setSelectedProduct] = useState([]);
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     const toggleSetSize = (id, product) => {
         setIsSizeSelector(!isSizeSelect);
@@ -69,17 +69,17 @@ function MainScreen() {
         const intervalId = setInterval(() => {
             try {
                 fetch('https://aqtas.ru/products')
-                .then((response) => response.json())
-                .then((data) => {
-                    setProducts(data);
-                    setIsLoading(false);
-                })
-                .catch((error) => {
-                });
+                    .then((response) => response.json())
+                    .then((data) => {
+                        setProducts(data);
+                        setIsLoading(false);
+                    })
+                    .catch((error) => {
+                    });
             } catch (error) {
             }
-          }, 2000); // 5000 миллисекунд
-    
+        }, 2000); // 5000 миллисекунд
+
         return () => {
             clearInterval(intervalId); // Очищаем интервал при размонтировании компонента
         };
@@ -92,43 +92,47 @@ function MainScreen() {
     const loadUserData = async () => {
         const userData = await getUserData();
         if (userData) {
-            setUserData(userData);   
+            setUserData(userData);
         }
     };
 
-    const addToCart = (product) => {
-        // Определим параметры для добавления товара в корзину
-        const cartItem = {
-            name: product.name,
-            oldCost: product.oldCost,
-            newCost: product.cost,
-            description: product.description,
-            brend: product.brend,
-            costumer: product.costumer,  // Получаем UserId из userData
-            imagePreview: product.imagePreview1,  // По умолчанию используем imagePreview1,
-            UserID: userData.userId,
-            count: 1,  // Устанавливаем значение по умолчанию в 1
-        };
-    
-        // Отправляем POST-запрос к серверу
-        fetch('https://aqtas.ru/addToCart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(cartItem),
-        })
-        .then((response) => response.json())
-        .then((data) => {
-    
-            if (data.error) {
-                // Если сервер вернул ошибку, выводим предупреждение
-                alert(data.error);
+    const addToCart = async (product) => {
+        try {
+            // Определим параметры для добавления товара в корзину
+            const cartItem = {
+                name: product.name,
+                oldCost: product.oldCost,
+                newCost: product.cost,
+                description: product.description,
+                brend: product.brend,
+                costumer: product.costumer,
+                imagePreview: product.imagePreview1,
+                UserID: userData.userId,
+                count: 1,
+            };
+
+            const resposne = await fetch('https://aqtas.ru/addToCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cartItem)
+            });
+
+            const responseJson = await resposne.json();
+
+            if (responseJson.success) {
+                Alert.alert(`${t("message-title")}`, `${t("product-success")}`);
             } else {
+                if (responseJson.error === 'Этот товар уже есть в корзине') {
+                    Alert.alert(`${t("title-no-card-message")}`, `${t("product-exist-in-cart")}`);;
+                }
             }
-        })
-        .catch((error) => {
-        });
+
+        } catch (error) {
+            console.log('add to cart error: ', error);
+
+        };
     };
 
     const groupedProducts = {};
@@ -141,31 +145,31 @@ function MainScreen() {
         });
     }
 
-    const handleSearch = ( search ) => {
+    const handleSearch = (search) => {
         setIsLoading(true);
         onChangeSearch(search);
         setTimeout(() => {
-            if(!search) {
+            if (!search) {
                 fetch(`https://aqtas.ru/products`)
-                .then((response) => response.json()) 
-                .then((data) => {
-                    setProducts(data);
-                    setIsLoading(false);
-                })
-                .catch((error) => {
-                    setIsLoading(false);
-                });
-            } 
+                    .then((response) => response.json())
+                    .then((data) => {
+                        setProducts(data);
+                        setIsLoading(false);
+                    })
+                    .catch((error) => {
+                        setIsLoading(false);
+                    });
+            }
             else {
                 fetch(`https://aqtas.ru/productsSearch/${search}`)
-                .then((response) => response.json()) 
-                .then((data) => {
-                    setProducts(data);
-                    setIsLoading(false);
-                })
-                .catch((error) => {
-                    setIsLoading(false);
-                });
+                    .then((response) => response.json())
+                    .then((data) => {
+                        setProducts(data);
+                        setIsLoading(false);
+                    })
+                    .catch((error) => {
+                        setIsLoading(false);
+                    });
             }
         }, 1000);
     };
@@ -174,7 +178,7 @@ function MainScreen() {
         <View>
             <View style={styles.container}>
                 <View style={styles.navbar}>
-                    <Image style={styles.logo} source={require('../../img/miniLogo.png')}/>
+                    <Image style={styles.logo} source={require('../../img/miniLogo.png')} />
                     <View style={styles.search}>
                         <AntDesign name="search1" size={scale(14)} color="#BDBDBD" />
                         <TextInput value={search} onChangeText={(text) => handleSearch(text)} style={styles.serchInput} placeholder={`${t('search-products-placeholder')}`} />
@@ -184,36 +188,36 @@ function MainScreen() {
                     <ScrollView horizontal style={styles.categories}>
                         {categories.map((category) => (
                             <TouchableOpacity
-                            key={category.id}
-                            style={
-                                activeCategory === category.id
-                                ? styles.categoryActive
-                                : styles.category
-                            }
-                            onPress={() => handleCategoryClick(category.id)}
-                            >
-                            <Text
+                                key={category.id}
                                 style={
-                                activeCategory === category.id
-                                    ? styles.categoryTextActive
-                                    : styles.categoryText
+                                    activeCategory === category.id
+                                        ? styles.categoryActive
+                                        : styles.category
                                 }
+                                onPress={() => handleCategoryClick(category.id)}
                             >
-                                {category.name}
-                            </Text>
+                                <Text
+                                    style={
+                                        activeCategory === category.id
+                                            ? styles.categoryTextActive
+                                            : styles.categoryText
+                                    }
+                                >
+                                    {category.name}
+                                </Text>
                             </TouchableOpacity>
                         ))}
                     </ScrollView>
                 </View>
-                { isLoading && (
+                {isLoading && (
                     <View style={styles.loadingIndicatorContainer}>
                         <ActivityIndicator size="big" color="#95E5FF" />
                         <Text style={styles.textLoad}>{t('products-load-message')}</Text>
                     </View>
-                )  }
-                { !isLoading && (
+                )}
+                {!isLoading && (
                     <>
-                        { products.length > 0 ? (
+                        {products.length > 0 ? (
                             <FlatList
                                 data={Object.keys(groupedProducts)}
                                 keyExtractor={(item) => item}
@@ -242,7 +246,7 @@ function MainScreen() {
                                                                 {Array.from({ length: 5 }).map((_, index) => {
                                                                     const imagePreviewKey = `imagePreview${index + 1}`;
                                                                     const imagePreviewPath = product[imagePreviewKey];
-            
+
                                                                     if (imagePreviewPath) {
                                                                         return (
                                                                             <Image
@@ -254,25 +258,25 @@ function MainScreen() {
                                                                             />
                                                                         );
                                                                     }
-            
+
                                                                     return null;
                                                                 })}
                                                             </Swiper>
                                                         )}
-                                                        {product.isTOP ? 
+                                                        {product.isTOP ?
                                                             <View style={styles.top}>
                                                                 <Text style={styles.textTop}>TOP</Text>
                                                             </View> : null}
-                                                        { product.sale && (
-                                                            <View style={product.imagePreview1 && !product.imagePreview2 ? {...styles.sale, bottom: 12} : styles.sale}>
+                                                        {product.sale && (
+                                                            <View style={product.imagePreview1 && !product.imagePreview2 ? { ...styles.sale, bottom: 12 } : styles.sale}>
                                                                 <Text style={styles.saleText}>{product.sale}%</Text>
                                                             </View>
-                                                        ) }
+                                                        )}
                                                     </View>
                                                     <TouchableOpacity onPress={_ => (goToCard(product))}>
-                                                        <View style={product.imagePreview1 && !product.imagePreview2 ? {...styles.costContainer, marginTop: 10} : styles.costContainer}>
+                                                        <View style={product.imagePreview1 && !product.imagePreview2 ? { ...styles.costContainer, marginTop: 10 } : styles.costContainer}>
                                                             <Text style={styles.cost}>{product.cost}тнг</Text>
-                                                            { product.oldCost && <Text style={styles.oldCost}>{product.oldCost}тнг</Text>}
+                                                            {product.oldCost && <Text style={styles.oldCost}>{product.oldCost}тнг</Text>}
                                                         </View>
                                                         <Text style={styles.name}>{product.name}</Text>
                                                         <Text style={styles.description}>
@@ -299,12 +303,12 @@ function MainScreen() {
                             />
                         ) : (
                             <Text style={styles.noDataText}>{t('no-products-message')}</Text>
-                        ) }
+                        )}
                     </>
-                ) }
+                )}
                 <StatusBar backgroundColor="transparent" translucent={true} />
             </View>
-            { isSizeSelect && <SizeSelector onClose={toggleSetSize} id={productId} productData={selectedProduct}/> }
+            {isSizeSelect && <SizeSelector onClose={toggleSetSize} id={productId} productData={selectedProduct} />}
         </View>
     );
 }

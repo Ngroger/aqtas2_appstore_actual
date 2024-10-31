@@ -2,25 +2,25 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, TouchableOpacity, TextInput, Text, Platform } from 'react-native';
 import styles from '../../styles/RegistrationScreenStyle';
 import { useNavigation } from '@react-navigation/native';
-import { getToken, storeToken, hasToken } from '../../store/tokenManager';
+import { storeToken, hasToken } from '../../store/tokenManager';
 import axios from 'axios';
-import { storeUserData, getUserData } from '../../store/userDataManager';
+import { storeUserData } from '../../store/userDataManager';
 import { useTranslation } from 'react-i18next';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
     }),
 });
 
 function ConfirmPassword(props) {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [errors, setErrors] = useState({
         password: false,
         confirmPassword: false,
@@ -30,20 +30,21 @@ function ConfirmPassword(props) {
     const [notification, setNotification] = useState(false);
     const notificationListener = useRef();
     const responseListener = useRef();
+    const [message, setMessage] = useState();
 
     useEffect(() => {
         registerForPushNotificationsAsync().then(token => {
             setExpoPushToken(token);
         });
-    
+
         notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
             setNotification(notification);
         });
-    
+
         responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
 
         });
-    
+
         return () => {
             Notifications.removeNotificationSubscription(notificationListener.current);
             Notifications.removeNotificationSubscription(responseListener.current);
@@ -52,18 +53,18 @@ function ConfirmPassword(props) {
 
     async function schedulePushNotification() {
         await Notifications.scheduleNotificationAsync({
-        content: {
-            title: "Сообщение",
-            body: `Добро пожаловать в AQTas!`,
-            data: { data: 'goes here' },
-        },
-        trigger: { seconds: 2 },
+            content: {
+                title: "Сообщение",
+                body: `Добро пожаловать в AQTas!`,
+                data: { data: 'goes here' },
+            },
+            trigger: { seconds: 2 },
         });
     }
 
     async function registerForPushNotificationsAsync() {
         let token;
-        
+
         if (Platform.OS === 'android') {
             await Notifications.setNotificationChannelAsync('default', {
                 name: 'default',
@@ -72,7 +73,7 @@ function ConfirmPassword(props) {
                 lightColor: '#FF231F7C',
             });
         }
-        
+
         if (Device.isDevice) {
             const { status: existingStatus } = await Notifications.getPermissionsAsync();
             let finalStatus = existingStatus;
@@ -88,7 +89,7 @@ function ConfirmPassword(props) {
         } else {
             alert('Must use physical device for Push Notifications');
         }
-        
+
         return token;
     }
 
@@ -104,7 +105,7 @@ function ConfirmPassword(props) {
     };
 
     const navigation = useNavigation();
-    
+
     const goToMain = () => {
         navigation.navigate('MainTabs');
     };
@@ -115,40 +116,44 @@ function ConfirmPassword(props) {
     };
 
     const sendDataToServer = () => {
-        // Construct a user object to send to the server
-        const user = {
-            fullname: props.userData.fullname,
-            surname: props.userData.surname,
-            phoneNumber: props.userData.phoneNumber,
-            email: props.userData.email,
-            password: props.userData.password,
-            isBussinesAccount: props.userData.isBussinesAccount,
-            pushID: expoPushToken
-        };
+        if (password === confirmPassword) {
+            // Construct a user object to send to the server
+            const user = {
+                fullname: props.userData.fullname,
+                surname: props.userData.surname,
+                phoneNumber: props.userData.phoneNumber,
+                email: props.userData.email,
+                password: props.userData.password,
+                isBussinesAccount: props.userData.isBussinesAccount,
+                pushID: expoPushToken
+            };
 
-        storeUserData(props.userData);
+            storeUserData(props.userData);
 
-        // Send data to the server using Axios
-        axios.post('https://aqtas.ru/register', user)
-            .then((response) => {
-                const authToken = response.data.authToken;
-                const userId = response.data.userId; // Извлекаем ID пользователя
-        
-                // Сохраняем authToken и userId в локальном хранилище
-                storeToken(authToken);
-                storeUserData({ ...props.userData, userId, photoUser: 'withoutPhoto.png', sex: 'Не укаказано', birthday: 'Не указано', address: 'Не указано' });
+            // Send data to the server using Axios
+            axios.post('https://aqtas.ru/register', user)
+                .then((response) => {
+                    const authToken = response.data.authToken;
+                    const userId = response.data.userId; // Извлекаем ID пользователя
 
-                hasToken();
+                    // Сохраняем authToken и userId в локальном хранилище
+                    storeToken(authToken);
+                    storeUserData({ ...props.userData, userId, photoUser: 'withoutPhoto.png', sex: 'Не укаказано', birthday: 'Не указано', address: 'Не указано' });
 
-                // Handle the response here, for example, navigate to the next screen
-                schedulePushNotification();
-                goToMain();
-                setShowErrorText(false)
-            })
-            .catch((error) => {
+                    hasToken();
 
-                // Handle the error, show an error message, or take appropriate action
-            });
+                    // Handle the response here, for example, navigate to the next screen
+                    schedulePushNotification();
+                    goToMain();
+                    setShowErrorText(false)
+                })
+                .catch((error) => {
+
+                    // Handle the error, show an error message, or take appropriate action
+                });
+        } else {
+
+        }
     };
 
     return (
@@ -157,15 +162,16 @@ function ConfirmPassword(props) {
             <Text style={styles.description}>{t('reg-subtitle')}</Text>
             <View style={{ top: 80 }}>
                 <Text style={errors.password ? styles.inputTitleError : styles.inputTitle}>{t('password')}</Text>
-                <TextInput
-                    style={[styles.input, errors.password && styles.inputError]}
-                    onChangeText={(text) => {
-                        setPassword(text);
-                        updateUserData('password', text);
-                    }}
-                    maxLength={11}
-                    secureTextEntry={true}
-                />
+                <View style={styles.fieldContainr}>
+                    <TextInput
+                        style={[styles.input, errors.password && styles.inputError]}
+                        onChangeText={(text) => {
+                            setPassword(text);
+                            updateUserData('password', text);
+                        }}
+                        secureTextEntry={true}
+                    />
+                </View>
             </View>
             <View style={{ top: 110 }}>
                 <Text style={errors.confirmPassword ? styles.inputTitleError : styles.inputTitle}>{t('confirm-password')}</Text>

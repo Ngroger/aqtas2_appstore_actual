@@ -89,7 +89,8 @@ const styles = StyleSheet.create({
         fontFamily: 'CambriaBold',
         fontSize: 18,
         color: '#FF0000',
-        textAlign: 'center'
+        textAlign: 'center',
+        marginBottom: 12
     },
     buttonContainer: {
         width: '100%',

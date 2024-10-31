@@ -1,6 +1,6 @@
-import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
 import styles from '../../../styles/PersonalScreenStyle';
-import { MaterialIcons, EvilIcons, Feather, AntDesign  } from '@expo/vector-icons'; 
+import { MaterialIcons, EvilIcons, Feather, AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import ChangePhone from '../../ux/popup/changePhone';
@@ -21,7 +21,7 @@ function PersonalDate() {
     const [surname, onChangeSurname] = useState(userData.surname);
     const [isSurnameChanged, setIsSurnameChanged] = useState(false);
     const [showErrorSurname, setShowErrorSurname] = useState(false);
-    
+
     const [phone, onChangePhone] = useState(userData.phoneNumber);
     const [isPhoneChanged, setIsPhoneChanged] = useState(false);
     const [showErrorPhone, setShowErrorPhone] = useState(false);
@@ -43,7 +43,7 @@ function PersonalDate() {
 
     const [isChoiseImage, setChoiseImage] = useState(false);
 
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     const toggleChoiseImage = () => {
         setChoiseImage(!isChoiseImage)
@@ -62,7 +62,7 @@ function PersonalDate() {
             uploadImage(result.assets[0].uri);
         }
     };
-        
+
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -79,12 +79,12 @@ function PersonalDate() {
     const generateRandomId = () => {
         return Math.random().toString().slice(2, 20);
     };
-        
+
     const uploadImage = async (imageUri) => {
         const userId = userData.userId;
-        
+
         const formData = new FormData();
-        const uniqueId = generateRandomId(); 
+        const uniqueId = generateRandomId();
         const imageName = `photoUser${userId}_${uniqueId}.png`;
 
         formData.append('userId', userId);
@@ -93,7 +93,7 @@ function PersonalDate() {
             type: 'image/png',
             name: imageName,
         });
-        
+
         // Use the fetch API to send the image to the server for upload
         fetch('https://aqtas.ru/uploadImage', {
             method: 'POST',
@@ -102,24 +102,24 @@ function PersonalDate() {
                 'Content-Type': 'multipart/form-data',
             },
         })
-        .then((response) => response.json())
-        .then(async (data) => {
-            if (data.success) {
-                // Update the user's image in your local state or storage
-                console.log("data.image", data.image)
-                await updateUserData({ photoUser: data.image });
+            .then((response) => response.json())
+            .then(async (data) => {
+                if (data.success) {
+                    // Update the user's image in your local state or storage
+                    console.log("data.image", data.image)
+                    await updateUserData({ photoUser: data.image });
 
-                alert("Фотография профиля успешно обновлена")
-            }
-        })
-        .catch((error) => {
+                    alert("Фотография профиля успешно обновлена")
+                }
+            })
+            .catch((error) => {
 
-        });
+            });
     };
-    
+
     // Функция для обработки нажатия кнопки "назад"
     const handleGoBack = () => {
-      navigation.goBack(); // Вернуться на предыдущий экран
+        navigation.goBack(); // Вернуться на предыдущий экран
     };
 
     const handleNameChange = (text) => {
@@ -145,20 +145,20 @@ function PersonalDate() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            body: JSON.stringify({ userID: userID, fullname: name }), // Используйте newName вместо fullname
-        })
-            .then((response) => response.json())
-            .then(async (data) => {
-                if (data.success) {
-                    // Обновите имя в UserManager или локальном хранилище
-                    await updateUserData({ fullname: name });
-                } else {
-
-                }
+                body: JSON.stringify({ userID: userID, fullname: name }), // Используйте newName вместо fullname
             })
-            .catch((error) => {
+                .then((response) => response.json())
+                .then(async (data) => {
+                    if (data.success) {
+                        // Обновите имя в UserManager или локальном хранилище
+                        await updateUserData({ fullname: name });
+                    } else {
 
-            });
+                    }
+                })
+                .catch((error) => {
+
+                });
         }
     };
 
@@ -185,17 +185,17 @@ function PersonalDate() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            body: JSON.stringify({ userID, surname: surname }),
-        })
-            .then((response) => response.json())
-            .then(async (data) => {
-                if (data.success) {
-                    await updateUserData({ surname: surname });
-                }
+                body: JSON.stringify({ userID, surname: surname }),
             })
-            .catch((error) => {
+                .then((response) => response.json())
+                .then(async (data) => {
+                    if (data.success) {
+                        await updateUserData({ surname: surname });
+                    }
+                })
+                .catch((error) => {
 
-            });
+                });
         }
     };
     const handlePhoneChange = (text) => {
@@ -220,52 +220,52 @@ function PersonalDate() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            body: JSON.stringify({ userID: userID, phone: phone }),
-        })
-            .then((response) => response.json())
-            .then(async (data) => {
-                if (data.success) {
-                    await updateUserData({ phoneNumber: phone });
-                }
+                body: JSON.stringify({ userID: userID, phone: phone }),
             })
-            .catch((error) => {
+                .then((response) => response.json())
+                .then(async (data) => {
+                    if (data.success) {
+                        await updateUserData({ phoneNumber: phone });
+                    }
+                })
+                .catch((error) => {
 
-            });
+                });
         }
     };
 
     const handleBirthdayChange = (text) => {
         let formattedText = text.replace(/[^0-9]/g, ''); // Убираем все символы, кроме цифр
-    
+
         if (formattedText.length > 2) {
             formattedText = `${formattedText.slice(0, 2)}.${formattedText.slice(2)}`;
         }
         if (formattedText.length > 5) {
             formattedText = `${formattedText.slice(0, 5)}.${formattedText.slice(5)}`;
         }
-    
+
         onChangeBirthday(formattedText);
         setIsBirthdayChanged(true);
-    
+
         if (formattedText.length < 10) {
             setShowErrorBirthday(true);
         } else {
             setShowErrorBirthday(false);
         }
     };
-    
+
     const handleSavePressBirthday = () => {
         // Функция для проверки корректности формата даты
         const isValidDate = (dateString) => {
             const regex = /^\d{2}\.\d{2}\.\d{4}$/;
             if (!regex.test(dateString)) return false;
-    
+
             const [day, month, year] = dateString.split('.').map(Number);
             const date = new Date(year, month - 1, day);
-    
+
             return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
         };
-    
+
         if (!isValidDate(birthday)) {
             setShowErrorBirthday(true);
         } else {
@@ -279,20 +279,20 @@ function PersonalDate() {
                 },
                 body: JSON.stringify({ userId: userData.userId, date: birthday }),
             })
-            .then((response) => response.json())
-            .then(async (data) => {
-                if (data.message) {
-                    const updatedUserData = await updateUserData({ birthday: birthday });
-                } else {
+                .then((response) => response.json())
+                .then(async (data) => {
+                    if (data.message) {
+                        const updatedUserData = await updateUserData({ birthday: birthday });
+                    } else {
+                        // Обработка ошибки
+                    }
+                })
+                .catch((error) => {
                     // Обработка ошибки
-                }
-            })
-            .catch((error) => {
-                // Обработка ошибки
-            });
+                });
         }
     };
-    
+
 
     const handleAddressChange = (text) => {
         onChangeAddress(text);
@@ -307,7 +307,7 @@ function PersonalDate() {
     const handleSavePressAddress = () => {
         if (address.length < 2) {
             setShowErrorAddress(true);
-        } else {    
+        } else {
             // Сохранить имя и выполнить соответствующие действия
             setIsAddressChanged(false);
             setShowErrorAddress(false);
@@ -317,18 +317,18 @@ function PersonalDate() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            body: JSON.stringify({ userID, address: address }), // Используйте newName вместо fullname
-        })
-            .then((response) => response.json())
-            .then(async (data) => {
-                if (data.success) {
-                    // Обновите имя в UserManager или локальном хранилище
-                    const updatedUserData = await updateUserData({ address: address });
-                } else {
-                }
+                body: JSON.stringify({ userID, address: address }), // Используйте newName вместо fullname
             })
-            .catch((error) => {
-            });
+                .then((response) => response.json())
+                .then(async (data) => {
+                    if (data.success) {
+                        // Обновите имя в UserManager или локальном хранилище
+                        const updatedUserData = await updateUserData({ address: address });
+                    } else {
+                    }
+                })
+                .catch((error) => {
+                });
         }
     };
 
@@ -345,7 +345,7 @@ function PersonalDate() {
     };
 
     return (
-        <View>
+        <ScrollView style={{ height: '100%', backgroundColor: '#FFF' }}>
             <View style={styles.container}>
                 <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
                     <MaterialIcons name="arrow-back-ios" size={24} color="black" />
@@ -357,7 +357,7 @@ function PersonalDate() {
                             source={{ uri: `https://aqtas.ru/images/photoUsers/${userData.photoUser}` }}
                             style={styles.photo}
                         />
-                        { image === null ? (
+                        {image === null ? (
                             <>
                                 <TouchableOpacity onPress={toggleChoiseImage} style={styles.addPhoto}>
                                     <EvilIcons name="camera" size={18} color="black" />
@@ -369,14 +369,14 @@ function PersonalDate() {
                                     <AntDesign name="delete" size={18} color="#FF0000" />
                                 </TouchableOpacity>
                             </>
-                            ) 
+                        )
                         }
                     </View>
                 </View>
                 <View style={styles.infoContainer}>
                     <View>
                         <Text style={styles.firstInfo}>{t('name')}:</Text>
-                        <TextInput value={name} onChangeText={handleNameChange} style={styles.secondInfo}/>
+                        <TextInput value={name} onChangeText={handleNameChange} style={styles.secondInfo} />
                         {showErrorName && (
                             <Text style={styles.error}>{t('above-two-symbol-message')}</Text>
                         )}
@@ -390,7 +390,7 @@ function PersonalDate() {
                 <View style={styles.infoContainer}>
                     <View>
                         <Text style={styles.firstInfo}>{t('surname')}:</Text>
-                        <TextInput value={surname} onChangeText={handleSurnameChange} style={styles.secondInfo}/>
+                        <TextInput value={surname} onChangeText={handleSurnameChange} style={styles.secondInfo} />
                         {showErrorSurname && (
                             <Text style={styles.error}>{t('above-two-symbol-message')}</Text>
                         )}
@@ -404,7 +404,7 @@ function PersonalDate() {
                 <View style={styles.infoContainer}>
                     <View>
                         <Text style={styles.firstInfo}>{t('phone-number')}:</Text>
-                        <TextInput maxLength={11} keyboardType='numeric' value={phone} onChangeText={handlePhoneChange} style={styles.secondInfo}/>
+                        <TextInput maxLength={11} keyboardType='numeric' value={phone} onChangeText={handlePhoneChange} style={styles.secondInfo} />
                         {showErrorPhone && (
                             <Text style={styles.error}>{t('above-eleven-symbol-message')}</Text>
                         )}
@@ -436,7 +436,7 @@ function PersonalDate() {
                 <View style={styles.infoContainer}>
                     <View>
                         <Text style={styles.firstInfo}>{t('birthday-personal-data')}:</Text>
-                        <TextInput maxLength={10} keyboardType='numeric' value={birthday} onChangeText={handleBirthdayChange} style={styles.secondInfo}/>
+                        <TextInput maxLength={10} keyboardType='numeric' value={birthday} onChangeText={handleBirthdayChange} style={styles.secondInfo} />
                         {showErrorSurname && (
                             <Text style={styles.error}>{t('uncorrect-format-date')}</Text>
                         )}
@@ -450,7 +450,7 @@ function PersonalDate() {
                 <View style={styles.infoContainer}>
                     <View>
                         <Text style={styles.firstInfo}>{t('address-personal-data')}:</Text>
-                        <TextInput value={address} onChangeText={handleAddressChange} style={styles.secondInfo}/>
+                        <TextInput value={address} onChangeText={handleAddressChange} style={styles.secondInfo} />
                         {showErrorAddress && (
                             <Text style={styles.error}>{t('above-two-symbol-message')}</Text>
                         )}
@@ -462,10 +462,10 @@ function PersonalDate() {
                     )}
                 </View>
             </View>
-            { isChangePhoneModal && <ChangePhone onClose={toggleChangePhoneModal} userId={userData.userId} phone={phone}/> }
-            { isPasswordModal && <ChangePassword onClose={togglePasswordModal}  userId={userData.userId}/> }
-            { isSexModal && <ChangeSex onClose={toggleSexModal} userId={userData.userId}/> }
-            { isChoiseImage && 
+            {isChangePhoneModal && <ChangePhone onClose={toggleChangePhoneModal} userId={userData.userId} phone={phone} />}
+            {isPasswordModal && <ChangePassword onClose={togglePasswordModal} userId={userData.userId} />}
+            {isSexModal && <ChangeSex onClose={toggleSexModal} userId={userData.userId} />}
+            {isChoiseImage &&
                 <View style={styles.background}>
                     <View style={styles.containerChoiseImage}>
                         <TouchableOpacity onPress={toggleChoiseImage}>
@@ -480,7 +480,7 @@ function PersonalDate() {
                     </View>
                 </View>
             }
-        </View>
+        </ScrollView>
     );
 }
 

@@ -32,7 +32,7 @@ function ProfileMenu({ onClose }) {
         <View style={styles.background}>
             <TouchableOpacity onPress={handleClose} style={styles.goBack}/>
             <View style={styles.addCardContainer}>
-                <TouchableOpacity onPress={handleNext}>
+                <TouchableOpacity onPress={handleDelete}>
                     <Text style={styles.exitButton}>{t('exit-account-button')}</Text>
                 </TouchableOpacity>
                 <View style={styles.line}/>
