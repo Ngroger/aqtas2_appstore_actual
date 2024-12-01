@@ -50,7 +50,7 @@ function MainScreen() {
             setActiveCategory(categoryId);
             setIsLoading(true);
 
-            fetch(`https://aqtas.ru/products/${categories[categoryId - 1].value}`)
+            fetch(`https://aqtas.garcom.kz/products/${categories[categoryId - 1].value}`)
                 .then((response) => response.json())
                 .then((data) => {
                     setProducts(data);
@@ -68,7 +68,7 @@ function MainScreen() {
         loadUserData();
         const intervalId = setInterval(() => {
             try {
-                fetch('https://aqtas.ru/products')
+                fetch('https://aqtas.garcom.kz/products')
                     .then((response) => response.json())
                     .then((data) => {
                         setProducts(data);
@@ -111,7 +111,7 @@ function MainScreen() {
                 count: 1,
             };
 
-            const resposne = await fetch('https://aqtas.ru/addToCart', {
+            const resposne = await fetch('https://aqtas.garcom.kz/addToCart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -150,7 +150,7 @@ function MainScreen() {
         onChangeSearch(search);
         setTimeout(() => {
             if (!search) {
-                fetch(`https://aqtas.ru/products`)
+                fetch(`https://aqtas.garcom.kz/products`)
                     .then((response) => response.json())
                     .then((data) => {
                         setProducts(data);
@@ -161,7 +161,7 @@ function MainScreen() {
                     });
             }
             else {
-                fetch(`https://aqtas.ru/productsSearch/${search}`)
+                fetch(`https://aqtas.garcom.kz/productsSearch/${search}`)
                     .then((response) => response.json())
                     .then((data) => {
                         setProducts(data);
@@ -211,10 +211,11 @@ function MainScreen() {
                 </View>
                 {isLoading && (
                     <View style={styles.loadingIndicatorContainer}>
-                        <ActivityIndicator size="big" color="#95E5FF" />
-                        <Text style={styles.textLoad}>{t('products-load-message')}</Text>
+                        <ActivityIndicator size="large" color="#95E5FF" />
+                        <Text style={[styles.textLoad, { color: '#000' }]}>{t('products-load-message')}</Text>
                     </View>
                 )}
+
                 {!isLoading && (
                     <>
                         {products.length > 0 ? (
@@ -232,7 +233,7 @@ function MainScreen() {
                                                             <Image
                                                                 style={styles.cartPreview}
                                                                 source={{
-                                                                    uri: `https://aqtas.ru/images/imageProducts/${product.imagePreview1}`,
+                                                                    uri: `https://aqtas.garcom.kz/images/imageProducts/${product.imagePreview1}`,
                                                                 }}
                                                             />
                                                         ) : (
@@ -253,7 +254,7 @@ function MainScreen() {
                                                                                 key={imagePreviewKey}
                                                                                 style={styles.cartPreview}
                                                                                 source={{
-                                                                                    uri: `https://aqtas.ru/images/imageProducts/${imagePreviewPath}`,
+                                                                                    uri: `https://aqtas.garcom.kz/images/imageProducts/${imagePreviewPath}`,
                                                                                 }}
                                                                             />
                                                                         );

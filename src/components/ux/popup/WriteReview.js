@@ -27,7 +27,7 @@ function WriteReview({ onClose, productId }) {
     const loadUserData = async () => {
         const userData = await getUserData();
         if (userData) {
-          setUserData(userData); // Установка данных пользователя в состояние
+            setUserData(userData); // Установка данных пользователя в состояние
         }
     };
 
@@ -35,42 +35,42 @@ function WriteReview({ onClose, productId }) {
         if (Platform.OS === 'web') {
             return;
         }
-    
+
         const { status } = await ImagePicker.requestCameraPermissionsAsync();
         if (status !== 'granted') {
             return;
         }
-    
+
         let result = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
         });
-    
+
         if (!result.canceled) {
             setChoiseImage(false);
             setSelectedImages([...selectedImages, result.assets[0].uri]);
         }
     };
-    
+
     const pickImage = async () => {
         if (Platform.OS === 'web') {
             return;
         }
-    
+
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
             return;
         }
-    
+
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
         });
-    
+
         if (!result.canceled) {
             setChoiseImage(false);
             setSelectedImages([...selectedImages, result.assets[0].uri]);
@@ -111,7 +111,7 @@ function WriteReview({ onClose, productId }) {
         }
 
         try {
-            const response = await axios.post('https://aqtas.ru/publishReview', data, {
+            const response = await axios.post('https://aqtas.garcom.kz/publishReview', data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -134,17 +134,17 @@ function WriteReview({ onClose, productId }) {
                 </TouchableOpacity>
                 <View style={styles.imageContainer}>
                     {selectedImages.length === 0 ? (
-                        <View style={styles.image}/>
+                        <View style={styles.image} />
                     ) : (
                         <>
-                        {selectedImages.map((imageUri, index) => (
-                            <View key={index} style={[styles.image, { borderWidth: 0 }]}>
-                                <Image source={{ uri: imageUri }} style={{ width: '100%', height: '100%', borderRadius: 15 }} />
-                                <TouchableOpacity style={styles.deleteImage} onPress={() => toggleDeleteImage(index)}>
-                                    <AntDesign name="close" size={24} color="#95E5FF" />
-                                </TouchableOpacity>
-                            </View>
-                        ))}
+                            {selectedImages.map((imageUri, index) => (
+                                <View key={index} style={[styles.image, { borderWidth: 0 }]}>
+                                    <Image source={{ uri: imageUri }} style={{ width: '100%', height: '100%', borderRadius: 15 }} />
+                                    <TouchableOpacity style={styles.deleteImage} onPress={() => toggleDeleteImage(index)}>
+                                        <AntDesign name="close" size={24} color="#95E5FF" />
+                                    </TouchableOpacity>
+                                </View>
+                            ))}
                         </>
                     )}
                     {selectedImages.length < 3 && (
@@ -173,8 +173,8 @@ function WriteReview({ onClose, productId }) {
                 <View style={styles.reviewContainer}>
                     <Text style={styles.titleInput}>Ваш комментарий</Text>
                     <TextInput multiline={true}
-                        numberOfLines={4} 
-                        style={styles.input} 
+                        numberOfLines={4}
+                        style={styles.input}
                         placeholder='Введите ваш комментарий'
                         value={description}
                         onChangeText={onChangeDescription}
@@ -183,7 +183,7 @@ function WriteReview({ onClose, productId }) {
                 <View style={styles.reviewContainer}>
                     <Text style={styles.titleInput}>Цвет</Text>
                     <TextInput
-                        style={styles.input} 
+                        style={styles.input}
                         placeholder='Введите цвет товара'
                         value={color}
                         onChangeText={onChangeColor}
@@ -192,7 +192,7 @@ function WriteReview({ onClose, productId }) {
                 <View style={styles.reviewContainer}>
                     <Text style={styles.titleInput}>Размер</Text>
                     <TextInput
-                        style={styles.input} 
+                        style={styles.input}
                         placeholder='Введите размер товара'
                         value={size}
                         onChangeText={onChangeSize}
@@ -203,7 +203,7 @@ function WriteReview({ onClose, productId }) {
                     <Text style={styles.publicButtonText}>Опубликовать</Text>
                 </TouchableOpacity>
             </View>
-            { isChoiseImage && 
+            {isChoiseImage &&
                 <View style={styles.backgroundContainer}>
                     <View style={styles.containerChoiseImage}>
                         <TouchableOpacity onPress={toggleChoiseImage}>

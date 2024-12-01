@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StatusBar, ActivityIndicator } from 'react-native';
 import { Feather, Entypo } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import styles from '../../styles/ProfileScreenStyle';
 import AddBankCard from '../ux/popup/AddBankCard';
 import { getUserData } from '../../store/userDataManager'; // Импортируйте функцию
@@ -15,24 +15,16 @@ function ProfileScreen() {
   const [showMenu, setShowMenu] = useState(false);
   const [isPush, setIsPush] = useState(true);
   const [userData, setUserData] = useState({}); // Состояние для данных пользователя
-  const [photo, setPhoto] = useState(userData.photoUser);
   const [isBussinesAccount, setIsBussinesAccount] = useState(false);
-  const {t} = useTranslation();
-  const [isLoad, setIsLoad] = useState(false);
+  const { t } = useTranslation();
+  const [isLoad, setIsLoad] = useState(true);
 
-  // Загрузка данных пользователя при загрузке экрана
-  useEffect(() => {
-    setIsLoad(true);
-    const intervalId = setInterval(() => {
-      setIsLoad(false);
+  useFocusEffect(
+    useCallback(() => {
       loadUserData();
-    }, 2000); // 5000 миллисекунд
+    }, [])
+  );
 
-    return () => {
-        clearInterval(intervalId); // Очищаем интервал при размонтировании компонента
-    };
-    
-  }, []);
 
   const toggleAddBankCard = () => {
     setShowAddBankCard(!showAddBankCard);
@@ -40,26 +32,20 @@ function ProfileScreen() {
 
   const togglePushMessage = async () => {
     try {
-        // Определите новый статус push-уведомлений
-        const newStatus = !isPush;
+      // Определите новый статус push-уведомлений
+      const newStatus = !isPush;
 
-        // Отправьте PUT-запрос на сервер для обновления статуса push-уведомлений
-        const response = await fetch(`https://aqtas.ru/updatePushStatus/${userData.userId}/${newStatus}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+      // Отправьте PUT-запрос на сервер для обновления статуса push-уведомлений
+      const response = await fetch(`https://aqtas.garcom.kz/updatePushStatus/${userData.userId}/${newStatus}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-        const responseData = await response.json();
-
-        if (response.ok) {
-
-            // Обновите локальный статус isPush
-            setIsPush(newStatus);
-        } else {
-
-        }
+      if (response.ok) {
+        setIsPush(newStatus);
+      }
     } catch (error) {
 
     }
@@ -73,33 +59,29 @@ function ProfileScreen() {
     navigation.navigate('Personal', { userData }); // Переход на экран "Personal"
   };
 
-  // Функция для загрузки данных пользователя
   const loadUserData = async () => {
-    const userData = await getUserData();
-    if (userData) {
-      setUserData(userData); 
-      // Выполните запрос к серверу для получения данных о финансах
-      try {
-        const response = await fetch(`https://aqtas.ru/isBussines/${userData.userId}`);
+    setIsLoad(true);
+    try {
+      const userData = await getUserData();
+      if (userData && userData.userId && userData.fullname) {
+        setUserData(userData);
+        const response = await fetch(`https://aqtas.garcom.kz/isBussines/${userData.userId}`);
         if (response.ok) {
-            const data = await response.json();
-            const isBussinesAccount = data && data.isBussinesAccount;
-            if(isBussinesAccount === 1) {
-              setIsBussinesAccount(true);
-            } else {
-              setIsBussinesAccount(false);
-            }
-        } else {
-
+          const data = await response.json();
+          const isBussinesAccount = data && data.isBussinesAccount;
+          setIsBussinesAccount(isBussinesAccount === 1);
         }
+      }
     } catch (error) {
-      
-    }// Установка данных пользователя в состояние
+      console.error(error);
+      setIsLoad(false);
+    } finally {
+      setIsLoad(false);
     }
   };
 
   const goToMyOrdersScreen = () => {
-      navigation.navigate('MyOrders'); // Переход на экран "MyOrders"
+    navigation.navigate('MyOrders'); // Переход на экран "MyOrders"
   };
 
   const goToFaQScreen = () => {
@@ -125,32 +107,28 @@ function ProfileScreen() {
   return (
     <View>
       <View style={styles.container}>
-        { isLoad && (
-          <View style={styles.loadingIndicatorContainer}>
-            <ActivityIndicator size="big" color="#95E5FF" />
-            <Text style={styles.textLoad}>{t('products-load-message')}</Text>
-          </View>
-        )}
-        { !isLoad && (
+        {!isLoad && (
           <>
             <View>
-              <View style={[styles.infoContainer, { justifyContent: 'space-between' }]}>
-                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
-                  <Image source={{ uri: `https://aqtas.ru/images/photoUsers/${userData.photoUser}` }} style={styles.photo} />
-                  <View>
-                    <Text style={styles.infoText}>{t('greetings-title')},</Text>
-                    <Text style={styles.infoText}>{userData.fullname} {userData.surname}</Text>
+              {userData && (
+                <View style={[styles.infoContainer, { justifyContent: 'space-between' }]}>
+                  <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
+                    <Image source={{ uri: `https://aqtas.garcom.kz/images/photoUsers/${userData?.photoUser}` }} style={styles.photo} />
+                    <View>
+                      <Text style={styles.infoText}>{t('greetings-title')},</Text>
+                      <Text style={styles.infoText}>{userData?.fullname} {userData?.surname}</Text>
+                    </View>
+                  </View>
+                  <View style={{ flexDirection: 'row', display: 'flex' }}>
+                    <TouchableOpacity onPress={togglePushMessage}>
+                      <Feather name={isPush ? 'bell' : 'bell-off'} size={scale(20)} color="black" />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={toggleShowMenu} style={{ left: 0 }}>
+                      <Entypo name="dots-three-vertical" size={scale(20)} color="black" />
+                    </TouchableOpacity>
                   </View>
                 </View>
-                <View style={{ flexDirection: 'row', display: 'flex' }}>
-                  <TouchableOpacity onPress={togglePushMessage}>
-                    <Feather name={isPush ? 'bell' : 'bell-off'} size={scale(20)} color="black" />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={toggleShowMenu} style={{ left: 0 }}>
-                    <Entypo name="dots-three-vertical" size={scale(20)} color="black" />
-                  </TouchableOpacity>
-                </View>
-              </View>
+              )}
               {/* <View style={styles.bonusContainer}>
                 <View style={styles.sale}>
                   <Text style={styles.saleText}>До 35%</Text>
@@ -174,7 +152,7 @@ function ProfileScreen() {
                 <Text style={styles.faqText}>
                   {t('faq-profile-button')}
                 </Text>
-              </TouchableOpacity>  
+              </TouchableOpacity>
               {isBussinesAccount ? (
                 <TouchableOpacity onPress={goToBussines} style={styles.profileButton}>
                   <Text style={styles.profileButtonText}>{t('bussines-profile-button')}</Text>
@@ -189,11 +167,11 @@ function ProfileScreen() {
               </TouchableOpacity>
             </View>
           </>
-        ) }
+        )}
         <StatusBar backgroundColor="transparent" translucent={true} />
       </View>
-      {showAddBankCard && <AddBankCard onClose={toggleAddBankCard}/>}
-      {showMenu && <ProfileMenu onClose={toggleShowMenu}/>}
+      {showAddBankCard && <AddBankCard onClose={toggleAddBankCard} />}
+      {showMenu && <ProfileMenu onClose={toggleShowMenu} />}
     </View>
   );
 }

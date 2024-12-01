@@ -81,7 +81,7 @@ function AddCardScreen() {
         const formattedCardNumber = cardNumber.replace(/\s/g, ''); // Remove spaces
 
         // Make a request to the server to add the card
-        const response = await fetch('https://aqtas.ru/addBankCard', {
+        const response = await fetch('https://aqtas.garcom.kz/addBankCard', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

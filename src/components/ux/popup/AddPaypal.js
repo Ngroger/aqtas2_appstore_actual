@@ -1,8 +1,8 @@
 import React, { Component, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import styles from '../../../styles/AddPaypalStyles';
-import { Ionicons } from '@expo/vector-icons'; 
-import { AntDesign } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import HowWorkPayPal from './messages/HowWorkPayPal';
 import { getUserData } from '../../../store/userDataManager';
 
@@ -16,7 +16,7 @@ function AddPaypal({ onClose }) {
     }
 
     handleBack = () => {
-        if(onClose) {
+        if (onClose) {
             onClose()
         }
     }
@@ -28,13 +28,13 @@ function AddPaypal({ onClose }) {
     const loadUserData = async () => {
         const userData = await getUserData();
         if (userData) {
-            setUserData(userData);   
+            setUserData(userData);
         }
-    }  
-    
+    }
+
     const addPayPal = async () => {
         try {
-            const response = await fetch('https://aqtas.ru/addPaypal', {
+            const response = await fetch('https://aqtas.garcom.kz/addPaypal', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ function AddPaypal({ onClose }) {
                     email: email,
                 }),
             });
-    
+
             if (!response.ok) {
 
                 // Обработка ошибки, например, показ сообщения пользователю
@@ -55,7 +55,7 @@ function AddPaypal({ onClose }) {
                 }
             }
         } catch (error) {
-            
+
             // Обработка ошибки, например, показ сообщения пользователю
         }
     };
@@ -74,8 +74,8 @@ function AddPaypal({ onClose }) {
                 </View>
                 <View style={styles.form}>
                     <Text style={styles.formTitle}>PayPal индентификатор</Text>
-                    <TextInput value={email} onChangeText={onChangeEmail} style={styles.formInput} placeholder='Введите Email'/>
-                </View> 
+                    <TextInput value={email} onChangeText={onChangeEmail} style={styles.formInput} placeholder='Введите Email' />
+                </View>
                 <View style={styles.buttonContainer}>
                     <Text style={styles.link}>Нет аккаунте?</Text>
                     <TouchableOpacity>
@@ -86,7 +86,7 @@ function AddPaypal({ onClose }) {
                     <Text style={styles.addPayPalText}>Добавить</Text>
                 </TouchableOpacity>
             </View>
-            { isShowHowItWork && <HowWorkPayPal onClose={toggleOpenHowItWork}/> }
+            {isShowHowItWork && <HowWorkPayPal onClose={toggleOpenHowItWork} />}
         </View>
     )
 };

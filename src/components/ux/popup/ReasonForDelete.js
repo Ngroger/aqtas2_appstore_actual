@@ -26,10 +26,10 @@ function ReasonForDelete({ onClose, id, userId, buyerId }) {
     const handleDelete = async () => {
         if (selectedReason) {
             try {
-                const response = await fetch(`https://aqtas.ru/deleteOrder/${userId}/${id}/${buyerId}?reasons=${encodeURIComponent(selectedReasonText)}`, {
+                const response = await fetch(`https://aqtas.garcom.kz/deleteOrder/${userId}/${id}/${buyerId}?reasons=${encodeURIComponent(selectedReasonText)}`, {
                     method: 'DELETE',
                 });
-    
+
                 if (response.ok) {
                     handleClose();
                 } else {

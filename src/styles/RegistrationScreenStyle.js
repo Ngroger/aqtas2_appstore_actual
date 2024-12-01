@@ -84,8 +84,6 @@ const styles = ScaledSheet.create({
     display: 'flex',
     justifyContent: 'space-between',
     marginTop: 30,
-    borderWidth: 1,
-    borderColor: '#000'
   },
   input: {
     borderWidth: 1,

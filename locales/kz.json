@@ -222,5 +222,17 @@
     },
     "product-exist-in-cart": "Бұл товар себетке қосылып қойған",
     "product-success": "Өнім себетке сәтті қосылды",
-    "message-title": "Хабарлама"
+    "message-title": "Хабарлама",
+    "change-password-modal": {
+        "title": "Құпия сөзді өзгерту",
+        "old-pass-title": "Ескі құпия сөз",
+        "old-pass-place": "Ескі құпия сөзді енгізіңіз",
+        "new-pass-title": "Жаңа құпия сөз",
+        "new-pass-place": "Жаңа құпия сөзді енгізіңіз",
+        "confirm-pass-title": "Құпия сөзді растаңыз",
+        "confirm-pass-place": "Құпия сөзді қайталаңыз",
+        "passwords-do-not-match": "Құпия сөздер сәйкес келмейді",
+        "password-must-be-greater": "Жаңа құпия сөз 10 таңбадан жоғары болуы керек",
+        "old-pass-wrong": "Ескі құпия сөз дұрыс емес"
+    }
 }

@@ -4,7 +4,7 @@ import styles from '../../../styles/ChangeSexStyle';
 import { AntDesign } from '@expo/vector-icons';
 import { updateUserData } from '../../../store/userDataManager';
 
-function ChangeSex({ onClose, userId }) {
+function ChangeSex({ onClose, userId, onChangeSex }) {
     const [selectedSex, setSelectedSex] = useState(''); // Состояние для выбора пола
 
     const handleClose = () => {
@@ -14,7 +14,8 @@ function ChangeSex({ onClose, userId }) {
     };
 
     const handleSexChange = (sex) => {
-        setSelectedSex(sex); // Обновляем выбранный пол в состоянии
+        setSelectedSex(sex);
+        onChangeSex(sex);
     };
 
     const handleSaveSex = () => {
@@ -23,7 +24,7 @@ function ChangeSex({ onClose, userId }) {
         }
 
         // Отправить запрос на сервер для обновления пола
-        fetch('https://aqtas.ru/changeUserSex', {
+        fetch('https://aqtas.garcom.kz/changeUserSex', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -33,7 +34,7 @@ function ChangeSex({ onClose, userId }) {
             .then((response) => response.json())
             .then(async (data) => {
                 if (data.success) {
-                    const updatedUserData = await updateUserData({ sex: selectedSex });
+                    await updateUserData({ sex: selectedSex });
                     handleClose();
                 } else {
 
@@ -54,19 +55,19 @@ function ChangeSex({ onClose, userId }) {
                     <Text style={styles.title}>Изменить пол</Text>
                 </View>
                 <TouchableOpacity
-                    style={ selectedSex === 'Не указано' ? [styles.button, { opacity: 0.4 }] : styles.button }
+                    style={selectedSex === 'Не указано' ? [styles.button, { opacity: 0.4 }] : styles.button}
                     onPress={() => handleSexChange('Не указано')}
                 >
                     <Text style={styles.buttonText}>Не указано</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={ selectedSex === 'Женщина' ? [styles.button, { opacity: 0.4 }] : styles.button }
+                    style={selectedSex === 'Женщина' ? [styles.button, { opacity: 0.4 }] : styles.button}
                     onPress={() => handleSexChange('Женщина')}
                 >
                     <Text style={styles.buttonText}>Женщина</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={ selectedSex === 'Мужчина' ? [styles.button, { opacity: 0.4 }] : styles.button }
+                    style={selectedSex === 'Мужчина' ? [styles.button, { opacity: 0.4 }] : styles.button}
                     onPress={() => handleSexChange('Мужчина')}
                 >
                     <Text style={styles.buttonText}>Мужчина</Text>

@@ -12,11 +12,11 @@ function ShopsScreen() {
     const [shops, setShops] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
     const [flatListData, setFlatListData] = useState([]);
-    const [isLoading, setIsLoading] = useState(false); 
+    const [isLoading, setIsLoading] = useState(false);
     const [search, onChangeSearch] = useState('');
     const [noResults, setNoResults] = useState(false);
-    const {t} = useTranslation();
-    
+    const { t } = useTranslation();
+
     const goToMap = (item) => {
         navigation.navigate('Map', { item })
     }
@@ -43,7 +43,7 @@ function ShopsScreen() {
             setActiveCategory(categoryId);
             setIsLoading(true);
 
-            fetch(`https://aqtas.ru/shops/${categories[categoryId - 1].value}`)
+            fetch(`https://aqtas.garcom.kz/shops/${categories[categoryId - 1].value}`)
                 .then((response) => response.json())
                 .then((data) => {
                     setShops(data);
@@ -56,56 +56,56 @@ function ShopsScreen() {
     };
 
     const loadUserData = () => {
-        fetch('https://aqtas.ru/shops')
-        .then((response) => response.json())
-        .then((data) => {
-            setShops(data);
-        })
-        .catch((error) => {
-        });
+        fetch('https://aqtas.garcom.kz/shops')
+            .then((response) => response.json())
+            .then((data) => {
+                setShops(data);
+            })
+            .catch((error) => {
+            });
     }
 
     const handleOpen2GIS = (link) => {
         const url = `dgis://${link}`;
         Linking.openURL(url);
     };
-    
+
 
     useEffect(() => {
         loadUserData()
     }, []);
 
-    const handleSearch = ( search ) => {
+    const handleSearch = (search) => {
         setIsLoading(true);
         onChangeSearch(search);
         setTimeout(() => {
-            if(!search) {
-                fetch(`https://aqtas.ru/shops`)
-                .then((response) => response.json()) 
-                .then((data) => {
-                    setShops(data);
-                    setIsLoading(false);
-                })
-                .catch((error) => {
-                    setIsLoading(false);
-                });
-            } 
-            else {
-                fetch(`https://aqtas.ru/shopsSearch/${search}`)
-                .then((response) => response.json()) 
-                .then((data) => {
-                    if (data.length === 0) {
-                        setNoResults(true); // Установить состояние noResults в true
-                        setIsLoading(false);
-                    } else {
-                        setNoResults(false);
+            if (!search) {
+                fetch(`https://aqtas.garcom.kz/shops`)
+                    .then((response) => response.json())
+                    .then((data) => {
                         setShops(data);
                         setIsLoading(false);
-                    }
-                })
-                .catch((error) => {
-                    setIsLoading(false);
-                });
+                    })
+                    .catch((error) => {
+                        setIsLoading(false);
+                    });
+            }
+            else {
+                fetch(`https://aqtas.garcom.kz/shopsSearch/${search}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.length === 0) {
+                            setNoResults(true); // Установить состояние noResults в true
+                            setIsLoading(false);
+                        } else {
+                            setNoResults(false);
+                            setShops(data);
+                            setIsLoading(false);
+                        }
+                    })
+                    .catch((error) => {
+                        setIsLoading(false);
+                    });
             }
         }, 1000); // Запуск поиска после 1 секунды без изменений в тексте
     };
@@ -121,10 +121,10 @@ function ShopsScreen() {
     return (
         <View style={styles.container}>
             <View style={styles.navbar}>
-                <Image style={styles.logo} source={require('../../img/miniLogo.png')}/>
+                <Image style={styles.logo} source={require('../../img/miniLogo.png')} />
                 <View style={styles.search}>
                     <AntDesign name="search1" size={scale(14)} color="#BDBDBD" />
-                    <TextInput value={search} onChangeText={(text) => handleSearch(text)} style={styles.serchInput} placeholder={t('search-shops-placeholder')}/>
+                    <TextInput value={search} onChangeText={(text) => handleSearch(text)} style={styles.serchInput} placeholder={t('search-shops-placeholder')} />
                 </View>
             </View>
             <View style={styles.categoriesContainer}>
@@ -134,16 +134,16 @@ function ShopsScreen() {
                             key={category.id}
                             style={
                                 activeCategory === category.id
-                                ? styles.categoryActive
-                                : styles.category
+                                    ? styles.categoryActive
+                                    : styles.category
                             }
                             onPress={() => handleCategoryClick(category.id)}
-                            >
+                        >
                             <Text
                                 style={
-                                activeCategory === category.id
-                                    ? styles.categoryTextActive
-                                    : styles.categoryText
+                                    activeCategory === category.id
+                                        ? styles.categoryTextActive
+                                        : styles.categoryText
                                 }
                             >
                                 {category.name}
@@ -152,20 +152,20 @@ function ShopsScreen() {
                     ))}
                 </ScrollView>
             </View>
-            { isLoading && (
+            {isLoading && (
                 <View style={styles.loadingIndicatorContainer}>
                     <ActivityIndicator size="big" color="#95E5FF" />
                     <Text style={styles.textLoad}>{t('products-load-message')}</Text>
                 </View>
-            )  }
-            
-            { !isLoading && (
+            )}
+
+            {!isLoading && (
                 <>
-                    { noResults ? (
+                    {noResults ? (
                         <Text>{t('no-shops-found')}</Text>
                     ) : (
                         <>
-                            { shops.length > 0 ? (
+                            {shops.length > 0 ? (
                                 <FlatList
                                     data={shops}
                                     keyExtractor={(item, index) => index.toString()}
@@ -173,7 +173,7 @@ function ShopsScreen() {
                                     renderItem={({ item }) => {
                                         return (
                                             <View style={styles.shopCart}>
-                                                <Image style={styles.image} source={{ uri: `https://aqtas.ru/images/imageShop/${item.imageShop}` }}/>
+                                                <Image style={styles.image} source={{ uri: `https://aqtas.garcom.kz/images/imageShop/${item.imageShop}` }} />
                                                 <View style={{ padding: 5, flex: 1 }}>
                                                     <View>
                                                         <View style={styles.infoContainer}>
@@ -203,11 +203,11 @@ function ShopsScreen() {
                                 />
                             ) : (
                                 <Text style={styles.noDataText}>{t('no-shops-category-found')}</Text>
-                            ) }
+                            )}
                         </>
-                    ) }
+                    )}
                 </>
-            ) }
+            )}
         </View>
     )
 };

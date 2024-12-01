@@ -2,10 +2,11 @@
   "expo": {
     "name": "AQTas",
     "slug": "aqtas",
-    "version": "2.4.8",
+    "version": "2.4.9",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -13,9 +14,10 @@
     },
     "ios": {
       "bundleIdentifier": "com.bogdandev3444456.aqtas",
-      "buildNumber": "2.1.1",
+      "buildNumber": "2.1.2",
       "icon": "./assets/icon.png",
       "infoPlist": {
+        "NSCameraUsageDescription": "This app needs access to your camera to take photos.",
         "CFBundleIconFiles": [
           "icon-20",
           "icon-20@2x",
@@ -62,7 +64,10 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#95E5FF"
       },
-      "versionCode": 17,
+      "permissions": [
+        "CAMERA"
+      ],
+      "versionCode": 18,
       "package": "com.bogdandev3444456.aqtas"
     },
     "web": {

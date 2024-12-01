@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Text, View, TouchableOpacity, FlatList } from 'react-native';
 import styles from '../../../styles/FinanceScreenStyle';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Octicons } from '@expo/vector-icons'; 
+import { Octicons } from '@expo/vector-icons';
 import { getUserData } from '../../../store/userDataManager';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,8 +13,8 @@ function FinanceScreen() {
     const [finances, setFinances] = useState([]);
     const [filteredFinances, setFilteredFinances] = useState([]);
     const [activeCategory, setActiveCategory] = useState();
-    const [isLoading, setIsLoading] = useState(false); 
-    const {t} = useTranslation();
+    const [isLoading, setIsLoading] = useState(false);
+    const { t } = useTranslation();
 
     const loadUserData = async () => {
         const userData = await getUserData();
@@ -22,7 +22,7 @@ function FinanceScreen() {
             setUserData(userData);
             // Выполните запрос к серверу для получения данных о финансах
             try {
-                const response = await fetch(`https://aqtas.ru/finances/${userData.userId}`);
+                const response = await fetch(`https://aqtas.garcom.kz/finances/${userData.userId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setFinances(data);
@@ -36,19 +36,19 @@ function FinanceScreen() {
     const handleCategoryClick = async (categoryId) => {
         setIsLoading(true);
         setActiveCategory(categoryId);
-        
+
         let status = null; // Статус по умолчанию, если "Все" выбрано
         if (categoryId === 2) {
             status = 'Пополнение';
         } else if (categoryId === 3) {
             status = 'Списание';
         }
-        
+
         // Имитируем задержку в 5 секунд
-        
+
         if (status) {
             try {
-                const response = await fetch(`https://aqtas.ru/finances/${userData.userId}/${status}`);
+                const response = await fetch(`https://aqtas.garcom.kz/finances/${userData.userId}/${status}`);
                 if (response.ok) {
                     const data = await response.json();
                     setFinances(data);
@@ -77,12 +77,12 @@ function FinanceScreen() {
     const handleGoBack = () => {
         navigation.goBack(); // Вернуться на предыдущий экран
     };
-    
+
     const formatDate = (dateString) => {
         const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
         return new Date(dateString).toLocaleDateString('ru-RU', options);
     };
-    
+
 
     return (
         <View style={styles.container}>
@@ -96,16 +96,16 @@ function FinanceScreen() {
                         key={category.id}
                         style={
                             activeCategory === category.id
-                            ? styles.activeFilter
-                            : styles.filter
+                                ? styles.activeFilter
+                                : styles.filter
                         }
                         onPress={() => handleCategoryClick(category.id)}
-                        >
+                    >
                         <Text
                             style={
-                            activeCategory === category.id
-                                ? styles.activeFilterText
-                                : styles.filterText
+                                activeCategory === category.id
+                                    ? styles.activeFilterText
+                                    : styles.filterText
                             }
                         >
                             {category.name}
@@ -114,7 +114,7 @@ function FinanceScreen() {
                 ))}
             </View>
             <View>
-            {finances.length > 0 ? ( // Проверка наличия элементов в массиве finances
+                {finances.length > 0 ? ( // Проверка наличия элементов в массиве finances
                     <FlatList
                         data={finances}
                         keyExtractor={(item, index) => index.toString()}
@@ -139,7 +139,7 @@ function FinanceScreen() {
             </View>
         </View>
     )
-    
+
 };
 
 export default FinanceScreen;

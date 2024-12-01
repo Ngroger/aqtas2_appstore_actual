@@ -7,7 +7,7 @@ function Test() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get("https://aqtas.ru/hello") // Используем Axios для GET-запроса
+        axios.get("https://aqtas.garcom.kz/hello") // Используем Axios для GET-запроса
             .then(response => {
                 setBackendData(response.data);
             })

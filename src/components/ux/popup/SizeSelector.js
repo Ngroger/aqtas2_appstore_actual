@@ -32,7 +32,7 @@ function SizeSelector({ onClose, id, productData }) {
                 size: size
             };
 
-            const resposne = await fetch('https://aqtas.ru/addToCart', {
+            const resposne = await fetch('https://aqtas.garcom.kz/addToCart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ function SizeSelector({ onClose, id, productData }) {
     useEffect(() => {
         loadUserData();
         try {
-            fetch(`https://aqtas.ru/sizes/${id}`)
+            fetch(`https://aqtas.garcom.kz/sizes/${id}`)
                 .then((response) => response.json())
                 .then((data) => {
                     // Создаем массив непустых размеров

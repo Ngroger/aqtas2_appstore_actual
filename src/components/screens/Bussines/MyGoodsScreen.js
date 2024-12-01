@@ -45,7 +45,7 @@ function MyGoodsScreen() {
             setActiveCategory(categoryId);
             setIsLoading(true);
 
-            fetch(`https://aqtas.ru/myProducts/${userData.userId}/${categories[categoryId - 1].value}`)
+            fetch(`https://aqtas.garcom.kz/myProducts/${userData.userId}/${categories[categoryId - 1].value}`)
                 .then((response) => response.json())
                 .then((data) => {
                     setProducts(data);
@@ -69,7 +69,7 @@ function MyGoodsScreen() {
             setUserData(userData);
             // Выполните запрос к серверу для получения данных о финансах
             try {
-                const response = await fetch(`https://aqtas.ru/myProducts/${userData.userId}`);
+                const response = await fetch(`https://aqtas.garcom.kz/myProducts/${userData.userId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setProducts(data);
@@ -104,17 +104,17 @@ function MyGoodsScreen() {
         const selectedProductIds = Object.entries(selectedItems)
             .filter(([_, isSelected]) => isSelected)
             .map(([productId]) => productId);
-    
+
         if (selectedProductIds.length === 0) {
             return;
         }
 
         try {
             for (const productId of selectedProductIds) {
-                const response = await fetch(`https://aqtas.ru/removeMyProduct/${userData.userId}/${productId}`, {
+                const response = await fetch(`https://aqtas.garcom.kz/removeMyProduct/${userData.userId}/${productId}`, {
                     method: 'DELETE',
                 });
-    
+
                 if (response.ok) {
                     const updatedProducts = products.filter(item => item.id !== productId);
                     setProducts(updatedProducts);
@@ -131,17 +131,17 @@ function MyGoodsScreen() {
         const selectedProductIds = Object.entries(selectedItems)
             .filter(([_, isSelected]) => isSelected)
             .map(([productId]) => productId);
-    
+
         if (selectedProductIds.length === 0) {
             return;
         }
 
         try {
             for (const productId of selectedProductIds) {
-                const response = await fetch(`https://aqtas.ru/actionMyProduct/${userData.userId}/${productId}/${action}`, {
+                const response = await fetch(`https://aqtas.garcom.kz/actionMyProduct/${userData.userId}/${productId}/${action}`, {
                     method: 'DELETE',
                 });
-    
+
                 if (response.ok) {
                     const updatedProducts = products.filter(item => item.id !== productId);
                     setProducts(updatedProducts);
@@ -169,16 +169,16 @@ function MyGoodsScreen() {
                                 key={category.id}
                                 style={
                                     activeCategory === category.id
-                                    ? styles.categoryActive
-                                    : styles.category
+                                        ? styles.categoryActive
+                                        : styles.category
                                 }
                                 onPress={() => handleCategoryClick(category.id)}
-                                >
+                            >
                                 <Text
                                     style={
-                                    activeCategory === category.id
-                                        ? styles.categoryTextActive
-                                        : styles.categoryText
+                                        activeCategory === category.id
+                                            ? styles.categoryTextActive
+                                            : styles.categoryText
                                     }
                                 >
                                     {category.name}
@@ -187,32 +187,32 @@ function MyGoodsScreen() {
                         ))}
                     </ScrollView>
                 </View>
-                { isLoading && (
+                {isLoading && (
                     <View style={styles.loadingIndicatorContainer}>
                         <ActivityIndicator size="big" color="#95E5FF" />
                         <Text style={styles.textLoad}>Подождите, это может занять время...</Text>
                     </View>
-                )  }
-                { !isLoading && (
+                )}
+                {!isLoading && (
                     <>
-                        { products.length > 0 ? (
+                        {products.length > 0 ? (
                             <>
                                 <FlatList
                                     data={products}
                                     keyExtractor={(item, index) => index.toString()}
                                     renderItem={({ item }) => (
                                         <View style={styles.card}>
-                                            <Image style={styles.productPreview} source={{ uri: `https://aqtas.ru/images/imageProducts/${item.imagePreview1}` }}/>
+                                            <Image style={styles.productPreview} source={{ uri: `https://aqtas.garcom.kz/images/imageProducts/${item.imagePreview1}` }} />
                                             <View style={{ flex: 1, marginLeft: 10 }}>
                                                 <View style={styles.costContainer}>
                                                     <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
                                                         <Text style={styles.cost}>{item.cost}тнг</Text>
-                                                        { item.oldCost && <Text style={styles.oldCost}>{item.oldCost}тнг</Text>}
+                                                        {item.oldCost && <Text style={styles.oldCost}>{item.oldCost}тнг</Text>}
                                                     </View>
                                                     <TouchableOpacity onPress={() => selectItem(item.id)} style={selectedItems[item.id] ? styles.selectedCheckbox : styles.checkbox}>
                                                         {selectedItems[item.id] ? (
-                                                            <View style={styles.dot}/>
-                                                        ) : null }
+                                                            <View style={styles.dot} />
+                                                        ) : null}
                                                     </TouchableOpacity>
                                                 </View>
                                                 <View style={{ padding: 0, flex: 1 }}>
@@ -223,7 +223,7 @@ function MyGoodsScreen() {
                                                         </View>
                                                         <View style={styles.infoContainer}>
                                                             <Text style={styles.firstInfo}>Описание</Text>
-                                                            <Text style={styles.secondInfo}>                
+                                                            <Text style={styles.secondInfo}>
                                                                 {item.description.length > 10
                                                                     ? item.description.substring(0, 10) + "..."
                                                                     : item.description
@@ -257,13 +257,13 @@ function MyGoodsScreen() {
                                         </View>
                                     )}
                                 />
-                                <View style={{ marginBottom: 100 }}/>
+                                <View style={{ marginBottom: 100 }} />
                             </>
                         ) : (
                             <Text style={styles.noDataText}>У вас нет товаров, соответстующих этой категории</Text>
-                        ) }
+                        )}
                     </>
-                ) }
+                )}
                 <View style={styles.buttonsContainer}>
                     {Object.keys(selectedItems).some((itemId) => selectedItems[itemId]) ? (
                         <View style={{ flexDirection: 'row', display: 'flex', justifyContent: 'space-between' }}>
@@ -282,8 +282,8 @@ function MyGoodsScreen() {
                 </View>
                 <StatusBar backgroundColor="transparent" translucent={true} />
             </View>
-            { isUpToTop && <UpToTop onClose={toggleUpToTop}/> }
-            { isCreateProduct && <CreateProduct onClose={toggleCreateProduct}/> }
+            {isUpToTop && <UpToTop onClose={toggleUpToTop} />}
+            {isCreateProduct && <CreateProduct onClose={toggleCreateProduct} />}
         </View>
     )
 };

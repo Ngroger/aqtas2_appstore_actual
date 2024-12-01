@@ -9,7 +9,7 @@ import { getUserData } from '../../store/userDataManager';
 import axios from 'axios';
 
 function AddPaymentsMethod() {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [showAddPayPal, setShowAddPayPal] = useState(false);
     const [userData, setUserData] = useState({});
     const [isPaypal, setIsPaypal] = useState(false);
@@ -21,32 +21,32 @@ function AddPaymentsMethod() {
     };
 
     const AddPaypalMethod = async () => {
-            try {
-                const apiUrl = `https://aqtas.ru/isEmailPaypal/${userData.userId}`;
-                
-                const response = await fetch(apiUrl);
-        
+        try {
+            const apiUrl = `https://aqtas.garcom.kz/isEmailPaypal/${userData.userId}`;
+
+            const response = await fetch(apiUrl);
+
             if (!response.ok) {
                 throw new Error(`Ошибка HTTP: ${response.status}`);
             }
-        
+
             const responseData = await response.json();
-        
+
             // Получаем результат из ответа
             const isPaypalValue = responseData.hasEmailPaypal;
-        
+
             // Обновляем состояние isPaypal
             setIsPaypal(isPaypalValue);
-        
+
             // Если isPaypal true, тогда выполняем setShowAddPayPal(!showAddPayPal)
             if (!isPaypalValue) {
                 setShowAddPayPal(!showAddPayPal);
             } else {
                 alert('PayPal уже успешно добавлен')
             }
-            } catch (error) {
+        } catch (error) {
             // Обработка ошибок, если это необходимо
-            }
+        }
     };
 
     useEffect(() => {
@@ -56,9 +56,9 @@ function AddPaymentsMethod() {
     const loadUserData = async () => {
         const userData = await getUserData();
         if (userData) {
-            setUserData(userData);   
+            setUserData(userData);
         }
-    }  
+    }
 
     return (
         <View>
@@ -69,27 +69,27 @@ function AddPaymentsMethod() {
                 </TouchableOpacity>
                 <View>
                     <TouchableOpacity onPress={AddPaypalMethod} style={styles.card}>
-                        <Image style={{ width: 200, height: 100 }} source={require('../../img/paypal.png')}/>
+                        <Image style={{ width: 200, height: 100 }} source={require('../../img/paypal.png')} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => alert(`${t('this-method-under-development')}`)} style={styles.card}>
-                        <Image style={{ width: 200, height: 100, resizeMode: 'contain' }} source={require('../../img/qiwi.png')}/>
-                        <View style={styles.unavailable}/>
+                        <Image style={{ width: 200, height: 100, resizeMode: 'contain' }} source={require('../../img/qiwi.png')} />
+                        <View style={styles.unavailable} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => alert(`${t('this-method-under-development')}`)} style={styles.card}>
-                        <Image style={{ width: 250, height: 100 }} source={require('../../img/yandex.png')}/>
-                        <View style={styles.unavailable}/>
+                        <Image style={{ width: 250, height: 100 }} source={require('../../img/yandex.png')} />
+                        <View style={styles.unavailable} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => alert(`${t('this-method-under-development')}`)} style={styles.card}>
-                        <Image style={{ width: 250, height: 100, resizeMode: 'contain' }} source={require('../../img/kaspi.png')}/>
-                        <View style={styles.unavailable}/>
+                        <Image style={{ width: 250, height: 100, resizeMode: 'contain' }} source={require('../../img/kaspi.png')} />
+                        <View style={styles.unavailable} />
                     </TouchableOpacity>
                 </View>
                 <StatusBar backgroundColor="transparent" translucent={true} />
             </View>
-            { showAddPayPal && <AddPaypal onClose={AddPaypalMethod}/> }
+            {showAddPayPal && <AddPaypal onClose={AddPaypalMethod} />}
         </View>
     )
-    
+
 };
 
 export default AddPaymentsMethod;

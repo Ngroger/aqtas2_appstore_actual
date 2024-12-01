@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
+import { ScaledSheet } from "react-native-size-matters";
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     background: {
         width: '100%',
         height: '100%',
@@ -70,6 +70,13 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontFamily: 'CambriaBold',
         fontSize: 20
+    },
+    error: {
+        textAlign: 'center',
+        fontFamily: 'Cambria',
+        color: '#FF0000',
+        marginTop: 12,
+        fontSize: '8@s'
     }
 });
 

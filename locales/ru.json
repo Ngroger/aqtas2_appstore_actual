@@ -222,5 +222,17 @@
     },
     "product-exist-in-cart": "Этот товар уже добавлен в корзину",
     "product-success": "Товар успешно добавлен в корзину",
-    "message-title": "Сообщение"
+    "message-title": "Сообщение",
+    "change-password-modal": {
+        "title": "Изменить пароль",
+        "old-pass-title": "Старый пароль",
+        "old-pass-place": "Введите старый пароль",
+        "new-pass-title": "Новый пароль",
+        "new-pass-place": "Введите новый пароль",
+        "confirm-pass-title": "Подтвердите пароль",
+        "confirm-pass-place": "Повторите пароль",
+        "passwords-do-not-match": "Пароли не соответствуют",
+        "password-must-be-greater": "Новый пароль должен быть выше 10 символов",
+        "old-pass-wrong": "Старый пароль неправильный"
+    }
 }

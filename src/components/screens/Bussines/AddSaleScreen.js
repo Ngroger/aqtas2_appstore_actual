@@ -11,10 +11,10 @@ function AddSaleScreen() {
     const navigation = useNavigation();
     const [name, onChangeName] = useState('');
     const [isNameError, setNameError] = useState(false);
-    
+
     const [description, onChangeDescription] = useState('');
     const [isDescrtiptionError, setDescriptionError] = useState(false);
-    
+
     const [precent, onChangePresent] = useState();
     const [isPrecentError, setPrecentError] = useState(false);
 
@@ -41,7 +41,7 @@ function AddSaleScreen() {
 
     const pickImage = async () => {
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        
+
         if (permissionResult.granted === false) {
             alert('Разрешение на доступ к галерее не предоставлено');
             return;
@@ -75,7 +75,7 @@ function AddSaleScreen() {
             setImage(result.assets[0].uri); // Обновленный способ доступа к URI
         }
     };
-        
+
     useEffect(() => {
         loadUserData();
     }, []);
@@ -118,7 +118,7 @@ function AddSaleScreen() {
             }
 
             try {
-                const response = await fetch('https://aqtas.ru/addSale', {
+                const response = await fetch('https://aqtas.garcom.kz/addSale', {
                     method: 'POST',
                     body: formData,
                     headers: {
@@ -150,71 +150,71 @@ function AddSaleScreen() {
                     </TouchableOpacity>
                     <View style={styles.photoContainer}>
                         <Text style={styles.photoTitle}>Фотография акции</Text>
-                        <View style={image ? {...styles.photoPick, borderWidth: 0} : styles.photoPick}>
+                        <View style={image ? { ...styles.photoPick, borderWidth: 0 } : styles.photoPick}>
                             <Image source={{ uri: image }} style={{ width: '100%', height: '100%', borderRadius: 15 }} />
-                            <TouchableOpacity onPress={image ? deleteImage : choiseImage } style={styles.photoPickButton}>
-                                {image ? <AntDesign name="close" size={30} color="#95E5FF"/> : <Feather name="camera" size={30} color="#95E5FF" /> }
+                            <TouchableOpacity onPress={image ? deleteImage : choiseImage} style={styles.photoPickButton}>
+                                {image ? <AntDesign name="close" size={30} color="#95E5FF" /> : <Feather name="camera" size={30} color="#95E5FF" />}
                             </TouchableOpacity>
                         </View>
                     </View>
                     <View style={{ marginTop: 10 }}>
                         <Text style={styles.titleField}>Название</Text>
                         <View style={isNameError ? styles.errorField : styles.field}>
-                            <TextInput value={name} onChangeText={onChangeName} style={styles.input} placeholder='Название акции'/>
+                            <TextInput value={name} onChangeText={onChangeName} style={styles.input} placeholder='Название акции' />
                         </View>
-                        { isNameError && <Text style={styles.error}>Название должно быть свыше 2 символов</Text> }
+                        {isNameError && <Text style={styles.error}>Название должно быть свыше 2 символов</Text>}
                     </View>
                     <View style={{ marginTop: 10 }}>
                         <Text style={styles.titleField}>Описание</Text>
                         <View style={isDescrtiptionError ? styles.errorField : styles.field}>
-                            <TextInput value={description} onChangeText={onChangeDescription} style={styles.input} placeholder='Введите описание'/>
+                            <TextInput value={description} onChangeText={onChangeDescription} style={styles.input} placeholder='Введите описание' />
                         </View>
-                        { isDescrtiptionError && <Text style={styles.error}>Описание должно быть свыше 5 символов</Text> }
+                        {isDescrtiptionError && <Text style={styles.error}>Описание должно быть свыше 5 символов</Text>}
                     </View>
                     <View style={{ marginTop: 10 }}>
                         <Text style={styles.titleField}>Процент</Text>
                         <View style={isPrecentError ? styles.errorField : styles.field}>
-                            <TextInput value={precent} onChangeText={onChangePresent} keyboardType='numeric' style={styles.input} placeholder='Введите процент'/>
+                            <TextInput value={precent} onChangeText={onChangePresent} keyboardType='numeric' style={styles.input} placeholder='Введите процент' />
                         </View>
-                        { isPrecentError && <Text style={styles.error}>Поле обязательно к заполнению</Text> }
+                        {isPrecentError && <Text style={styles.error}>Поле обязательно к заполнению</Text>}
                     </View>
                     <View style={{ marginTop: 10 }}>
                         <Text style={styles.titleField}>Сезон</Text>
-                        <View style={ isSelectedSeasonError ? [styles.errorField, { justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', display: 'flex', padding: 12 }] : [styles.field, { justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', display: 'flex', padding: 12 }] }>
+                        <View style={isSelectedSeasonError ? [styles.errorField, { justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', display: 'flex', padding: 12 }] : [styles.field, { justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', display: 'flex', padding: 12 }]}>
                             <Text style={styles.input}>
-                                {seasonSelected == null ? 'Выберите сезон' : seasonSelected }
+                                {seasonSelected == null ? 'Выберите сезон' : seasonSelected}
                             </Text>
                             <TouchableOpacity onPress={toggleSetSeasonShowMenu}>
                                 <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
                             </TouchableOpacity>
                         </View>
-                        { isSelectedSeasonError && <Text style={styles.error}>Поле обязат476ельно к заполнению</Text> }
+                        {isSelectedSeasonError && <Text style={styles.error}>Поле обязат476ельно к заполнению</Text>}
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
-                    { isErrorMessage && <Text style={styles.error}>Все поля обязательны к заполнению</Text> }
+                    {isErrorMessage && <Text style={styles.error}>Все поля обязательны к заполнению</Text>}
                     <TouchableOpacity onPress={addSale} style={styles.addSaleButton}>
                         <Text style={styles.addSaleButtonText}>Создать акцию</Text>
                     </TouchableOpacity>
                 </View>
                 <StatusBar backgroundColor="transparent" translucent={true} />
-        </View>
-        { isChoiseImage && 
-            <View style={styles.background}>
-                <View style={styles.containerChoiseImage}>
-                    <TouchableOpacity onPress={choiseImage}>
-                        <AntDesign name="close" size={32} color="black" />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={takePhoto} style={styles.buttonChoiseImage}>
-                        <Text style={styles.buttonChoiseImageText}>Сделать фотографию</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={pickImage} style={styles.buttonChoiseImage}>
-                        <Text style={styles.buttonChoiseImageText}>Выбрать фотографию</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
-        }
-        { isSelectedSeasonShowMenu && <SelectSeason onClose={toggleSetSeasonShowMenu} onSeasonSelect={toggleSetSeasonSelected}/> }
+            {isChoiseImage &&
+                <View style={styles.background}>
+                    <View style={styles.containerChoiseImage}>
+                        <TouchableOpacity onPress={choiseImage}>
+                            <AntDesign name="close" size={32} color="black" />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={takePhoto} style={styles.buttonChoiseImage}>
+                            <Text style={styles.buttonChoiseImageText}>Сделать фотографию</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={pickImage} style={styles.buttonChoiseImage}>
+                            <Text style={styles.buttonChoiseImageText}>Выбрать фотографию</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            }
+            {isSelectedSeasonShowMenu && <SelectSeason onClose={toggleSetSeasonShowMenu} onSeasonSelect={toggleSetSeasonSelected} />}
         </View>
     )
 };

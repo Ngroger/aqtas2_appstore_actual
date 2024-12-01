@@ -44,9 +44,9 @@ function AuthorizationScreen(props) {
     const auth = async () => {
         // Перед отправкой запроса вызываем updateErrors
         const hasErrors = updateErrors();
-    
+
         if (hasErrors) {
-            return; 
+            return;
         } else {
             setState(prevState => ({
                 ...prevState,
@@ -56,9 +56,9 @@ function AuthorizationScreen(props) {
                 },
                 showErrorText: false
             }));
-    
+
             try {
-                const response = await fetch(`https://aqtas.ru/login`, {
+                const response = await fetch(`https://aqtas.garcom.kz/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -68,9 +68,9 @@ function AuthorizationScreen(props) {
                         password: state.password
                     })
                 });
-    
+
                 const responseJson = await response.json();
-    
+
                 if (responseJson.success) {
                     setServerMessage();
 
@@ -101,10 +101,10 @@ function AuthorizationScreen(props) {
             }
         }
     };
-    
+
 
     return (
-        <View style={{ width: '100%', padding: 30, backgroundColor: '#95E5FF', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{ width: '100%', padding: 30, backgroundColor: '#95E5FF', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
             <Image style={styles.logo} source={require('../../img/logo.png')} />
             <Text style={styles.titleReg}>{t('auth-title')}</Text>
             <Text style={styles.description}>{t('reg-subtitle')}</Text>
@@ -134,7 +134,7 @@ function AuthorizationScreen(props) {
                 {state.showErrorText && (
                     <Text style={styles.error}>{t('all-field-need-to-complete')}</Text>
                 )}
-                { serverMessage && <Text style={styles.error}>{t(serverMessage)}</Text> }
+                {serverMessage && <Text style={styles.error}>{t(serverMessage)}</Text>}
                 <TouchableOpacity
                     style={styles.nextButton}
                     onPress={auth}

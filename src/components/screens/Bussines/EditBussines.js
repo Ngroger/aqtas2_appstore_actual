@@ -11,7 +11,7 @@ function EditBussinesScreen() {
     const navigation = useNavigation();
     const [shopInfo, setShopInfo] = useState({});
     const [customerInfo, setCustomerInfo] = useState({});
-    const [userData, setUserData] = useState({}); 
+    const [userData, setUserData] = useState({});
 
     const [shopName, onChangeShopName] = useState();
     const [isShopNameChanged, setIsShopNameChanged] = useState(false);
@@ -61,7 +61,7 @@ function EditBussinesScreen() {
             setIsSave(false);
         }
     }, [category]);
-    
+
     useEffect(() => {
         loadUserData();
         setIsLoad(true);
@@ -69,13 +69,13 @@ function EditBussinesScreen() {
             setIsLoad(false);
         }, 1000)
     }, []);
-    
+
     const loadUserData = async () => {
         const userData = await getUserData();
         if (userData) {
             setUserData(userData);
             try {
-                const response = await fetch(`https://aqtas.ru/shop/${userData.userId}`);
+                const response = await fetch(`https://aqtas.garcom.kz/shop/${userData.userId}`);
                 const data = await response.json();
 
                 if (data.success) {
@@ -87,17 +87,17 @@ function EditBussinesScreen() {
                     setCategory(data.item[0].category);
                 }
                 try {
-                    const response = await fetch(`https://aqtas.ru/customer/${userData.userId}`);
+                    const response = await fetch(`https://aqtas.garcom.kz/customer/${userData.userId}`);
                     const data = await response.json();
                     data.map((item) => {
                         setCustomerInfo(item);
                         onChangeIin(`${item.iin}`);
                         onChangeBin(`${item.bin}`);
                     });
-                    
+
                 } catch (error) {
                 }
-                
+
             } catch (error) {
             }
         }
@@ -121,21 +121,21 @@ function EditBussinesScreen() {
             setIsShopNameChanged(false);
             setShowErrorShopName(false);
             const userID = userData.userId;
-            fetch('https://aqtas.ru/changeShopName', {
+            fetch('https://aqtas.garcom.kz/changeShopName', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            body: JSON.stringify({ userID: userID, name: shopName }), // Используйте newName вместо fullname
-        })
-            .then((response) => response.json())
-            .then(async (data) => {
-                if (data.success) {
-                } else {
-                }
+                body: JSON.stringify({ userID: userID, name: shopName }), // Используйте newName вместо fullname
             })
-            .catch((error) => {
-            });
+                .then((response) => response.json())
+                .then(async (data) => {
+                    if (data.success) {
+                    } else {
+                    }
+                })
+                .catch((error) => {
+                });
         }
     }
 
@@ -157,21 +157,21 @@ function EditBussinesScreen() {
             setIsIinChanged(false);
             setShowErrorIin(false);
             const userID = userData.userId;
-            fetch('https://aqtas.ru/changeCustomerIin', {
+            fetch('https://aqtas.garcom.kz/changeCustomerIin', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            body: JSON.stringify({ userID: userID, iin: iin }), // Используйте newName вместо fullname
-        })
-            .then((response) => response.json())
-            .then(async (data) => {
-                if (data.success) {
-                } else {
-                }
+                body: JSON.stringify({ userID: userID, iin: iin }), // Используйте newName вместо fullname
             })
-            .catch((error) => {
-            });
+                .then((response) => response.json())
+                .then(async (data) => {
+                    if (data.success) {
+                    } else {
+                    }
+                })
+                .catch((error) => {
+                });
         }
     }
 
@@ -193,22 +193,22 @@ function EditBussinesScreen() {
             setIsBinChanged(false);
             setShowErrorBin(false);
             const userID = userData.userId;
-            fetch('https://aqtas.ru/changeCustomerBin', {
+            fetch('https://aqtas.garcom.kz/changeCustomerBin', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            body: JSON.stringify({ userID, bin: bin }), // Используйте newName вместо fullname
-        })
-            .then((response) => response.json())
-            .then(async (data) => {
-                if (data.success) {
-                } else {
-                }
+                body: JSON.stringify({ userID, bin: bin }), // Используйте newName вместо fullname
             })
-            .catch((error) => {
+                .then((response) => response.json())
+                .then(async (data) => {
+                    if (data.success) {
+                    } else {
+                    }
+                })
+                .catch((error) => {
 
-            });
+                });
         }
     }
 
@@ -230,23 +230,23 @@ function EditBussinesScreen() {
             setIsAdressChanged(false);
             setShowErrorAdress(false);
             const userID = userData.userId;
-            fetch('https://aqtas.ru/changeShopAdress', {
+            fetch('https://aqtas.garcom.kz/changeShopAdress', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            body: JSON.stringify({ userID, adress: adress }), // Используйте newName вместо fullname
-        })
-            .then((response) => response.json())
-            .then(async (data) => {
-                if (data.success) {
-                } else {
-
-                }
+                body: JSON.stringify({ userID, adress: adress }), // Используйте newName вместо fullname
             })
-            .catch((error) => {
+                .then((response) => response.json())
+                .then(async (data) => {
+                    if (data.success) {
+                    } else {
 
-            });
+                    }
+                })
+                .catch((error) => {
+
+                });
         }
     }
 
@@ -268,34 +268,34 @@ function EditBussinesScreen() {
             setIsPhoneChanged(false);
             setShowErrorPhone(false);
             const userID = userData.userId;
-            fetch('https://aqtas.ru/changeShopPhone', {
+            fetch('https://aqtas.garcom.kz/changeShopPhone', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            body: JSON.stringify({ userID: userID, phone: phone }), // Используйте newName вместо fullname
-        })
-            .then((response) => response.json())
-            .then(async (data) => {
-                if (data.success) {
-
-                } else {
-
-                }
+                body: JSON.stringify({ userID: userID, phone: phone }), // Используйте newName вместо fullname
             })
-            .catch((error) => {
+                .then((response) => response.json())
+                .then(async (data) => {
+                    if (data.success) {
 
-            });
+                    } else {
+
+                    }
+                })
+                .catch((error) => {
+
+                });
         }
     }
 
     const handleSaveCategory = () => {
         const userID = userData.userId;
-            fetch('https://aqtas.ru/changeShopCategory', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+        fetch('https://aqtas.garcom.kz/changeShopCategory', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({ userID: userID, category: category }), // Используйте newName вместо fullname
         })
             .then((response) => response.json())
@@ -307,10 +307,10 @@ function EditBussinesScreen() {
                 }
             })
             .catch((error) => {
-                
+
             });
     }
-    
+
 
     return (
         <View>
@@ -319,18 +319,18 @@ function EditBussinesScreen() {
                     <MaterialIcons name="arrow-back-ios" size={24} color="black" />
                     <Text style={styles.title}>{t('edit-info-bussines-button')}</Text>
                 </TouchableOpacity>
-                { isLoad && (
+                {isLoad && (
                     <View style={styles.loadingIndicatorContainer}>
                         <ActivityIndicator size="big" color="#95E5FF" />
                         <Text style={styles.textLoad}>{t('products-load-message')}</Text>
                     </View>
-                ) }
-                { !isLoad && (
+                )}
+                {!isLoad && (
                     <View style={{ width: '100%', flex: 1, paddingHorizontal: 24 }}>
                         <View style={styles.infoContainer}>
                             <Text style={styles.firstInfo}>{t('name-of-shop-field-title')}:</Text>
                             <View style={styles.field}>
-                                <TextInput value={shopName} onChangeText={(text) => handleShopNameChange(text)} style={styles.secondInfo}/>
+                                <TextInput value={shopName} onChangeText={(text) => handleShopNameChange(text)} style={styles.secondInfo} />
                                 {isShopNameChanged && (
                                     <TouchableOpacity onPress={handleSavePressName} >
                                         <AntDesign name="save" size={24} color="black" />
@@ -344,7 +344,7 @@ function EditBussinesScreen() {
                         <View style={styles.infoContainer}>
                             <Text style={styles.firstInfo}>{t('iin-become-customer-field')}:</Text>
                             <View style={styles.field}>
-                                <TextInput maxLength={12} keyboardType='numeric' value={iin} onChangeText={handleShopIinChange} style={styles.secondInfo}/>
+                                <TextInput maxLength={12} keyboardType='numeric' value={iin} onChangeText={handleShopIinChange} style={styles.secondInfo} />
                                 {isIinChanged && (
                                     <TouchableOpacity onPress={handleSavePressIin} >
                                         <AntDesign name="save" size={24} color="black" />
@@ -358,7 +358,7 @@ function EditBussinesScreen() {
                         <View style={styles.infoContainer}>
                             <Text style={styles.firstInfo}>{t('bin-become-customer-field')}:</Text>
                             <View style={styles.field}>
-                                <TextInput maxLength={12} keyboardType='numeric' value={bin} onChangeText={handleShopBinChange} style={styles.secondInfo}/>
+                                <TextInput maxLength={12} keyboardType='numeric' value={bin} onChangeText={handleShopBinChange} style={styles.secondInfo} />
                                 {isBinChanged && (
                                     <TouchableOpacity onPress={handleSavePressBin} >
                                         <AntDesign name="save" size={24} color="black" />
@@ -372,7 +372,7 @@ function EditBussinesScreen() {
                         <View style={styles.infoContainer}>
                             <Text style={styles.firstInfo}>{t('address-become-customer-field')}:</Text>
                             <View style={styles.field}>
-                                <TextInput value={adress} onChangeText={handleAdressChange} style={styles.secondInfo}/>
+                                <TextInput value={adress} onChangeText={handleAdressChange} style={styles.secondInfo} />
                                 {isAdressChanged && (
                                     <TouchableOpacity onPress={handleSavePressAdress} >
                                         <AntDesign name="save" size={24} color="black" />
@@ -386,7 +386,7 @@ function EditBussinesScreen() {
                         <View style={styles.infoContainer}>
                             <Text style={styles.firstInfo}>{t('phone-number-become-customer-field')}:</Text>
                             <View style={styles.field}>
-                                <TextInput value={phone} maxLength={11} keyboardType='numeric' onChangeText={handlePhoneChange} style={styles.secondInfo}/>
+                                <TextInput value={phone} maxLength={11} keyboardType='numeric' onChangeText={handlePhoneChange} style={styles.secondInfo} />
                                 {isPhoneChanged && (
                                     <TouchableOpacity onPress={handleSavePressPhone} >
                                         <AntDesign name="save" size={24} color="black" />
@@ -407,16 +407,16 @@ function EditBussinesScreen() {
                             </View>
                         </View>
                         <View style={styles.buttonContainer}>
-                            <TouchableOpacity onPress={handleSaveCategory} disabled={!isSave} style={!isSave ? {...styles.saveButton, opacity: 0.5} : styles.saveButton}>
+                            <TouchableOpacity onPress={handleSaveCategory} disabled={!isSave} style={!isSave ? { ...styles.saveButton, opacity: 0.5 } : styles.saveButton}>
                                 <Text style={styles.saveButtonText}>{t('save-changes-button')}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-                    
-                ) }
+
+                )}
                 <StatusBar backgroundColor="transparent" translucent={true} />
             </View>
-            { isCategoryShowModal && <CategoryShop onClose={toggleShowCategoryModal} onCategorySelect={handleCategoryShopySelect}/> }
+            {isCategoryShowModal && <CategoryShop onClose={toggleShowCategoryModal} onCategorySelect={handleCategoryShopySelect} />}
         </View>
     )
 };

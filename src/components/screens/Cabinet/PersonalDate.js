@@ -95,7 +95,7 @@ function PersonalDate() {
         });
 
         // Use the fetch API to send the image to the server for upload
-        fetch('https://aqtas.ru/uploadImage', {
+        fetch('https://aqtas.garcom.kz/uploadImage', {
             method: 'POST',
             body: formData,
             headers: {
@@ -140,7 +140,7 @@ function PersonalDate() {
             setIsNameChanged(false);
             setShowErrorName(false);
             const userID = userData.userId;
-            fetch('https://aqtas.ru/changeName', {
+            fetch('https://aqtas.garcom.kz/changeName', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -180,7 +180,7 @@ function PersonalDate() {
             setIsSurnameChanged(false);
             setShowErrorSurname(false);
             const userID = userData.userId;
-            fetch('https://aqtas.ru/changeSurname', {
+            fetch('https://aqtas.garcom.kz/changeSurname', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -215,7 +215,7 @@ function PersonalDate() {
             const userID = userData.userId;
             setShowErrorPhone(false);
             setIsPhoneChanged(false);
-            fetch('https://aqtas.ru/changePhone', {
+            fetch('https://aqtas.garcom.kz/changePhone', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -272,7 +272,7 @@ function PersonalDate() {
             // Сохранить дату рождения и выполнить соответствующие действия
             setIsBirthdayChanged(false);
             setShowErrorBirthday(false);
-            fetch('https://aqtas.ru/updateUserBirthday', {
+            fetch('https://aqtas.garcom.kz/updateUserBirthday', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -312,7 +312,7 @@ function PersonalDate() {
             setIsAddressChanged(false);
             setShowErrorAddress(false);
             const userID = userData.userId;
-            fetch('https://aqtas.ru/changeAddress', {
+            fetch('https://aqtas.garcom.kz/changeAddress', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -354,7 +354,7 @@ function PersonalDate() {
                 <View style={styles.photoContainer}>
                     <View>
                         <Image
-                            source={{ uri: `https://aqtas.ru/images/photoUsers/${userData.photoUser}` }}
+                            source={{ uri: `https://aqtas.garcom.kz/images/photoUsers/${userData.photoUser}` }}
                             style={styles.photo}
                         />
                         {image === null ? (
@@ -464,7 +464,7 @@ function PersonalDate() {
             </View>
             {isChangePhoneModal && <ChangePhone onClose={toggleChangePhoneModal} userId={userData.userId} phone={phone} />}
             {isPasswordModal && <ChangePassword onClose={togglePasswordModal} userId={userData.userId} />}
-            {isSexModal && <ChangeSex onClose={toggleSexModal} userId={userData.userId} />}
+            {isSexModal && <ChangeSex onClose={toggleSexModal} userId={userData.userId} onChangeSex={onChangeSex} />}
             {isChoiseImage &&
                 <View style={styles.background}>
                     <View style={styles.containerChoiseImage}>

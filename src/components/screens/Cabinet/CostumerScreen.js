@@ -31,7 +31,7 @@ function CustomerScreen() {
     const [isAdressError, setIsAdressError] = useState(false);
 
     const [isChoiseImage, setChoiseImage] = useState(false);
-    
+
     const [bin, changeBin] = useState('');
     const [isFocusBin, setFocusBin] = useState(false);
     const [isBinError, setIsBinError] = useState(false);
@@ -115,7 +115,7 @@ function CustomerScreen() {
             }
 
             try {
-                const response = await fetch('https://aqtas.ru/addShop', {
+                const response = await fetch('https://aqtas.garcom.kz/addShop', {
                     method: 'POST',
                     body: formData,
                     headers: {
@@ -127,7 +127,7 @@ function CustomerScreen() {
                     toggleSetMessage()
                 } else {
                     // Обработка ошибки
-                    const errorData = await response.json(); 
+                    const errorData = await response.json();
                 }
             } catch (error) {
             }
@@ -136,7 +136,7 @@ function CustomerScreen() {
 
     const pickImage = async () => {
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        
+
         if (permissionResult.granted === false) {
             alert('Разрешение на доступ к галерее не предоставлено');
             return;
@@ -170,7 +170,7 @@ function CustomerScreen() {
             setImage(result.assets[0].uri); // Обновленный способ доступа к URI
         }
     };
-    
+
     const toggleChoiseImageModal = () => {
         setChoiseImage(!isChoiseImage)
     }
@@ -178,7 +178,7 @@ function CustomerScreen() {
     const handleGoBack = () => {
         navigation.goBack(); // Вернуться на предыдущий экран
     };
-    
+
     return (
         <View>
             <ScrollView>
@@ -205,29 +205,29 @@ function CustomerScreen() {
                                 </TouchableOpacity>
                             )}
                         </View>
-                        { isImageError && <Text style={[styles.error, { width: 250 }]}>Фото обязательно должно быть выбрано</Text> }
+                        {isImageError && <Text style={[styles.error, { width: 250 }]}>Фото обязательно должно быть выбрано</Text>}
                     </View>
                     <View style={{ marginTop: 16 }}>
-                        <Text style={ isFocusName ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle }>Название</Text>
+                        <Text style={isFocusName ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>Название</Text>
                         <View style={isNameError ? styles.errorField : styles.field}>
                             <Text style={isFocusName ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }]}>Название</Text>
-                            <TextInput 
-                                style={styles.input} 
-                                placeholder='Введите название...' 
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Введите название...'
                                 onFocus={() => setFocusName(true)}
                                 onBlur={() => setFocusName(false)}
                                 value={name}
                                 onChangeText={changeName}
-                                />
+                            />
                         </View>
-                        { isNameError && <Text style={styles.error}>Название должно быть свыше 2 символов</Text>}
+                        {isNameError && <Text style={styles.error}>Название должно быть свыше 2 символов</Text>}
                     </View>
                     <View style={{ marginTop: 16 }}>
-                        <Text style={ isFocusPhone ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle }>Контактный номер</Text>
+                        <Text style={isFocusPhone ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>Контактный номер</Text>
                         <View style={isPhoneError ? styles.errorField : styles.field}>
-                            <Text style={ isFocusPhone ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }]}>Контактный номер</Text>
-                            <TextInput 
-                                style={styles.input} 
+                            <Text style={isFocusPhone ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }]}>Контактный номер</Text>
+                            <TextInput
+                                style={styles.input}
                                 placeholder='Введите контактный номер...'
                                 keyboardType='numeric'
                                 maxLength={11}
@@ -235,78 +235,78 @@ function CustomerScreen() {
                                 onBlur={() => setFocusPhone(false)}
                                 value={phone}
                                 onChangeText={changePhone}
-                                />
+                            />
                         </View>
-                        { isPhoneError && <Text style={styles.error}>Телефон должен быть 11 символов</Text>}
+                        {isPhoneError && <Text style={styles.error}>Телефон должен быть 11 символов</Text>}
                     </View>
                     <View style={{ marginTop: 16 }}>
-                        <Text style={ isFocusAdress ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle }>Адрес</Text>
+                        <Text style={isFocusAdress ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>Адрес</Text>
                         <View style={isAdressError ? styles.errorField : styles.field}>
                             <Text style={isFocusAdress ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }]}>Адрес</Text>
-                            <TextInput 
-                                style={styles.input} 
+                            <TextInput
+                                style={styles.input}
                                 placeholder='Введите адрес...'
                                 onFocus={() => setFocusAdress(true)}
                                 onBlur={() => setFocusAdress(false)}
                                 value={adress}
-                                onChangeText={changeAdress} 
-                                />
+                                onChangeText={changeAdress}
+                            />
                         </View>
-                        { isAdressError && <Text style={styles.error}>Адрес должен быть свыше 2 символов</Text>}
+                        {isAdressError && <Text style={styles.error}>Адрес должен быть свыше 2 символов</Text>}
                     </View>
                     <View style={{ marginTop: 16 }}>
-                        <Text style={ isFocusName ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle }>Выберите категорию</Text>
+                        <Text style={isFocusName ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>Выберите категорию</Text>
                         <View style={isCategoryError ? styles.errorField : styles.field}>
                             <Text style={styles.input}>{category}</Text>
                             <TouchableOpacity onPress={toggleCategoryModal}>
-                                <AntDesign name="right" size={24} color="#95E5FF"/>
+                                <AntDesign name="right" size={24} color="#95E5FF" />
                             </TouchableOpacity>
                         </View>
-                        { isCategoryError && <Text style={styles.error}>Вы должна выбрать категорию</Text>}
+                        {isCategoryError && <Text style={styles.error}>Вы должна выбрать категорию</Text>}
                     </View>
                     <View style={{ marginTop: 16 }}>
-                        <Text style={ isFocusBin ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle }>БИН</Text>
+                        <Text style={isFocusBin ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>БИН</Text>
                         <View style={isBinError ? styles.errorField : styles.field}>
-                            <Text style={ isFocusBin ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }] }>БИН</Text>
-                            <TextInput 
-                                style={styles.input} 
+                            <Text style={isFocusBin ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }]}>БИН</Text>
+                            <TextInput
+                                style={styles.input}
                                 placeholder='Введите БИН'
                                 keyboardType='numeric'
                                 maxLength={12}
                                 onFocus={() => setFocusBin(true)}
                                 onBlur={() => setFocusBin(false)}
                                 value={bin}
-                                onChangeText={changeBin} 
-                                />
+                                onChangeText={changeBin}
+                            />
                         </View>
-                        { isBinError && <Text style={styles.error}>БИН должен быть 12 символов</Text>}
+                        {isBinError && <Text style={styles.error}>БИН должен быть 12 символов</Text>}
                     </View>
                     <View style={{ marginTop: 16 }}>
-                        <Text style={ isFocusIin ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle }>ИИН</Text>
+                        <Text style={isFocusIin ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>ИИН</Text>
                         <View style={isIinError ? styles.errorField : styles.field}>
                             <Text style={isFocusIin ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }]}>ИИН</Text>
-                            <TextInput 
-                                style={styles.input} 
+                            <TextInput
+                                style={styles.input}
                                 placeholder="Введите ИИН..."
                                 keyboardType='numeric'
                                 maxLength={12}
                                 onFocus={() => setFocusIin(true)}
                                 onBlur={() => setFocusIin(false)}
                                 value={iin}
-                                onChangeText={changeIin} 
-                                />
+                                onChangeText={changeIin}
+                            />
                         </View>
-                        { isIinError && <Text style={styles.error}>ИИН должен быть 12 символов</Text>}
+                        {isIinError && <Text style={styles.error}>ИИН должен быть 12 символов</Text>}
                     </View>
                     <View style={{ marginTop: 40 }}>
-                        { isErrorMessage && <Text style={styles.error}>Все поля обязательны к заполнению</Text> }
+                        {isErrorMessage && <Text style={styles.error}>Все поля обязательны к заполнению</Text>}
                         <TouchableOpacity onPress={createShop} style={styles.createButton}>
                             <Text style={styles.createButtonText}>Создать магазин</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>
-            { isChoiseImage && 
+            {isChoiseImage &&
                 <View style={styles.background}>
                     <View style={styles.containerChoiseImage}>
                         <TouchableOpacity onPress={toggleChoiseImageModal}>
@@ -321,8 +321,8 @@ function CustomerScreen() {
                     </View>
                 </View>
             }
-            { isCategoryShopModal && <CategoryShop  onCategorySelect={handleCategoryShopySelect} onClose={toggleCategoryModal}/> }
-            { isMessage && <SuccessCreatedShop onClose={toggleSetMessage}/> }
+            {isCategoryShopModal && <CategoryShop onCategorySelect={handleCategoryShopySelect} onClose={toggleCategoryModal} />}
+            {isMessage && <SuccessCreatedShop onClose={toggleSetMessage} />}
         </View>
     )
 };

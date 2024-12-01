@@ -41,7 +41,7 @@ function EditInfo({ onClose, productId }) {
         };
 
         // Отправка данных на сервер
-        fetch(`https://aqtas.ru/updateProduct/${userData.userId}/${productId}`, {
+        fetch(`https://aqtas.garcom.kz/updateProduct/${userData.userId}/${productId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ function EditInfo({ onClose, productId }) {
     };
 
     return (
-        <View  style={styles.background}>
+        <View style={styles.background}>
             <View style={styles.container}>
                 <View style={styles.navbar}>
                     <Text style={styles.title}>Изменение данных</Text>
@@ -67,14 +67,14 @@ function EditInfo({ onClose, productId }) {
                     <View>
                         <View style={[styles.field, { width: 160 }]}>
                             <Text style={styles.titleField}>Новая цена</Text>
-                            <TextInput value={cost} onChangeText={onChangeCost} keyboardType='numeric' style={[styles.input, { width: 80 }]}  placeholder='10000'/>
+                            <TextInput value={cost} onChangeText={onChangeCost} keyboardType='numeric' style={[styles.input, { width: 80 }]} placeholder='10000' />
                             <Text style={styles.currency}>тнг</Text>
                         </View>
                     </View>
                     <View>
                         <View style={[styles.field, { width: 160 }]}>
                             <Text style={styles.titleField}>Cтарая цена цена</Text>
-                            <TextInput value={oldCost} onChangeText={onChangeOldCost} keyboardType='numeric' style={[styles.input, { width: 80 }]} placeholder='25000'/>
+                            <TextInput value={oldCost} onChangeText={onChangeOldCost} keyboardType='numeric' style={[styles.input, { width: 80 }]} placeholder='25000' />
                             <Text style={styles.currency}>тнг</Text>
                         </View>
                     </View>
@@ -82,13 +82,13 @@ function EditInfo({ onClose, productId }) {
                 <View>
                     <View style={styles.field}>
                         <Text style={styles.titleField}>Название</Text>
-                        <TextInput value={name} onChangeText={onChangeName} style={styles.input} placeholder='Название продукта'/>
+                        <TextInput value={name} onChangeText={onChangeName} style={styles.input} placeholder='Название продукта' />
                     </View>
                 </View>
                 <View>
                     <View style={styles.field}>
                         <Text style={styles.titleField}>Описание</Text>
-                        <TextInput value={description} onChangeText={onChangeDescription} style={styles.input} placeholder='Описание продукта'/>
+                        <TextInput value={description} onChangeText={onChangeDescription} style={styles.input} placeholder='Описание продукта' />
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>

@@ -46,18 +46,18 @@ function CreateProduct({ onClose }) {
         setSeasonSelected(season);
     }
 
-    
+
 
     const showDeleteSizeComponent = (index) => {
         setDeleteSizeVisible(index);
-        };
-        
+    };
+
     const handleDeleteSize = (index) => {
         // Удаляем элемент из массива по индексу
         const updatedSizes = [...sizes];
         updatedSizes.splice(index, 1);
         setSizes(updatedSizes);
-    
+
         // Скрываем компонент deleteSize
         setDeleteSizeVisible(null);
     };
@@ -68,14 +68,14 @@ function CreateProduct({ onClose }) {
             setNewSize('');
         }
     };
-    
+
     const handleSaveSize = () => {
         if (newSize !== '') {
             setSizes([...sizes, newSize]);
             setNewSize('');
         }
     };
-    
+
     const handleClose = () => {
         if (onClose) {
             onClose();
@@ -105,27 +105,27 @@ function CreateProduct({ onClose }) {
     const takePhoto = async () => {
         const { status } = await ImagePicker.requestCameraPermissionsAsync();
         console.log("Camera permission status:", status);
-    
+
         if (status !== 'granted') {
             alert('Permission to access the camera is required!');
             return;
         }
-    
+
         let result = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             quality: 1,
         });
-    
+
         console.log("ImagePicker result:", result.assets[0].uri);
-    
+
         if (!result.canceled) {
             setChoiseImage(false);
             setSelectedImages([...selectedImages, result.assets[0].uri]);
         }
     };
-    
-    
+
+
     const pickPhoto = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
@@ -138,12 +138,12 @@ function CreateProduct({ onClose }) {
             allowsEditing: true,
             quality: 1,
         });
-            
+
         if (!result.canceled) {
             setChoiseImage(false);
             setSelectedImages([...selectedImages, result.assets[0].uri]);
         }
-    };      
+    };
 
     useEffect(() => {
         loadUserData();
@@ -155,7 +155,7 @@ function CreateProduct({ onClose }) {
             setUresData(userData);
             // Выполните запрос к серверу для получения данных о финансах
             try {
-                const response = await fetch(`https://aqtas.ru/bankCards/${userData.userId}`);
+                const response = await fetch(`https://aqtas.garcom.kz/bankCards/${userData.userId}`);
                 if (response.ok) {
                     const data = await response.json();
                     if (data.length === 0) {
@@ -187,7 +187,7 @@ function CreateProduct({ onClose }) {
     const toggleChangeColor = () => {
         setChangeColor(!isChangeColor);
     }
-    
+
     const deletePhoto = (index) => {
         // Создайте копию массива всех фотографий
         const updatedImages = [...selectedImages];
@@ -200,22 +200,22 @@ function CreateProduct({ onClose }) {
     const getCurrentTimestamp = () => {
         return new Date().getTime();
     };
-    
+
     const generateUniqueId = () => {
         return `${getCurrentTimestamp()}_${Math.floor(Math.random() * 10000)}`;
     };
-    
+
     const publishProduct = async () => {
         const renamedImages = [];
-    
+
         for (let i = 0; i < selectedImages.length; i++) {
             const userId = userData.userId;
             const uniqueId = generateUniqueId();
-    
+
             const imageName = `product${userId}${uniqueId}.png`;
-    
+
             renamedImages.push(imageName);
-        } 
+        }
         const formData = new FormData();
         formData.append('name', name);
         formData.append('description', description);
@@ -237,7 +237,7 @@ function CreateProduct({ onClose }) {
         })
         formData.append('season', seasonSelected);
 
-        
+
         for (let i = 0; i < selectedImages.length; i++) {
             formData.append('imagePreviews', {
                 uri: selectedImages[i],
@@ -245,13 +245,13 @@ function CreateProduct({ onClose }) {
                 type: 'image/jpeg',
             });
         }
-    
+
         try {
-            const response = await fetch('https://aqtas.ru/createProduct', {
+            const response = await fetch('https://aqtas.garcom.kz/createProduct', {
                 method: 'POST',
                 body: formData,
             });
-        
+
             if (response.ok) {
                 handleClose();
             } else {
@@ -260,7 +260,7 @@ function CreateProduct({ onClose }) {
         } catch (error) {
         }
     };
-    
+
 
     return (
         <View style={styles.background}>
@@ -274,47 +274,47 @@ function CreateProduct({ onClose }) {
                 <ScrollView>
                     <View style={styles.photoContainer}>
                         <ScrollView horizontal={true} style={{ width: '70%', padding: 10 }}>
-                            { selectedImages.length > 0 ? (
+                            {selectedImages.length > 0 ? (
                                 <>
                                     {selectedImages.map((image, index) => (
                                         <View key={index} style={styles.photoPickContainer}>
                                             <Image key={index} source={{ uri: image }} style={styles.photoPickFront} />
                                             <TouchableOpacity onPress={() => deletePhoto(index)} style={styles.deleteButton}>
-                                                <AntDesign name='close' color='#95E5FF' size={28}/>
+                                                <AntDesign name='close' color='#95E5FF' size={28} />
                                             </TouchableOpacity>
                                         </View>
                                     ))}
                                 </>
                             ) : (
-                                <View style={styles.photoEmptyContainer}/>
-                            ) }
+                                <View style={styles.photoEmptyContainer} />
+                            )}
                         </ScrollView>
-                        { selectedImages.length === 5 ? null : (<TouchableOpacity onPress={toggleChoiseImage} style={styles.photoPickButton}>
+                        {selectedImages.length === 5 ? null : (<TouchableOpacity onPress={toggleChoiseImage} style={styles.photoPickButton}>
                             <Feather name="camera" size={24} color="#95E5FF" />
-                        </TouchableOpacity>) }
-                        </View>
+                        </TouchableOpacity>)}
+                    </View>
                     <View>
-                        { subcategory === 'Одежда' && (
+                        {subcategory === 'Одежда' && (
                             <View style={styles.sizeContainer}>
                                 {sizes.map((size, index) => (
                                     <TouchableOpacity
-                                    key={index}
-                                    style={styles.size}
-                                    onPress={() => showDeleteSizeComponent(index)}
+                                        key={index}
+                                        style={styles.size}
+                                        onPress={() => showDeleteSizeComponent(index)}
                                     >
-                                    <TextInput
-                                        keyboardType='numeric'
-                                        style={styles.sizeInput}
-                                        value={size.toString()}
-                                        editable={false}
-                                    />
-                                    {deleteSizeVisible === index && (
-                                        <View style={styles.deleteSize}>
-                                        <TouchableOpacity onPress={() => handleDeleteSize(index)}>
-                                            <AntDesign name='close' size={24} color='#fff' />
-                                        </TouchableOpacity>
-                                        </View>
-                                    )}
+                                        <TextInput
+                                            keyboardType='numeric'
+                                            style={styles.sizeInput}
+                                            value={size.toString()}
+                                            editable={false}
+                                        />
+                                        {deleteSizeVisible === index && (
+                                            <View style={styles.deleteSize}>
+                                                <TouchableOpacity onPress={() => handleDeleteSize(index)}>
+                                                    <AntDesign name='close' size={24} color='#fff' />
+                                                </TouchableOpacity>
+                                            </View>
+                                        )}
                                     </TouchableOpacity>
                                 ))}
                                 <View style={styles.size}>
@@ -326,37 +326,37 @@ function CreateProduct({ onClose }) {
                                         maxLength={3}
                                     />
                                 </View>
-                                { sizes.length >= 10 ? null : (
+                                {sizes.length >= 10 ? null : (
                                     <>
                                         {newSize !== '' ? (
-                                    <TouchableOpacity style={styles.size} onPress={handleSaveSize}>
-                                        <Feather name='save' size={24} color='#000' />
-                                    </TouchableOpacity>
-                                ) : (
-                                    <TouchableOpacity style={styles.size} onPress={handleAddSize}>
-                                        <Feather name='plus' size={24} color='#000' />
-                                    </TouchableOpacity>
-                                )}
+                                            <TouchableOpacity style={styles.size} onPress={handleSaveSize}>
+                                                <Feather name='save' size={24} color='#000' />
+                                            </TouchableOpacity>
+                                        ) : (
+                                            <TouchableOpacity style={styles.size} onPress={handleAddSize}>
+                                                <Feather name='plus' size={24} color='#000' />
+                                            </TouchableOpacity>
+                                        )}
                                     </>
-                                ) }
+                                )}
                             </View>
-                        ) }
+                        )}
                         <View style={styles.field}>
                             <Text style={styles.titleInput}>Название продукта</Text>
-                            <TextInput value={name} onChangeText={onChangeName} style={styles.input} placeholder='Введите название продукта'/>
+                            <TextInput value={name} onChangeText={onChangeName} style={styles.input} placeholder='Введите название продукта' />
                         </View>
                         <View style={styles.field}>
                             <Text style={styles.titleInput}>Описание</Text>
-                            <TextInput value={description} onChangeText={onChangeDescription} style={styles.input} placeholder='Введите описание продукта'/>
+                            <TextInput value={description} onChangeText={onChangeDescription} style={styles.input} placeholder='Введите описание продукта' />
                         </View>
                         <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }]}>
                             <Text style={styles.titleInput}>Цена</Text>
-                            <TextInput value={cost} onChangeText={onChangeCost} keyboardType='numeric' style={styles.input} placeholder='Введите цене продукта'/>
+                            <TextInput value={cost} onChangeText={onChangeCost} keyboardType='numeric' style={styles.input} placeholder='Введите цене продукта' />
                             <Text style={styles.currency}>тнг</Text>
                         </View>
                         <View style={styles.field}>
                             <Text style={styles.titleInput}>Производитель</Text>
-                            <TextInput value={manufacturer} onChangeText={onChangeManufacturer} style={styles.input} placeholder='Введите производителя'/>
+                            <TextInput value={manufacturer} onChangeText={onChangeManufacturer} style={styles.input} placeholder='Введите производителя' />
                         </View>
                         <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between' }]}>
                             <Text style={styles.titleInput}>Цвет</Text>
@@ -367,7 +367,7 @@ function CreateProduct({ onClose }) {
                         </View>
                         <View style={styles.field}>
                             <Text style={styles.titleInput}>Бренд</Text>
-                            <TextInput value={brend} onChangeText={onChangeBrend} style={styles.input} placeholder='Введите бренд'/>
+                            <TextInput value={brend} onChangeText={onChangeBrend} style={styles.input} placeholder='Введите бренд' />
                         </View>
                         <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between' }]}>
                             <Text style={styles.titleInput}>Категория</Text>
@@ -403,13 +403,13 @@ function CreateProduct({ onClose }) {
                     </TouchableOpacity>
                 </ScrollView>
             </View>
-            { isChangeColor && <ChangeColor onColorSelect={handleColorSelect} onClose={toggleChangeColor}/> }
-            { isChangeCategory && <EditCategory onCategorySelect={handleCategorySelect} onClose={toggleChangeCategory}/> }
-            { isChangeDelivery && <EditDelivery onDeliverySelect={handleDeliverySelect} onClose={toggleChangeDelivery}/> }
-            { isNoCardMessage && <NoCardMessage/> }
-            { isChangeSubcategory && <EditSubcategory onSubcategorySelect={handleSubcategorySelect} onClose={toggleChangeSubcategory}/> }
-            { isShowSelectSeason && <SelectSeason onClose={toggleShowSelectSeason} onSeasonSelect={toggleSetSeasonSelected}/> }
-            { isChoiseImage && 
+            {isChangeColor && <ChangeColor onColorSelect={handleColorSelect} onClose={toggleChangeColor} />}
+            {isChangeCategory && <EditCategory onCategorySelect={handleCategorySelect} onClose={toggleChangeCategory} />}
+            {isChangeDelivery && <EditDelivery onDeliverySelect={handleDeliverySelect} onClose={toggleChangeDelivery} />}
+            {isNoCardMessage && <NoCardMessage />}
+            {isChangeSubcategory && <EditSubcategory onSubcategorySelect={handleSubcategorySelect} onClose={toggleChangeSubcategory} />}
+            {isShowSelectSeason && <SelectSeason onClose={toggleShowSelectSeason} onSeasonSelect={toggleSetSeasonSelected} />}
+            {isChoiseImage &&
                 <View style={styles.background}>
                     <View style={styles.containerChoiseImage}>
                         <TouchableOpacity onPress={toggleChoiseImage}>

@@ -4,16 +4,16 @@ import {
     Cursor,
     useBlurOnFulfill,
     useClearByFocusCell,
-    } from 'react-native-confirmation-code-field';
+} from 'react-native-confirmation-code-field';
 import styles from '../../../styles/ChangePhoneStyles';
 import { useState } from 'react';
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 
 const CELL_COUNT = 6;
 
 function ChangePhone({ onClose, phone, userId }) {
     const [value, setValue] = useState('');
-    const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
+    const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
     const [props, getCellOnLayoutHandler] = useClearByFocusCell({
         value,
         setValue,
@@ -24,11 +24,11 @@ function ChangePhone({ onClose, phone, userId }) {
             onClose();
         }
     };
-    
+
     const handleConfirm = () => {
         if (value.length === CELL_COUNT) {
             // Send a request to verify the SMS code.
-            fetch('https://aqtas.ru/validateSMS', {
+            fetch('https://aqtas.garcom.kz/validateSMS', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ function ChangePhone({ onClose, phone, userId }) {
                 .then((response) => response.json())
                 .then((data) => {
                     const newPhone = phone;
-                    fetch('https://aqtas.ru/updatePhoneNumber', {
+                    fetch('https://aqtas.garcom.kz/updatePhoneNumber', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -58,12 +58,12 @@ function ChangePhone({ onClose, phone, userId }) {
                         });
                 })
                 .catch((error) => {
-                    
+
                 });
         }
     };
 
-    return(
+    return (
         <View style={styles.background}>
             <View style={styles.container}>
                 <View style={styles.navbar}>
@@ -82,13 +82,13 @@ function ChangePhone({ onClose, phone, userId }) {
                     rootStyle={styles.codeFieldRoot}
                     keyboardType="number-pad"
                     textContentType="oneTimeCode"
-                    renderCell={({index, symbol, isFocused}) => (
-                    <Text
-                        key={index}
-                        style={[styles.cell, isFocused && styles.focusCell]}
-                        onLayout={getCellOnLayoutHandler(index)}>
-                        {symbol || (isFocused ? <Cursor/> : null)}
-                    </Text>
+                    renderCell={({ index, symbol, isFocused }) => (
+                        <Text
+                            key={index}
+                            style={[styles.cell, isFocused && styles.focusCell]}
+                            onLayout={getCellOnLayoutHandler(index)}>
+                            {symbol || (isFocused ? <Cursor /> : null)}
+                        </Text>
                     )}
                 />
                 <Text style={styles.time}>Повторная отправка через... <Text>2:00</Text></Text>

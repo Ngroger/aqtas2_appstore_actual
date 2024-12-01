@@ -1,6 +1,6 @@
 import { View, TouchableOpacity, TextInput, Text } from 'react-native';
 import styles from '../../../../styles/EditAdditionalInfoStyle';
-import { MaterialIcons } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons';
 import EditDelivery from './EditDelivery';
 import { useState, useEffect } from 'react';
 import EditCategory from './EditCategory';
@@ -70,7 +70,7 @@ function EditAdditionalInfo({ onClose, productId }) {
         };
 
         // Отправка данных на сервер
-        fetch(`https://aqtas.ru/updateAdditionalProduct/${userData.userId}/${productId}`, {
+        fetch(`https://aqtas.garcom.kz/updateAdditionalProduct/${userData.userId}/${productId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ function EditAdditionalInfo({ onClose, productId }) {
                 <View>
                     <View style={styles.field}>
                         <Text style={styles.titleField}>Прозводитель </Text>
-                        <TextInput value={manufacturer} onChangeText={onChangeManufacturer} style={styles.input} placeholder='Название производителя'/>
+                        <TextInput value={manufacturer} onChangeText={onChangeManufacturer} style={styles.input} placeholder='Название производителя' />
                     </View>
                 </View>
                 <View>
@@ -112,7 +112,7 @@ function EditAdditionalInfo({ onClose, productId }) {
                 <View>
                     <View style={styles.field}>
                         <Text style={styles.titleField}>Бренд</Text>
-                        <TextInput value={brend} onChangeText={onChangeBrend} style={styles.input} placeholder='Бренд'/>
+                        <TextInput value={brend} onChangeText={onChangeBrend} style={styles.input} placeholder='Бренд' />
                     </View>
                 </View>
                 <View>
@@ -142,9 +142,9 @@ function EditAdditionalInfo({ onClose, productId }) {
                     </TouchableOpacity>
                 </View>
             </View>
-            { isChangeDelivery && <EditDelivery onDeliverySelect={handleDeliverySelect} onClose={toggleChangeDelivery}/> }
-            { isChangeCategory && <EditCategory onCategorySelect={handleCategorySelect} onClose={toggleChangeCategory}/> }
-            { isChangeColor && <ChangeColor onColorSelect={handleColorSelect} onClose={toggleChangeColor}/> }
+            {isChangeDelivery && <EditDelivery onDeliverySelect={handleDeliverySelect} onClose={toggleChangeDelivery} />}
+            {isChangeCategory && <EditCategory onCategorySelect={handleCategorySelect} onClose={toggleChangeCategory} />}
+            {isChangeColor && <ChangeColor onColorSelect={handleColorSelect} onClose={toggleChangeColor} />}
         </View>
     )
 };

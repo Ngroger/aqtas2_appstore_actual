@@ -18,7 +18,7 @@ function OrderScreen() {
     const [orders, setOrders] = useState([]);
     const [selectedCard, setSelected] = useState({});
     const [selectedOrderId, setSelectedOrderId] = useState();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [isLoad, setIsLoad] = useState(false);
     const [buyerId, setBuyerId] = useState();
 
@@ -27,8 +27,8 @@ function OrderScreen() {
         const intervalId = setInterval(() => {
             setIsLoad(false);
             loadUserData();
-          }, 5000); // 5000 миллисекунд
-    
+        }, 5000); // 5000 миллисекунд
+
         return () => {
             clearInterval(intervalId); // Очищаем интервал при размонтировании компонента
         };
@@ -43,7 +43,7 @@ function OrderScreen() {
     const deleteOrderWithReason = async (id, buyerId) => {
         try {
             const reasons = encodeURIComponent("Время ответа истекло. За ожидание с продавца снимется рейтинг");
-            const response = await fetch(`https://aqtas.ru/deleteOrder/${userData.userId}/${id}/${buyerId}?reasons=${reasons}`, {
+            const response = await fetch(`https://aqtas.garcom.kz/deleteOrder/${userData.userId}/${id}/${buyerId}?reasons=${reasons}`, {
                 method: 'DELETE',
             });
 
@@ -71,7 +71,7 @@ function OrderScreen() {
             setUserData(userData);
             // Выполните запрос к серверу для получения данных о финансах
             try {
-                const response = await fetch(`https://aqtas.ru/orders/${userData.userId}`);
+                const response = await fetch(`https://aqtas.garcom.kz/orders/${userData.userId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setOrders(data);
@@ -94,7 +94,7 @@ function OrderScreen() {
         setSelected(newSelectedCard);
     };
 
-    const productAvailability = ({answer}) => {
+    const productAvailability = ({ answer }) => {
         if (answer === 'yes') {
             setProductAvailability(true);
             //
@@ -106,10 +106,10 @@ function OrderScreen() {
 
     const updateOrderAvailability = async (orderId, buyerId) => {
         try {
-            const response = await fetch(`https://aqtas.ru/updateOrderAvailability/${userData.userId}/${orderId}/${buyerId}`, {
+            const response = await fetch(`https://aqtas.garcom.kz/updateOrderAvailability/${userData.userId}/${orderId}/${buyerId}`, {
                 method: 'PUT', // Используйте HTTP-метод PUT для обновления
             });
-    
+
             if (response.ok) {
 
             } else {
@@ -123,10 +123,10 @@ function OrderScreen() {
     const notAvailable = async (orderId, buyerId) => {
         try {
             const reasons = encodeURIComponent("Товара нет в наличии");
-            const response = await fetch(`https://aqtas.ru/deleteOrder/${userData.userId}/${orderId}/${buyerId}?reasons=${reasons}`, {
+            const response = await fetch(`https://aqtas.garcom.kz/deleteOrder/${userData.userId}/${orderId}/${buyerId}?reasons=${reasons}`, {
                 method: 'DELETE', // Используйте HTTP-метод DELETE для удаления записи заказа
             });
-    
+
             if (response.ok) {
                 // Успешное удаление на сервере
                 // Здесь вы можете выполнить необходимые действия после успешного удаления
@@ -137,7 +137,7 @@ function OrderScreen() {
 
         }
     };
-    
+
 
     return (
         <View>
@@ -146,77 +146,77 @@ function OrderScreen() {
                     <MaterialIcons name="arrow-back-ios" size={24} color="black" />
                     <Text style={styles.title}>Заказы Доставка</Text>
                 </TouchableOpacity>
-                    { isLoad && (
-                        <View style={styles.loadingIndicatorContainer}>
-                            <ActivityIndicator size="big" color="#95E5FF" />
-                            <Text style={styles.textLoad}>{t('products-load-message')}</Text>
-                        </View>
-                    )  }
-                    { !isLoad && (
-                        <>        
-                            { orders.length === 0 ? (
-                                <View>
-                                    <Text style={styles.noDataText}>У вас пока нет заказов</Text>
-                                </View>
-                            ) : (
-                                <FlatList
-                                    data={orders}
-                                    keyExtractor={(item, index) => index.toString()}
-                                    renderItem={({ item }) => (
-                                        <TouchableOpacity style={styles.order} onPress={() => selectCard(item.id)}>
-                                            <View style={{ padding: 16 }}>
-                                                <View style={styles.infoContainer}>
-                                                    <Image style={styles.orderImage} source={{ uri: `https://aqtas.ru/images/photoUsers/${item.photoUser}` }}/>
-                                                    <View style={{ left: 10 }}>
-                                                        <Text style={styles.nameOrder}>{item.name}</Text>
-                                                        <Text style={styles.infoOrder}>{item.nameProduct}</Text>
-                                                        <Text style={styles.infoOrder}>Кол-во: {item.count}</Text>
-                                                        <Text style={styles.infoOrder}>Адрес: {item.address}</Text>
-                                                        { item.size && <Text style={styles.infoOrder}>Размер: {item.size}</Text> }
-                                                    </View>
+                {isLoad && (
+                    <View style={styles.loadingIndicatorContainer}>
+                        <ActivityIndicator size="big" color="#95E5FF" />
+                        <Text style={styles.textLoad}>{t('products-load-message')}</Text>
+                    </View>
+                )}
+                {!isLoad && (
+                    <>
+                        {orders.length === 0 ? (
+                            <View>
+                                <Text style={styles.noDataText}>У вас пока нет заказов</Text>
+                            </View>
+                        ) : (
+                            <FlatList
+                                data={orders}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={({ item }) => (
+                                    <TouchableOpacity style={styles.order} onPress={() => selectCard(item.id)}>
+                                        <View style={{ padding: 16 }}>
+                                            <View style={styles.infoContainer}>
+                                                <Image style={styles.orderImage} source={{ uri: `https://aqtas.garcom.kz/images/photoUsers/${item.photoUser}` }} />
+                                                <View style={{ left: 10 }}>
+                                                    <Text style={styles.nameOrder}>{item.name}</Text>
+                                                    <Text style={styles.infoOrder}>{item.nameProduct}</Text>
+                                                    <Text style={styles.infoOrder}>Кол-во: {item.count}</Text>
+                                                    <Text style={styles.infoOrder}>Адрес: {item.address}</Text>
+                                                    {item.size && <Text style={styles.infoOrder}>Размер: {item.size}</Text>}
                                                 </View>
                                             </View>
-                                            {item.availability ? null : (
-                                                    <>
-                                                    <View style={styles.productAvailability}>
-                                                        <Text style={styles.quenstion}>Есть товар в наличии?</Text>
-                                                        <View style={styles.answer}>
-                                                            <TouchableOpacity onPress={_ => updateOrderAvailability(item.id, item.userID)}>
-                                                                <Text style={styles.yes}>ДА</Text>
-                                                            </TouchableOpacity>
-                                                            <View style={styles.line}/>
-                                                            <TouchableOpacity onPress={_ => notAvailable(item.id, item.userID)}>
-                                                                <Text style={styles.no}>НЕТ</Text>
-                                                            </TouchableOpacity>
-                                                        </View>
-                                                        <Text style={styles.time}>Оставшееся время на ответ: {formatTime(item.timer, item.id, item.userID)}</Text>
+                                        </View>
+                                        {item.availability ? null : (
+                                            <>
+                                                <View style={styles.productAvailability}>
+                                                    <Text style={styles.quenstion}>Есть товар в наличии?</Text>
+                                                    <View style={styles.answer}>
+                                                        <TouchableOpacity onPress={_ => updateOrderAvailability(item.id, item.userID)}>
+                                                            <Text style={styles.yes}>ДА</Text>
+                                                        </TouchableOpacity>
+                                                        <View style={styles.line} />
+                                                        <TouchableOpacity onPress={_ => notAvailable(item.id, item.userID)}>
+                                                            <Text style={styles.no}>НЕТ</Text>
+                                                        </TouchableOpacity>
                                                     </View>
-                                                    </>
-                                                )}
-                                            {selectedCard[item.id] && item.availability ? (
-                                                <>
-                                                    <BlurView intensity={100} tint="default" style={styles.deleteBackground}>
-                                                        <View style={styles.deleteContainer}>
-                                                            <TouchableOpacity onPress={() => toggleReasonForDelete(item.id, item.userID)}>
-                                                                <Ionicons name="md-trash-outline" size={50} color="#FC0005" />
-                                                            </TouchableOpacity>
-                                                            <View style={styles.line}/>
-                                                            <TouchableOpacity onPress={() => selectCard(item.id)}>
-                                                                <Ionicons name="ios-close" size={50} color="#14FF00" />
-                                                            </TouchableOpacity>
-                                                        </View>
-                                                    </BlurView>
-                                                </>
-                                            ) : null }
-                                        </TouchableOpacity>
-                                    )}
-                                />
-                            ) }
-                        </>
-                    )}
+                                                    <Text style={styles.time}>Оставшееся время на ответ: {formatTime(item.timer, item.id, item.userID)}</Text>
+                                                </View>
+                                            </>
+                                        )}
+                                        {selectedCard[item.id] && item.availability ? (
+                                            <>
+                                                <BlurView intensity={100} tint="default" style={styles.deleteBackground}>
+                                                    <View style={styles.deleteContainer}>
+                                                        <TouchableOpacity onPress={() => toggleReasonForDelete(item.id, item.userID)}>
+                                                            <Ionicons name="md-trash-outline" size={50} color="#FC0005" />
+                                                        </TouchableOpacity>
+                                                        <View style={styles.line} />
+                                                        <TouchableOpacity onPress={() => selectCard(item.id)}>
+                                                            <Ionicons name="ios-close" size={50} color="#14FF00" />
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                </BlurView>
+                                            </>
+                                        ) : null}
+                                    </TouchableOpacity>
+                                )}
+                            />
+                        )}
+                    </>
+                )}
                 <StatusBar backgroundColor="transparent" translucent={true} />
             </View>
-            {isReasonForDelete && <ReasonForDelete onClose={toggleReasonForDelete} id={selectedOrderId} userId={userData.userId} buyerId={buyerId}/>}
+            {isReasonForDelete && <ReasonForDelete onClose={toggleReasonForDelete} id={selectedOrderId} userId={userData.userId} buyerId={buyerId} />}
         </View>
     )
 };
