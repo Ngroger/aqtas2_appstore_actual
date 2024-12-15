@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 function Registration(props) {
     const navigation = useNavigation();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [state, setState] = useState({
         name: '',
         surname: '',

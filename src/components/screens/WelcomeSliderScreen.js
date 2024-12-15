@@ -3,22 +3,21 @@ import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../../styles/WelcomeSwiperStyle';
 import Swiper from 'react-native-swiper';
-import { hasToken } from '../../store/tokenManager';
 import { useTranslation } from 'react-i18next';
 import { StatusBar } from 'expo-status-bar';
+import { s } from 'react-native-size-matters';
 
 export default function WelcomeSliderScreen() {
     const navigation = useNavigation();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     const handleNext = () => {
-        const tokenExists = hasToken();
         navigation.navigate('RegistrationScreen'); // Use navigation to navigate to 'RegistrationScreen'
     };
 
     return (
         <View style={styles.container}>
-            <View style={{ width: 350, height: 500 }}>
+            <View style={{ width: s(300), height: s(450) }}>
                 <Swiper
                     style={styles.wrapper}
                     showsButtons={false}
@@ -27,19 +26,19 @@ export default function WelcomeSliderScreen() {
                     activeDotStyle={styles.activeDot}
                 >
                     <View style={styles.card}>
-                        <Image style={styles.image} source={require('../../img/slider/security.png')} resizeMode="cover"/>
+                        <Image style={styles.image} source={require('../../img/slider/security.png')} resizeMode="cover" />
                         <Text style={styles.text}>{t('first-slide-info')}</Text>
                     </View>
                     <View style={styles.card}>
-                        <Image style={styles.image} source={require('../../img/slider/cart.png')} resizeMode="cover"/>
+                        <Image style={styles.image} source={require('../../img/slider/cart.png')} resizeMode="cover" />
                         <Text style={styles.text}>{t('second-slide-info')}</Text>
                     </View>
                     <View style={styles.card}>
-                        <Image style={styles.image} source={require('../../img/slider/credit-card.png')} resizeMode="cover"/>
+                        <Image style={styles.image} source={require('../../img/slider/credit-card.png')} resizeMode="cover" />
                         <Text style={styles.text}>{t('third-slide-info')}</Text>
                     </View>
                     <View style={styles.card}>
-                        <Image style={styles.image} source={require('../../img/slider/sales.png')} resizeMode="cover"/>
+                        <Image style={styles.image} source={require('../../img/slider/sales.png')} resizeMode="cover" />
                         <Text style={styles.text}>{t('fourth-slide-info')}</Text>
                     </View>
                 </Swiper>

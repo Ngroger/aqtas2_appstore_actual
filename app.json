@@ -2,7 +2,11 @@
   "expo": {
     "name": "AQTas",
     "slug": "aqtas",
-    "version": "2.4.9",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "2.5.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -13,8 +17,9 @@
       "backgroundColor": "#95E5FF"
     },
     "ios": {
+      "supportsTablet": false,
       "bundleIdentifier": "com.bogdandev3444456.aqtas",
-      "buildNumber": "2.1.2",
+      "buildNumber": "2.1.3",
       "icon": "./assets/icon.png",
       "infoPlist": {
         "NSCameraUsageDescription": "This app needs access to your camera to take photos.",
@@ -67,7 +72,7 @@
       "permissions": [
         "CAMERA"
       ],
-      "versionCode": 18,
+      "versionCode": 19,
       "package": "com.bogdandev3444456.aqtas"
     },
     "web": {

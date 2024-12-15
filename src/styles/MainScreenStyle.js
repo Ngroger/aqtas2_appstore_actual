@@ -50,14 +50,14 @@ const styles = ScaledSheet.create({
         borderRadius: 100,
         paddingHorizontal: 16,
         marginHorizontal: 5
-        
+
     },
     categoryTextActive: {
         fontFamily: 'CambriaBold',
         fontSize: '18@mvs',
         color: '#fff'
     },
-    
+
     category: {
         borderColor: '#95E5FF',
         borderWidth: 1,
@@ -82,12 +82,12 @@ const styles = ScaledSheet.create({
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
-        paddingHorizontal: 24
+        paddingHorizontal: '18@s'
     },
     cart: {
         borderRadius: 20,
         marginTop: 10,
-        width: '155@ms'
+        width: '140@ms'
     },
     cartPreview: {
         width: '100%',

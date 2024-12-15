@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useTranslation } from "react-i18next";
 import i18next from "../../i18next";
 import { loadLanguage, saveLanguage } from "../../store/languageStorage";
-import { scale } from "react-native-size-matters";
+import { s } from "react-native-size-matters";
 
 function SelectLanguage(props) {
     const [language, setLanguage] = useState('Русский');
@@ -63,11 +63,11 @@ function SelectLanguage(props) {
             {isOpen && (
                 <View style={styles.openAccordion}>
                     <TouchableOpacity onPress={() => changeLanguage('ru', `Русский язык`)}>
-                        <Text style={[styles.language, { fontSize: 20 }]}>{t('russian-language')}</Text>
+                        <Text style={[styles.language, { fontSize: s(20) }]}>{t('russian-language')}</Text>
                     </TouchableOpacity>
                     <View style={styles.line} />
                     <TouchableOpacity onPress={() => changeLanguage('kz', `Қазақ тілі`)}>
-                        <Text style={[styles.language, { fontSize: 20 }]}>{t('kaz-language')}</Text>
+                        <Text style={[styles.language, { fontSize: s(20) }]}>{t('kaz-language')}</Text>
                     </TouchableOpacity>
                 </View>
             )}

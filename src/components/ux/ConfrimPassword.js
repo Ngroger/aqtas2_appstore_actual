@@ -160,7 +160,7 @@ function ConfirmPassword(props) {
         <View style={{ width: '100%' }}>
             <Text style={styles.titleReg}>{t('registration-title')}</Text>
             <Text style={styles.description}>{t('reg-subtitle')}</Text>
-            <View style={{ top: 80 }}>
+            <View style={{ marginTop: 16 }}>
                 <Text style={errors.password ? styles.inputTitleError : styles.inputTitle}>{t('password')}</Text>
                 <View style={styles.fieldContainr}>
                     <TextInput
@@ -173,7 +173,7 @@ function ConfirmPassword(props) {
                     />
                 </View>
             </View>
-            <View style={{ top: 110 }}>
+            <View style={{ marginTop: 16 }}>
                 <Text style={errors.confirmPassword ? styles.inputTitleError : styles.inputTitle}>{t('confirm-password')}</Text>
                 <TextInput
                     style={[styles.input, errors.confirmPassword && styles.inputError]}
@@ -183,7 +183,7 @@ function ConfirmPassword(props) {
                     secureTextEntry={true}
                 />
             </View>
-            <View style={{ top: 200 }}>
+            <View style={{ marginTop: 16 }}>
                 {showErrorText && (
                     <Text style={styles.error}>
                         {errors.password

@@ -8,7 +8,7 @@ import { FlatList } from 'react-native';
 import { getUserData } from '../../store/userDataManager';
 import SizeSelector from '../ux/popup/SizeSelector';
 import { useTranslation } from 'react-i18next';
-import { scale } from 'react-native-size-matters';
+import { scale, s } from 'react-native-size-matters';
 
 function MainScreen() {
     const navigation = useNavigation();
@@ -239,7 +239,7 @@ function MainScreen() {
                                                         ) : (
                                                             <Swiper
                                                                 showsButtons={false}
-                                                                style={{ width: 1000, height: 300 }}
+                                                                style={{ width: 1000, height: 300, borderWidth: 1, borderColor: '#000' }}
                                                                 paginationStyle={styles.pagination}
                                                                 dotStyle={styles.dot}
                                                                 activeDotStyle={styles.activeDot}

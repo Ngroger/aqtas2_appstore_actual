@@ -37,7 +37,7 @@ import AddPaymentsMethod from '../../screens/AddPaymentsMethod';
 import { useTranslation } from 'react-i18next';
 import AddPaypalScreen from '../../screens/AddPaypalScreen';
 import MyBankAccount from '../../screens/Bussines/MyBankAccount';
-// Определяем названия экранов
+import { s } from 'react-native-size-matters'
 
 export default function AppNavigationContainer() {
   const [hasUserToken, setHasUserToken] = useState(false);
@@ -75,111 +75,111 @@ export default function AppNavigationContainer() {
 
   return (
     <NavigationContainer>
-      { !isConnection && (
+      {!isConnection && (
         <Stack.Navigator>
-          <Stack.Screen name='NoInternet' component={NoInternetMessage} options={{ headerShown: false }}/>
+          <Stack.Screen name='NoInternet' component={NoInternetMessage} options={{ headerShown: false }} />
           <Stack.Screen name="MainTabs" options={{ headerShown: false }}>
-                {() => (
-                  <Tab.Navigator
-                    initialRouteName={mainName}
-                    screenOptions={({ route }) => ({
-                      headerShown: false, // Hide the navigation bar
-                      tabBarIcon: ({ focused, color, size }) => {
-                        let iconName;
-                        let rn = route.name;
+            {() => (
+              <Tab.Navigator
+                initialRouteName={mainName}
+                screenOptions={({ route }) => ({
+                  headerShown: false, // Hide the navigation bar
+                  tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+                    let rn = route.name;
 
-                        if (rn === mainName) {
-                          iconName = 'home-outline';
-                          return (
-                            <Ionicons
-                              name={iconName}
-                              size={focused ? 28 : 24}
-                              color={focused ? '#95E5FF' : '#BDBDBD'}
-                            />
-                          );
-                        }
-                        if (rn === categoriesName) {
-                          iconName = 'shopping-bag';
-                          return (
-                            <Feather 
-                              name={iconName} 
-                              size={focused ? 28 : 24}
-                              color={focused ? '#95E5FF' : '#BDBDBD'}
-                            />
-                          );
-                        }
-                        if (rn === shopsName) {
-                          iconName = 'shop';
-                          return (
-                            <Entypo
-                              name={iconName}
-                              size={focused ? 28 : 24}
-                              color={focused ? '#95E5FF' : '#BDBDBD'}
-                            />
-                          );
-                        }
-                        if (rn === cartName) {
-                          iconName = 'cart-outline';
-                          return (
-                            <Ionicons
-                              name={iconName}
-                              size={focused ? 28 : 24}
-                              color={focused ? '#95E5FF' : '#BDBDBD'}
-                            />
-                          );
-                        }
-                        if (rn === profileName) {
-                          iconName = 'user';
-                          return (
-                            <AntDesign
-                              name={iconName}
-                              size={focused ? 28 : 24}
-                              color={focused ? '#95E5FF' : '#BDBDBD'}
-                            />
-                          );
-                        }
-                      },
-                      tabBarInactiveTintColor: '#BDBDBD', // Цвет подсказок без фокуса
-                      tabBarActiveTintColor: '#95E5FF', // Цвет подсказок при фокусе
-                      tabBarLabelStyle: {
-                        fontSize: 14
-                      },
-                    })}
-                  >
-                    <Tab.Screen name={mainName} component={MainScreen} />
-                    <Tab.Screen name={categoriesName} component={CategoriesScreen} />
-                    <Tab.Screen name={shopsName} component={ShopsScreen} />
-                    <Tab.Screen name={cartName} component={CartScreen} />
-                    <Tab.Screen name={profileName} component={ProfileScreen} />
-                  </Tab.Navigator>
-                )}
-              </Stack.Screen>
-              <Stack.Screen name='RegistrationScreen' component={RegistrationScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Authorization" component={AuthorizationScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Personal" component={PersonalDate} options={{ headerShown: false }}/>
-              <Stack.Screen name="MyOrders" component={MyOrdersScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="FaQ" component={FaqScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Finance" component={FinanceScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Customer" component={CustomerScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Accordion" component={AccordionScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="AddCard" component={AddCardScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Map" component={MapScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Product" component={ProductCardScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Reviews" component={ReviewsScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Bussines" component={BussinesScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="EditBussines" component={EditBussinesScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="MyGoods" component={MyGoodsScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Sales" component={SalesScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Orders" component={OrderScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Stats" component={StatScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="AddSale" component={AddSaleScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="EditProduct" component={EditProductScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="AddPayments" component={AddPaymentsMethod} options={{ headerShown: false }}/>
-              <Stack.Screen name="AddPaypal" component={AddPaypalScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="MyBankAccount" component={MyBankAccount} options={{ headerShown: false }}/>
-            </Stack.Navigator>
+                    if (rn === mainName) {
+                      iconName = 'home-outline';
+                      return (
+                        <Ionicons
+                          name={iconName}
+                          size={focused ? s(24) : s(20)}
+                          color={focused ? '#95E5FF' : '#BDBDBD'}
+                        />
+                      );
+                    }
+                    if (rn === categoriesName) {
+                      iconName = 'shopping-bag';
+                      return (
+                        <Feather
+                          name={iconName}
+                          size={focused ? s(24) : s(20)}
+                          color={focused ? '#95E5FF' : '#BDBDBD'}
+                        />
+                      );
+                    }
+                    if (rn === shopsName) {
+                      iconName = 'shop';
+                      return (
+                        <Entypo
+                          name={iconName}
+                          size={focused ? s(24) : s(20)}
+                          color={focused ? '#95E5FF' : '#BDBDBD'}
+                        />
+                      );
+                    }
+                    if (rn === cartName) {
+                      iconName = 'cart-outline';
+                      return (
+                        <Ionicons
+                          name={iconName}
+                          size={focused ? s(24) : s(20)}
+                          color={focused ? '#95E5FF' : '#BDBDBD'}
+                        />
+                      );
+                    }
+                    if (rn === profileName) {
+                      iconName = 'user';
+                      return (
+                        <AntDesign
+                          name={iconName}
+                          size={focused ? s(24) : s(20)}
+                          color={focused ? '#95E5FF' : '#BDBDBD'}
+                        />
+                      );
+                    }
+                  },
+                  tabBarInactiveTintColor: '#BDBDBD', // Цвет подсказок без фокуса
+                  tabBarActiveTintColor: '#95E5FF', // Цвет подсказок при фокусе
+                  tabBarLabelStyle: {
+                    fontSize: s(14)
+                  },
+                })}
+              >
+                <Tab.Screen name={mainName} component={MainScreen} />
+                <Tab.Screen name={categoriesName} component={CategoriesScreen} />
+                <Tab.Screen name={shopsName} component={ShopsScreen} />
+                <Tab.Screen name={cartName} component={CartScreen} />
+                <Tab.Screen name={profileName} component={ProfileScreen} />
+              </Tab.Navigator>
+            )}
+          </Stack.Screen>
+          <Stack.Screen name='RegistrationScreen' component={RegistrationScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Authorization" component={AuthorizationScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Personal" component={PersonalDate} options={{ headerShown: false }} />
+          <Stack.Screen name="MyOrders" component={MyOrdersScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="FaQ" component={FaqScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Finance" component={FinanceScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Customer" component={CustomerScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Accordion" component={AccordionScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="AddCard" component={AddCardScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Map" component={MapScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Product" component={ProductCardScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Reviews" component={ReviewsScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Bussines" component={BussinesScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="EditBussines" component={EditBussinesScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="MyGoods" component={MyGoodsScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Sales" component={SalesScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Orders" component={OrderScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Stats" component={StatScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="AddSale" component={AddSaleScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="EditProduct" component={EditProductScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="AddPayments" component={AddPaymentsMethod} options={{ headerShown: false }} />
+          <Stack.Screen name="AddPaypal" component={AddPaypalScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="MyBankAccount" component={MyBankAccount} options={{ headerShown: false }} />
+        </Stack.Navigator>
       )}
-      { isConnection && (
+      {isConnection && (
         <Stack.Navigator>
           {hasUserToken ? ( // В зависимости от наличия токена выбираем, что рендерить
             <>
@@ -198,7 +198,7 @@ export default function AppNavigationContainer() {
                           return (
                             <Ionicons
                               name={iconName}
-                              size={focused ? 28 : 24}
+                              size={focused ? s(24) : s(20)}
                               color={focused ? '#95E5FF' : '#BDBDBD'}
                             />
                           );
@@ -206,9 +206,9 @@ export default function AppNavigationContainer() {
                         if (rn === categoriesName) {
                           iconName = 'shopping-bag';
                           return (
-                            <Feather 
-                              name={iconName} 
-                              size={focused ? 28 : 24}
+                            <Feather
+                              name={iconName}
+                              size={focused ? s(24) : s(20)}
                               color={focused ? '#95E5FF' : '#BDBDBD'}
                             />
                           );
@@ -218,7 +218,7 @@ export default function AppNavigationContainer() {
                           return (
                             <Entypo
                               name={iconName}
-                              size={focused ? 28 : 24}
+                              size={focused ? s(24) : s(20)}
                               color={focused ? '#95E5FF' : '#BDBDBD'}
                             />
                           );
@@ -228,7 +228,7 @@ export default function AppNavigationContainer() {
                           return (
                             <Ionicons
                               name={iconName}
-                              size={focused ? 28 : 24}
+                              size={focused ? s(24) : s(20)}
                               color={focused ? '#95E5FF' : '#BDBDBD'}
                             />
                           );
@@ -238,7 +238,7 @@ export default function AppNavigationContainer() {
                           return (
                             <AntDesign
                               name={iconName}
-                              size={focused ? 28 : 24}
+                              size={focused ? s(24) : s(20)}
                               color={focused ? '#95E5FF' : '#BDBDBD'}
                             />
                           );
@@ -247,7 +247,7 @@ export default function AppNavigationContainer() {
                       tabBarInactiveTintColor: '#BDBDBD', // Цвет подсказок без фокуса
                       tabBarActiveTintColor: '#95E5FF', // Цвет подсказок при фокусе
                       tabBarLabelStyle: {
-                        fontSize: 14
+                        fontSize: s(14)
                       },
                     })}
                   >
@@ -259,56 +259,56 @@ export default function AppNavigationContainer() {
                   </Tab.Navigator>
                 )}
               </Stack.Screen>
-              <Stack.Screen name='RegistrationScreen' component={RegistrationScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Authorization" component={AuthorizationScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Personal" component={PersonalDate} options={{ headerShown: false }}/>
-              <Stack.Screen name="MyOrders" component={MyOrdersScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="FaQ" component={FaqScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Finance" component={FinanceScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Customer" component={CustomerScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Accordion" component={AccordionScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="AddCard" component={AddCardScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Map" component={MapScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Product" component={ProductCardScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Reviews" component={ReviewsScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Bussines" component={BussinesScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="EditBussines" component={EditBussinesScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="MyGoods" component={MyGoodsScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Sales" component={SalesScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Orders" component={OrderScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Stats" component={StatScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="AddSale" component={AddSaleScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="EditProduct" component={EditProductScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="AddPayments" component={AddPaymentsMethod} options={{ headerShown: false }}/>
-              <Stack.Screen name="AddPaypal" component={AddPaypalScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="MyBankAccount" component={MyBankAccount} options={{ headerShown: false }}/>
+              <Stack.Screen name='RegistrationScreen' component={RegistrationScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Authorization" component={AuthorizationScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Personal" component={PersonalDate} options={{ headerShown: false }} />
+              <Stack.Screen name="MyOrders" component={MyOrdersScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="FaQ" component={FaqScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Finance" component={FinanceScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Customer" component={CustomerScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Accordion" component={AccordionScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="AddCard" component={AddCardScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Map" component={MapScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Product" component={ProductCardScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Reviews" component={ReviewsScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Bussines" component={BussinesScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="EditBussines" component={EditBussinesScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="MyGoods" component={MyGoodsScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Sales" component={SalesScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Orders" component={OrderScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Stats" component={StatScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="AddSale" component={AddSaleScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="EditProduct" component={EditProductScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="AddPayments" component={AddPaymentsMethod} options={{ headerShown: false }} />
+              <Stack.Screen name="AddPaypal" component={AddPaypalScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="MyBankAccount" component={MyBankAccount} options={{ headerShown: false }} />
             </>
           ) : (
             <>
-              <Stack.Screen name={welcomeName} component={WelcomeSliderScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name='RegistrationScreen' component={RegistrationScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Authorization" component={AuthorizationScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Personal" component={PersonalDate} options={{ headerShown: false }}/>
-              <Stack.Screen name="MyOrders" component={MyOrdersScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="FaQ" component={FaqScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Finance" component={FinanceScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Customer" component={CustomerScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Accordion" component={AccordionScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="AddCard" component={AddCardScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Map" component={MapScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Product" component={ProductCardScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Reviews" component={ReviewsScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Bussines" component={BussinesScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="EditBussines" component={EditBussinesScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="MyGoods" component={MyGoodsScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Sales" component={SalesScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Orders" component={OrderScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Stats" component={StatScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="AddSale" component={AddSaleScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="EditProduct" component={EditProductScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="AddPayments" component={AddPaymentsMethod} options={{ headerShown: false }}/>
-              <Stack.Screen name="AddPaypal" component={AddPaypalScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="MyBankAccount" component={MyBankAccount} options={{ headerShown: false }}/>
+              <Stack.Screen name={welcomeName} component={WelcomeSliderScreen} options={{ headerShown: false }} />
+              <Stack.Screen name='RegistrationScreen' component={RegistrationScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Authorization" component={AuthorizationScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Personal" component={PersonalDate} options={{ headerShown: false }} />
+              <Stack.Screen name="MyOrders" component={MyOrdersScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="FaQ" component={FaqScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Finance" component={FinanceScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Customer" component={CustomerScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Accordion" component={AccordionScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="AddCard" component={AddCardScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Map" component={MapScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Product" component={ProductCardScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Reviews" component={ReviewsScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Bussines" component={BussinesScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="EditBussines" component={EditBussinesScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="MyGoods" component={MyGoodsScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Sales" component={SalesScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Orders" component={OrderScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Stats" component={StatScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="AddSale" component={AddSaleScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="EditProduct" component={EditProductScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="AddPayments" component={AddPaymentsMethod} options={{ headerShown: false }} />
+              <Stack.Screen name="AddPaypal" component={AddPaypalScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="MyBankAccount" component={MyBankAccount} options={{ headerShown: false }} />
               <Stack.Screen name="MainTabs" options={{ headerShown: false }}>
                 {() => (
                   <Tab.Navigator
@@ -324,7 +324,7 @@ export default function AppNavigationContainer() {
                           return (
                             <Ionicons
                               name={iconName}
-                              size={focused ? 28 : 24}
+                              size={focused ? s(24) : s(20)}
                               color={focused ? '#95E5FF' : '#BDBDBD'}
                             />
                           );
@@ -332,9 +332,9 @@ export default function AppNavigationContainer() {
                         if (rn === categoriesName) {
                           iconName = 'shopping-bag';
                           return (
-                            <Feather 
-                              name={iconName} 
-                              size={focused ? 28 : 24}
+                            <Feather
+                              name={iconName}
+                              size={focused ? s(24) : s(20)}
                               color={focused ? '#95E5FF' : '#BDBDBD'}
                             />
                           );
@@ -344,7 +344,7 @@ export default function AppNavigationContainer() {
                           return (
                             <Entypo
                               name={iconName}
-                              size={focused ? 28 : 24}
+                              size={focused ? s(24) : s(20)}
                               color={focused ? '#95E5FF' : '#BDBDBD'}
                             />
                           );
@@ -354,7 +354,7 @@ export default function AppNavigationContainer() {
                           return (
                             <Ionicons
                               name={iconName}
-                              size={focused ? 28 : 24}
+                              size={focused ? s(24) : s(20)}
                               color={focused ? '#95E5FF' : '#BDBDBD'}
                             />
                           );
@@ -364,7 +364,7 @@ export default function AppNavigationContainer() {
                           return (
                             <AntDesign
                               name={iconName}
-                              size={focused ? 28 : 24}
+                              size={focused ? s(24) : s(20)}
                               color={focused ? '#95E5FF' : '#BDBDBD'}
                             />
                           );
@@ -373,7 +373,7 @@ export default function AppNavigationContainer() {
                       tabBarInactiveTintColor: '#BDBDBD', // Цвет подсказок без фокуса
                       tabBarActiveTintColor: '#95E5FF', // Цвет подсказок при фокусе
                       tabBarLabelStyle: {
-                        fontSize: 14
+                        fontSize: s(14)
                       },
                     })}
                   >
@@ -388,7 +388,7 @@ export default function AppNavigationContainer() {
             </>
           )}
         </Stack.Navigator>
-      ) }
+      )}
     </NavigationContainer>
   );
 }

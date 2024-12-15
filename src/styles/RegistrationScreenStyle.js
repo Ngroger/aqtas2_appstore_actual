@@ -8,7 +8,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 30,
+    padding: '18@s',
     borderWidth: 1,
     borderColor: '#000'
   },
@@ -68,16 +68,15 @@ const styles = ScaledSheet.create({
     fontSize: 24
   },
   titleReg: {
-    fontSize: 28,
+    fontSize: '24@s',
     fontFamily: 'CambriaBold',
     textAlign: 'center',
-    marginTop: 50
   },
   description: {
     fontFamily: 'Cambria',
-    fontSize: 20,
+    fontSize: '18@s',
     textAlign: 'center',
-    marginTop: 10
+    marginTop: 6
   },
   inputContainer: {
     flexDirection: 'row',
@@ -139,7 +138,7 @@ const styles = ScaledSheet.create({
     color: '#ff0000'
   },
   logo: {
-    width: '200@s',
+    width: '250@vs',
     height: '100@vs',
     objectFit: 'contain',
   },
