@@ -17,6 +17,7 @@
       "backgroundColor": "#95E5FF"
     },
     "ios": {
+      "deploymentTarget": "13.0",
       "supportsTablet": false,
       "bundleIdentifier": "com.bogdandev3444456.aqtas",
       "buildNumber": "2.1.3",
