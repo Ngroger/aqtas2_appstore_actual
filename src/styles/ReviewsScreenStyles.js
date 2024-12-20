@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     },
     categories: {
         paddingVertical: 16,
-        
+
     },
     categoriesContainer: {
         width: '100%',
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         paddingHorizontal: 16,
         marginHorizontal: 5
-        
+
     },
     categoryTextActive: {
         fontFamily: 'CambriaBold',
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     reviewerDate: {
-        color: '#BDBDBD', 
+        color: '#BDBDBD',
         fontFamily: 'Cambria',
         fontSize: 18
     },

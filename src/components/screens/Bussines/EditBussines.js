@@ -64,15 +64,12 @@ function EditBussinesScreen() {
 
     useEffect(() => {
         loadUserData();
-        setIsLoad(true);
-        setTimeout(() => {
-            setIsLoad(false);
-        }, 1000)
     }, []);
 
     const loadUserData = async () => {
         const userData = await getUserData();
         if (userData) {
+            setIsLoad(true);
             setUserData(userData);
             try {
                 const response = await fetch(`https://aqtas.garcom.kz/shop/${userData.userId}`);
@@ -99,6 +96,8 @@ function EditBussinesScreen() {
                 }
 
             } catch (error) {
+            } finally {
+                setIsLoad(false)
             }
         }
     };
@@ -287,7 +286,7 @@ function EditBussinesScreen() {
 
                 });
         }
-    }
+    };
 
     const handleSaveCategory = () => {
         const userID = userData.userId;
@@ -309,8 +308,7 @@ function EditBussinesScreen() {
             .catch((error) => {
 
             });
-    }
-
+    };
 
     return (
         <View>
@@ -321,7 +319,6 @@ function EditBussinesScreen() {
                 </TouchableOpacity>
                 {isLoad && (
                     <View style={styles.loadingIndicatorContainer}>
-                        <ActivityIndicator size="big" color="#95E5FF" />
                         <Text style={styles.textLoad}>{t('products-load-message')}</Text>
                     </View>
                 )}
@@ -399,7 +396,7 @@ function EditBussinesScreen() {
                         </View>
                         <View style={styles.infoContainer}>
                             <Text style={styles.firstInfo}>{t('category-become-customer-field')}:</Text>
-                            <View style={styles.field}>
+                            <View style={[styles.field, { padding: 16, paddingHorizontal: 18 }]}>
                                 <Text style={styles.secondInfo}>{category}</Text>
                                 <TouchableOpacity onPress={toggleShowCategoryModal}>
                                     <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />

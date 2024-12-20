@@ -5,8 +5,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         backgroundColor: '#FFF',
-        padding: 30
-    }, 
+        padding: 24
+    },
     titleContainer: {
         flexDirection: 'row',
         display: 'flex',
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Cambria'
     },
     topic: {
-        borderWidth: 1, 
+        borderWidth: 1,
         borderColor: '#95E5FF',
         padding: 12,
         alignContent: 'center',

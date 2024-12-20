@@ -58,21 +58,25 @@ function PersonalDate() {
             aspect: [4, 3],
             quality: 1,
         });
+
         if (!result.canceled) {
             uploadImage(result.assets[0].uri);
+            setChoiseImage(false);
         }
     };
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
         });
+
         if (!result.canceled) {
-            // Send the image to the server
+            // Отправка изображения на сервер
             uploadImage(result.assets[0].uri);
+            setChoiseImage(false);
         }
     };
 
@@ -109,7 +113,8 @@ function PersonalDate() {
                     console.log("data.image", data.image)
                     await updateUserData({ photoUser: data.image });
 
-                    alert("Фотография профиля успешно обновлена")
+                    alert("Фотография профиля успешно обновлена. Перезайдите в экран, чтоб увидеть изменения");
+
                 }
             })
             .catch((error) => {
@@ -345,123 +350,125 @@ function PersonalDate() {
     };
 
     return (
-        <ScrollView style={{ height: '100%', backgroundColor: '#FFF' }}>
-            <View style={styles.container}>
-                <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
-                    <MaterialIcons name="arrow-back-ios" size={24} color="black" />
-                    <Text style={styles.title}>{t('personal-data-profile-button')}</Text>
-                </TouchableOpacity>
-                <View style={styles.photoContainer}>
-                    <View>
-                        <Image
-                            source={{ uri: `https://aqtas.garcom.kz/images/photoUsers/${userData.photoUser}` }}
-                            style={styles.photo}
-                        />
-                        {image === null ? (
-                            <>
-                                <TouchableOpacity onPress={toggleChoiseImage} style={styles.addPhoto}>
-                                    <EvilIcons name="camera" size={18} color="black" />
-                                </TouchableOpacity>
-                            </>
-                        ) : (
-                            <>
-                                <TouchableOpacity onPress={() => (setImage(null))} style={styles.addPhoto}>
-                                    <AntDesign name="delete" size={18} color="#FF0000" />
-                                </TouchableOpacity>
-                            </>
-                        )
-                        }
-                    </View>
-                </View>
-                <View style={styles.infoContainer}>
-                    <View>
-                        <Text style={styles.firstInfo}>{t('name')}:</Text>
-                        <TextInput value={name} onChangeText={handleNameChange} style={styles.secondInfo} />
-                        {showErrorName && (
-                            <Text style={styles.error}>{t('above-two-symbol-message')}</Text>
-                        )}
-                    </View>
-                    {isNameChanged && (
-                        <TouchableOpacity onPress={handleSavePressName} >
-                            <AntDesign name="save" size={24} color="black" />
-                        </TouchableOpacity>
-                    )}
-                </View>
-                <View style={styles.infoContainer}>
-                    <View>
-                        <Text style={styles.firstInfo}>{t('surname')}:</Text>
-                        <TextInput value={surname} onChangeText={handleSurnameChange} style={styles.secondInfo} />
-                        {showErrorSurname && (
-                            <Text style={styles.error}>{t('above-two-symbol-message')}</Text>
-                        )}
-                    </View>
-                    {isSurnameChanged && (
-                        <TouchableOpacity onPress={handleSavePressSurname} >
-                            <AntDesign name="save" size={24} color="black" />
-                        </TouchableOpacity>
-                    )}
-                </View>
-                <View style={styles.infoContainer}>
-                    <View>
-                        <Text style={styles.firstInfo}>{t('phone-number')}:</Text>
-                        <TextInput maxLength={11} keyboardType='numeric' value={phone} onChangeText={handlePhoneChange} style={styles.secondInfo} />
-                        {showErrorPhone && (
-                            <Text style={styles.error}>{t('above-eleven-symbol-message')}</Text>
-                        )}
-                    </View>
-                    {isPhoneChanged && (
-                        <TouchableOpacity onPress={handleSavePressPhone} >
-                            <AntDesign name="save" size={24} color="black" />
-                        </TouchableOpacity>
-                    )}
-                </View>
-                <View style={styles.infoContainer}>
-                    <View>
-                        <Text style={styles.firstInfo}>{t('password')}:</Text>
-                        <Text style={styles.secondInfo}>********</Text>
-                    </View>
-                    <TouchableOpacity onPress={togglePasswordModal}>
-                        <Feather name="edit" size={24} color="black" />
+        <View style={{ width: '100%', height: '100%', backgroundColor: '#FFF' }}>
+            <ScrollView style={{ flex: 1 }}>
+                <View style={styles.container}>
+                    <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
+                        <MaterialIcons name="arrow-back-ios" size={24} color="black" />
+                        <Text style={styles.title}>{t('personal-data-profile-button')}</Text>
                     </TouchableOpacity>
-                </View>
-                <View style={styles.infoContainer}>
-                    <View>
-                        <Text style={styles.firstInfo}>{t('sex-personal-data')}:</Text>
-                        <Text style={styles.secondInfo}>{sex}</Text>
+                    <View style={styles.photoContainer}>
+                        <View>
+                            <Image
+                                source={{ uri: `https://aqtas.garcom.kz/images/photoUsers/${userData.photoUser}` }}
+                                style={styles.photo}
+                            />
+                            {image === null ? (
+                                <>
+                                    <TouchableOpacity onPress={toggleChoiseImage} style={styles.addPhoto}>
+                                        <EvilIcons name="camera" size={18} color="black" />
+                                    </TouchableOpacity>
+                                </>
+                            ) : (
+                                <>
+                                    <TouchableOpacity onPress={() => (setImage(null))} style={styles.addPhoto}>
+                                        <AntDesign name="delete" size={18} color="#FF0000" />
+                                    </TouchableOpacity>
+                                </>
+                            )
+                            }
+                        </View>
                     </View>
-                    <TouchableOpacity onPress={toggleSexModal}>
-                        <Feather name="edit" size={24} color="black" />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.infoContainer}>
-                    <View>
-                        <Text style={styles.firstInfo}>{t('birthday-personal-data')}:</Text>
-                        <TextInput maxLength={10} keyboardType='numeric' value={birthday} onChangeText={handleBirthdayChange} style={styles.secondInfo} />
-                        {showErrorSurname && (
-                            <Text style={styles.error}>{t('uncorrect-format-date')}</Text>
+                    <View style={styles.infoContainer}>
+                        <View>
+                            <Text style={styles.firstInfo}>{t('name')}:</Text>
+                            <TextInput value={name} onChangeText={handleNameChange} style={styles.secondInfo} />
+                            {showErrorName && (
+                                <Text style={styles.error}>{t('above-two-symbol-message')}</Text>
+                            )}
+                        </View>
+                        {isNameChanged && (
+                            <TouchableOpacity onPress={handleSavePressName} >
+                                <AntDesign name="save" size={24} color="black" />
+                            </TouchableOpacity>
                         )}
                     </View>
-                    {isBirthdayChanged && (
-                        <TouchableOpacity onPress={handleSavePressBirthday} >
-                            <AntDesign name="save" size={24} color="black" />
-                        </TouchableOpacity>
-                    )}
-                </View>
-                <View style={styles.infoContainer}>
-                    <View>
-                        <Text style={styles.firstInfo}>{t('address-personal-data')}:</Text>
-                        <TextInput value={address} onChangeText={handleAddressChange} style={styles.secondInfo} />
-                        {showErrorAddress && (
-                            <Text style={styles.error}>{t('above-two-symbol-message')}</Text>
+                    <View style={styles.infoContainer}>
+                        <View>
+                            <Text style={styles.firstInfo}>{t('surname')}:</Text>
+                            <TextInput value={surname} onChangeText={handleSurnameChange} style={styles.secondInfo} />
+                            {showErrorSurname && (
+                                <Text style={styles.error}>{t('above-two-symbol-message')}</Text>
+                            )}
+                        </View>
+                        {isSurnameChanged && (
+                            <TouchableOpacity onPress={handleSavePressSurname} >
+                                <AntDesign name="save" size={24} color="black" />
+                            </TouchableOpacity>
                         )}
                     </View>
-                    {isAddressChanged && (
-                        <TouchableOpacity onPress={handleSavePressAddress} >
-                            <AntDesign name="save" size={24} color="black" />
+                    <View style={styles.infoContainer}>
+                        <View>
+                            <Text style={styles.firstInfo}>{t('phone-number')}:</Text>
+                            <TextInput maxLength={11} keyboardType='numeric' value={phone} onChangeText={handlePhoneChange} style={styles.secondInfo} />
+                            {showErrorPhone && (
+                                <Text style={styles.error}>{t('above-eleven-symbol-message')}</Text>
+                            )}
+                        </View>
+                        {isPhoneChanged && (
+                            <TouchableOpacity onPress={handleSavePressPhone} >
+                                <AntDesign name="save" size={24} color="black" />
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <View>
+                            <Text style={styles.firstInfo}>{t('password')}:</Text>
+                            <Text style={styles.secondInfo}>********</Text>
+                        </View>
+                        <TouchableOpacity onPress={togglePasswordModal}>
+                            <Feather name="edit" size={24} color="black" />
                         </TouchableOpacity>
-                    )}
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <View>
+                            <Text style={styles.firstInfo}>{t('sex-personal-data')}:</Text>
+                            <Text style={styles.secondInfo}>{sex}</Text>
+                        </View>
+                        <TouchableOpacity onPress={toggleSexModal}>
+                            <Feather name="edit" size={24} color="black" />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <View>
+                            <Text style={styles.firstInfo}>{t('birthday-personal-data')}:</Text>
+                            <TextInput maxLength={10} keyboardType='numeric' value={birthday} onChangeText={handleBirthdayChange} style={styles.secondInfo} />
+                            {showErrorSurname && (
+                                <Text style={styles.error}>{t('uncorrect-format-date')}</Text>
+                            )}
+                        </View>
+                        {isBirthdayChanged && (
+                            <TouchableOpacity onPress={handleSavePressBirthday} >
+                                <AntDesign name="save" size={24} color="black" />
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <View>
+                            <Text style={styles.firstInfo}>{t('address-personal-data')}:</Text>
+                            <TextInput value={address} onChangeText={handleAddressChange} style={styles.secondInfo} />
+                            {showErrorAddress && (
+                                <Text style={styles.error}>{t('above-two-symbol-message')}</Text>
+                            )}
+                        </View>
+                        {isAddressChanged && (
+                            <TouchableOpacity onPress={handleSavePressAddress} >
+                                <AntDesign name="save" size={24} color="black" />
+                            </TouchableOpacity>
+                        )}
+                    </View>
                 </View>
-            </View>
+            </ScrollView>
             {isChangePhoneModal && <ChangePhone onClose={toggleChangePhoneModal} userId={userData.userId} phone={phone} />}
             {isPasswordModal && <ChangePassword onClose={togglePasswordModal} userId={userData.userId} />}
             {isSexModal && <ChangeSex onClose={toggleSexModal} userId={userData.userId} onChangeSex={onChangeSex} />}
@@ -480,7 +487,7 @@ function PersonalDate() {
                     </View>
                 </View>
             }
-        </ScrollView>
+        </View>
     );
 }
 

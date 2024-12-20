@@ -8,6 +8,8 @@ import { storeUserData } from '../../store/userDataManager';
 import { useTranslation } from 'react-i18next';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { toggleIsNewUser } from '../../store/NewUserStorage';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -30,7 +32,8 @@ function ConfirmPassword(props) {
     const [notification, setNotification] = useState(false);
     const notificationListener = useRef();
     const responseListener = useRef();
-    const [message, setMessage] = useState();
+    const [isShowPass, setIsShowPass] = useState(true);
+    const [isShowConfirmPass, setIsShowConfirmPass] = useState(true);
 
     useEffect(() => {
         registerForPushNotificationsAsync().then(token => {
@@ -133,23 +136,21 @@ function ConfirmPassword(props) {
             // Send data to the server using Axios
             axios.post('https://aqtas.garcom.kz/register', user)
                 .then((response) => {
-                    const authToken = response.data.authToken;
-                    const userId = response.data.userId; // Извлекаем ID пользователя
+                    if (response.data.success) {
+                        const authToken = response.data.authToken;
+                        const userId = response.data.userId;
 
-                    // Сохраняем authToken и userId в локальном хранилище
-                    storeToken(authToken);
-                    storeUserData({ ...props.userData, userId, photoUser: 'withoutPhoto.png', sex: 'Не укаказано', birthday: 'Не указано', address: 'Не указано' });
-
-                    hasToken();
-
-                    // Handle the response here, for example, navigate to the next screen
-                    schedulePushNotification();
-                    goToMain();
-                    setShowErrorText(false)
+                        storeToken(authToken);
+                        storeUserData({ ...props.userData, userId, photoUser: 'withoutPhoto.png', sex: 'Не укаказано', birthday: 'Не указано', address: 'Не указано' });
+                        toggleIsNewUser(false);
+                        hasToken();
+                        schedulePushNotification();
+                        goToMain();
+                        setShowErrorText(false)
+                    }
                 })
                 .catch((error) => {
 
-                    // Handle the error, show an error message, or take appropriate action
                 });
         } else {
 
@@ -169,19 +170,27 @@ function ConfirmPassword(props) {
                             setPassword(text);
                             updateUserData('password', text);
                         }}
-                        secureTextEntry={true}
+                        secureTextEntry={isShowPass}
                     />
+                    <TouchableOpacity onPress={() => setIsShowPass(!isShowPass)} style={{ position: 'absolute', zIndex: 10, right: 12 }}>
+                        <Ionicons name={isShowPass ? "eye-outline" : "eye-off-outline"} size={20} color="#141414" />
+                    </TouchableOpacity>
                 </View>
             </View>
             <View style={{ marginTop: 16 }}>
                 <Text style={errors.confirmPassword ? styles.inputTitleError : styles.inputTitle}>{t('confirm-password')}</Text>
-                <TextInput
-                    style={[styles.input, errors.confirmPassword && styles.inputError]}
-                    onChangeText={(text) => {
-                        setConfirmPassword(text);
-                    }}
-                    secureTextEntry={true}
-                />
+                <View style={styles.fieldContainr}>
+                    <TextInput
+                        style={[styles.input, errors.confirmPassword && styles.inputError]}
+                        onChangeText={(text) => {
+                            setConfirmPassword(text);
+                        }}
+                        secureTextEntry={isShowConfirmPass}
+                    />
+                    <TouchableOpacity onPress={() => setIsShowConfirmPass(!isShowConfirmPass)} style={{ position: 'absolute', zIndex: 10, right: 12 }}>
+                        <Ionicons name={isShowPass ? "eye-outline" : "eye-off-outline"} size={20} color="#141414" />
+                    </TouchableOpacity>
+                </View>
             </View>
             <View style={{ marginTop: 16 }}>
                 {showErrorText && (

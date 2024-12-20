@@ -1,8 +1,7 @@
 import { Component } from 'react';
 import { FontLoader } from './src/helpers/FontLoader'
 import AppNavigationContainer from './src/components/ux/navigation/AppNavigation';
-import Test from './src/components/screens/test';
-import { View } from 'react-native';
+import { UnauthProvider } from './src/context/UnauthProvider';
 
 class App extends Component {
   constructor(props) {
@@ -16,11 +15,11 @@ class App extends Component {
     await FontLoader(); // Вызываем функцию загрузки шрифтов
     this.setState({ fontsLoaded: true });
   }
-  
+
   render() {
     if (this.state.fontsLoaded) {
       return (
-        <AppNavigationContainer/>
+        <AppNavigationContainer />
       );
     } else {
       return null;

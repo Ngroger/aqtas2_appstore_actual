@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { scale } from 'react-native-size-matters';
 import { useFocusEffect } from '@react-navigation/native';
+import { useUnauth } from '../../context/UnauthProvider';
 
 function CartScreen() {
     const [userData, setUserData] = useState({});
@@ -20,6 +21,7 @@ function CartScreen() {
     const [isSuccessOrder, setSuccessOrder] = useState(false);
     const [isNoAddress, setIsNoAddress] = useState(false);
     const { t } = useTranslation();
+    const { openModal } = useUnauth();
 
     const selectItem = (index) => {
         setSelectedItems(prevSelectedItems => ({
@@ -103,6 +105,8 @@ function CartScreen() {
                 }
             } catch (error) {
             }
+        } else {
+            openModal("Предупреждение", "Только авторизованные пользователи могут иметь доступ к корзине. Пожалуйста, пройдите регистрацию или войдите")
         }
     };
 

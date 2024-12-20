@@ -6,7 +6,7 @@
       "ios",
       "android"
     ],
-    "version": "2.5.0",
+    "version": "2.5.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -17,13 +17,14 @@
       "backgroundColor": "#95E5FF"
     },
     "ios": {
-      "deploymentTarget": "13.0",
+      "deploymentTarget": "14.0",
       "supportsTablet": false,
       "bundleIdentifier": "com.bogdandev3444456.aqtas",
       "buildNumber": "2.1.3",
       "icon": "./assets/icon.png",
       "infoPlist": {
         "NSCameraUsageDescription": "This app needs access to your camera to take photos.",
+        "NSPhotoLibraryUsageDescription": "This app needs access to your photo library to select images.",
         "CFBundleIconFiles": [
           "icon-20",
           "icon-20@2x",
@@ -73,7 +74,7 @@
       "permissions": [
         "CAMERA"
       ],
-      "versionCode": 19,
+      "versionCode": 20,
       "package": "com.bogdandev3444456.aqtas"
     },
     "web": {

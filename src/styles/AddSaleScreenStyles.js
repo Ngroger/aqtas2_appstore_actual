@@ -91,12 +91,12 @@ const styles = StyleSheet.create({
     containerChoiseImage: {
         position: 'absolute',
         zIndex: 200,
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
+        borderTopLeftRadius: 24,
+        borderTopRightRadius: 24,
         backgroundColor: '#FFF',
         bottom: 0,
         width: '100%',
-        padding: 10,
+        padding: 16,
     },
     buttonChoiseImage: {
         justifyContent: 'center',

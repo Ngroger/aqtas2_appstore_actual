@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingBottom: 10
-        
+
     },
     firstInfo: {
         fontFamily: 'Cambria',
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     reviewerDate: {
-        color: '#BDBDBD', 
+        color: '#BDBDBD',
         fontFamily: 'Cambria',
         fontSize: 18
     },
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
         padding: 16,
         alignItems: 'center',
         justifyContent: 'center',
-        width: 170,
+        width: '100%',
         marginVertical: 20
     },
     addToCartButtonText: {

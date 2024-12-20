@@ -2,16 +2,16 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FFF',
         width: '100%',
         height: '100%',
-        padding: 20
+        backgroundColor: '#FFF',
+        padding: 24
     },
     titleContainer: {
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        marginTop: 20
+        marginTop: 10
     },
     title: {
         fontSize: 28,
@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
     },
     accordionText: {
         fontFamily: 'Cambria',
-        fontSize: 24,
+        fontSize: 20,
+        width: '90%'
     },
     description: {
         borderColor: '#BDBDBD',

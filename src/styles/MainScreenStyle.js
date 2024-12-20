@@ -87,7 +87,7 @@ const styles = ScaledSheet.create({
     cart: {
         borderRadius: 20,
         marginTop: 10,
-        width: '140@ms'
+        width: '135@vs'
     },
     cartPreview: {
         width: '100%',
@@ -155,7 +155,7 @@ const styles = ScaledSheet.create({
     addCartText: {
         color: '#fff',
         fontFamily: 'CambriaBold',
-        fontSize: '14@ms'
+        fontSize: '12@ms'
     },
     previewContainer: {
         position: 'relative'

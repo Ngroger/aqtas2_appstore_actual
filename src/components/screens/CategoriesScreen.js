@@ -1,38 +1,33 @@
-import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from '../../styles/CaregoriesScreenStyle';
 import { useTranslation } from 'react-i18next';
+import { useCategories } from '../../context/CategoriesProvider';
+import { useNavigation } from '@react-navigation/native';
+import { categories } from '../../categories';
 
-import { EvilIcons } from '@expo/vector-icons'
-import { useState } from 'react';
-import SelectedCategory from '../ux/popup/SelectedCategory';
-
-const CategoriesScreen = ({ handleSelectedCategory }) => {
+const CategoriesScreen = () => {
     const { t } = useTranslation();
+    const { selectCategoryContext } = useCategories();
+    const navigation = useNavigation();
 
-    const categories = [
-        { name: 'Спорт', label: t('sport-category'), image: require('../../img/categories/sport.png') },
-        { name: 'Женское', label: t('woman-category'), image: require('../../img/categories/women.png') },
-        { name: 'Мужское', label: t('men-category'), image: require('../../img/categories/men.png') },
-        { name: 'Детское', label: t('child-category'), image: require('../../img/categories/children.png') },
-        { name: 'Дом', label: t('home-category'), image: require('../../img/categories/home.png') },
-        { name: 'Косметика', label: t('make-up-category'), image: require('../../img/categories/makeup.png') },
-        { name: 'Акксесуары', label: t('accessories-category'), image: require('../../img/categories/acc.png') },
-        { name: 'Техника', label: t('tech-category'), image: require('../../img/categories/tech.png') },
-        { name: 'Игрушки', label: t('toys-category'), image: require('../../img/categories/toys.png') }
-    ];
+    const setCategory = (category) => {
+        console.log("setCategory: ", category)
+        selectCategoryContext(category);
+        navigation.navigate(t('main-name-bottom-tab'));
+    }
 
     return (
         <View style={styles.container}>
             <View style={styles.containerCategories}>
-                {categories.map(category => (
+                {categories.map((category, index) => (
                     <TouchableOpacity
-                        key={category.name}
+                        key={index}
                         style={styles.categoryButton}
-                        onPress={() => handleSelectedCategory(category.name, category.label)}
+                        onPress={() => setCategory(category.value)}
                     >
                         <View style={styles.category}>
                             <Image style={styles.categoryImage} source={category.image} />
-                            <Text style={styles.categoryText}>{category.label}</Text>
+                            <Text style={styles.categoryText}>{t(`${category.label}`)}</Text>
                         </View>
                     </TouchableOpacity>
                 ))}
@@ -40,4 +35,5 @@ const CategoriesScreen = ({ handleSelectedCategory }) => {
         </View>
     );
 };
+
 export default CategoriesScreen;

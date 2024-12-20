@@ -88,7 +88,7 @@ const styles = ScaledSheet.create({
     borderWidth: 1,
     borderColor: '#000',
     borderRadius: 10,
-    padding: 10,
+    padding: 14,
     width: '100%',
     fontFamily: 'Cambria',
     fontSize: 18,
@@ -108,7 +108,7 @@ const styles = ScaledSheet.create({
     borderWidth: 1,
     borderColor: '#FF0000',
     borderRadius: 10,
-    padding: 10,
+    padding: 14,
     width: '100%',
     fontFamily: 'Cambria',
     fontSize: 18,
@@ -147,6 +147,20 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between'
+  },
+  skipButton: {
+    position: 'absolute',
+    zIndex: 100,
+    right: 24,
+    top: 36,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2
+  },
+  skipButtonText: {
+    fontSize: 20,
+    color: '#141414',
+    fontFamily: 'Cambria'
   }
 });
 

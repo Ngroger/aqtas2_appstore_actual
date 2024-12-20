@@ -234,5 +234,9 @@
         "passwords-do-not-match": "Пароли не соответствуют",
         "password-must-be-greater": "Новый пароль должен быть выше 10 символов",
         "old-pass-wrong": "Старый пароль неправильный"
+    },
+    "unauth-modal": {
+        "cancel": "На главную",
+        "registration": "Регистрация"
     }
 }

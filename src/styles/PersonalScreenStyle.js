@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: 10 ,
+        paddingVertical: 10,
         borderBottomColor: '#BDBDBD',
         borderBottomWidth: 0.5
     },
@@ -102,20 +102,20 @@ const styles = StyleSheet.create({
     },
     background: {
         position: 'absolute',
-        zIndex: 100,
+        zIndex: 200,
         width: '100%',
         height: '100%',
         backgroundColor: 'rgba(0, 0, 0, 0.25)'
     },
     containerChoiseImage: {
         position: 'absolute',
-        zIndex: 200,
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
+        zIndex: 300,
+        borderTopLeftRadius: 24,
+        borderTopRightRadius: 24,
         backgroundColor: '#FFF',
         bottom: 0,
         width: '100%',
-        padding: 10,
+        padding: 16,
     },
     buttonChoiseImage: {
         justifyContent: 'center',
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     },
     buttonChoiseImageText: {
         fontFamily: 'Cambria',
-        fontSize: 24,
+        fontSize: 28,
         color: '#95E5FF'
     },
     saveButton: {
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: '#FFF',
     },
-    
+
 });
 
 export default styles;

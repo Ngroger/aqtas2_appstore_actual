@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View, StatusBar, Image, TextInput } from 'react-native';
+import { Text, TouchableOpacity, View, StatusBar, Image, TextInput, ScrollView } from 'react-native';
 import styles from '../../../styles/AddSaleScreenStyles';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons, Feather, AntDesign } from '@expo/vector-icons';
@@ -54,7 +54,8 @@ function AddSaleScreen() {
         });
 
         if (!result.canceled) {
-            setImage(result.assets[0].uri); // Обновленный способ доступа к URI
+            setImage(result.assets[0].uri);
+            setChoiseImage(false);
         }
     };
 
@@ -67,12 +68,14 @@ function AddSaleScreen() {
         }
 
         const result = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [4, 3],
         });
 
         if (!result.canceled) {
-            setImage(result.assets[0].uri); // Обновленный способ доступа к URI
+            setImage(result.assets[0].uri);
+            setChoiseImage(false);
         }
     };
 
@@ -142,7 +145,7 @@ function AddSaleScreen() {
 
     return (
         <View>
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 <View style={{ padding: 24 }}>
                     <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
                         <MaterialIcons name="arrow-back-ios" size={24} color="black" />
@@ -191,13 +194,13 @@ function AddSaleScreen() {
                         {isSelectedSeasonError && <Text style={styles.error}>Поле обязат476ельно к заполнению</Text>}
                     </View>
                 </View>
-                <View style={styles.buttonContainer}>
-                    {isErrorMessage && <Text style={styles.error}>Все поля обязательны к заполнению</Text>}
-                    <TouchableOpacity onPress={addSale} style={styles.addSaleButton}>
-                        <Text style={styles.addSaleButtonText}>Создать акцию</Text>
-                    </TouchableOpacity>
-                </View>
-                <StatusBar backgroundColor="transparent" translucent={true} />
+                <View style={{ marginBottom: 64 }} />
+            </ScrollView>
+            <View style={styles.buttonContainer}>
+                {isErrorMessage && <Text style={styles.error}>Все поля обязательны к заполнению</Text>}
+                <TouchableOpacity onPress={addSale} style={styles.addSaleButton}>
+                    <Text style={styles.addSaleButtonText}>Создать акцию</Text>
+                </TouchableOpacity>
             </View>
             {isChoiseImage &&
                 <View style={styles.background}>
@@ -215,6 +218,7 @@ function AddSaleScreen() {
                 </View>
             }
             {isSelectedSeasonShowMenu && <SelectSeason onClose={toggleSetSeasonShowMenu} onSeasonSelect={toggleSetSeasonSelected} />}
+            <StatusBar backgroundColor="transparent" translucent={true} />
         </View>
     )
 };

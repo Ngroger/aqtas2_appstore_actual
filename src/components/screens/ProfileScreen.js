@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StatusBar, ActivityIndicator } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StatusBar } from 'react-native';
 import { Feather, Entypo } from '@expo/vector-icons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import styles from '../../styles/ProfileScreenStyle';
@@ -8,6 +8,7 @@ import { getUserData } from '../../store/userDataManager'; // Импортиру
 import ProfileMenu from '../ux/popup/ProfileMenu';
 import { useTranslation } from 'react-i18next';
 import { scale } from 'react-native-size-matters'
+import { useUnauth } from '../../context/UnauthProvider';
 
 function ProfileScreen() {
   const navigation = useNavigation();
@@ -18,6 +19,7 @@ function ProfileScreen() {
   const [isBussinesAccount, setIsBussinesAccount] = useState(false);
   const { t } = useTranslation();
   const [isLoad, setIsLoad] = useState(true);
+  const { openModal } = useUnauth();
 
   useFocusEffect(
     useCallback(() => {
@@ -71,6 +73,8 @@ function ProfileScreen() {
           const isBussinesAccount = data && data.isBussinesAccount;
           setIsBussinesAccount(isBussinesAccount === 1);
         }
+      } else {
+        openModal("Предупреждение", "Для того, чтоб воспользоваться профилем нужно авторизоваться. Пожалуйста, войдите или пройдите регистрацию и повторите попытку")
       }
     } catch (error) {
       console.error(error);

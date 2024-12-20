@@ -4,7 +4,7 @@ import Swiper from 'react-native-swiper'
 import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import AboutCommision from '../ux/popup/AboutCommistion';
 import AboutCostumer from '../ux/popup/AboutCostumer';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +14,7 @@ import NoCardMessage from '../ux/popup/messages/NoCardMessage';
 import PaymentMethod from '../ux/popup/PaymentMethod';
 import SuccessOrder from '../ux/popup/messages/SuccessOrder';
 import NoAddressMessage from '../ux/popup/messages/NoAddressMessage';
+import { useUnauth } from '../../context/UnauthProvider';
 
 function ProductCardScreen({ route }) {
     const [reviews, setReviews] = useState([]);
@@ -36,11 +37,19 @@ function ProductCardScreen({ route }) {
     const [isPaymentsMethod, setPaymentsMethod] = useState(false);
     const [isSuccessOrder, setSuccessOrder] = useState(false);
     const [isNoAddress, setIsNoAddress] = useState(false);
+    const { openModal } = useUnauth();
+    const scrollRef = useRef();
 
-    const toggleSetSize = (id, product) => {
-        setIsSizeSelector(!isSizeSelect);
-        setProductId(id);
-        setSelectedProduct(product);
+    const toggleSetSize = async (id, product) => {
+        const userData = await getUserData();
+        if (userData) {
+            console.log("test 1");
+            setIsSizeSelector(!isSizeSelect);
+            setProductId(id);
+            setSelectedProduct(product);
+        } else {
+            openModal("Предупреждение", "Для того, чтоб добавить товар в корзину нужно авторизорваться");
+        }
     }
 
     const selectSize = (size) => {
@@ -147,35 +156,38 @@ function ProductCardScreen({ route }) {
         }
     }
 
-    const addToCart = (product) => {
-        // Определим параметры для добавления товара в корзину
-        const cartItem = {
-            name: product.name,
-            oldCost: product.oldCost,
-            newCost: product.cost,
-            description: product.description,
-            brend: product.brend,
-            costumer: product.costumer,  // Получаем UserId из userData
-            imagePreview: product.imagePreview1,  // По умолчанию используем imagePreview1,
-            UserID: userData.userId,
-            count: 1,  // Устанавливаем значение по умолчанию в 1
-        };
+    const addToCart = async (product) => {
+        const userData = await getUserData();
+        if (userData) {
+            const cartItem = {
+                name: product.name,
+                oldCost: product.oldCost,
+                newCost: product.cost,
+                description: product.description,
+                brend: product.brend,
+                costumer: product.costumer,
+                imagePreview: product.imagePreview1,
+                UserID: userData.userId,
+                count: 1,
+            };
 
-        // Отправляем POST-запрос к серверу
-        fetch('https://aqtas.garcom.kz/addToCart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(cartItem),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-
+            fetch('https://aqtas.garcom.kz/addToCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(cartItem),
             })
-            .catch((error) => {
+                .then((response) => response.json())
+                .then((data) => {
 
-            });
+                })
+                .catch((error) => {
+
+                });
+        } else {
+            openModal("Предупреждение", "Для того, чтоб добавить товар в корзину нужно авторизорваться");
+        }
     };
 
     const checkPayment = async () => {
@@ -198,7 +210,6 @@ function ProductCardScreen({ route }) {
 
         }
     }
-
 
     const buyNow = async (subcategory) => {
         if (subcategory === 'Одежда') {
@@ -237,10 +248,34 @@ function ProductCardScreen({ route }) {
         setPaymentsMethod(false);
     }
 
+    const renderImages = (product) => {
+        const images = [];
+
+        Object.keys(product).forEach(key => {
+            if (key.startsWith('imagePreview')) {
+                const imagePreviewPath = product[key];
+
+                if (imagePreviewPath) {
+                    images.push(imagePreviewPath);
+                }
+            }
+        });
+
+        return images;
+    };
+
+    const images = renderImages(product);
+
+    const goToCard = (product) => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTo({ y: 0, animated: true }); // Прокрутка на начало
+        }
+        navigation.navigate('Product', { product });
+    };
 
     return (
-        <View>
-            <ScrollView style={styles.container}>
+        <>
+            <ScrollView ref={scrollRef} style={styles.container}>
                 <View style={{ width: '100%', height: 300, justifyContent: 'center', alignItems: 'center', }}>
                     <Swiper
                         showsButtons={false}
@@ -249,22 +284,13 @@ function ProductCardScreen({ route }) {
                         dotStyle={styles.dot}
                         activeDotStyle={styles.activeDot}
                     >
-                        {Array.from({ length: 5 }).map((_, index) => {
-                            const imagePreviewKey = `imagePreview${index + 1}`;
-                            const imagePreviewPath = product[imagePreviewKey];
-
-                            if (imagePreviewPath) {
-                                return (
-                                    <Image
-                                        key={imagePreviewKey}
-                                        style={styles.image}
-                                        source={{ uri: `https://aqtas.garcom.kz/images/imageProducts/${imagePreviewPath}` }}
-                                    />
-                                );
-                            }
-
-                            return null;
-                        })}
+                        {images.map((image, index) => (
+                            <Image
+                                key={index}
+                                style={styles.image}
+                                source={{ uri: `https://aqtas.garcom.kz/images/imageProducts/${image}` }}
+                            />
+                        ))}
                     </Swiper>
                 </View>
                 <View style={{ padding: 20 }}>
@@ -294,7 +320,7 @@ function ProductCardScreen({ route }) {
                                             <>
                                                 {sizes.map((size, index) => (
                                                     <TouchableOpacity
-                                                        key={size.id}
+                                                        key={index}
                                                         style={[
                                                             styles.size,
                                                             selectedSize === size ? styles.selectedSize : null,
@@ -336,31 +362,29 @@ function ProductCardScreen({ route }) {
                     {customerData.length > 0 && (
                         <View style={styles.infoContainer}>
                             <View style={styles.aboutCostumer}>
-                                {customerData.map((customer) => (
-                                    <View key={customer.id}>
-                                        <Text style={[styles.title, { fontSize: 18 }]}>{customer.shop}</Text>
-                                        <View style={{ display: 'flex', flexDirection: 'row' }}>
-                                            <Text style={[styles.title, { fontSize: 16, color: '#BDBDBD' }]}>{customer.fullname}</Text>
-                                            <TouchableOpacity onPress={toggleShowCostumer} style={[styles.commisionButton, { left: 7 }]}>
-                                                <Text style={{ fontFamily: 'Cambria', color: '#95E5FF', fontSize: 18 }}>!</Text>
-                                            </TouchableOpacity>
+                                <View>
+                                    <Text style={[styles.title, { fontSize: 18 }]}>{customerData[0]?.shop}</Text>
+                                    <View style={{ display: 'flex', flexDirection: 'row' }}>
+                                        <Text style={[styles.title, { fontSize: 16, color: '#BDBDBD' }]}>{customerData[0]?.fullname}</Text>
+                                        <TouchableOpacity onPress={toggleShowCostumer} style={[styles.commisionButton, { left: 7 }]}>
+                                            <Text style={{ fontFamily: 'Cambria', color: '#95E5FF', fontSize: 18 }}>!</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={styles.statsContainer}>
+                                        <View style={styles.stat}>
+                                            <Entypo name="star" size={20} color="#FFD600" />
+                                            <Text style={styles.statText}>{customerData[0]?.countSales} {t('count-of-sales-title')}</Text>
                                         </View>
-                                        <View style={styles.statsContainer}>
-                                            <View style={styles.stat}>
-                                                <Entypo name="star" size={20} color="#FFD600" />
-                                                <Text style={styles.statText}>{customer.countSales} {t('count-of-sales-title')}</Text>
-                                            </View>
-                                            <View style={styles.stat}>
-                                                <Image style={{ width: 20, height: 20 }} source={require('../../img/clothes.png')} />
-                                                <Text style={styles.statText}>{customer.defect}% {t('percentage-of-defects-title')}</Text>
-                                            </View>
-                                            <View style={styles.stat}>
-                                                <Image style={{ width: 20, height: 20 }} source={require('../../img/calendar.png')} />
-                                                <Text style={styles.statText}>С {new Date(customer.timeRegistration).toLocaleDateString("ru-RU", { day: "numeric", month: "numeric", year: "numeric" })} {t('date-of-reg-customer-title')}</Text>
-                                            </View>
+                                        <View style={styles.stat}>
+                                            <Image style={{ width: 20, height: 20 }} source={require('../../img/clothes.png')} />
+                                            <Text style={styles.statText}>{customerData[0]?.defect}% {t('percentage-of-defects-title')}</Text>
+                                        </View>
+                                        <View style={styles.stat}>
+                                            <Image style={{ width: 20, height: 20 }} source={require('../../img/calendar.png')} />
+                                            <Text style={styles.statText}>С {new Date(customerData[0]?.timeRegistration).toLocaleDateString("ru-RU", { day: "numeric", month: "numeric", year: "numeric" })} {t('date-of-reg-customer-title')}</Text>
                                         </View>
                                     </View>
-                                ))}
+                                </View>
                             </View>
                         </View>
                     )}
@@ -440,27 +464,30 @@ function ProductCardScreen({ route }) {
                             />
                         </View>
                     </View>
-                    <View style={[styles.infoContainer, { padding: 10 }]}>
-                        <Text style={styles.title}>{t('similar-products-title')}</Text>
-                        {similarProducts.length == 0 ? (
+                    <View style={styles.infoContainer}>
+                        <Text style={[styles.title, { marginTop: 12 }]}>{t('similar-products-title')}</Text>
+                        {similarProducts.length === 0 ? (
                             <View>
-                                <Text style={styles.noDataText}>{t('')}</Text>
+                                <Text style={styles.noDataText}>{t('no-similar-products')}</Text>
                             </View>
                         ) : (
                             <FlatList
-                                horizontal={true} // Горизонтальный список
+                                horizontal={true}
                                 data={similarProducts}
-                                keyExtractor={(item) => item}
-                                style={{ marginVertical: 10 }}
+                                keyExtractor={(item) => item.id.toString()}
+                                style={{ marginTop: 12 }}
                                 renderItem={({ item }) => {
+                                    // Получаем массив картинок для товара
+                                    const images = renderImages(item);
+
                                     return (
                                         <View style={styles.cart} key={item.id}>
                                             <View style={styles.previewContainer}>
-                                                {item.imagePreview1 && !item.imagePreview2 ? (
+                                                {images.length === 1 ? (
                                                     <Image
                                                         style={styles.cartPreview}
                                                         source={{
-                                                            uri: `https://aqtas.garcom.kz/images/imageProducts/${item.imagePreview1}`,
+                                                            uri: `https://aqtas.garcom.kz/images/imageProducts/${images[0]}`,
                                                         }}
                                                     />
                                                 ) : (
@@ -471,38 +498,34 @@ function ProductCardScreen({ route }) {
                                                         dotStyle={styles.dot}
                                                         activeDotStyle={styles.activeDot}
                                                     >
-                                                        {Array.from({ length: 5 }).map((_, index) => {
-                                                            const imagePreviewKey = `imagePreview${index + 1}`;
-                                                            const imagePreviewPath = item[imagePreviewKey];
-
-                                                            if (imagePreviewPath) {
-                                                                return (
-                                                                    <Image
-                                                                        key={imagePreviewKey}
-                                                                        style={styles.cartPreview}
-                                                                        source={{
-                                                                            uri: `https://aqtas.garcom.kz/images/imageProducts/${imagePreviewPath}`,
-                                                                        }}
-                                                                    />
-                                                                );
-                                                            }
-
-                                                            return null;
-                                                        })}
+                                                        {images.map((imagePreviewPath, index) => (
+                                                            <Image
+                                                                key={index}
+                                                                style={styles.cartPreview}
+                                                                source={{
+                                                                    uri: `https://aqtas.garcom.kz/images/imageProducts/${imagePreviewPath}`,
+                                                                }}
+                                                            />
+                                                        ))}
                                                     </Swiper>
                                                 )}
-                                                {item.isTOP ?
+                                                {item.isTOP && (
                                                     <View style={styles.top}>
                                                         <Text style={styles.textTop}>TOP</Text>
-                                                    </View> : null}
+                                                    </View>
+                                                )}
                                                 {item.sale && (
-                                                    <View style={item.imagePreview1 && !item.imagePreview2 ? { ...styles.sale, bottom: 12 } : styles.sale}>
+                                                    <View
+                                                        style={images.length === 1 ? { ...styles.sale, bottom: 12 } : styles.sale}
+                                                    >
                                                         <Text style={styles.saleText}>{item.sale}%</Text>
                                                     </View>
                                                 )}
                                             </View>
-                                            <TouchableOpacity onPress={_ => (goToCard(item))}>
-                                                <View style={item.imagePreview1 && !item.imagePreview2 ? { ...styles.costContainer, marginTop: 10 } : { ...styles.costContainer, marginTop: -20 }}>
+                                            <TouchableOpacity onPress={() => goToCard(item)}>
+                                                <View
+                                                    style={images.length === 1 ? { ...styles.costContainer, marginTop: 10 } : { ...styles.costContainer, marginTop: -20 }}
+                                                >
                                                     <Text style={styles.cost}>{item.cost}тнг</Text>
                                                     {item.oldCost && <Text style={styles.oldCost}>{item.oldCost}тнг</Text>}
                                                 </View>
@@ -510,8 +533,7 @@ function ProductCardScreen({ route }) {
                                                 <Text style={styles.description}>
                                                     {item.description.length > 20
                                                         ? item.description.slice(0, 20) + '...'
-                                                        : item.description
-                                                    }
+                                                        : item.description}
                                                 </Text>
                                                 {item.subcategory === 'Одежда' ? (
                                                     <TouchableOpacity onPress={() => toggleSetSize(item.id, item)} style={styles.addCart}>
@@ -524,15 +546,15 @@ function ProductCardScreen({ route }) {
                                                 )}
                                             </TouchableOpacity>
                                         </View>
-                                    )
+                                    );
                                 }}
                             />
                         )}
                     </View>
                     <View style={styles.buttons}>
-                        <TouchableOpacity onPress={() => buyNow(product.subcategory)} style={styles.buyNow}>
+                        {/* <TouchableOpacity onPress={() => buyNow(product.subcategory)} style={styles.buyNow}>
                             <Text style={styles.buyNowText}>{t('buy-now-button')}</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                         {product.subcategory === 'Одежда' ? (
                             <TouchableOpacity onPress={() => toggleSetSize(product.id, product)} style={styles.addToCartButtons}>
                                 <Text style={styles.addToCartButtonText}>{t('add-to-card-from-card-screen')}</Text>
@@ -552,7 +574,7 @@ function ProductCardScreen({ route }) {
             {isPaymentsMethod && <PaymentMethod productName={product.name} customerId={product.CustomerId} payments={payments} onClose={toggleSetPaymentsMethod} success={toggleSetSuccessOrder} size={selectedSize} />}
             {isSuccessOrder && <SuccessOrder onClose={toggleSetSuccessOrder} />}
             {isNoAddress && <NoAddressMessage />}
-        </View>
+        </>
     )
 };
 

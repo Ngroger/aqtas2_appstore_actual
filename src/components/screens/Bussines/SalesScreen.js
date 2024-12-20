@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View, StatusBar, Image, FlatList, ActivityIndicator } from 'react-native';
+import { Text, TouchableOpacity, View, StatusBar, Image, FlatList } from 'react-native';
 import styles from '../../../styles/SalesScreenStyle';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
@@ -8,6 +8,9 @@ import { useState, useEffect } from 'react';
 import { getUserData } from '../../../store/userDataManager';
 import { useTranslation } from 'react-i18next';
 import { scale } from 'react-native-size-matters';
+
+import Feather from '@expo/vector-icons/Feather';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 function SalesScreen() {
     const navigation = useNavigation();
@@ -53,21 +56,13 @@ function SalesScreen() {
     }, []);
 
     const handlePress = (index) => {
-        const currentTime = new Date().getTime();
-        const doubleClickDelay = 200; // Задержка для определения двойного нажатия (в миллисекундах)
-
         // Создайте новый массив cardStates с обновленным состоянием для текущей карточки
         const newCardStates = [...selectedCard];
-        if (currentTime - lastPress < doubleClickDelay) {
-            newCardStates[index] = !newCardStates[index]; // Инвертировать состояние карточки
-            setCount(count + 2);
-        } else {
-            setCount(count + 1);
-        }
+        newCardStates[index] = !newCardStates[index]; // Инвертировать состояние карточки
 
-        setLastPress(currentTime);
         setSelected(newCardStates); // Обновить состояние карточек
     };
+
 
 
     const handleGoBack = () => {
@@ -110,7 +105,6 @@ function SalesScreen() {
                 </TouchableOpacity>
                 {isLoad && (
                     <View style={styles.loadingIndicatorContainer}>
-                        <ActivityIndicator size="big" color="#95E5FF" />
                         <Text style={styles.textLoad}>{t("products-load-message")}</Text>
                     </View>
                 )}
@@ -131,11 +125,11 @@ function SalesScreen() {
                                                 <BlurView intensity={100} tint="default" style={styles.deleteBackground} />
                                                 <View style={styles.deleteContainer}>
                                                     <TouchableOpacity onPress={() => deleteSale(item.id)}>
-                                                        <Ionicons name="md-trash-outline" size={50} color="#FC0005" />
+                                                        <Feather name="trash-2" size={50} color="#FC0005" />
                                                     </TouchableOpacity>
                                                     <View style={styles.line} />
                                                     <TouchableOpacity onPress={() => cancel(item.id)}>
-                                                        <Ionicons name="ios-close" size={50} color="#14FF00" />
+                                                        <AntDesign name="close" size={50} color="#14FF00" />
                                                     </TouchableOpacity>
                                                 </View>
                                             </>

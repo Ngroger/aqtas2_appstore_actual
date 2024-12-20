@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import ImagePreview from '../ux/popup/ImagePreview';
 import WriteReview from '../ux/popup/WriteReview';
 import axios from 'axios';
+import { useUnauth } from '../../context/UnauthProvider';
+import { getUserData } from '../../store/userDataManager';
 
 function ReviewsScreen({ route }) {
     const navigation = useNavigation();
@@ -17,7 +19,17 @@ function ReviewsScreen({ route }) {
     const [activeCategory, setActiveCategory] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const [reviewsData, setReviews] = useState([]);
-    const [isMainLoad, setIsMainLoad] = useState(false);
+    const { openModal } = useUnauth();
+
+    const categories = [
+        { id: 1, name: 'Положительные', value: '5' },
+        { id: 2, name: 'Отрицательные', value: '1' },
+        { id: 3, name: '5 ★', value: '5' },
+        { id: 4, name: '4 ★', value: '4' },
+        { id: 5, name: '3 ★', value: '3' },
+        { id: 6, name: '2 ★', value: '2' },
+        { id: 7, name: '1 ★', value: '1' },
+    ];
 
     useEffect(() => {
         loadReviewsData();
@@ -34,8 +46,13 @@ function ReviewsScreen({ route }) {
             });
     }
 
-    const toggleWriteReview = () => {
-        setShowWriteReview(!isShowWriteReview);
+    const toggleWriteReview = async () => {
+        const userData = await getUserData();
+        if (userData) {
+            setShowWriteReview(!isShowWriteReview);
+        } else {
+            openModal('Предупреждение', 'Для того, чтоб оставить комментарий на товар нужно авторизоваться. Пожалуйста, войдите или пройдите регистрацию')
+        }
     }
 
     const toggleShowImagePreview = () => {
@@ -103,17 +120,7 @@ function ReviewsScreen({ route }) {
         } else {
             return percentage;
         }
-    }
-
-    const categories = [
-        { id: 1, name: 'Положительные', value: '5' },
-        { id: 2, name: 'Отрицательные', value: '1' },
-        { id: 3, name: '5 ★', value: '5' },
-        { id: 4, name: '4 ★', value: '4' },
-        { id: 5, name: '3 ★', value: '3' },
-        { id: 6, name: '2 ★', value: '2' },
-        { id: 7, name: '1 ★', value: '1' },
-    ];
+    };
 
     const handleCategoryClick = (categoryId) => {
         if (activeCategory === categoryId) {

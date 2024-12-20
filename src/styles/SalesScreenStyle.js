@@ -10,7 +10,7 @@ const styles = ScaledSheet.create({
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        marginTop: 10,
+        marginTop: 28,
         paddingHorizontal: 24
     },
     title: {
@@ -62,7 +62,8 @@ const styles = ScaledSheet.create({
     line: {
         height: '100%',
         width: 1,
-        backgroundColor:'#000'
+        backgroundColor: '#000',
+        marginHorizontal: 16
     },
     addSaleButton: {
         borderRadius: 15,

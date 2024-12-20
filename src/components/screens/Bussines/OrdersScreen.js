@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View, StatusBar, FlatList, Image, ActivityIndicator } from 'react-native';
+import { Text, TouchableOpacity, View, StatusBar, FlatList, Image } from 'react-native';
 import styles from '../../../styles/OrderScreenStyles';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -148,7 +148,6 @@ function OrderScreen() {
                 </TouchableOpacity>
                 {isLoad && (
                     <View style={styles.loadingIndicatorContainer}>
-                        <ActivityIndicator size="big" color="#95E5FF" />
                         <Text style={styles.textLoad}>{t('products-load-message')}</Text>
                     </View>
                 )}

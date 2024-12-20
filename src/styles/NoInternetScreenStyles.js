@@ -9,12 +9,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     logotype: {
-        width: 350,
-        height: 250
+        width: 250,
+        height: 150,
+        objectFit: 'contain'
     },
     title: {
         fontFamily: 'Cambria',
-        fontSize: 32,
+        fontSize: 28,
         textAlign: 'center',
         color: '#95E5FF'
     },
@@ -25,9 +26,9 @@ const styles = StyleSheet.create({
         color: '#FFF'
     },
     button: {
-        marginTop: 150,
-        width: 64,
-        height: 64,
+        marginTop: 24,
+        width: 48,
+        height: 48,
         borderRadius: 100,
         backgroundColor: 'rgba(149, 229, 255, 0.10)',
         justifyContent: 'center',

@@ -234,5 +234,9 @@
         "passwords-do-not-match": "Құпия сөздер сәйкес келмейді",
         "password-must-be-greater": "Жаңа құпия сөз 10 таңбадан жоғары болуы керек",
         "old-pass-wrong": "Ескі құпия сөз дұрыс емес"
+    },
+    "unauth-modal": {
+        "cancel": "Басты бетке",
+        "registration": "Тіркеу"
     }
 }

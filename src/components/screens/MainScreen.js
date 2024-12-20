@@ -1,89 +1,89 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, ScrollView, ActivityIndicator, StatusBar, Alert } from 'react-native';
 import styles from '../../styles/MainScreenStyle';
 import { AntDesign } from '@expo/vector-icons';
 import Swiper from 'react-native-swiper'
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native';
 import { getUserData } from '../../store/userDataManager';
 import SizeSelector from '../ux/popup/SizeSelector';
 import { useTranslation } from 'react-i18next';
-import { scale, s } from 'react-native-size-matters';
+import { scale } from 'react-native-size-matters';
+import { useUnauth } from '../../context/UnauthProvider';
+import { useCategories } from '../../context/CategoriesProvider';
+import { categories } from '../../categories';
 
 function MainScreen() {
     const navigation = useNavigation();
     const [products, setProducts] = useState([]);
     const [userData, setUserData] = useState({});
-    const [activeCategory, setActiveCategory] = useState(null);
-    const [flatListData, setFlatListData] = useState([]);
-    const [isLoading, setIsLoading] = useState(false); // Добавлено состояние для отображения индикатора загрузки
+
+    const { selectedCategory, selectCategoryContext } = useCategories();
+
+    const [isLoading, setIsLoading] = useState(false);
     const [search, onChangeSearch] = useState('');
     const [isSizeSelect, setIsSizeSelector] = useState(false);
     const [productId, setProductId] = useState();
     const [selectedProduct, setSelectedProduct] = useState([]);
     const { t } = useTranslation();
+    const { openModal } = useUnauth();
 
-    const toggleSetSize = (id, product) => {
-        setIsSizeSelector(!isSizeSelect);
-        setProductId(id);
-        setSelectedProduct(product);
-    }
+    useEffect(() => {
+        loadUserData();
+        // Здесь вы вызываете fetchProducts при изменении selectedCategory
+        fetchProducts(selectedCategory ? 'categories' : 'all', selectedCategory);
+    }, [selectedCategory]);
 
-    const categories = [
-        { id: 1, value: 'Детская одежда', name: `${t('child-cloth-category')}` },
-        { id: 2, value: 'Женское', name: `${t('woman-category')}` },
-        { id: 3, value: 'Мужское', name: `${t('men-category')}` },
-        { id: 4, value: 'Спорт', name: `${t('sport-category')}` },
-    ];
-
-    const handleCategoryClick = (categoryId) => {
-        if (activeCategory === categoryId) {
-            setActiveCategory(null);
-            setIsLoading(true); // Показать индикатор загрузки
-
-            // Вернуться к рендеру всех продуктов через некоторое время
-            setTimeout(() => {
-                setIsLoading(false);
-                loadUserData();  // Загрузить все продукты с сервера
-            }, 1000); // Время загрузки в миллисекундах (в данном случае 5 секунд)
+    const toggleSetSize = async (id, product) => {
+        const userData = await getUserData();
+        if (userData) {
+            console.log("test 2");
+            setIsSizeSelector(!isSizeSelect);
+            setProductId(id);
+            setSelectedProduct(product);
         } else {
-            setActiveCategory(categoryId);
-            setIsLoading(true);
-
-            fetch(`https://aqtas.garcom.kz/products/${categories[categoryId - 1].value}`)
-                .then((response) => response.json())
-                .then((data) => {
-                    setProducts(data);
-                    setIsLoading(false);
-                })
-                .catch((error) => {
-                    setIsLoading(false);
-                });
+            openModal("Предупреждение", "Для того, чтоб добавить товар в корзину нужно авторизорваться");
         }
     };
 
+    const selectCategory = async (category) => {
+        console.log("selected category: ", category);
+        if (selectedCategory === category) {
+            selectCategoryContext(null);
+            await fetchProducts('all');
+        } else {
+            selectCategoryContext(category);
+            await fetchProducts('categories', category);
+        }
+    };
 
-    useEffect(() => {
-        setIsLoading(true);
-        loadUserData();
-        const intervalId = setInterval(() => {
-            try {
-                fetch('https://aqtas.garcom.kz/products')
-                    .then((response) => response.json())
-                    .then((data) => {
-                        setProducts(data);
-                        setIsLoading(false);
-                    })
-                    .catch((error) => {
-                    });
-            } catch (error) {
+    const fetchProducts = async (type, category) => {
+        try {
+            setIsLoading(true);
+
+            const url = type === 'categories'
+                ? `https://aqtas.garcom.kz/products/${category}`
+                : 'https://aqtas.garcom.kz/products';
+
+            console.log("url: ", url);
+            console.log("type: ", type);
+
+            const response = await fetch(url, {
+                method: 'GET'
+            });
+
+            const responseJson = await response.json();
+
+            if (responseJson.success) {
+                setProducts(responseJson.products);
             }
-        }, 2000); // 5000 миллисекунд
+        } catch (error) {
+            console.log('fetch by category error: ', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
-        return () => {
-            clearInterval(intervalId); // Очищаем интервал при размонтировании компонента
-        };
-    }, []);
 
     const goToCard = (product) => {
         navigation.navigate('Product', { product });
@@ -97,8 +97,12 @@ function MainScreen() {
     };
 
     const addToCart = async (product) => {
+        if (!userData || !userData.userId) {
+            openModal("Предупреждение", "Для того, чтоб добавить товар в корзину нужно авторизорваться");
+            return;
+        }
+
         try {
-            // Определим параметры для добавления товара в корзину
             const cartItem = {
                 name: product.name,
                 oldCost: product.oldCost,
@@ -111,29 +115,26 @@ function MainScreen() {
                 count: 1,
             };
 
-            const resposne = await fetch('https://aqtas.garcom.kz/addToCart', {
+            const response = await fetch('https://aqtas.garcom.kz/addToCart', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(cartItem)
+                body: JSON.stringify(cartItem),
             });
 
-            const responseJson = await resposne.json();
+            const responseJson = await response.json();
 
             if (responseJson.success) {
                 Alert.alert(`${t("message-title")}`, `${t("product-success")}`);
-            } else {
-                if (responseJson.error === 'Этот товар уже есть в корзине') {
-                    Alert.alert(`${t("title-no-card-message")}`, `${t("product-exist-in-cart")}`);;
-                }
+            } else if (responseJson.error === 'Этот товар уже есть в корзине') {
+                Alert.alert(`${t("title-no-card-message")}`, `${t("product-exist-in-cart")}`);
             }
-
         } catch (error) {
-            console.log('add to cart error: ', error);
-
-        };
+            console.error('add to cart error:', error);
+        }
     };
+
 
     const groupedProducts = {};
     if (Array.isArray(products)) {
@@ -186,24 +187,24 @@ function MainScreen() {
                 </View>
                 <View style={styles.categoriesContainer}>
                     <ScrollView horizontal style={styles.categories}>
-                        {categories.map((category) => (
+                        {categories.map((category, index) => (
                             <TouchableOpacity
-                                key={category.id}
+                                key={index}
                                 style={
-                                    activeCategory === category.id
+                                    selectedCategory === category.value
                                         ? styles.categoryActive
                                         : styles.category
                                 }
-                                onPress={() => handleCategoryClick(category.id)}
+                                onPress={() => selectCategory(category.value)}
                             >
                                 <Text
                                     style={
-                                        activeCategory === category.id
+                                        selectedCategory === category.value
                                             ? styles.categoryTextActive
                                             : styles.categoryText
                                     }
                                 >
-                                    {category.name}
+                                    {t(`${category.label}`)}
                                 </Text>
                             </TouchableOpacity>
                         ))}
@@ -307,9 +308,9 @@ function MainScreen() {
                         )}
                     </>
                 )}
-                <StatusBar backgroundColor="transparent" translucent={true} />
             </View>
             {isSizeSelect && <SizeSelector onClose={toggleSetSize} id={productId} productData={selectedProduct} />}
+            <StatusBar backgroundColor="transparent" translucent={true} />
         </View>
     );
 }

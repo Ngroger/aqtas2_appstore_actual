@@ -6,15 +6,23 @@ const styles = StyleSheet.create({
         height: '100%',
         backgroundColor: '#FFF',
     },
+    textLoad: {
+        width: '85%',
+        textAlign: 'center',
+        justifyContent: 'center',
+        color: '#141414',
+        fontFamily: 'Cambria',
+        fontSize: 20
+    },
     titleContainer: {
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
         paddingHorizontal: 24,
-        marginTop: 24
+        marginTop: 36
     },
     title: {
-        fontSize: 28,
+        fontSize: 24,
         fontFamily: 'Cambria'
     },
     input: {
@@ -38,18 +46,20 @@ const styles = StyleSheet.create({
         left: 10,
         fontFamily: 'Cambria',
         fontSize: 20,
-    }, 
+    },
     infoContainer: {
         marginTop: 6
     },
     firstInfo: {
         fontFamily: 'Cambria',
-        fontSize: 20
+        fontSize: 18,
+        marginTop: 6
     },
     secondInfo: {
         fontFamily: 'Cambria',
         fontSize: 20,
-        color: '#BDBDBD'
+        color: '#BDBDBD',
+        width: '85%'
     },
     field: {
         width: '100%',
@@ -57,9 +67,11 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         borderColor: '#95E5FF',
         padding: 10,
+        paddingHorizontal: 16,
         flexDirection: 'row',
         display: 'flex',
         justifyContent: 'space-between',
+        alignItems: 'center',
         marginTop: 6
     },
     fieldTitle: {
@@ -80,7 +92,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Cambria',
         color: '#BDBDBD',
         fontSize: 20,
-        left: 10
+        left: 10,
     },
     error: {
         fontFamily: 'Cambria',

@@ -18,15 +18,7 @@ function NoInternetMessage() {
         const isConnected = netInfoState.isConnected;
 
         if (isConnected) {
-            // Если есть интернет
-            const tokenExists = await hasToken();
-            if (tokenExists) {
-                // Если есть токен, отправляем пользователя на главный стек навигации
-                navigation.navigate('MainTabs');
-            } else {
-                // Если нет токена, отправляем пользователя на экран регистрации
-                navigation.navigate('Registration');
-            }
+            navigation.navigate('MainTabs');
         } else {
             // Сбросить значение перед каждым запуском анимации
             spinValue.setValue(0);
@@ -54,10 +46,10 @@ function NoInternetMessage() {
             <Text style={styles.title}>Не удалось подключиться к интернету.</Text>
             <TouchableOpacity style={styles.button} onPress={reloadInternetConnection}>
                 <Animated.View style={{ transform: [{ rotate: spin }] }}>
-                    <AntDesign name="reload1" size={36} color="#95E5FF" />
+                    <AntDesign name="reload1" size={24} color="#95E5FF" />
                 </Animated.View>
             </TouchableOpacity>
-            <StatusBar backgroundColor="transparent" translucent={true}/>
+            <StatusBar backgroundColor="transparent" translucent={true} />
         </View>
     );
 }
