@@ -29,7 +29,7 @@ function AddBankCard({ onClose }) {
       setUserData(userData);
       // Выполните запрос к серверу для получения данных о финансах
       try {
-        const response = await fetch(`https://aqtas.garcom.kz/bankCards/${userData.userId}`);
+        const response = await fetch(`https://aqtas.garcom.kz/api/bankCards/${userData.userId}`);
         if (response.ok) {
           const data = await response.json();
           setCards(data);

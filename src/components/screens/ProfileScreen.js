@@ -38,7 +38,7 @@ function ProfileScreen() {
       const newStatus = !isPush;
 
       // Отправьте PUT-запрос на сервер для обновления статуса push-уведомлений
-      const response = await fetch(`https://aqtas.garcom.kz/updatePushStatus/${userData.userId}/${newStatus}`, {
+      const response = await fetch(`https://aqtas.garcom.kz/api/updatePushStatus/${userData.userId}/${newStatus}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ function ProfileScreen() {
       const userData = await getUserData();
       if (userData && userData.userId && userData.fullname) {
         setUserData(userData);
-        const response = await fetch(`https://aqtas.garcom.kz/isBussines/${userData.userId}`);
+        const response = await fetch(`https://aqtas.garcom.kz/api/isBussines/${userData.userId}`);
         if (response.ok) {
           const data = await response.json();
           const isBussinesAccount = data && data.isBussinesAccount;
@@ -117,7 +117,7 @@ function ProfileScreen() {
               {userData && (
                 <View style={[styles.infoContainer, { justifyContent: 'space-between' }]}>
                   <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
-                    <Image source={{ uri: `https://aqtas.garcom.kz/images/photoUsers/${userData?.photoUser}` }} style={styles.photo} />
+                    <Image source={{ uri: `https://aqtas.garcom.kz/api/images/photoUsers/${userData?.photoUser}` }} style={styles.photo} />
                     <View>
                       <Text style={styles.infoText}>{t('greetings-title')},</Text>
                       <Text style={styles.infoText}>{userData?.fullname} {userData?.surname}</Text>

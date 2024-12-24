@@ -59,11 +59,11 @@ function ProductCardScreen({ route }) {
     useEffect(() => {
         loadUserData();
         getSizes();
-        fetch(`https://aqtas.garcom.kz/products/${product.id}/reviews`)
+        fetch(`https://aqtas.garcom.kz/api/products/${product.id}/reviews`)
             .then((response) => response.json())
             .then((data) => {
                 setReviews(data);
-                fetch(`https://aqtas.garcom.kz/customers/${product.CustomerId}`)
+                fetch(`https://aqtas.garcom.kz/api/customers/${product.CustomerId}`)
                     .then((response) => response.json())
                     .then((data) => {
                         setCustomerData(data);
@@ -75,10 +75,10 @@ function ProductCardScreen({ route }) {
             .catch((error) => {
 
             });
-        fetch(`https://aqtas.garcom.kz/products/${product.category}`)
+        fetch(`https://aqtas.garcom.kz/api/products/${product.category}`)
             .then((response) => response.json())
             .then((data) => {
-                setSimilarProducts(data);
+                setSimilarProducts(data.products);
             })
             .catch((error) => {
             });
@@ -86,7 +86,7 @@ function ProductCardScreen({ route }) {
 
     const getSizes = () => {
         try {
-            fetch(`https://aqtas.garcom.kz/sizes/${product.id}`)
+            fetch(`https://aqtas.garcom.kz/api/sizes/${product.id}`)
                 .then((response) => response.json())
                 .then((data) => {
                     // Создаем массив непустых размеров
@@ -171,7 +171,7 @@ function ProductCardScreen({ route }) {
                 count: 1,
             };
 
-            fetch('https://aqtas.garcom.kz/addToCart', {
+            fetch('https://aqtas.garcom.kz/api/addToCart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -192,7 +192,7 @@ function ProductCardScreen({ route }) {
 
     const checkPayment = async () => {
         try {
-            const response = await fetch(`https://aqtas.garcom.kz/bankCards/${userData.userId}`);
+            const response = await fetch(`https://aqtas.garcom.kz/api/bankCards/${userData.userId}`);
             if (response.ok) {
                 const data = await response.json();
                 if (data.length === 0) {
@@ -288,7 +288,7 @@ function ProductCardScreen({ route }) {
                             <Image
                                 key={index}
                                 style={styles.image}
-                                source={{ uri: `https://aqtas.garcom.kz/images/imageProducts/${image}` }}
+                                source={{ uri: `https://aqtas.garcom.kz/api/images/imageProducts/${image}` }}
                             />
                         ))}
                     </Swiper>
@@ -445,7 +445,7 @@ function ProductCardScreen({ route }) {
                                             <View style={styles.reviewInfo}>
                                                 <Image
                                                     style={styles.imageReviewer}
-                                                    source={{ uri: `https://aqtas.garcom.kz/images/photoUsers/${item.photoReviewer}` }}
+                                                    source={{ uri: `https://aqtas.garcom.kz/api/images/photoUsers/${item.photoReviewer}` }}
                                                 />
                                                 <View style={{ marginLeft: 10 }}>
                                                     <Text style={styles.reviwerName}>{item.nameReviewer}</Text>
@@ -487,7 +487,7 @@ function ProductCardScreen({ route }) {
                                                     <Image
                                                         style={styles.cartPreview}
                                                         source={{
-                                                            uri: `https://aqtas.garcom.kz/images/imageProducts/${images[0]}`,
+                                                            uri: `https://aqtas.garcom.kz/api/images/imageProducts/${images[0]}`,
                                                         }}
                                                     />
                                                 ) : (
@@ -503,7 +503,7 @@ function ProductCardScreen({ route }) {
                                                                 key={index}
                                                                 style={styles.cartPreview}
                                                                 source={{
-                                                                    uri: `https://aqtas.garcom.kz/images/imageProducts/${imagePreviewPath}`,
+                                                                    uri: `https://aqtas.garcom.kz/api/images/imageProducts/${imagePreviewPath}`,
                                                                 }}
                                                             />
                                                         ))}

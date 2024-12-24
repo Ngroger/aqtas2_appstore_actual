@@ -22,7 +22,7 @@ function AddPaymentsMethod() {
 
     const AddPaypalMethod = async () => {
         try {
-            const apiUrl = `https://aqtas.garcom.kz/isEmailPaypal/${userData.userId}`;
+            const apiUrl = `https://aqtas.garcom.kz/api/isEmailPaypal/${userData.userId}`;
 
             const response = await fetch(apiUrl);
 

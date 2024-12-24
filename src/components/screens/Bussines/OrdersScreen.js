@@ -43,7 +43,7 @@ function OrderScreen() {
     const deleteOrderWithReason = async (id, buyerId) => {
         try {
             const reasons = encodeURIComponent("Время ответа истекло. За ожидание с продавца снимется рейтинг");
-            const response = await fetch(`https://aqtas.garcom.kz/deleteOrder/${userData.userId}/${id}/${buyerId}?reasons=${reasons}`, {
+            const response = await fetch(`https://aqtas.garcom.kz/api/deleteOrder/${userData.userId}/${id}/${buyerId}?reasons=${reasons}`, {
                 method: 'DELETE',
             });
 
@@ -71,7 +71,7 @@ function OrderScreen() {
             setUserData(userData);
             // Выполните запрос к серверу для получения данных о финансах
             try {
-                const response = await fetch(`https://aqtas.garcom.kz/orders/${userData.userId}`);
+                const response = await fetch(`https://aqtas.garcom.kz/api/orders/${userData.userId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setOrders(data);
@@ -106,7 +106,7 @@ function OrderScreen() {
 
     const updateOrderAvailability = async (orderId, buyerId) => {
         try {
-            const response = await fetch(`https://aqtas.garcom.kz/updateOrderAvailability/${userData.userId}/${orderId}/${buyerId}`, {
+            const response = await fetch(`https://aqtas.garcom.kz/api/updateOrderAvailability/${userData.userId}/${orderId}/${buyerId}`, {
                 method: 'PUT', // Используйте HTTP-метод PUT для обновления
             });
 
@@ -123,7 +123,7 @@ function OrderScreen() {
     const notAvailable = async (orderId, buyerId) => {
         try {
             const reasons = encodeURIComponent("Товара нет в наличии");
-            const response = await fetch(`https://aqtas.garcom.kz/deleteOrder/${userData.userId}/${orderId}/${buyerId}?reasons=${reasons}`, {
+            const response = await fetch(`https://aqtas.garcom.kz/api/deleteOrder/${userData.userId}/${orderId}/${buyerId}?reasons=${reasons}`, {
                 method: 'DELETE', // Используйте HTTP-метод DELETE для удаления записи заказа
             });
 
@@ -165,7 +165,7 @@ function OrderScreen() {
                                     <TouchableOpacity style={styles.order} onPress={() => selectCard(item.id)}>
                                         <View style={{ padding: 16 }}>
                                             <View style={styles.infoContainer}>
-                                                <Image style={styles.orderImage} source={{ uri: `https://aqtas.garcom.kz/images/photoUsers/${item.photoUser}` }} />
+                                                <Image style={styles.orderImage} source={{ uri: `https://aqtas.garcom.kz/api/images/photoUsers/${item.photoUser}` }} />
                                                 <View style={{ left: 10 }}>
                                                     <Text style={styles.nameOrder}>{item.name}</Text>
                                                     <Text style={styles.infoOrder}>{item.nameProduct}</Text>

@@ -134,7 +134,7 @@ function ConfirmPassword(props) {
             storeUserData(props.userData);
 
             // Send data to the server using Axios
-            axios.post('https://aqtas.garcom.kz/register', user)
+            axios.post('https://aqtas.garcom.kz/api/register', user)
                 .then((response) => {
                     if (response.data.success) {
                         const authToken = response.data.authToken;

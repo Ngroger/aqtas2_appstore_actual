@@ -63,11 +63,11 @@ function SelectLanguage(props) {
             {isOpen && (
                 <View style={styles.openAccordion}>
                     <TouchableOpacity onPress={() => changeLanguage('ru', `Русский язык`)}>
-                        <Text style={[styles.language, { fontSize: s(20) }]}>{t('russian-language')}</Text>
+                        <Text style={[styles.language, { fontSize: s(16) }]}>{t('russian-language')}</Text>
                     </TouchableOpacity>
                     <View style={styles.line} />
                     <TouchableOpacity onPress={() => changeLanguage('kz', `Қазақ тілі`)}>
-                        <Text style={[styles.language, { fontSize: s(20) }]}>{t('kaz-language')}</Text>
+                        <Text style={[styles.language, { fontSize: s(16) }]}>{t('kaz-language')}</Text>
                     </TouchableOpacity>
                 </View>
             )}

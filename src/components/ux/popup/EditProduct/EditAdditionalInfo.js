@@ -70,7 +70,7 @@ function EditAdditionalInfo({ onClose, productId }) {
         };
 
         // Отправка данных на сервер
-        fetch(`https://aqtas.garcom.kz/updateAdditionalProduct/${userData.userId}/${productId}`, {
+        fetch(`https://aqtas.garcom.kz/api/updateAdditionalProduct/${userData.userId}/${productId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

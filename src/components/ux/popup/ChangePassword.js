@@ -39,7 +39,7 @@ function ChangePassword({ onClose, userId }) {
             newPassword: newPassword,
         };
 
-        fetch('https://aqtas.garcom.kz/passwordChange', {
+        fetch('https://aqtas.garcom.kz/api/passwordChange', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

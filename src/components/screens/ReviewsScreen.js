@@ -36,7 +36,7 @@ function ReviewsScreen({ route }) {
     }, []);
 
     const loadReviewsData = () => {
-        fetch(`https://aqtas.garcom.kz/products/${id}/reviews`)
+        fetch(`https://aqtas.garcom.kz/api/products/${id}/reviews`)
             .then((response) => response.json())
             .then((data) => {
                 setReviews(data);
@@ -67,7 +67,7 @@ function ReviewsScreen({ route }) {
     const dislike = (reviewId) => {
         // Проверяем, поставлен ли уже дизлайк для этого отзыва
         if (likes[reviewId] !== 'dislike') {
-            axios.post(`https://aqtas.garcom.kz/dislikeReview/${reviewId}`)
+            axios.post(`https://aqtas.garcom.kz/api/dislikeReview/${reviewId}`)
                 .then(response => {
 
                     // Устанавливаем состояние дизлайка для этого отзыва
@@ -82,7 +82,7 @@ function ReviewsScreen({ route }) {
     const like = (reviewId) => {
         // Проверяем, поставлен ли уже дизлайк для этого отзыва
         if (likes[reviewId] !== 'like') {
-            axios.post(`https://aqtas.garcom.kz/likeReview/${reviewId}`)
+            axios.post(`https://aqtas.garcom.kz/api/likeReview/${reviewId}`)
                 .then(response => {
                     // Устанавливаем состояние дизлайка для этого отзыва
                     setLikes({ ...likes, [reviewId]: 'like' });
@@ -135,7 +135,7 @@ function ReviewsScreen({ route }) {
         } else {
             setActiveCategory(categoryId);
             setIsLoading(true);
-            fetch(`https://aqtas.garcom.kz/products/${id}/reviews/${categories[categoryId - 1].value}`)
+            fetch(`https://aqtas.garcom.kz/api/products/${id}/reviews/${categories[categoryId - 1].value}`)
                 .then((response) => response.json())
                 .then((data) => {
                     setReviews(data);
@@ -241,10 +241,10 @@ function ReviewsScreen({ route }) {
                                                                 return (
                                                                     <TouchableOpacity
                                                                         key={photoReviewKey}
-                                                                        onPress={() => handleImagePreview({ uri: `https://aqtas.garcom.kz/images/imageReviews/${photoReview}` })}
+                                                                        onPress={() => handleImagePreview({ uri: `https://aqtas.garcom.kz/api/images/imageReviews/${photoReview}` })}
                                                                         style={{ marginLeft: 10 }}
                                                                     >
-                                                                        <Image source={{ uri: `https://aqtas.garcom.kz/images/imageReviews/${photoReview}` }} style={styles.imageReview} />
+                                                                        <Image source={{ uri: `https://aqtas.garcom.kz/api/images/imageReviews/${photoReview}` }} style={styles.imageReview} />
                                                                     </TouchableOpacity>
                                                                 );
                                                             }
@@ -254,7 +254,7 @@ function ReviewsScreen({ route }) {
                                                     <View style={styles.review}>
                                                         <View style={styles.reviewInfo}>
                                                             <View style={{ display: 'flex', flexDirection: 'row' }}>
-                                                                <Image style={styles.imageReviewer} source={{ uri: `https://aqtas.garcom.kz/images/photoUsers/${review.photoReviewer}` }} />
+                                                                <Image style={styles.imageReviewer} source={{ uri: `https://aqtas.garcom.kz/api/images/photoUsers/${review.photoReviewer}` }} />
                                                                 <View style={{ marginLeft: 10 }}>
                                                                     <Text style={styles.reviwerName}>{review.nameReviewer}</Text>
                                                                     <Text style={styles.reviewerDate}>

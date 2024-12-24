@@ -44,7 +44,7 @@ function PaymentMethod({ payments, onClose, productName, customerId, size, succe
         };
 
         try {
-            const response = await axios.post('https://aqtas.garcom.kz/createOrder', requestData);
+            const response = await axios.post('https://aqtas.garcom.kz/api/createOrder', requestData);
             if (response.data.success) {
                 success();
             }
@@ -57,7 +57,7 @@ function PaymentMethod({ payments, onClose, productName, customerId, size, succe
 
     const getUserPhoto = async () => {
         try {
-            const response = await fetch(`https://aqtas.garcom.kz/getUserImage/${userData.userId}`);
+            const response = await fetch(`https://aqtas.garcom.kz/api/getUserImage/${userData.userId}`);
             if (response.ok) {
                 const data = await response.json();
                 return data.photo

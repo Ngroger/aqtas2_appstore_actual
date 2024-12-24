@@ -155,7 +155,7 @@ function CreateProduct({ onClose }) {
             setUresData(userData);
             // Выполните запрос к серверу для получения данных о финансах
             try {
-                const response = await fetch(`https://aqtas.garcom.kz/bankCards/${userData.userId}`);
+                const response = await fetch(`https://aqtas.garcom.kz/api/bankCards/${userData.userId}`);
                 if (response.ok) {
                     const data = await response.json();
                     if (data.length === 0) {
@@ -247,7 +247,7 @@ function CreateProduct({ onClose }) {
         }
 
         try {
-            const response = await fetch('https://aqtas.garcom.kz/createProduct', {
+            const response = await fetch('https://aqtas.garcom.kz/api/createProduct', {
                 method: 'POST',
                 body: formData,
             });

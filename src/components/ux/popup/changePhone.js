@@ -28,7 +28,7 @@ function ChangePhone({ onClose, phone, userId }) {
     const handleConfirm = () => {
         if (value.length === CELL_COUNT) {
             // Send a request to verify the SMS code.
-            fetch('https://aqtas.garcom.kz/validateSMS', {
+            fetch('https://aqtas.garcom.kz/api/validateSMS', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ function ChangePhone({ onClose, phone, userId }) {
                 .then((response) => response.json())
                 .then((data) => {
                     const newPhone = phone;
-                    fetch('https://aqtas.garcom.kz/updatePhoneNumber', {
+                    fetch('https://aqtas.garcom.kz/api/updatePhoneNumber', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',

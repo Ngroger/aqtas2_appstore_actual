@@ -61,7 +61,7 @@ function EditProductScreen() {
             setUserData(userData);
             // Выполните запрос к серверу для получения данных о финансах
             try {
-                const response = await fetch(`https://aqtas.garcom.kz/customers/${userData.userId}`);
+                const response = await fetch(`https://aqtas.garcom.kz/api/customers/${userData.userId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setCustomer(data);
@@ -92,7 +92,7 @@ function EditProductScreen() {
 
         // Выполняем HTTP POST запрос на ваш сервер
         try {
-            const response = await fetch(`https://aqtas.garcom.kz/updateProductImage/${userData.userId}/${productData.id}`, {
+            const response = await fetch(`https://aqtas.garcom.kz/api/updateProductImage/${userData.userId}/${productData.id}`, {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -235,7 +235,7 @@ function EditProductScreen() {
                                 <View style={styles.photo} key={index}>
                                     <Image
                                         style={styles.photoPickFront}
-                                        source={{ uri: `https://aqtas.garcom.kz/images/imageProducts/${image}` }}
+                                        source={{ uri: `https://aqtas.garcom.kz/api/images/imageProducts/${image}` }}
                                     />
                                 </View>
                             ))}

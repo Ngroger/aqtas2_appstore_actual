@@ -45,7 +45,7 @@ function MyGoodsScreen() {
             setActiveCategory(categoryId);
             setIsLoading(true);
 
-            fetch(`https://aqtas.garcom.kz/myProducts/${userData.userId}/${categories[categoryId - 1].value}`)
+            fetch(`https://aqtas.garcom.kz/api/myProducts/${userData.userId}/${categories[categoryId - 1].value}`)
                 .then((response) => response.json())
                 .then((data) => {
                     setProducts(data);
@@ -69,7 +69,7 @@ function MyGoodsScreen() {
             setUserData(userData);
             // Выполните запрос к серверу для получения данных о финансах
             try {
-                const response = await fetch(`https://aqtas.garcom.kz/myProducts/${userData.userId}`);
+                const response = await fetch(`https://aqtas.garcom.kz/api/myProducts/${userData.userId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setProducts(data);
@@ -111,7 +111,7 @@ function MyGoodsScreen() {
 
         try {
             for (const productId of selectedProductIds) {
-                const response = await fetch(`https://aqtas.garcom.kz/removeMyProduct/${userData.userId}/${productId}`, {
+                const response = await fetch(`https://aqtas.garcom.kz/api/removeMyProduct/${userData.userId}/${productId}`, {
                     method: 'DELETE',
                 });
 
@@ -138,7 +138,7 @@ function MyGoodsScreen() {
 
         try {
             for (const productId of selectedProductIds) {
-                const response = await fetch(`https://aqtas.garcom.kz/actionMyProduct/${userData.userId}/${productId}/${action}`, {
+                const response = await fetch(`https://aqtas.garcom.kz/api/actionMyProduct/${userData.userId}/${productId}/${action}`, {
                     method: 'DELETE',
                 });
 
@@ -202,7 +202,7 @@ function MyGoodsScreen() {
                                     keyExtractor={(item, index) => index.toString()}
                                     renderItem={({ item }) => (
                                         <View style={styles.card}>
-                                            <Image style={styles.productPreview} source={{ uri: `https://aqtas.garcom.kz/images/imageProducts/${item.imagePreview1}` }} />
+                                            <Image style={styles.productPreview} source={{ uri: `https://aqtas.garcom.kz/api/images/imageProducts/${item.imagePreview1}` }} />
                                             <View style={{ flex: 1, marginLeft: 10 }}>
                                                 <View style={styles.costContainer}>
                                                     <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center' }}>

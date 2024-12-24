@@ -22,7 +22,7 @@ function FinanceScreen() {
             setUserData(userData);
             // Выполните запрос к серверу для получения данных о финансах
             try {
-                const response = await fetch(`https://aqtas.garcom.kz/finances/${userData.userId}`);
+                const response = await fetch(`https://aqtas.garcom.kz/api/finances/${userData.userId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setFinances(data);
@@ -48,7 +48,7 @@ function FinanceScreen() {
 
         if (status) {
             try {
-                const response = await fetch(`https://aqtas.garcom.kz/finances/${userData.userId}/${status}`);
+                const response = await fetch(`https://aqtas.garcom.kz/api/finances/${userData.userId}/${status}`);
                 if (response.ok) {
                     const data = await response.json();
                     setFinances(data);

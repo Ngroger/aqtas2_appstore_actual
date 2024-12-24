@@ -72,7 +72,7 @@ function EditBussinesScreen() {
             setIsLoad(true);
             setUserData(userData);
             try {
-                const response = await fetch(`https://aqtas.garcom.kz/shop/${userData.userId}`);
+                const response = await fetch(`https://aqtas.garcom.kz/api/shop/${userData.userId}`);
                 const data = await response.json();
 
                 if (data.success) {
@@ -84,7 +84,7 @@ function EditBussinesScreen() {
                     setCategory(data.item[0].category);
                 }
                 try {
-                    const response = await fetch(`https://aqtas.garcom.kz/customer/${userData.userId}`);
+                    const response = await fetch(`https://aqtas.garcom.kz/api/customer/${userData.userId}`);
                     const data = await response.json();
                     data.map((item) => {
                         setCustomerInfo(item);
@@ -120,7 +120,7 @@ function EditBussinesScreen() {
             setIsShopNameChanged(false);
             setShowErrorShopName(false);
             const userID = userData.userId;
-            fetch('https://aqtas.garcom.kz/changeShopName', {
+            fetch('https://aqtas.garcom.kz/api/changeShopName', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -156,7 +156,7 @@ function EditBussinesScreen() {
             setIsIinChanged(false);
             setShowErrorIin(false);
             const userID = userData.userId;
-            fetch('https://aqtas.garcom.kz/changeCustomerIin', {
+            fetch('https://aqtas.garcom.kz/api/changeCustomerIin', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -192,7 +192,7 @@ function EditBussinesScreen() {
             setIsBinChanged(false);
             setShowErrorBin(false);
             const userID = userData.userId;
-            fetch('https://aqtas.garcom.kz/changeCustomerBin', {
+            fetch('https://aqtas.garcom.kz/api/changeCustomerBin', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -229,7 +229,7 @@ function EditBussinesScreen() {
             setIsAdressChanged(false);
             setShowErrorAdress(false);
             const userID = userData.userId;
-            fetch('https://aqtas.garcom.kz/changeShopAdress', {
+            fetch('https://aqtas.garcom.kz/api/changeShopAdress', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -267,7 +267,7 @@ function EditBussinesScreen() {
             setIsPhoneChanged(false);
             setShowErrorPhone(false);
             const userID = userData.userId;
-            fetch('https://aqtas.garcom.kz/changeShopPhone', {
+            fetch('https://aqtas.garcom.kz/api/changeShopPhone', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -290,7 +290,7 @@ function EditBussinesScreen() {
 
     const handleSaveCategory = () => {
         const userID = userData.userId;
-        fetch('https://aqtas.garcom.kz/changeShopCategory', {
+        fetch('https://aqtas.garcom.kz/api/changeShopCategory', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

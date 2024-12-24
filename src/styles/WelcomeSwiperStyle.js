@@ -3,7 +3,7 @@ import { ScaledSheet } from 'react-native-size-matters';
 const styles = ScaledSheet.create({
   text: {
     fontFamily: 'Cambria',
-    fontSize: '18@s',
+    fontSize: '14@s',
     textAlign: 'center',
   },
   wrapper: {},
@@ -12,10 +12,12 @@ const styles = ScaledSheet.create({
     height: '100%',
     backgroundColor: '#95E5FF',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderWidth: 6,
+    borderColor: '#000'
   },
   card: {
-    padding: 20,
+    padding: '16@msr',
     borderRadius: 25,
     backgroundColor: '#95E5FF',
     marginHorizontal: 20,
@@ -26,13 +28,16 @@ const styles = ScaledSheet.create({
     },
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
-    marginTop: 12,
     elevation: 6,
-    height: '350@vs'
+    height: '300@vs',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    marginTop: '12@msr'
   },
   image: {
-    width: '200@vs',
-    height: '200@vs',
+    width: '150@vs',
+    height: '150@vs',
   },
   pagination: {
     position: 'absolute', // Добавляем абсолютное позиционирование
@@ -54,8 +59,12 @@ const styles = ScaledSheet.create({
   buttonContainer: {
     position: 'absolute',
     zIndex: 10,
-    bottom: 24,
-    width: '100%'
+    bottom: 0,
+    width: '100%',
+    zIndex: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '18@msr'
   },
   nextButton: {
     borderWidth: 2,
@@ -65,8 +74,6 @@ const styles = ScaledSheet.create({
     padding: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute',
-    bottom: -150
   },
   nextText: {
     color: '#fff',

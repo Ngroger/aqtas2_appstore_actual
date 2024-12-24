@@ -43,7 +43,7 @@ function ShopsScreen() {
             setActiveCategory(categoryId);
             setIsLoading(true);
 
-            fetch(`https://aqtas.garcom.kz/shops/${categories[categoryId - 1].value}`)
+            fetch(`https://aqtas.garcom.kz/api/shops/${categories[categoryId - 1].value}`)
                 .then((response) => response.json())
                 .then((data) => {
                     setShops(data);
@@ -56,7 +56,7 @@ function ShopsScreen() {
     };
 
     const loadUserData = () => {
-        fetch('https://aqtas.garcom.kz/shops')
+        fetch('https://aqtas.garcom.kz/api/shops')
             .then((response) => response.json())
             .then((data) => {
                 setShops(data);
@@ -80,7 +80,7 @@ function ShopsScreen() {
         onChangeSearch(search);
         setTimeout(() => {
             if (!search) {
-                fetch(`https://aqtas.garcom.kz/shops`)
+                fetch(`https://aqtas.garcom.kz/api/shops`)
                     .then((response) => response.json())
                     .then((data) => {
                         setShops(data);
@@ -91,7 +91,7 @@ function ShopsScreen() {
                     });
             }
             else {
-                fetch(`https://aqtas.garcom.kz/shopsSearch/${search}`)
+                fetch(`https://aqtas.garcom.kz/api/shopsSearch/${search}`)
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.length === 0) {
@@ -173,7 +173,7 @@ function ShopsScreen() {
                                     renderItem={({ item }) => {
                                         return (
                                             <View style={styles.shopCart}>
-                                                <Image style={styles.image} source={{ uri: `https://aqtas.garcom.kz/images/imageShop/${item.imageShop}` }} />
+                                                <Image style={styles.image} source={{ uri: `https://aqtas.garcom.kz/api/images/imageShop/${item.imageShop}` }} />
                                                 <View style={{ padding: 5, flex: 1 }}>
                                                     <View>
                                                         <View style={styles.infoContainer}>

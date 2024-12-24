@@ -121,7 +121,7 @@ function AddSaleScreen() {
             }
 
             try {
-                const response = await fetch('https://aqtas.garcom.kz/addSale', {
+                const response = await fetch('https://aqtas.garcom.kz/api/addSale', {
                     method: 'POST',
                     body: formData,
                     headers: {

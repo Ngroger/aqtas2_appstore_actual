@@ -29,7 +29,9 @@ const styles = ScaledSheet.create({
   },
   language: {
     fontFamily: 'Cambria',
-    fontSize: 24
+    fontSize: '16@s',
+    borderWidth: 1,
+    borderColor: 'transparent'
   },
   openAccordion: {
     borderWidth: 1,
@@ -68,13 +70,13 @@ const styles = ScaledSheet.create({
     fontSize: 24
   },
   titleReg: {
-    fontSize: '24@s',
+    fontSize: '16@s',
     fontFamily: 'CambriaBold',
     textAlign: 'center',
   },
   description: {
     fontFamily: 'Cambria',
-    fontSize: '18@s',
+    fontSize: '14@s',
     textAlign: 'center',
     marginTop: 6
   },
@@ -138,7 +140,7 @@ const styles = ScaledSheet.create({
     color: '#ff0000'
   },
   logo: {
-    width: '250@vs',
+    width: '200@vs',
     height: '100@vs',
     objectFit: 'contain',
   },

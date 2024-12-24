@@ -34,7 +34,7 @@ function AddPaypal({ onClose }) {
 
     const addPayPal = async () => {
         try {
-            const response = await fetch('https://aqtas.garcom.kz/addPaypal', {
+            const response = await fetch('https://aqtas.garcom.kz/api/addPaypal', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

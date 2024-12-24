@@ -15,7 +15,7 @@ function MyOrdersScreen() {
         loadUserData();
         // Выполните запрос к серверу для получения данных о финансах
         try {
-            const response = fetch(`https://aqtas.garcom.kz/myOrders/${userData.userId}`);
+            const response = fetch(`https://aqtas.garcom.kz/api/myOrders/${userData.userId}`);
             if (response.ok) {
                 const data = response.json();
                 setMyOrders(data);

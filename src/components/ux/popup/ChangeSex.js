@@ -24,7 +24,7 @@ function ChangeSex({ onClose, userId, onChangeSex }) {
         }
 
         // Отправить запрос на сервер для обновления пола
-        fetch('https://aqtas.garcom.kz/changeUserSex', {
+        fetch('https://aqtas.garcom.kz/api/changeUserSex', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

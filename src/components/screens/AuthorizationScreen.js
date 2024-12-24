@@ -6,6 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { storeUserData } from '../../store/userDataManager';
 import { storeToken, hasToken } from '../../store/tokenManager';
 import { s } from 'react-native-size-matters';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { toggleIsNewUser } from '../../store/NewUserStorage';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 function AuthorizationScreen(props) {
     const navigation = useNavigation();
@@ -20,6 +23,7 @@ function AuthorizationScreen(props) {
     });
     const { t } = useTranslation();
     const [serverMessage, setServerMessage] = useState();
+    const [isShowPass, setIsShowPass] = useState(true);
 
     const updateErrors = () => {
         const { login, password, errors } = state;
@@ -59,7 +63,7 @@ function AuthorizationScreen(props) {
             }));
 
             try {
-                const response = await fetch(`https://aqtas.garcom.kz/login`, {
+                const response = await fetch(`https://aqtas.garcom.kz/api/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -93,6 +97,8 @@ function AuthorizationScreen(props) {
 
                     hasToken();
 
+                    toggleIsNewUser(false);
+
                     goToMain();
                 } else {
                     setServerMessage(responseJson.message);
@@ -103,12 +109,20 @@ function AuthorizationScreen(props) {
         }
     };
 
+    const skip = async () => {
+        await toggleIsNewUser(false);
+        navigation.navigate('MainTabs')
+    };
 
     return (
         <View style={{ width: '100%', padding: s(18), backgroundColor: '#95E5FF', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
             <Image style={styles.logo} source={require('../../img/logo.png')} />
             <Text style={styles.titleReg}>{t('auth-title')}</Text>
             <Text style={styles.description}>{t('reg-subtitle')}</Text>
+            <TouchableOpacity onPress={() => skip()} style={styles.skipButton}>
+                <Text style={styles.skipButtonText}>Пропустить</Text>
+                <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
+            </TouchableOpacity>
             <View style={{ marginTop: 40, width: '100%' }}>
                 <Text style={state.errors.login ? styles.inputTitleError : styles.inputTitle}>{t('email-or-phone-title')}</Text>
                 <TextInput
@@ -120,18 +134,23 @@ function AuthorizationScreen(props) {
             </View>
             <View style={{ marginTop: 20, width: '100%' }}>
                 <Text style={state.errors.password ? styles.inputTitleError : styles.inputTitle}>{t('password')}</Text>
-                <TextInput
-                    secureTextEntry={true}
-                    style={[styles.input, state.errors.password && styles.inputError]}
-                    onChangeText={(text) => {
-                        setState({ ...state, password: text });
-                    }}
-                />
+                <View style={styles.fieldContainr}>
+                    <TextInput
+                        secureTextEntry={isShowPass}
+                        style={[styles.input, state.errors.password && styles.inputError]}
+                        onChangeText={(text) => {
+                            setState({ ...state, password: text });
+                        }}
+                    />
+                    <TouchableOpacity onPress={() => setIsShowPass(!isShowPass)} style={{ position: 'absolute', zIndex: 10, right: 12 }}>
+                        <Ionicons name={isShowPass ? "eye-outline" : "eye-off-outline"} size={20} color="#141414" />
+                    </TouchableOpacity>
+                </View>
             </View>
             <TouchableOpacity onPress={goToRegistration}>
                 <Text style={styles.logInText}>{t('is-account-reg')}</Text>
             </TouchableOpacity>
-            <View style={{ top: 24, width: '100%' }}>
+            <View style={{ width: '100%' }}>
                 {state.showErrorText && (
                     <Text style={styles.error}>{t('all-field-need-to-complete')}</Text>
                 )}

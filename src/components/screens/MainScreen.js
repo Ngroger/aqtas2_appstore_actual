@@ -62,8 +62,8 @@ function MainScreen() {
             setIsLoading(true);
 
             const url = type === 'categories'
-                ? `https://aqtas.garcom.kz/products/${category}`
-                : 'https://aqtas.garcom.kz/products';
+                ? `https://aqtas.garcom.kz/api/products/${category}`
+                : 'https://aqtas.garcom.kz/api/products';
 
             console.log("url: ", url);
             console.log("type: ", type);
@@ -115,7 +115,7 @@ function MainScreen() {
                 count: 1,
             };
 
-            const response = await fetch('https://aqtas.garcom.kz/addToCart', {
+            const response = await fetch('https://aqtas.garcom.kz/api/addToCart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -149,31 +149,24 @@ function MainScreen() {
     const handleSearch = (search) => {
         setIsLoading(true);
         onChangeSearch(search);
-        setTimeout(() => {
-            if (!search) {
-                fetch(`https://aqtas.garcom.kz/products`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        setProducts(data);
-                        setIsLoading(false);
-                    })
-                    .catch((error) => {
-                        setIsLoading(false);
-                    });
-            }
-            else {
-                fetch(`https://aqtas.garcom.kz/productsSearch/${search}`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        setProducts(data);
-                        setIsLoading(false);
-                    })
-                    .catch((error) => {
-                        setIsLoading(false);
-                    });
-            }
-        }, 1000);
+
+        if (!search) {
+            fetchProducts("all");
+            return;
+        }
+
+        fetch(`https://aqtas.garcom.kz/api/productsSearch/${search}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setProducts(data);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                setIsLoading(false);
+                console.error('Search error:', error);
+            });
     };
+
 
     return (
         <View>
@@ -234,7 +227,7 @@ function MainScreen() {
                                                             <Image
                                                                 style={styles.cartPreview}
                                                                 source={{
-                                                                    uri: `https://aqtas.garcom.kz/images/imageProducts/${product.imagePreview1}`,
+                                                                    uri: `https://aqtas.garcom.kz/api/images/imageProducts/${product.imagePreview1}`,
                                                                 }}
                                                             />
                                                         ) : (
@@ -255,7 +248,7 @@ function MainScreen() {
                                                                                 key={imagePreviewKey}
                                                                                 style={styles.cartPreview}
                                                                                 source={{
-                                                                                    uri: `https://aqtas.garcom.kz/images/imageProducts/${imagePreviewPath}`,
+                                                                                    uri: `https://aqtas.garcom.kz/api/images/imageProducts/${imagePreviewPath}`,
                                                                                 }}
                                                                             />
                                                                         );

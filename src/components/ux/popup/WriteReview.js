@@ -111,7 +111,7 @@ function WriteReview({ onClose, productId }) {
         }
 
         try {
-            const response = await axios.post('https://aqtas.garcom.kz/publishReview', data, {
+            const response = await axios.post('https://aqtas.garcom.kz/api/publishReview', data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

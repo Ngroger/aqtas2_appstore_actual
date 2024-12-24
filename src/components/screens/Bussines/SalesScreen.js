@@ -30,7 +30,7 @@ function SalesScreen() {
             setUserData(userData);
             // Выполните запрос к серверу для получения данных о финансах
             try {
-                const response = await fetch(`https://aqtas.garcom.kz/sales/${userData.userId}`);
+                const response = await fetch(`https://aqtas.garcom.kz/api/sales/${userData.userId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setSales(data);
@@ -82,7 +82,7 @@ function SalesScreen() {
 
     const deleteSale = async (saleId) => {
         try {
-            const response = await fetch(`https://aqtas.garcom.kz/removeSale/${userData.userId}/${saleId}`, {
+            const response = await fetch(`https://aqtas.garcom.kz/api/removeSale/${userData.userId}/${saleId}`, {
                 method: 'DELETE',
             });
 
@@ -117,7 +117,7 @@ function SalesScreen() {
                                 keyExtractor={(item, index) => index.toString()}
                                 renderItem={({ item }) => (
                                     <TouchableOpacity onPress={() => handlePress(item.id)} style={styles.sale}>
-                                        <Image style={styles.imageSale} source={{ uri: `https://aqtas.garcom.kz/images/imageSales/${item.imageSale}` }} />
+                                        <Image style={styles.imageSale} source={{ uri: `https://aqtas.garcom.kz/api/images/imageSales/${item.imageSale}` }} />
                                         <View style={styles.filter} />
                                         <Text style={styles.textSale}>{item.name}</Text>
                                         {selectedCard[item.id] ? (

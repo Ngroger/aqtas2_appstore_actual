@@ -5,7 +5,7 @@ import styles from '../../styles/WelcomeSwiperStyle';
 import Swiper from 'react-native-swiper';
 import { useTranslation } from 'react-i18next';
 import { StatusBar } from 'expo-status-bar';
-import { s } from 'react-native-size-matters';
+import { s, vs } from 'react-native-size-matters';
 
 export default function WelcomeSliderScreen() {
     const navigation = useNavigation();
@@ -17,7 +17,7 @@ export default function WelcomeSliderScreen() {
 
     return (
         <View style={styles.container}>
-            <View style={{ width: s(300), height: s(450) }}>
+            <View style={{ width: vs(300), height: vs(350) }}>
                 <Swiper
                     style={styles.wrapper}
                     showsButtons={false}
@@ -42,11 +42,11 @@ export default function WelcomeSliderScreen() {
                         <Text style={styles.text}>{t('fourth-slide-info')}</Text>
                     </View>
                 </Swiper>
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
-                        <Text style={styles.nextText}>{t("button-next")}</Text>
-                    </TouchableOpacity>
-                </View>
+            </View>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
+                    <Text style={styles.nextText}>{t("button-next")}</Text>
+                </TouchableOpacity>
             </View>
             <StatusBar backgroundColor="transparent" translucent={true} />
         </View>

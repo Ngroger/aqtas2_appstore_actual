@@ -28,7 +28,7 @@ function SelectedCategory({ onClose, category, title }) {
 
     useEffect(() => {
         loadUserData();
-        fetch(`https://aqtas.garcom.kz/products/${category}`)
+        fetch(`https://aqtas.garcom.kz/api/products/${category}`)
             .then((response) => response.json())
             .then((data) => {
                 setProducts(data);
@@ -71,7 +71,7 @@ function SelectedCategory({ onClose, category, title }) {
             count: 1,  // Устанавливаем значение по умолчанию в 1
         };
         // Отправляем POST-запрос к серверу
-        fetch('https://aqtas.garcom.kz/addToCart', {
+        fetch('https://aqtas.garcom.kz/api/addToCart', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -121,7 +121,7 @@ function SelectedCategory({ onClose, category, title }) {
                                                         <Image
                                                             style={styles.cartPreview}
                                                             source={{
-                                                                uri: `https://aqtas.garcom.kz/images/imageProducts/${product.imagePreview1}`,
+                                                                uri: `https://aqtas.garcom.kz/api/images/imageProducts/${product.imagePreview1}`,
                                                             }}
                                                         />
                                                     ) : (
@@ -142,7 +142,7 @@ function SelectedCategory({ onClose, category, title }) {
                                                                             key={imagePreviewKey}
                                                                             style={styles.cartPreview}
                                                                             source={{
-                                                                                uri: `https://aqtas.garcom.kz/images/imageProducts/${imagePreviewPath}`,
+                                                                                uri: `https://aqtas.garcom.kz/api/images/imageProducts/${imagePreviewPath}`,
                                                                             }}
                                                                         />
                                                                     );

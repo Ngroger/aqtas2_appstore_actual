@@ -82,17 +82,18 @@ const styles = ScaledSheet.create({
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
-        paddingHorizontal: '18@s'
+        paddingHorizontal: '16@msr'
     },
     cart: {
         borderRadius: 20,
         marginTop: 10,
-        width: '135@vs'
+        width: '150@ms0.9'
     },
     cartPreview: {
         width: '100%',
         height: '200@vs',
         borderRadius: 20,
+        objectFit: 'cover'
     },
     pagination: {
         position: 'absolute', // Добавляем абсолютное позиционирование
@@ -134,11 +135,11 @@ const styles = ScaledSheet.create({
     },
     name: {
         fontFamily: 'Cambria',
-        fontSize: '20@ms'
+        fontSize: '16@vs'
     },
     description: {
         fontFamily: 'Cambria',
-        fontSize: '18@ms',
+        fontSize: '14@ms',
         color: '#BDBDBD',
         marginTop: 2
     },
@@ -148,14 +149,14 @@ const styles = ScaledSheet.create({
         paddingVertical: '7@msr',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: '9@msr',
+        paddingHorizontal: '12@msr',
         marginTop: '6@s',
         alignSelf: 'flex-start'
     },
     addCartText: {
         color: '#fff',
         fontFamily: 'CambriaBold',
-        fontSize: '12@ms'
+        fontSize: '10@vs'
     },
     previewContainer: {
         position: 'relative'

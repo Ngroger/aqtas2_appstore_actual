@@ -115,7 +115,7 @@ function CustomerScreen() {
             }
 
             try {
-                const response = await fetch('https://aqtas.garcom.kz/addShop', {
+                const response = await fetch('https://aqtas.garcom.kz/api/addShop', {
                     method: 'POST',
                     body: formData,
                     headers: {

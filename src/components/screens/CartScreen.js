@@ -54,7 +54,7 @@ function CartScreen() {
                 size: size,
             };
 
-            const response = await fetch('https://aqtas.garcom.kz/createOrder', {
+            const response = await fetch('https://aqtas.garcom.kz/api/createOrder', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -74,7 +74,7 @@ function CartScreen() {
 
     const getUserPhoto = async () => {
         try {
-            const response = await fetch(`https://aqtas.garcom.kz/getUserImage/${userData.userId}`);
+            const response = await fetch(`https://aqtas.garcom.kz/api/getUserImage/${userData.userId}`);
             if (response.ok) {
                 const data = await response.json();
                 return data.photo
@@ -94,7 +94,7 @@ function CartScreen() {
                 setIsNoAddress(false);
             }
             try {
-                const response = await fetch(`https://aqtas.garcom.kz/cart/${userData.userId}`);
+                const response = await fetch(`https://aqtas.garcom.kz/api/cart/${userData.userId}`);
                 if (response.ok) {
                     const data = await response.json();
                     const total = data.reduce((acc, item) => acc + item.newCost, 0);
@@ -112,7 +112,7 @@ function CartScreen() {
 
     const increaseCount = async (ProductId) => {
         try {
-            await fetch(`https://aqtas.garcom.kz/increaseCount/${userData.userId}/${ProductId}`, {
+            await fetch(`https://aqtas.garcom.kz/api/increaseCount/${userData.userId}/${ProductId}`, {
                 method: 'PUT'
             });
 
@@ -124,7 +124,7 @@ function CartScreen() {
 
     const decreaseCount = async (ProductId) => {
         try {
-            await fetch(`https://aqtas.garcom.kz/decreaseCount/${userData.userId}/${ProductId}`, {
+            await fetch(`https://aqtas.garcom.kz/api/decreaseCount/${userData.userId}/${ProductId}`, {
                 method: 'PUT'
             });
 
@@ -145,7 +145,7 @@ function CartScreen() {
 
         try {
             for (const productId of selectedProductIds) {
-                const response = await fetch(`https://aqtas.garcom.kz/removeFromCart/${userData.userId}/${productId}`, {
+                const response = await fetch(`https://aqtas.garcom.kz/api/removeFromCart/${userData.userId}/${productId}`, {
                     method: 'DELETE',
                 });
 
@@ -186,7 +186,7 @@ function CartScreen() {
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item }) => (
                             <View style={styles.card}>
-                                <Image style={styles.productPreview} source={{ uri: `https://aqtas.garcom.kz/images/imageProducts/${item.imagePreview}` }} />
+                                <Image style={styles.productPreview} source={{ uri: `https://aqtas.garcom.kz/api/images/imageProducts/${item.imagePreview}` }} />
                                 <View style={{ flex: 1, marginLeft: 10 }}>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <View style={styles.costContainer}>

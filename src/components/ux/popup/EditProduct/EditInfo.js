@@ -41,7 +41,7 @@ function EditInfo({ onClose, productId }) {
         };
 
         // Отправка данных на сервер
-        fetch(`https://aqtas.garcom.kz/updateProduct/${userData.userId}/${productId}`, {
+        fetch(`https://aqtas.garcom.kz/api/updateProduct/${userData.userId}/${productId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

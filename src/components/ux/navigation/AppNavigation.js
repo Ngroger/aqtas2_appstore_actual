@@ -5,10 +5,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons, Entypo, AntDesign, Feather } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import NetInfo from '@react-native-community/netinfo';
-import { useState, useEffect } from 'react';
-import { s } from 'react-native-size-matters';
+import { useEffect } from 'react';
+import { s, vs } from 'react-native-size-matters';
 import { useTranslation } from 'react-i18next';
-import { hasToken } from '../../../store/tokenManager';
 
 import WelcomeSliderScreen from '../../screens/WelcomeSliderScreen';
 import MainScreen from '../../screens/MainScreen';
@@ -55,7 +54,7 @@ export default function AppNavigationContainer() {
     headerShown: false,
     tabBarIcon: ({ focused }) => {
       const iconProps = {
-        size: focused ? s(24) : s(20),
+        size: focused ? vs(20) : vs(20),
         color: focused ? '#95E5FF' : '#BDBDBD',
       };
       switch (route.name) {
@@ -75,7 +74,7 @@ export default function AppNavigationContainer() {
     },
     tabBarInactiveTintColor: '#BDBDBD',
     tabBarActiveTintColor: '#95E5FF',
-    tabBarLabelStyle: { fontSize: s(14) },
+    tabBarLabelStyle: { fontSize: vs(10) },
   });
 
   useEffect(() => {
@@ -95,11 +94,13 @@ export default function AppNavigationContainer() {
   const checkIsNewUser = async () => {
     try {
       const isNewUser = await getIsNewUser();
+      console.log("isNewUser: ", isNewUser);
       if (navigationRef.current) {
         if (isNewUser) {
-          customNavigate('Welcome')
+          customNavigate('Welcome');
+          console.log("isNewUser: ", isNewUser);
         } else {
-          customNavigate('MainTabs')
+          customNavigate('MainTabs');
         }
       }
     } catch (error) {
