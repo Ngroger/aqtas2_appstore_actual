@@ -48,7 +48,7 @@ function ProductCardScreen({ route }) {
             setProductId(id);
             setSelectedProduct(product);
         } else {
-            openModal("Предупреждение", "Для того, чтоб добавить товар в корзину нужно авторизорваться");
+            openModal(t("unauth-modal.title"), t("unauth-modal.description"));
         }
     }
 
@@ -124,7 +124,7 @@ function ProductCardScreen({ route }) {
     }
 
     const goToReviews = (reviews, id) => {
-        navigation.navigate('Reviews', { reviews, id: product.id });
+        navigation.navigate('Reviews', { product: product, id: product.id });
     };
 
     const starsRender = (countStar) => Array(countStar).fill().map((_, index) => (
@@ -186,7 +186,7 @@ function ProductCardScreen({ route }) {
 
                 });
         } else {
-            openModal("Предупреждение", "Для того, чтоб добавить товар в корзину нужно авторизорваться");
+            openModal(t("unauth-modal.title"), t("unauth-modal.description"));
         }
     };
 

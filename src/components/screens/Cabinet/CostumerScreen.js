@@ -6,10 +6,9 @@ import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { getUserData } from '../../../store/userDataManager';
 import { useEffect } from 'react';
-import axios from 'axios';
-import * as FileSystem from 'expo-file-system';
 import CategoryShop from '../../ux/popup/CategoryShop';
 import SuccessCreatedShop from '../../ux/popup/messages/SuccessCreatedShop';
+import { useTranslation } from 'react-i18next';
 
 function CustomerScreen() {
     const navigation = useNavigation();
@@ -48,6 +47,8 @@ function CustomerScreen() {
     const [isMessage, setMessage] = useState(false);
 
     const [isErrorMessage, setIsErrorMessage] = useState(false);
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         loadUserData();
@@ -186,10 +187,10 @@ function CustomerScreen() {
                 <View style={styles.container}>
                     <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
                         <MaterialIcons name="arrow-back-ios" size={24} color="black" />
-                        <Text style={styles.title}>Стать продавцом</Text>
+                        <Text style={styles.title}>{t("customer-screen.title")}</Text>
                     </TouchableOpacity>
                     <View style={styles.photoContainer}>
-                        <Text style={styles.fieldTitle}>Фото магазина</Text>
+                        <Text style={styles.fieldTitle}>{t("customer-screen.photo-shop")}</Text>
                         <View style={image === null ? styles.photoBorder : { ...styles.photoBorder, borderWidth: 0 }}>
                             {image ? (
                                 <Image source={{ uri: image }} style={styles.photo} />
@@ -206,30 +207,32 @@ function CustomerScreen() {
                                 </TouchableOpacity>
                             )}
                         </View>
-                        {isImageError && <Text style={[styles.error, { width: 250 }]}>Фото обязательно должно быть выбрано</Text>}
+                        {isImageError && <Text style={[styles.error, { width: 250 }]}>{t("customer-screen.no-photo")}</Text>}
                     </View>
                     <View style={{ marginTop: 16 }}>
-                        <Text style={isFocusName ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>Название</Text>
+                        <Text style={isFocusName ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>{t("customer-screen.name-title")}</Text>
                         <View style={isNameError ? styles.errorField : styles.field}>
-                            <Text style={isFocusName ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }]}>Название</Text>
+                            <Text style={isFocusName ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }]}>{t("customer-screen.name-title")}</Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder='Введите название...'
+                                placeholder={t("customer-screen.name-placeholder")}
                                 onFocus={() => setFocusName(true)}
                                 onBlur={() => setFocusName(false)}
                                 value={name}
                                 onChangeText={changeName}
                             />
                         </View>
-                        {isNameError && <Text style={styles.error}>Название должно быть свыше 2 символов</Text>}
+                        {isNameError && <Text style={styles.error}>{t("customer-screen.name-limit")}</Text>}
                     </View>
                     <View style={{ marginTop: 16 }}>
-                        <Text style={isFocusPhone ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>Контактный номер</Text>
+                        <Text style={isFocusPhone ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>
+                            {t("customer-screen.phone-title")}
+                        </Text>
                         <View style={isPhoneError ? styles.errorField : styles.field}>
-                            <Text style={isFocusPhone ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }]}>Контактный номер</Text>
+                            <Text style={isFocusPhone ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }]}>{t("customer-screen.phone-title")}</Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder='Введите контактный номер...'
+                                placeholder={t("customer-screen.phone-placeholder")}
                                 keyboardType='numeric'
                                 maxLength={11}
                                 onFocus={() => setFocusPhone(true)}
@@ -238,40 +241,46 @@ function CustomerScreen() {
                                 onChangeText={changePhone}
                             />
                         </View>
-                        {isPhoneError && <Text style={styles.error}>Телефон должен быть 11 символов</Text>}
+                        {isPhoneError && <Text style={styles.error}>{t("customer-screen.phone-limit")}</Text>}
                     </View>
                     <View style={{ marginTop: 16 }}>
                         <Text style={isFocusAdress ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>Адрес</Text>
                         <View style={isAdressError ? styles.errorField : styles.field}>
-                            <Text style={isFocusAdress ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }]}>Адрес</Text>
+                            <Text style={isFocusAdress ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }]}>{t("customer-screen.address-title")}</Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder='Введите адрес...'
+                                placeholder={t("customer-screen.address-placeholder")}
                                 onFocus={() => setFocusAdress(true)}
                                 onBlur={() => setFocusAdress(false)}
                                 value={adress}
                                 onChangeText={changeAdress}
                             />
                         </View>
-                        {isAdressError && <Text style={styles.error}>Адрес должен быть свыше 2 символов</Text>}
+                        {isAdressError && <Text style={styles.error}>{t("customer-screen.address-limit")}</Text>}
                     </View>
                     <View style={{ marginTop: 16 }}>
-                        <Text style={isFocusName ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>Выберите категорию</Text>
+                        <Text style={isFocusName ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>
+                            {t("customer-screen.category-title")}
+                        </Text>
                         <View style={isCategoryError ? styles.errorField : styles.field}>
                             <Text style={styles.input}>{category}</Text>
                             <TouchableOpacity onPress={toggleCategoryModal}>
                                 <AntDesign name="right" size={24} color="#95E5FF" />
                             </TouchableOpacity>
                         </View>
-                        {isCategoryError && <Text style={styles.error}>Вы должна выбрать категорию</Text>}
+                        {isCategoryError && <Text style={styles.error}>{t("customer-screen.category-request")}</Text>}
                     </View>
                     <View style={{ marginTop: 16 }}>
-                        <Text style={isFocusBin ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>БИН</Text>
+                        <Text style={isFocusBin ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>
+                            {t("customer-screen.bin-title")}
+                        </Text>
                         <View style={isBinError ? styles.errorField : styles.field}>
-                            <Text style={isFocusBin ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }]}>БИН</Text>
+                            <Text style={isFocusBin ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }]}>
+                                {t("customer-screen.bin-title")}
+                            </Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder='Введите БИН'
+                                placeholder={t("customer-screen.bin-placeholder")}
                                 keyboardType='numeric'
                                 maxLength={12}
                                 onFocus={() => setFocusBin(true)}
@@ -280,15 +289,19 @@ function CustomerScreen() {
                                 onChangeText={changeBin}
                             />
                         </View>
-                        {isBinError && <Text style={styles.error}>БИН должен быть 12 символов</Text>}
+                        {isBinError && <Text style={styles.error}>{t("customer-screen.bin-limit")}</Text>}
                     </View>
                     <View style={{ marginTop: 16 }}>
-                        <Text style={isFocusIin ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>ИИН</Text>
+                        <Text style={isFocusIin ? [styles.fieldTitle, { display: 'none' }] : styles.fieldTitle}>
+                            {t("customer-screen.iin-title")}
+                        </Text>
                         <View style={isIinError ? styles.errorField : styles.field}>
-                            <Text style={isFocusIin ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }]}>ИИН</Text>
+                            <Text style={isFocusIin ? styles.activeFieldTitle : [styles.activeFieldTitle, { display: 'none' }]}>
+                                {t("customer-screen.iin-title")}
+                            </Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder="Введите ИИН..."
+                                placeholder={t("customer-screen.iin-placeholder")}
                                 keyboardType='numeric'
                                 maxLength={12}
                                 onFocus={() => setFocusIin(true)}
@@ -297,12 +310,20 @@ function CustomerScreen() {
                                 onChangeText={changeIin}
                             />
                         </View>
-                        {isIinError && <Text style={styles.error}>ИИН должен быть 12 символов</Text>}
+                        {isIinError &&
+                            <Text style={styles.error}>
+                                {t("customer-screen.bin-limit")}
+                            </Text>
+                        }
                     </View>
                     <View style={{ marginTop: 40 }}>
-                        {isErrorMessage && <Text style={styles.error}>Все поля обязательны к заполнению</Text>}
+                        {isErrorMessage && <Text style={styles.error}>
+                            {t("customer-screen.all-fields-request")}
+                        </Text>}
                         <TouchableOpacity onPress={createShop} style={styles.createButton}>
-                            <Text style={styles.createButtonText}>Создать магазин</Text>
+                            <Text style={styles.createButtonText}>
+                                {t("customer-screen.create-shop-btn")}
+                            </Text>
                         </TouchableOpacity>
                     </View>
                 </View>

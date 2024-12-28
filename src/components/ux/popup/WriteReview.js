@@ -5,9 +5,9 @@ import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { getUserData } from '../../../store/userDataManager';
-import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
-function WriteReview({ onClose, productId }) {
+function WriteReview({ product, onClose, productId }) {
     const [rating, setRating] = useState(0);
     const [isChoiseImage, setChoiseImage] = useState(false);
     const [selectedImages, setSelectedImages] = useState([]);
@@ -15,10 +15,14 @@ function WriteReview({ onClose, productId }) {
     const [description, onChangeDescription] = useState('');
     const [color, onChangeColor] = useState('');
     const [size, onChangeSize] = useState('');
+    const [message, setMessage] = useState();
+    const { t } = useTranslation();
+
+    console.log("product: ", product);
 
     const toggleChoiseImage = () => {
-        setChoiseImage(!isChoiseImage)
-    }
+        setChoiseImage(!isChoiseImage);
+    };
 
     useEffect(() => {
         loadUserData();
@@ -27,25 +31,22 @@ function WriteReview({ onClose, productId }) {
     const loadUserData = async () => {
         const userData = await getUserData();
         if (userData) {
-            setUserData(userData); // Установка данных пользователя в состояние
+            setUserData(userData);
         }
     };
 
     const takePhoto = async () => {
-        if (Platform.OS === 'web') {
+        const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+        if (!permissionResult.granted) {
+            alert('Разрешение на использование камеры не предоставлено');
             return;
         }
 
-        const { status } = await ImagePicker.requestCameraPermissionsAsync();
-        if (status !== 'granted') {
-            return;
-        }
-
-        let result = await ImagePicker.launchCameraAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+        const result = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [4, 3],
-            quality: 1,
         });
 
         if (!result.canceled) {
@@ -55,12 +56,10 @@ function WriteReview({ onClose, productId }) {
     };
 
     const pickImage = async () => {
-        if (Platform.OS === 'web') {
-            return;
-        }
+        const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== 'granted') {
+        if (!permissionResult.granted) {
+            alert('Разрешение на доступ к галерее не предоставлено');
             return;
         }
 
@@ -68,7 +67,6 @@ function WriteReview({ onClose, productId }) {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [4, 3],
-            quality: 1,
         });
 
         if (!result.canceled) {
@@ -78,30 +76,30 @@ function WriteReview({ onClose, productId }) {
     };
 
     const toggleDeleteImage = (id) => {
-        const updatedImages = selectedImages.filter((image, index) => index !== id);
+        const updatedImages = selectedImages.filter((_, index) => index !== id);
         setSelectedImages(updatedImages);
-    }
+    };
 
     const publishReview = async () => {
-        // Подготавливаем данные для отправки на сервер
         const data = new FormData();
 
-        // Подготавливаем данные для отправки на сервер
-        const date = new Date(); // Получаем текущую дату и время
-        const formattedDate = date.toISOString().slice(0, 19).replace('T', ' '); // Преобразуем дату в строку в формате "ГГГГ-ММ-ДД ЧЧ:ММ:СС"
-        data.append('nameReviewer', `${userData.fullname + ' ' + userData.surname}`);
-        data.append('date', formattedDate); // Получаем текущую дату и время
+        const date = new Date();
+        const formattedDate = date.toISOString().slice(0, 19).replace('T', ' ');
+        data.append('nameReviewer', `${userData.fullname} ${userData.surname}`);
+        data.append('date', formattedDate);
         data.append('stars', rating.toString());
         data.append('description', description);
-        data.append('photoReviewer', userData.photoUser)
-        data.append('like', '0'); // Значение по умолчанию
-        data.append('dislike', '0'); // Значение по умолчанию
-        data.append('size', size);
-        data.append('color', color);
+        data.append('photoReviewer', userData.photoUser);
+        data.append('like', '0');
+        data.append('dislike', '0');
         data.append('ProductID', productId);
         data.append('userId', userData.userId);
 
-        // Добавляем фотографии, если они выбраны
+        if (product.subcategory === 'Одежда') {
+            data.append('size', size);
+            data.append('color', color);
+        }
+
         for (let i = 0; i < selectedImages.length; i++) {
             data.append(`photoReview${i + 1}`, {
                 uri: selectedImages[i],
@@ -111,12 +109,23 @@ function WriteReview({ onClose, productId }) {
         }
 
         try {
-            const response = await axios.post('https://aqtas.garcom.kz/api/publishReview', data, {
+            const response = await fetch('https://aqtas.garcom.kz/api/publishReview', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
+                body: data,
             });
+
+            const responseJson = await response.json();
+            if (responseJson.success) {
+                setMessage();
+                onClose();
+            } else {
+                setMessage(responseJson.message);
+            }
         } catch (error) {
+            console.error('Error publishing review:', error);
         }
     };
 
@@ -125,12 +134,13 @@ function WriteReview({ onClose, productId }) {
             onClose();
         }
     };
+
     return (
         <View style={styles.background}>
             <View style={styles.container}>
                 <TouchableOpacity onPress={handleClose} style={styles.navbar}>
                     <MaterialIcons name="arrow-back-ios" size={24} color="black" />
-                    <Text style={styles.title}>Написать отзыв</Text>
+                    <Text style={styles.title}>{t("write-review.title")}</Text>
                 </TouchableOpacity>
                 <View style={styles.imageContainer}>
                     {selectedImages.length === 0 ? (
@@ -154,72 +164,69 @@ function WriteReview({ onClose, productId }) {
                     )}
                 </View>
                 <View style={styles.starsContainer}>
-                    <TouchableOpacity onPress={() => setRating(1)}>
-                        <Entypo name="star" size={30} color={rating >= 1 ? "#FFD600" : "#665602"} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setRating(2)}>
-                        <Entypo name="star" size={30} color={rating >= 2 ? "#FFD600" : "#665602"} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setRating(3)}>
-                        <Entypo name="star" size={30} color={rating >= 3 ? "#FFD600" : "#665602"} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setRating(4)}>
-                        <Entypo name="star" size={30} color={rating >= 4 ? "#FFD600" : "#665602"} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setRating(5)}>
-                        <Entypo name="star" size={30} color={rating >= 5 ? "#FFD600" : "#665602"} />
-                    </TouchableOpacity>
+                    {[1, 2, 3, 4, 5].map((star) => (
+                        <TouchableOpacity key={star} onPress={() => setRating(star)}>
+                            <Entypo name="star" size={30} color={rating >= star ? "#FFD600" : "#665602"} />
+                        </TouchableOpacity>
+                    ))}
                 </View>
                 <View style={styles.reviewContainer}>
-                    <Text style={styles.titleInput}>Ваш комментарий</Text>
-                    <TextInput multiline={true}
+                    <Text style={styles.titleInput}>{t("write-review.comment-title")}</Text>
+                    <TextInput
+                        multiline
                         numberOfLines={4}
                         style={styles.input}
-                        placeholder='Введите ваш комментарий'
+                        placeholder={t("write-review.comment-placeholder")}
                         value={description}
                         onChangeText={onChangeDescription}
                     />
                 </View>
-                <View style={styles.reviewContainer}>
-                    <Text style={styles.titleInput}>Цвет</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Введите цвет товара'
-                        value={color}
-                        onChangeText={onChangeColor}
-                    />
-                </View>
-                <View style={styles.reviewContainer}>
-                    <Text style={styles.titleInput}>Размер</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Введите размер товара'
-                        value={size}
-                        onChangeText={onChangeSize}
-                        keyboardType='numeric'
-                    />
-                </View>
+                {product.subcategory === 'Одежда' && (
+                    <>
+                        <View style={styles.reviewContainer}>
+                            <Text style={styles.titleInput}>{t("write-review.color-title")}</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder={t("write-review.color-placeholder")}
+                                value={color}
+                                onChangeText={onChangeColor}
+                            />
+                        </View>
+                        <View style={styles.reviewContainer}>
+                            <Text style={styles.titleInput}>{t("write-review.size-title")}</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder={t("write-review.size-placeholder")}
+                                value={size}
+                                onChangeText={onChangeSize}
+                                keyboardType="numeric"
+                            />
+                        </View>
+                    </>
+                )}
+                {message && <Text style={styles.error}>{message}</Text>}
                 <TouchableOpacity onPress={publishReview} style={styles.publicButton}>
-                    <Text style={styles.publicButtonText}>Опубликовать</Text>
+                    <Text style={styles.publicButtonText}>{t("write-review.publish-btn")}</Text>
                 </TouchableOpacity>
             </View>
-            {isChoiseImage &&
+            {isChoiseImage && (
                 <View style={styles.backgroundContainer}>
                     <View style={styles.containerChoiseImage}>
                         <TouchableOpacity onPress={toggleChoiseImage}>
                             <AntDesign name="close" size={32} color="black" />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={takePhoto} style={styles.buttonChoiseImage}>
-                            <Text style={styles.buttonChoiseImageText}>Сделать фотографию</Text>
+                            <Text style={styles.buttonChoiseImageText}>{t("take-photo-button")}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={pickImage} style={styles.buttonChoiseImage}>
-                            <Text style={styles.buttonChoiseImageText}>Выбрать фотографию</Text>
+                            <Text style={styles.buttonChoiseImageText}>{t("pick-photo-button")}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-            }
+            )}
         </View>
     );
 }
 
 export default WriteReview;
+

@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     background: {
         width: '100%',
         height: '100%',
@@ -143,17 +143,22 @@ const styles = StyleSheet.create({
     containerChoiseImage: {
         position: 'absolute',
         zIndex: 2000,
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
+        borderTopLeftRadius: 24,
+        borderTopRightRadius: 24,
         backgroundColor: '#FFF',
         bottom: 0,
         width: '100%',
-        padding: 10,
-        borderTopWidth: 1,
-        borderLeftWidth: 1,
-        borderRightWidth: 1,
-        borderColor: 'rgba(0,0,0,0.5)'
-        
+        padding: 16,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+
+        elevation: 10,
+
     },
     buttonChoiseImage: {
         justifyContent: 'center',
@@ -174,6 +179,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         zIndex: 10000
+    },
+    error: {
+        color: '#ff0000',
+        fontFamily: 'Cambria',
+        fontSize: '14@s',
+        textAlign: 'center'
     }
 });
 

@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'reac
 import styles from '../../../styles/PersonalScreenStyle';
 import { MaterialIcons, EvilIcons, Feather, AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ChangePhone from '../../ux/popup/changePhone';
 import ChangePassword from '../../ux/popup/ChangePassword';
 import ChangeSex from '../../ux/popup/ChangeSex';
@@ -113,7 +113,7 @@ function PersonalDate() {
                     console.log("data.image", data.image)
                     await updateUserData({ photoUser: data.image });
 
-                    alert("Фотография профиля успешно обновлена. Перезайдите в экран, чтоб увидеть изменения");
+                    alert(t("avatar-updated"));
 
                 }
             })

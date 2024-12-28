@@ -106,7 +106,7 @@ function CartScreen() {
             } catch (error) {
             }
         } else {
-            openModal("Предупреждение", "Только авторизованные пользователи могут иметь доступ к корзине. Пожалуйста, пройдите регистрацию или войдите")
+            openModal(t("unauth-modal.title"), t("unauth-modal.description-cart"))
         }
     };
 

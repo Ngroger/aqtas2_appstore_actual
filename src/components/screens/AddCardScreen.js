@@ -143,13 +143,13 @@ function AddCardScreen() {
           </View>
         </View>
         <View style={styles.fields}>
-          <View style={[styles.field, { width: 160 }]}>
+          <View style={[styles.field, { width: '48%' }]}>
             <Text style={styles.fieldTitle}>{t('validity-payment-field')}</Text>
             <View style={{ flexDirection: 'row', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <MaskInput
                 keyboardType='numeric'
                 maxLength={5}
-                style={[styles.input, { width: 100, textAlign: 'center' }]}
+                style={[styles.input, { textAlign: 'center' }]}
                 placeholder={t('validity-payment-placeholder')}
                 mask={[/\d/, /\d/, '/', /\d/, /\d/]}
                 onChangeText={(text) => {
@@ -159,14 +159,14 @@ function AddCardScreen() {
               />
             </View>
           </View>
-          <View style={[styles.field, { width: 160 }]}>
+          <View style={[styles.field, { width: '48%' }]}>
             <Text style={styles.fieldTitle}>CVV|CVC</Text>
             <View style={{ flexDirection: 'row', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <TextInput
                 keyboardType='numeric'
                 maxLength={3}
                 secureTextEntry={true}
-                style={[styles.input, { width: 100, textAlign: 'center' }]}
+                style={[styles.input, { textAlign: 'center' }]}
                 placeholder='CVV'
                 onChangeText={(text) => {
                   handleCvvChange(text);

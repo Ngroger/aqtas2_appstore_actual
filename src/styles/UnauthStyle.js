@@ -17,7 +17,7 @@ const styles = ScaledSheet.create({
     zIndex: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20
+    padding: '16@msr'
   },
   container: {
     width: '100%',
@@ -25,16 +25,16 @@ const styles = ScaledSheet.create({
     paddingHorizontal: 24,
     backgroundColor: '#FFF',
     borderRadius: 18,
-    gap: 12
+    gap: 16
   },
   title: {
-    fontSize: '24@s',
+    fontSize: '16@s',
     color: '#141414',
     fontFamily: 'CambriaBold',
     textAlign: 'center'
   },
   description: {
-    fontSize: '18@s',
+    fontSize: '14@s',
     color: '#141414',
     fontFamily: 'Cambria',
     opacity: 0.5,
@@ -53,7 +53,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center'
   },
   buttonText: {
-    fontSize: '20@s',
+    fontSize: '14@s',
     color: '#95E5FF',
     fontFamily: 'CambriaBold'
   }

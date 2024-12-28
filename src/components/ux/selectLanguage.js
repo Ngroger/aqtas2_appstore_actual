@@ -55,7 +55,7 @@ function SelectLanguage(props) {
                 <TouchableOpacity onPress={toggleAccordion}>
                     <MaterialIcons
                         name={isOpen ? "arrow-drop-up" : "arrow-drop-down"}
-                        size={24}
+                        size={s(24)}
                         color="black"
                     />
                 </TouchableOpacity>

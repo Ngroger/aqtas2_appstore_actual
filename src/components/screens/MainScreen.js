@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, ScrollView, ActivityIndicator, StatusBar, Alert } from 'react-native';
 import styles from '../../styles/MainScreenStyle';
 import { AntDesign } from '@expo/vector-icons';
 import Swiper from 'react-native-swiper'
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native';
 import { getUserData } from '../../store/userDataManager';
 import SizeSelector from '../ux/popup/SizeSelector';
@@ -42,7 +42,7 @@ function MainScreen() {
             setProductId(id);
             setSelectedProduct(product);
         } else {
-            openModal("Предупреждение", "Для того, чтоб добавить товар в корзину нужно авторизорваться");
+            openModal(t("unauth-modal.title"), t("unauth-modal.description"));
         }
     };
 

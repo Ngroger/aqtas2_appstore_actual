@@ -1,17 +1,20 @@
-import { StyleSheet } from "react-native";
+import { ScaledSheet } from "react-native-size-matters";
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
+    header: {
+        paddingHorizontal: 16,
+        marginTop: 24
+    },
     container: {
-        backgroundColor: '#fff',
         width: '100%',
-        height: '100%',
-        padding: 20
+        flex: 1,
     },
     titleContainer: {
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
         marginTop: 10,
+        paddingHorizontal: 18
     },
     title: {
         fontSize: 28,
@@ -110,7 +113,6 @@ const styles = StyleSheet.create({
     },
     review: {
         padding: 16,
-        marginHorizontal: 10,
         marginBottom: 20,
         backgroundColor: '#fff',
         shadowColor: "#000",
@@ -185,12 +187,17 @@ const styles = StyleSheet.create({
     imagesPreview: {
         flexDirection: 'row',
         display: 'flex',
-        margin: 10
+        marginBottom: 12
     },
     imageReview: {
         width: 50,
         height: 50,
         borderRadius: 10
+    },
+    buttonContainer: {
+        bottom: 0,
+        width: '100%',
+        padding: 16
     },
     writeReviewButton: {
         backgroundColor: '#95E5FF',
@@ -198,7 +205,6 @@ const styles = StyleSheet.create({
         padding: 10,
         justifyContent: "center",
         alignItems: 'center',
-        marginTop: 20
     },
     writeReviewButtonText: {
         fontFamily: 'CambriaBold',
@@ -208,11 +214,9 @@ const styles = StyleSheet.create({
     },
     noDataText: {
         fontFamily: 'Cambria',
-        fontSize: 18,
+        fontSize: '14@s',
         color: '#BDBDBD',
         textAlign: 'center',
-        marginTop: '100%',
-        marginBottom: '65%',
     },
     loadingIndicatorContainer: {
         width: '100%',
@@ -226,6 +230,12 @@ const styles = StyleSheet.create({
         marginTop: 10,
         color: '#BDBDBD',
     },
+    noDataContainer: {
+        width: '100%',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 });
 
 export default styles;

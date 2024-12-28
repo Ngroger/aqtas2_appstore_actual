@@ -74,7 +74,7 @@ function ProfileScreen() {
           setIsBussinesAccount(isBussinesAccount === 1);
         }
       } else {
-        openModal("Предупреждение", "Для того, чтоб воспользоваться профилем нужно авторизоваться. Пожалуйста, войдите или пройдите регистрацию и повторите попытку")
+        openModal(t("unauth-modal.title"), t("unauth-modal.description-profile"))
       }
     } catch (error) {
       console.error(error);

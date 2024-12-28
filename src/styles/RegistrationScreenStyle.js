@@ -21,6 +21,7 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     borderRadius: 10,
     justifyContent: 'space-between',
+    alignItems: 'center'
   },
   title: {
     fontFamily: 'Cambria',

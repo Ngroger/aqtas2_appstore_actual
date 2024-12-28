@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { getUserData } from '../../../store/userDataManager';
 import * as ImagePicker from 'expo-image-picker';
 import SelectSeason from '../../ux/popup/SelectSeason';
+import { useTranslation } from 'react-i18next';
 
 function AddSaleScreen() {
     const navigation = useNavigation();
@@ -26,6 +27,8 @@ function AddSaleScreen() {
     const [isSelectedSeasonError, setSelectedSeasonError] = useState(false);
 
     const [isErrorMessage, setIsErrorMessage] = useState(false);
+
+    const { t } = useTranslation();
 
     const toggleSetSeasonShowMenu = () => {
         setSelectedSeasonShowMenu(!isSelectedSeasonShowMenu);
@@ -149,10 +152,12 @@ function AddSaleScreen() {
                 <View style={{ padding: 24 }}>
                     <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
                         <MaterialIcons name="arrow-back-ios" size={24} color="black" />
-                        <Text style={styles.title}>Добавить акцию</Text>
+                        <Text style={styles.title}>{t("add-sale-screen.title")}</Text>
                     </TouchableOpacity>
                     <View style={styles.photoContainer}>
-                        <Text style={styles.photoTitle}>Фотография акции</Text>
+                        <Text style={styles.photoTitle}>
+                            {t("add-sale-screen.photo-title")}
+                        </Text>
                         <View style={image ? { ...styles.photoPick, borderWidth: 0 } : styles.photoPick}>
                             <Image source={{ uri: image }} style={{ width: '100%', height: '100%', borderRadius: 15 }} />
                             <TouchableOpacity onPress={image ? deleteImage : choiseImage} style={styles.photoPickButton}>
@@ -161,45 +166,91 @@ function AddSaleScreen() {
                         </View>
                     </View>
                     <View style={{ marginTop: 10 }}>
-                        <Text style={styles.titleField}>Название</Text>
+                        <Text style={styles.titleField}>
+                            {t("add-sale-screen.name-title")}
+                        </Text>
                         <View style={isNameError ? styles.errorField : styles.field}>
-                            <TextInput value={name} onChangeText={onChangeName} style={styles.input} placeholder='Название акции' />
+                            <TextInput
+                                value={name}
+                                onChangeText={onChangeName}
+                                style={styles.input}
+                                placeholder={t("add-sale-screen.name-placeholder")}
+                            />
                         </View>
-                        {isNameError && <Text style={styles.error}>Название должно быть свыше 2 символов</Text>}
+                        {isNameError &&
+                            <Text style={styles.error}>
+                                {t("add-sale-screen.name-title")}
+                            </Text>
+                        }
                     </View>
                     <View style={{ marginTop: 10 }}>
-                        <Text style={styles.titleField}>Описание</Text>
+                        <Text style={styles.titleField}>
+                            {t("add-sale-screen.description-title")}
+                        </Text>
                         <View style={isDescrtiptionError ? styles.errorField : styles.field}>
-                            <TextInput value={description} onChangeText={onChangeDescription} style={styles.input} placeholder='Введите описание' />
+                            <TextInput
+                                value={description}
+                                onChangeText={onChangeDescription}
+                                style={styles.input}
+                                placeholder={t("add-sale-screen.description-placeholder")}
+                            />
                         </View>
-                        {isDescrtiptionError && <Text style={styles.error}>Описание должно быть свыше 5 символов</Text>}
+                        {isDescrtiptionError &&
+                            <Text style={styles.error}>
+                                {t("add-sale-screen.description-limit")}
+                            </Text>
+                        }
                     </View>
                     <View style={{ marginTop: 10 }}>
-                        <Text style={styles.titleField}>Процент</Text>
+                        <Text style={styles.titleField}>
+                            {t("add-sale-screen.percent-title")}
+                        </Text>
                         <View style={isPrecentError ? styles.errorField : styles.field}>
-                            <TextInput value={precent} onChangeText={onChangePresent} keyboardType='numeric' style={styles.input} placeholder='Введите процент' />
+                            <TextInput
+                                value={precent}
+                                onChangeText={onChangePresent}
+                                keyboardType='numeric'
+                                style={styles.input}
+                                placeholder={t("add-sale-screen.percent-placeholder")}
+                            />
                         </View>
-                        {isPrecentError && <Text style={styles.error}>Поле обязательно к заполнению</Text>}
+                        {isPrecentError &&
+                            <Text style={styles.error}>
+                                {t("add-sale-screen.field-request")}
+                            </Text>
+                        }
                     </View>
                     <View style={{ marginTop: 10 }}>
-                        <Text style={styles.titleField}>Сезон</Text>
+                        <Text style={styles.titleField}>
+                            {t("add-sale-screen.season-title")}
+                        </Text>
                         <View style={isSelectedSeasonError ? [styles.errorField, { justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', display: 'flex', padding: 12 }] : [styles.field, { justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', display: 'flex', padding: 12 }]}>
                             <Text style={styles.input}>
-                                {seasonSelected == null ? 'Выберите сезон' : seasonSelected}
+                                {seasonSelected == null ? t("add-sale-screen.season-placeholder") : seasonSelected}
                             </Text>
                             <TouchableOpacity onPress={toggleSetSeasonShowMenu}>
                                 <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
                             </TouchableOpacity>
                         </View>
-                        {isSelectedSeasonError && <Text style={styles.error}>Поле обязат476ельно к заполнению</Text>}
+                        {isSelectedSeasonError &&
+                            <Text style={styles.error}>
+                                {t("add-sale-screen.field-request")}
+                            </Text>
+                        }
                     </View>
                 </View>
                 <View style={{ marginBottom: 64 }} />
             </ScrollView>
             <View style={styles.buttonContainer}>
-                {isErrorMessage && <Text style={styles.error}>Все поля обязательны к заполнению</Text>}
+                {isErrorMessage &&
+                    <Text style={styles.error}>
+                        {t("add-sale-screen.all-fields-request")}
+                    </Text>
+                }
                 <TouchableOpacity onPress={addSale} style={styles.addSaleButton}>
-                    <Text style={styles.addSaleButtonText}>Создать акцию</Text>
+                    <Text style={styles.addSaleButtonText}>
+                        {t("add-sale-screen.create-sale-btn")}
+                    </Text>
                 </TouchableOpacity>
             </View>
             {isChoiseImage &&
@@ -209,10 +260,14 @@ function AddSaleScreen() {
                             <AntDesign name="close" size={32} color="black" />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={takePhoto} style={styles.buttonChoiseImage}>
-                            <Text style={styles.buttonChoiseImageText}>Сделать фотографию</Text>
+                            <Text style={styles.buttonChoiseImageText}>
+                                {t("take-photo-button")}
+                            </Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={pickImage} style={styles.buttonChoiseImage}>
-                            <Text style={styles.buttonChoiseImageText}>Выбрать фотографию</Text>
+                            <Text style={styles.buttonChoiseImageText}>
+                                {t("pick-photo-button")}
+                            </Text>
                         </TouchableOpacity>
                     </View>
                 </View>
