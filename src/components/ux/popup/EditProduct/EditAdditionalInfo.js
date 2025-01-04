@@ -6,17 +6,22 @@ import { useState, useEffect } from 'react';
 import EditCategory from './EditCategory';
 import ChangeColor from '../ChangeColor';
 import { getUserData } from '../../../../store/userDataManager';
+import { useTranslation } from 'react-i18next';
 
-function EditAdditionalInfo({ onClose, productId }) {
+function EditAdditionalInfo({ data, onClose, productId }) {
     const [isChangeDelivery, setChangeDelivery] = useState(false);
     const [isChangeCategory, setChangeCategory] = useState(false);
     const [isChangeColor, setChangeColor] = useState(false);
-    const [manufacturer, onChangeManufacturer] = useState();
-    const [color, setColor] = useState();
-    const [brend, onChangeBrend] = useState();
-    const [category, setCategory] = useState();
+    const [manufacturer, onChangeManufacturer] = useState(data.manufacturer);
+    const [color, setColor] = useState(data.color);
+    const [brend, onChangeBrend] = useState(data.brend);
+    const [category, setCategory] = useState(data.category);
     const [delivery, setDelivery] = useState();
     const [userData, setUserData] = useState({});
+    const [message, setMessage] = useState();
+    const { t } = useTranslation();
+
+    console.log(data.color)
 
     const toggleChangeDelivery = () => {
         setChangeDelivery(!isChangeDelivery);
@@ -60,16 +65,22 @@ function EditAdditionalInfo({ onClose, productId }) {
     }, []);
 
     const saveChanges = () => {
-        // Проверка и замена пустых значений на NULL
+        // Проверка на заполненность полей
+        if (!manufacturer || !color || !brend || !category) {
+            setMessage(t("edit-info.all-fields"));
+            return;
+        }
+
+        setMessage("");
+
         const postData = {
             manufacturer: manufacturer !== '' ? manufacturer : null,
             color: color !== '' ? color : null,
             brend: brend !== '' ? brend : null,
             category: category !== '' ? category : null,
-            delivery: delivery !== '' ? delivery : null
+            delivery: delivery !== '' ? delivery : null,
         };
 
-        // Отправка данных на сервер
         fetch(`https://aqtas.garcom.kz/api/updateAdditionalProduct/${userData.userId}/${productId}`, {
             method: 'PUT',
             headers: {
@@ -79,11 +90,16 @@ function EditAdditionalInfo({ onClose, productId }) {
         })
             .then(response => response.json())
             .then(data => {
-                // Можно добавить обработку успешного обновления
+                setMessage("");
+                alert(t("edit-info.success"))
+                onClose();
             })
             .catch(error => {
+                console.error("Ошибка при сохранении изменений:", error);
+                setMessage(t("edit-info.server-error"));
             });
     };
+
 
 
 
@@ -91,19 +107,28 @@ function EditAdditionalInfo({ onClose, productId }) {
         <View style={styles.background}>
             <View style={styles.container}>
                 <View style={styles.navbar}>
-                    <Text style={styles.title}>Изменение данных</Text>
-                    <Text style={styles.subtitle}>В этом поле вы можете изменить дополнительную информацию о вашем продукте</Text>
+                    <Text style={styles.title}>{t("edit-info.title")}</Text>
+                    <Text style={styles.subtitle}>{t("edit-info.description-second")}</Text>
                 </View>
                 <View>
                     <View style={styles.field}>
-                        <Text style={styles.titleField}>Прозводитель </Text>
-                        <TextInput value={manufacturer} onChangeText={onChangeManufacturer} style={styles.input} placeholder='Название производителя' />
+                        <Text style={styles.titleField}>{t("edit-info.manufacturer-title")}</Text>
+                        <TextInput
+                            value={manufacturer}
+                            onChangeText={onChangeManufacturer}
+                            style={styles.input}
+                            placeholder={t("edit-info.manufacturer-placeholder")}
+                        />
                     </View>
                 </View>
                 <View>
                     <View style={styles.field}>
-                        <Text style={styles.titleField}>Цвет</Text>
-                        <Text style={styles.input}>{color}</Text>
+                        <Text style={styles.titleField}>{t("edit-info.color-title")}</Text>
+                        <TextInput
+                            value={color}
+                            editable={false}
+                            style={styles.input}
+                        />
                         <TouchableOpacity onPress={toggleChangeColor}>
                             <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
                         </TouchableOpacity>
@@ -111,20 +136,29 @@ function EditAdditionalInfo({ onClose, productId }) {
                 </View>
                 <View>
                     <View style={styles.field}>
-                        <Text style={styles.titleField}>Бренд</Text>
-                        <TextInput value={brend} onChangeText={onChangeBrend} style={styles.input} placeholder='Бренд' />
+                        <Text style={styles.titleField}>{t("edit-info.brend-title")}</Text>
+                        <TextInput
+                            value={brend}
+                            onChangeText={onChangeBrend}
+                            style={styles.input}
+                            placeholder={t("edit-info.brend-placeholder")}
+                        />
                     </View>
                 </View>
                 <View>
                     <View style={styles.field}>
-                        <Text style={styles.titleField}>Категория</Text>
-                        <Text style={styles.input}>{category}</Text>
+                        <Text style={styles.titleField}>{t("edit-info.category-title")}</Text>
+                        <TextInput
+                            value={category}
+                            editable={false}
+                            style={styles.input}
+                        />
                         <TouchableOpacity onPress={toggleChangeCategory}>
                             <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View>
+                {/* <View>
                     <View style={styles.field}>
                         <Text style={styles.titleField}>Доставка</Text>
                         <Text style={styles.input}>{delivery}</Text>
@@ -132,13 +166,14 @@ function EditAdditionalInfo({ onClose, productId }) {
                             <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
                         </TouchableOpacity>
                     </View>
-                </View>
+                </View> */}
+                <Text style={styles.error}>{message}</Text>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity onPress={saveChanges} style={styles.saveButton}>
-                        <Text style={styles.saveButtonText}>Сохранить</Text>
+                        <Text style={styles.saveButtonText}>{t("edit-info.save-btn")}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleClose} style={styles.cancelButton}>
-                        <Text style={styles.cancelButtonText}>Отмена</Text>
+                        <Text style={styles.cancelButtonText}>{t("edit-info.cancel-btn")}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

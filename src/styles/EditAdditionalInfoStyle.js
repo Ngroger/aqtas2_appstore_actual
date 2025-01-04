@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     subtitle: {
         fontFamily: 'Cambria',
         color: 'rgba(0, 0, 0, 0.5)',
-        fontSize: 16    
+        fontSize: 16
     },
     field: {
         borderWidth: 1,
@@ -73,13 +73,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         display: 'flex',
         justifyContent: 'space-between',
-        marginTop: 20
     },
     saveButton: {
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
-        width: 160,
+        width: '48%',
         backgroundColor: '#95E5FF',
         borderRadius: 100
 
@@ -93,7 +92,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
-        width: 160,
+        width: '48%',
         borderWidth: 1,
         borderColor: '#95E5FF',
         borderRadius: 100
@@ -109,6 +108,13 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
+    },
+    error: {
+        fontFamily: 'Cambria',
+        color: '#FF0000',
+        textAlign: 'center',
+        fontSize: 16,
+        marginVertical: 6
     }
 });
 

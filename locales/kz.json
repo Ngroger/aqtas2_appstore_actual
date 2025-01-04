@@ -306,5 +306,39 @@
         "season-placeholder": "Маусымды таңдаңыз",
         "all-fields-request": "Барлық өрістерді толтыру қажет",
         "create-sale-btn": "Науқан құру"
+    },
+    "my-products": {
+        "title": "Менің тауарларым",
+        "canceled": "Тоқтатылғандар",
+        "in-sale": "Сатылымда",
+        "load-text": "Күтіңіз, бұл біраз уақыт алуы мүмкін...",
+        "edit-btn": "Өңдеу",
+        "no-data-text": "Бұл санатқа сәйкес келетін тауарларыңыз жоқ",
+        "public-btn": "Жариялау",
+        "cancel-btn": "Тоқтату",
+        "delete-btn": "Жою",
+        "add-product-btn": "Тауар қосу"
+    },
+    "edit-info": {
+        "title": "Деректерді өзгерту",
+        "description": "Бұл өрісте сіз өнімнің бастапқы ақпаратына өзгерістер енгізе аласыз",
+        "description-second": "Бұл өрісте сіз өнімнің қосымша ақпаратына өзгерістер енгізе аласыз",
+        "all-fields": "Барлық өрістер толтырылуы керек",
+        "success": "Өзгерістер сәтті сақталды. Өзгерістерді көру үшін қосымшаны қайта жүктеңіз",
+        "server-error": "Өзгерістерді сақтауда қате орын алды. Қайтадан көріңіз",
+        "cost-title": "Жаңа баға",
+        "cost-placeholder": "Өнімнің бағасы",
+        "name-title": "Атауы",
+        "name-placeholder": "Өнімнің атауы",
+        "description-title": "Сипаттама",
+        "description-placeholder": "Өнімнің сипаттамасы",
+        "save-btn": "Сақтау",
+        "cancel-btn": "Бас тарту",
+        "manufacturer-title": "Өндіруші",
+        "manufacturer-placeholder": "Өнім өндірушісі",
+        "color-title": "Түс",
+        "brend-title": "Бренд",
+        "brend-placeholder": "Өнімнің бренді",
+        "category-title": "Санат"
     }
 }

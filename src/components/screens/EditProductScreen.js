@@ -13,6 +13,7 @@ import { useRoute } from '@react-navigation/native';
 import { getUserData } from '../../store/userDataManager';
 import * as ImagePicker from 'expo-image-picker';
 import { useTranslation } from 'react-i18next';
+import { StatusBar } from 'expo-status-bar';
 
 function EditProductScreen() {
     const navigation = useNavigation();
@@ -418,31 +419,14 @@ function EditProductScreen() {
                                 </ScrollView>
                             </View>
                     </View> */}
-                    <TouchableOpacity onPress={uploadProductImages} style={styles.saveButton}>
-                        <Text style={styles.saveButtonText}>{t('save-changes-button')}</Text>
-                    </TouchableOpacity>
                 </View>
             </ScrollView>
             {isShowAboutComission && <AboutCommision onClose={toggleShowAbout} />}
             {isShowAboutCostumer && <AboutCostumer customerData={customer} onClose={toggleShowCostumer} />}
-            {isShowEditInfo && <EditInfo productId={editProductId} onClose={toggleShowEditInfo} />}
-            {isShowEditAddtionalInfo && <EditAdditionalInfo productId={editProductId} onClose={toggleShowAdditionalInfo} />}
+            {isShowEditInfo && <EditInfo data={productData} productId={editProductId} onClose={toggleShowEditInfo} />}
+            {isShowEditAddtionalInfo && <EditAdditionalInfo data={productData} productId={editProductId} onClose={toggleShowAdditionalInfo} />}
             {isUpToTop && <UpToTop onClose={toggleUpToTop} />}
-            {isChoiseImage &&
-                <View style={styles.background}>
-                    <View style={styles.containerChoiseImage}>
-                        <TouchableOpacity onPress={toggleChoiseImage}>
-                            <AntDesign name="close" size={32} color="black" />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={takePhoto} style={styles.buttonChoiseImage}>
-                            <Text style={styles.buttonChoiseImageText}>{t('take-photo-button')}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={pickPhoto} style={styles.buttonChoiseImage}>
-                            <Text style={styles.buttonChoiseImageText}>{t('pick-photo-button')}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            }
+            <StatusBar translucent={true} backgroundColor='transparent' />
         </View>
     )
 };

@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
         width: '90%',
-        padding: 10,
+        padding: 16,
         borderRadius: 16,
         position: 'absolute',
         zIndex: 1000,
@@ -21,8 +21,7 @@ const styles = StyleSheet.create({
     navbar: {
         borderBottomColor: '#BDBDBD',
         borderBottomWidth: 1,
-        padding: 10,
-        paddingVertical: 12
+        paddingBottom: 10
     },
     title: {
         fontFamily: 'Cambria',
@@ -32,7 +31,7 @@ const styles = StyleSheet.create({
     subtitle: {
         fontFamily: 'Cambria',
         color: 'rgba(0, 0, 0, 0.5)',
-        fontSize: 16    
+        fontSize: 16
     },
     field: {
         borderWidth: 1,
@@ -73,13 +72,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         display: 'flex',
         justifyContent: 'space-between',
-        marginTop: 20
     },
     saveButton: {
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
-        width: 160,
+        width: '48%',
         backgroundColor: '#95E5FF',
         borderRadius: 100
 
@@ -93,7 +91,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
-        width: 160,
+        width: '48%',
         borderWidth: 1,
         borderColor: '#95E5FF',
         borderRadius: 100
@@ -109,6 +107,13 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
+    },
+    error: {
+        fontFamily: 'Cambria',
+        color: '#FF0000',
+        textAlign: 'center',
+        fontSize: 16,
+        marginVertical: 6
     }
 });
 

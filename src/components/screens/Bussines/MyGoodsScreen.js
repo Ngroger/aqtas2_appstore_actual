@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View, StatusBar, Image, FlatList, ScrollView, ActivityIndicator } from 'react-native';
+import { Text, TouchableOpacity, View, StatusBar, Image, FlatList, ScrollView } from 'react-native';
 import styles from '../../../styles/MyGoodsStyles';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -6,19 +6,22 @@ import { useState, useEffect } from 'react';
 import UpToTop from '../../ux/popup/EditProduct/UpToTop';
 import CreateProduct from '../../ux/popup/CreateProduct';
 import { getUserData } from '../../../store/userDataManager';
+import { useTranslation } from 'react-i18next';
 
 function MyGoodsScreen() {
     const navigation = useNavigation();
-    const [isSelected, setSelected] = useState();
     const [isUpToTop, setUpToTop] = useState(false);
     const [isCreateProduct, setCreateProduct] = useState(false);
     const [userData, setUserData] = useState({});
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [activeCategory, setActiveCategory] = useState();
+    const [activeCategory, setActiveCategory] = useState('Продажа');
     const [selectedItems, setSelectedItems] = useState({});
-    const [isNoCardMessage, setIsNoCardMessage] = useState(false);
-    const [bankCardData, setBankCardData] = useState('');
+    const { t } = useTranslation();
+
+    useEffect(() => {
+        loadUserData();
+    }, [activeCategory]);
 
     const selectItem = (index) => {
         setSelectedItems(prevSelectedItems => ({
@@ -27,62 +30,37 @@ function MyGoodsScreen() {
         }));
     };
 
-    const toggleSelecter = () => {
-        setSelected(!isSelected)
-    }
-
-    const handleCategoryClick = (categoryId) => {
-        if (activeCategory === categoryId) {
-            setActiveCategory(null);
-            setIsLoading(true); // Показать индикатор загрузки
-
-            // Вернуться к рендеру всех продуктов через некоторое время
-            setTimeout(() => {
-                setIsLoading(false);
-                loadUserData();  // Загрузить все продукты с сервера
-            }, 1000); // Время загрузки в миллисекундах (в данном случае 5 секунд)
-        } else {
-            setActiveCategory(categoryId);
-            setIsLoading(true);
-
-            fetch(`https://aqtas.garcom.kz/api/myProducts/${userData.userId}/${categories[categoryId - 1].value}`)
-                .then((response) => response.json())
-                .then((data) => {
-                    setProducts(data);
-                    setIsLoading(false);
-                })
-                .catch((error) => {
-                    setIsLoading(false);
-                });
-        }
+    const handleCategoryClick = async (category) => {
+        setActiveCategory(category);
     };
 
     const categories = [
         { id: 1, name: 'Top', value: 'top' },
-        { id: 2, name: 'Отмененные', value: 'Отмененные' },
-        { id: 3, name: 'В продаже', value: 'Продажа' },
+        { id: 2, name: t("my-products.canceled"), value: 'Отмена' },
+        { id: 3, name: t("my-products.in-sale"), value: 'Продажа' },
     ];
 
     const loadUserData = async () => {
         const userData = await getUserData();
+        setIsLoading(true);
         if (userData) {
             setUserData(userData);
-            // Выполните запрос к серверу для получения данных о финансах
+            setProducts([]);
             try {
-                const response = await fetch(`https://aqtas.garcom.kz/api/myProducts/${userData.userId}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setProducts(data);
-                } else {
+                const response = await fetch(`https://aqtas.garcom.kz/api/myProducts/${userData.userId}/${activeCategory}`);
+                const responseJson = await response.json();
+
+                if (responseJson.success) {
+                    setProducts(responseJson.products);
+                    setIsLoading(false);
                 }
             } catch (error) {
+
+            } finally {
+                setIsLoading(false);
             }
         }
     };
-
-    useEffect(() => {
-        loadUserData();
-    }, []);
 
     const toggleUpToTop = () => {
         setUpToTop(!isUpToTop)
@@ -93,7 +71,7 @@ function MyGoodsScreen() {
     }
 
     const handleGoBack = () => {
-        navigation.goBack(); // Вернуться на предыдущий экран
+        navigation.goBack();
     };
 
     const goToEdit = (productData) => {
@@ -127,7 +105,7 @@ function MyGoodsScreen() {
         }
     };
 
-    const actionSelectedFromCart = async ({ action }) => {
+    const actionSelectedFromCart = async (action) => {
         const selectedProductIds = Object.entries(selectedItems)
             .filter(([_, isSelected]) => isSelected)
             .map(([productId]) => productId);
@@ -139,15 +117,15 @@ function MyGoodsScreen() {
         try {
             for (const productId of selectedProductIds) {
                 const response = await fetch(`https://aqtas.garcom.kz/api/actionMyProduct/${userData.userId}/${productId}/${action}`, {
-                    method: 'DELETE',
+                    method: 'PUT',
                 });
 
-                if (response.ok) {
+                const responseJson = await response.json();
+
+                if (responseJson.success) {
                     const updatedProducts = products.filter(item => item.id !== productId);
                     setProducts(updatedProducts);
-                    setSelectedItems({}); // Очищаем выбранные товары
-                } else {
-
+                    setSelectedItems({});
                 }
             }
         } catch (error) {
@@ -160,23 +138,24 @@ function MyGoodsScreen() {
             <View style={styles.container}>
                 <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
                     <MaterialIcons name="arrow-back-ios" size={24} color="black" />
-                    <Text style={styles.title}>Мои товары</Text>
+                    <Text style={styles.title}>{t("my-products.title")}</Text>
                 </TouchableOpacity>
                 <View style={styles.categoriesContainer}>
                     <ScrollView style={styles.categories} horizontal={true}>
-                        {categories.map((category) => (
+                        {categories.map((category, index) => (
                             <TouchableOpacity
-                                key={category.id}
+                                key={index}
                                 style={
-                                    activeCategory === category.id
+                                    activeCategory === category.value
                                         ? styles.categoryActive
                                         : styles.category
                                 }
-                                onPress={() => handleCategoryClick(category.id)}
+                                onPress={() => handleCategoryClick(category.value)}
+                                disabled={activeCategory === category.value}
                             >
                                 <Text
                                     style={
-                                        activeCategory === category.id
+                                        activeCategory === category.value
                                             ? styles.categoryTextActive
                                             : styles.categoryText
                                     }
@@ -189,8 +168,7 @@ function MyGoodsScreen() {
                 </View>
                 {isLoading && (
                     <View style={styles.loadingIndicatorContainer}>
-                        <ActivityIndicator size="big" color="#95E5FF" />
-                        <Text style={styles.textLoad}>Подождите, это может занять время...</Text>
+                        <Text style={styles.textLoad}>{t("my-products.load-text")}</Text>
                     </View>
                 )}
                 {!isLoading && (
@@ -209,20 +187,26 @@ function MyGoodsScreen() {
                                                         <Text style={styles.cost}>{item.cost}тнг</Text>
                                                         {item.oldCost && <Text style={styles.oldCost}>{item.oldCost}тнг</Text>}
                                                     </View>
-                                                    <TouchableOpacity onPress={() => selectItem(item.id)} style={selectedItems[item.id] ? styles.selectedCheckbox : styles.checkbox}>
-                                                        {selectedItems[item.id] ? (
-                                                            <View style={styles.dot} />
-                                                        ) : null}
-                                                    </TouchableOpacity>
+                                                    {activeCategory !== 'top' && (
+                                                        <TouchableOpacity onPress={() => selectItem(item.id)} style={selectedItems[item.id] ? styles.selectedCheckbox : styles.checkbox}>
+                                                            {selectedItems[item.id] ? (
+                                                                <View style={styles.dot} />
+                                                            ) : null}
+                                                        </TouchableOpacity>
+                                                    )}
                                                 </View>
                                                 <View style={{ padding: 0, flex: 1 }}>
                                                     <View>
                                                         <View style={styles.infoContainer}>
-                                                            <Text style={styles.firstInfo}>Название</Text>
+                                                            <Text style={styles.firstInfo}>
+                                                                {t("name-shop-info")}
+                                                            </Text>
                                                             <Text style={styles.secondInfo}>{item.name}</Text>
                                                         </View>
                                                         <View style={styles.infoContainer}>
-                                                            <Text style={styles.firstInfo}>Описание</Text>
+                                                            <Text style={styles.firstInfo}>
+                                                                {t("description-product-cart-info")}
+                                                            </Text>
                                                             <Text style={styles.secondInfo}>
                                                                 {item.description.length > 10
                                                                     ? item.description.substring(0, 10) + "..."
@@ -231,7 +215,7 @@ function MyGoodsScreen() {
                                                             </Text>
                                                         </View>
                                                         <View style={styles.infoContainer}>
-                                                            <Text style={styles.firstInfo}>Бренд</Text>
+                                                            <Text style={styles.firstInfo}>{t("brend-cart-info")}</Text>
                                                             <Text style={styles.secondInfo}>
                                                                 {item.brend.length > 10
                                                                     ? item.brend.substring(0, 10) + "..."
@@ -240,7 +224,7 @@ function MyGoodsScreen() {
                                                             </Text>
                                                         </View>
                                                         <View style={styles.infoContainer}>
-                                                            <Text style={styles.firstInfo}>Категория</Text>
+                                                            <Text style={styles.firstInfo}>{t("category-card-info")}</Text>
                                                             <Text style={styles.secondInfo}>{item.category}</Text>
                                                         </View>
                                                     </View>
@@ -250,7 +234,7 @@ function MyGoodsScreen() {
                                                         <Text style={styles.topButtonText}>Продвижение</Text>
                                                     </TouchableOpacity> */}
                                                     <TouchableOpacity onPress={() => goToEdit(item)} style={styles.editButton}>
-                                                        <Text style={styles.editButtonText}>Редактировать</Text>
+                                                        <Text style={styles.editButtonText}>{t("my-products.edit-btn")}</Text>
                                                     </TouchableOpacity>
                                                 </View>
                                             </View>
@@ -260,28 +244,36 @@ function MyGoodsScreen() {
                                 <View style={{ marginBottom: 100 }} />
                             </>
                         ) : (
-                            <Text style={styles.noDataText}>У вас нет товаров, соответстующих этой категории</Text>
+                            <Text style={styles.noDataText}>{t("my-products.no-data-text")}</Text>
                         )}
                     </>
                 )}
                 <View style={styles.buttonsContainer}>
                     {Object.keys(selectedItems).some((itemId) => selectedItems[itemId]) ? (
                         <View style={{ flexDirection: 'row', display: 'flex', justifyContent: 'space-between' }}>
-                            <TouchableOpacity onPress={() => actionSelectedFromCart('Отмена')} style={styles.buttonActionProduct}>
-                                <Text style={styles.buttonActionProductText}>Отменить</Text>
+                            <TouchableOpacity
+                                onPress={() => actionSelectedFromCart(activeCategory === 'Продажа' ? 'Отмена' : 'Продажа')}
+                                style={styles.buttonActionProduct}
+                            >
+                                <Text style={styles.buttonActionProductText}>
+                                    {activeCategory === 'Продажа' ?
+                                        t("my-products.cancel-btn") :
+                                        t("my-products.public-btn")
+                                    }
+                                </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={removeSelectedFromCart} style={styles.buttonDeleteProduct}>
-                                <Text style={styles.buttonDeleteProductText}>Удалить</Text>
+                            <TouchableOpacity onPress={() => removeSelectedFromCart()} style={styles.buttonDeleteProduct}>
+                                <Text style={styles.buttonDeleteProductText}>{t("my-products.delete-btn")}</Text>
                             </TouchableOpacity>
                         </View>
                     ) : (
                         <TouchableOpacity onPress={toggleCreateProduct} style={styles.buttonAddProduct}>
-                            <Text style={styles.buttonAddProductText}>Добавить товар</Text>
+                            <Text style={styles.buttonAddProductText}>{t("my-products.add-product-btn")}</Text>
                         </TouchableOpacity>
                     )}
                 </View>
-                <StatusBar backgroundColor="transparent" translucent={true} />
             </View>
+            <StatusBar backgroundColor="transparent" translucent={true} />
             {isUpToTop && <UpToTop onClose={toggleUpToTop} />}
             {isCreateProduct && <CreateProduct onClose={toggleCreateProduct} />}
         </View>
