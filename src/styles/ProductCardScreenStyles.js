@@ -7,6 +7,27 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 0
     },
+    goBackBtn: {
+        width: 52,
+        height: 52,
+        borderRadius: 100,
+        backgroundColor: '#FFF',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        elevation: 5,
+        position: 'absolute',
+        zIndex: 100,
+        left: 24,
+        top: 38,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     image: {
         width: '100%',
         height: 300,

@@ -97,6 +97,8 @@ function MainScreen() {
     };
 
     const addToCart = async (product) => {
+        console.log("test");
+        console.log("addToCart product LOG: ", product);
         if (!userData || !userData.userId) {
             openModal("Предупреждение", "Для того, чтоб добавить товар в корзину нужно авторизорваться");
             return;
@@ -113,7 +115,12 @@ function MainScreen() {
                 imagePreview: product.imagePreview1,
                 UserID: userData.userId,
                 count: 1,
+                customerId: product.CustomerId,
+                productId: product.id
             };
+
+            console.log("test");
+            console.log("product: ", product);
 
             const response = await fetch('https://aqtas.garcom.kz/api/addToCart', {
                 method: 'POST',

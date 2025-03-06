@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     input: {
         fontFamily: 'Cambria',
         fontSize: 18,
-        width: 220
     },
     cardImage: {
         width: 42,
@@ -98,6 +97,33 @@ const styles = StyleSheet.create({
         zIndex: 100,
         bottom: 0,
         padding: 24
+    },
+    checkboxContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        marginTop: 12
+    },
+    checkbox: {
+        width: 24,
+        height: 24,
+        borderWidth: 1.5,
+        borderColor: '#95E5FF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 6
+    },
+    checkboxText: {
+        fontFamily: 'Cambria',
+        color: '#141414',
+        fontSize: 18
+    },
+    dot: {
+        width: 12,
+        height: 12,
+        backgroundColor: '#95E5FF',
+        borderRadius: 100
     }
 });
 

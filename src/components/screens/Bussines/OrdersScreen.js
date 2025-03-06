@@ -1,19 +1,17 @@
 import { Text, TouchableOpacity, View, StatusBar, FlatList, Image } from 'react-native';
 import styles from '../../../styles/OrderScreenStyles';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import ReasonForDelete from '../../ux/popup/ReasonForDelete';
 import { getUserData } from '../../../store/userDataManager';
 import { useTranslation } from 'react-i18next';
 
 function OrderScreen() {
     const navigation = useNavigation();
-    const [isDelete, setDelete] = useState(false);
     const [isReasonForDelete, setReasonForDelete] = useState(false);
-    const [isProductAvailability, setProductAvailability] = useState(false);
     const [userData, setUserData] = useState({});
     const [orders, setOrders] = useState([]);
     const [selectedCard, setSelected] = useState({});
@@ -22,63 +20,45 @@ function OrderScreen() {
     const [isLoad, setIsLoad] = useState(false);
     const [buyerId, setBuyerId] = useState();
 
-    useEffect(() => {
-        setIsLoad(true);
-        const intervalId = setInterval(() => {
-            setIsLoad(false);
+    useFocusEffect(
+        useCallback(() => {
             loadUserData();
-        }, 5000); // 5000 миллисекунд
-
-        return () => {
-            clearInterval(intervalId); // Очищаем интервал при размонтировании компонента
-        };
-    }, []);
+        }, [])
+    );
 
     const toggleReasonForDelete = (id, buyerId) => {
         setReasonForDelete(!isReasonForDelete);
         setSelectedOrderId(id);
         setBuyerId(buyerId);
-    }
+    };
 
-    const deleteOrderWithReason = async (id, buyerId) => {
-        try {
-            const reasons = encodeURIComponent("Время ответа истекло. За ожидание с продавца снимется рейтинг");
-            const response = await fetch(`https://aqtas.garcom.kz/api/deleteOrder/${userData.userId}/${id}/${buyerId}?reasons=${reasons}`, {
-                method: 'DELETE',
-            });
-
-            if (response.ok) {
-            } else {
-            }
-        } catch (error) {
-        }
-    }
     // Функция для форматирования времени в формат "часы:минуты:секунды"
-    const formatTime = (timeInMinutes, id, buyerId) => {
-        if (timeInMinutes === 0) {
-            deleteOrderWithReason(id, buyerId);
-        } else {
-            const hours = Math.floor(timeInMinutes / 60);
-            const minutes = timeInMinutes % 60;
-            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-        }
+    const formatTime = (timeInMinutes) => {
+        const hours = Math.floor(timeInMinutes / 60);
+        const minutes = timeInMinutes % 60;
+        return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
     };
 
 
     const loadUserData = async () => {
+        setIsLoad(true);
         const userData = await getUserData();
         if (userData) {
             setUserData(userData);
-            // Выполните запрос к серверу для получения данных о финансах
+
             try {
                 const response = await fetch(`https://aqtas.garcom.kz/api/orders/${userData.userId}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setOrders(data);
+                const responseJson = await response.json();
+                console.log("responseJson: ", responseJson);
+                if (responseJson.success) {
+                    setOrders(responseJson.orders);
+                    setIsLoad(false);
                 } else {
                 }
             } catch (error) {
 
+            } finally {
+                setIsLoad(false);
             }
         }
     };
@@ -88,56 +68,29 @@ function OrderScreen() {
     };
 
     const selectCard = (saleId) => {
-        // Создайте новый объект selectedCard с обновленным состоянием для текущей карточки
         const newSelectedCard = { ...selectedCard };
         newSelectedCard[saleId] = !newSelectedCard[saleId];
         setSelected(newSelectedCard);
     };
 
-    const productAvailability = ({ answer }) => {
-        if (answer === 'yes') {
-            setProductAvailability(true);
-            //
-        } else {
-            setProductAvailability(true);
-            //отправка пользователю, что товара нет в наличие
-        }
-    }
-
-    const updateOrderAvailability = async (orderId, buyerId) => {
+    const updateOrderAvailability = async (orderId, availability, productId, buyerId) => {
         try {
-            const response = await fetch(`https://aqtas.garcom.kz/api/updateOrderAvailability/${userData.userId}/${orderId}/${buyerId}`, {
-                method: 'PUT', // Используйте HTTP-метод PUT для обновления
+            const response = await fetch(`https://aqtas.garcom.kz/api/updateAvailability/${orderId}/${availability}/${productId}/${buyerId}`, {
+                method: 'PUT',
             });
 
-            if (response.ok) {
+            const responseJson = await response.json();
 
-            } else {
+            console.log("responseJson: ", responseJson);
 
+            if (responseJson.success) {
+                // Убираем заказ из массива orders, если его id совпадает с orderId
+                setOrders(prevOrders => prevOrders.filter(order => order.id !== orderId));
             }
         } catch (error) {
-
+            console.log("updateOrderAvailability error", error);
         }
     };
-
-    const notAvailable = async (orderId, buyerId) => {
-        try {
-            const reasons = encodeURIComponent("Товара нет в наличии");
-            const response = await fetch(`https://aqtas.garcom.kz/api/deleteOrder/${userData.userId}/${orderId}/${buyerId}?reasons=${reasons}`, {
-                method: 'DELETE', // Используйте HTTP-метод DELETE для удаления записи заказа
-            });
-
-            if (response.ok) {
-                // Успешное удаление на сервере
-                // Здесь вы можете выполнить необходимые действия после успешного удаления
-            } else {
-
-            }
-        } catch (error) {
-
-        }
-    };
-
 
     return (
         <View>
@@ -180,15 +133,15 @@ function OrderScreen() {
                                                 <View style={styles.productAvailability}>
                                                     <Text style={styles.quenstion}>Есть товар в наличии?</Text>
                                                     <View style={styles.answer}>
-                                                        <TouchableOpacity onPress={_ => updateOrderAvailability(item.id, item.userID)}>
+                                                        <TouchableOpacity onPress={_ => updateOrderAvailability(item.id, 1, item.productId, item.userID)}>
                                                             <Text style={styles.yes}>ДА</Text>
                                                         </TouchableOpacity>
                                                         <View style={styles.line} />
-                                                        <TouchableOpacity onPress={_ => notAvailable(item.id, item.userID)}>
+                                                        <TouchableOpacity onPress={_ => updateOrderAvailability(item.id, 0, item.productId, item.userID)}>
                                                             <Text style={styles.no}>НЕТ</Text>
                                                         </TouchableOpacity>
                                                     </View>
-                                                    <Text style={styles.time}>Оставшееся время на ответ: {formatTime(item.timer, item.id, item.userID)}</Text>
+                                                    <Text style={styles.time}>Оставшееся время на ответ: {formatTime(item.timer)}</Text>
                                                 </View>
                                             </>
                                         )}

@@ -50,6 +50,8 @@ const styles = ScaledSheet.create({
         paddingHorizontal: '10@msr',
         borderRadius: 100,
         alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1
     },
     textBuy: {
         fontFamily: 'CambriaBold',

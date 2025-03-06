@@ -1,16 +1,10 @@
-import { View, TouchableOpacity, Text } from "react-native";
-import styles from '../../../styles/CategoryShopStyles';
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 import { useTranslation } from "react-i18next";
+import { Text, TouchableOpacity, View } from "react-native";
+import styles from '../../../styles/CategoryShopStyles';
 
-function CategoryShop({ onClose, onCategorySelect  }) {
-    const {t} = useTranslation();
-
-    const handleClose = () => {
-        if (onClose) {
-            onClose();
-        }
-    };
+function CategoryShop({ onClose, onCategorySelect }) {
+    const { t } = useTranslation();
 
     const handleCategorySelect = (selectedCategory) => {
         onCategorySelect(selectedCategory);

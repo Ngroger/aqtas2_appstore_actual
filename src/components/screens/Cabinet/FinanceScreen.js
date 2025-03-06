@@ -122,9 +122,6 @@ function FinanceScreen() {
                             <View style={{ marginVertical: 6 }}>
                                 <View style={styles.dataContainer}>
                                     <Text style={styles.date}>{formatDate(item.date)}</Text>
-                                    <TouchableOpacity>
-                                        <Octicons name="download" size={24} color="#95E5FF" />
-                                    </TouchableOpacity>
                                 </View>
                                 <View style={styles.financeCard}>
                                     <Text style={styles.financeState}>{item.status}</Text>

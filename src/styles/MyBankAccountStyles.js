@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Cambria',
         fontSize: 24,
         color: '#BDBDBD',
-        width: 250, 
+        width: 250,
         textAlign: 'center'
     },
     infoContainer: {
@@ -51,6 +51,31 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
 
         elevation: 5,
+    },
+    myBalance: {
+        fontSize: 24,
+        color: '#141414',
+        fontFamily: 'CambriaBold'
+    },
+    buttonContainer: {
+        width: '100%',
+        padding: 16,
+        position: 'absolute',
+        zIndex: 100,
+        bottom: 0
+    },
+    button: {
+        width: '100%',
+        padding: 16,
+        backgroundColor: '#95E5FF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 12
+    },
+    buttonText: {
+        fontSize: 20,
+        color: '#FFF',
+        fontFamily: 'CambriaBold'
     }
 });
 

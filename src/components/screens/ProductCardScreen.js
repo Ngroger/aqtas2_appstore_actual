@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native';
 import styles from '../../styles/ProductCardScreenStyles';
 import Swiper from 'react-native-swiper'
-import { Entypo, MaterialIcons } from '@expo/vector-icons';
+import { Entypo, MaterialIcons, Feather, AntDesign } from '@expo/vector-icons';
 import AboutCommision from '../ux/popup/AboutCommistion';
 import AboutCostumer from '../ux/popup/AboutCostumer';
 import { useEffect, useRef, useState } from 'react';
@@ -15,6 +15,7 @@ import PaymentMethod from '../ux/popup/PaymentMethod';
 import SuccessOrder from '../ux/popup/messages/SuccessOrder';
 import NoAddressMessage from '../ux/popup/messages/NoAddressMessage';
 import { useUnauth } from '../../context/UnauthProvider';
+import PhotoPreview from '../ux/popup/PhotoPreview';
 
 function ProductCardScreen({ route }) {
     const [reviews, setReviews] = useState([]);
@@ -27,6 +28,7 @@ function ProductCardScreen({ route }) {
     const [similarProducts, setSimilarProducts] = useState([]);
     const [isSizeSelect, setIsSizeSelector] = useState(false);
     const [productId, setProductId] = useState();
+    const [isOpenPhotos, setIsOpenPhotos] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState([]);
     const { t } = useTranslation();
     const [userData, setUserData] = useState({});
@@ -169,6 +171,7 @@ function ProductCardScreen({ route }) {
                 imagePreview: product.imagePreview1,
                 UserID: userData.userId,
                 count: 1,
+                customerId: product.CustomerId
             };
 
             fetch('https://aqtas.garcom.kz/api/addToCart', {
@@ -275,7 +278,11 @@ function ProductCardScreen({ route }) {
 
     return (
         <>
+            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.goBackBtn}>
+                <Feather name="chevron-left" size={38} color="#95E5FF" />
+            </TouchableOpacity>
             <ScrollView ref={scrollRef} style={styles.container}>
+
                 <View style={{ width: '100%', height: 300, justifyContent: 'center', alignItems: 'center', }}>
                     <Swiper
                         showsButtons={false}
@@ -285,11 +292,12 @@ function ProductCardScreen({ route }) {
                         activeDotStyle={styles.activeDot}
                     >
                         {images.map((image, index) => (
-                            <Image
-                                key={index}
-                                style={styles.image}
-                                source={{ uri: `https://aqtas.garcom.kz/api/images/imageProducts/${image}` }}
-                            />
+                            <TouchableOpacity onPress={() => setIsOpenPhotos(true)} key={index}>
+                                <Image
+                                    style={styles.image}
+                                    source={{ uri: `https://aqtas.garcom.kz/api/images/imageProducts/${image}` }}
+                                />
+                            </TouchableOpacity>
                         ))}
                     </Swiper>
                 </View>
@@ -298,6 +306,14 @@ function ProductCardScreen({ route }) {
                         {product.oldCost && <Text style={styles.oldCost}>{product.oldCost}тнг</Text>}
                         <View style={styles.costContainer}>
                             <Text style={styles.cost}>{product.cost}тнг</Text>
+                            {product.delivery === 'Маркетплейс' && (
+                                <>
+                                    <Text style={styles.commission}>+{product.deliveryCost}тг</Text>
+                                    <TouchableOpacity onPress={() => setShowAboutComission(true)} style={styles.commisionButton}>
+                                        <AntDesign name="question" size={16} color="#95E5FF" />
+                                    </TouchableOpacity>
+                                </>
+                            )}
                         </View>
                         <Text style={styles.title}>{product.name}</Text>
                         <Text style={styles.description}>{product.description}</Text>
@@ -574,6 +590,11 @@ function ProductCardScreen({ route }) {
             {isPaymentsMethod && <PaymentMethod productName={product.name} customerId={product.CustomerId} payments={payments} onClose={toggleSetPaymentsMethod} success={toggleSetSuccessOrder} size={selectedSize} />}
             {isSuccessOrder && <SuccessOrder onClose={toggleSetSuccessOrder} />}
             {isNoAddress && <NoAddressMessage />}
+            <PhotoPreview
+                onClose={() => setIsOpenPhotos(false)}
+                product={product}
+                modalVisible={isOpenPhotos}
+            />
         </>
     )
 };

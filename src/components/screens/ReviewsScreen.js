@@ -115,8 +115,6 @@ function ReviewsScreen({ route }) {
         <Entypo key={index} name="star" size={20} color="#FFD600" />
     ));
 
-
-
     function starsRatePercentage(stars) {
         const fiveStarsCount = reviewsData.filter(review => review.stars === stars).length;
         const totalReviews = reviewsData.length;

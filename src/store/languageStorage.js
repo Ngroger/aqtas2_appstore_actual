@@ -16,6 +16,7 @@ export const loadLanguage = async () => {
         if (storedLanguage) {
             i18next.language = storedLanguage;
             await i18next.changeLanguage(storedLanguage); // Добавь эту строку
+            return language;
         }
     } catch (error) {
     }

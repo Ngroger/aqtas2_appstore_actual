@@ -19,17 +19,20 @@ function SizeSelector({ onClose, id, productData }) {
     const addCart = async (size) => {
         // Определим параметры для добавления товара в корзину
         try {
+            console.log("productData: ", productData);
             const cartItem = {
                 name: productData.name,
                 oldCost: productData.oldCost,
                 newCost: productData.cost,
                 description: productData.description,
                 brend: productData.brend,
-                costumer: productData.costumer,  // Получаем UserId из userData
-                imagePreview: productData.imagePreview1,  // По умолчанию используем imagePreview1,
+                costumer: productData.costumer,
+                imagePreview: productData.imagePreview1,
                 UserID: userData.userId,
-                count: 1,  // Устанавливаем значение по умолчанию в 1
-                size: size
+                count: 1,
+                size: size,
+                customerId: productData.CustomerId,
+                productId: productData.id
             };
 
             const resposne = await fetch('https://aqtas.garcom.kz/api/addToCart', {

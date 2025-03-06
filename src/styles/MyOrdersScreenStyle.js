@@ -1,12 +1,12 @@
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     container: {
         width: '100%',
         height: '100%',
         backgroundColor: '#FFF',
         padding: 20
-    }, 
+    },
     titleContainer: {
         flexDirection: 'row',
         display: 'flex',
@@ -16,14 +16,16 @@ const styles = StyleSheet.create({
     productPreview: {
         width: 160,
         height: 160,
-        borderRadius: 15
+        borderRadius: 15,
+        objectFit: 'cover'
     },
     card: {
         display: 'flex',
         flexDirection: 'row',
         paddingVertical: 16,
         borderBottomColor: '#BDBDBD',
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        gap: 6
     },
     costContainer: {
         display: 'flex',
@@ -62,6 +64,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         left: 10
     },
+    buttonBuyText: {
+
+    },
     textBuy: {
         fontFamily: 'CambriaBold',
         color: '#95E5FF',
@@ -86,12 +91,12 @@ const styles = StyleSheet.create({
     },
     firstInfo: {
         fontFamily: 'Cambria',
-        fontSize: 18,
+        fontSize: '16@s',
         margin: 2,
     },
     secondInfo: {
         fontFamily: 'Cambria',
-        fontSize: 18,
+        fontSize: '16@s',
         margin: 2,
         color: '#BDBDBD',
         textAlign: 'right',
@@ -125,6 +130,30 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: '100%',
         marginBottom: '100%'
+    },
+    loadContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    loadText: {
+        color: '#141414',
+        fontFamily: 'Cambria',
+        fontSize: 20
+    },
+    payBtn: {
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#95E5FF',
+        borderRadius: 100,
+        padding: 6,
+        marginTop: 6
+    },
+    payBtnText: {
+        fontSize: '16@s',
+        color: '#FFF',
+        fontFamily: 'Cambria'
     }
 });
 

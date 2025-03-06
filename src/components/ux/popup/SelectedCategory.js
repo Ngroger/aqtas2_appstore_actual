@@ -69,6 +69,8 @@ function SelectedCategory({ onClose, category, title }) {
             imagePreview: product.imagePreview1,  // По умолчанию используем imagePreview1,
             UserID: userData.userId,
             count: 1,  // Устанавливаем значение по умолчанию в 1
+            customerId: product.CustomerId,
+            productId: product.id
         };
         // Отправляем POST-запрос к серверу
         fetch('https://aqtas.garcom.kz/api/addToCart', {

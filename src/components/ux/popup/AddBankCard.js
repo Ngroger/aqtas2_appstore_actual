@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 function AddBankCard({ onClose }) {
   const [cards, setCards] = useState([]);
-  const [userData, setUserData] = useState({})
+  const [userData, setUserData] = useState({});
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -45,10 +45,35 @@ function AddBankCard({ onClose }) {
     navigation.navigate('AddCard');
   };
 
-  function formatCardNumber(cardNumber) {
-    const visibleDigits = 4; // Количество видимых цифр в каждой группе
-    const separator = ' '; // Разделитель
+  const deleteCard = async (card_id) => {
+    try {
+      const response = await fetch('https://aqtas.garcom.kz/api/card', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id: card_id,
+          user_id: userData.userId
+        })
+      });
 
+      const responseJson = await response.json();
+
+      if (responseJson.success) {
+        setCards(
+          (prevCards) =>
+            prevCards.filter(
+              card => card.id !== card_id
+            )
+        )
+      };
+    } catch (error) {
+      console.log('delete card error: ', error);
+    }
+  };
+
+  function formatCardNumber(cardNumber) {
     // Заменяем все символы, кроме цифр, на пустую строку
     const cleanNumber = cardNumber.toString().replace(/\D/g, '');
 
@@ -74,7 +99,7 @@ function AddBankCard({ onClose }) {
         {cards.length > 0 ? ( // Проверка наличия элементов в массиве finances
           <FlatList
             data={cards}
-            keyExtractor={index => index.toString()}
+            keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.cardContainer}>
                 <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
@@ -90,6 +115,9 @@ function AddBankCard({ onClose }) {
                   />
                   <Text style={styles.number}>{formatCardNumber(item.number)}</Text>
                 </View>
+                <TouchableOpacity onPress={() => deleteCard(item.id)}>
+                  <Feather name="trash-2" size={18} color="#141414" />
+                </TouchableOpacity>
               </View>
             )}
           />

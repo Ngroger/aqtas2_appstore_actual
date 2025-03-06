@@ -41,18 +41,22 @@ function CartScreen() {
     );
 
 
-    const buyProduct = async (subcategory, size, CustomerId, productName) => {
-
+    const buyProduct = async (id, size, CustomerId, productId) => {
         try {
+            console.log("productId: ", productId);
             const requestData = {
                 name: userData.fullname,
-                nameProduct: productName,
                 address: userData.address,
                 photoUser: await getUserPhoto(),
                 count: 1,
-                userID: CustomerId,
+                userID: userData.userId,
                 size: size,
+                sellerId: CustomerId,
+                id: id,
+                productId: productId
             };
+
+            console.log("requestData: ", requestData);
 
             const response = await fetch('https://aqtas.garcom.kz/api/createOrder', {
                 method: 'POST',
@@ -66,9 +70,18 @@ function CartScreen() {
 
             if (responseJson.success) {
                 toggleSetSuccessOrder();
+                deleteProductByCard(productId);
             }
         } catch (error) {
 
+        }
+    };
+
+    const deleteProductByCard = (id) => {
+        try {
+            setCart((prevCart) => prevCart.filter((product) => product.id !== id));
+        } catch (error) {
+            console.log("delete product by cart: ", error);
         }
     };
 
@@ -95,11 +108,15 @@ function CartScreen() {
             }
             try {
                 const response = await fetch(`https://aqtas.garcom.kz/api/cart/${userData.userId}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    const total = data.reduce((acc, item) => acc + item.newCost, 0);
+                const responseJson = await response.json();
+                if (responseJson.success) {
+
+                    const total = responseJson.cart.reduce((acc, item) => acc + item.newCost, 0);
+
+                    console.log("total cost: ", total);
+
                     setTotalCost(total);
-                    setCart(data);
+                    setCart(responseJson.cart);
                 } else {
 
                 }
@@ -236,7 +253,7 @@ function CartScreen() {
                                         </View>
                                     </View>
                                     <View>
-                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 12 }}>
                                             <View style={styles.counterContainer}>
                                                 <TouchableOpacity onPress={() => decreaseCount(item.id)} style={styles.counterButton}>
                                                     <Text style={styles.counterButtonText}>-</Text>
@@ -246,7 +263,7 @@ function CartScreen() {
                                                     <Text style={styles.counterButtonText}>+</Text>
                                                 </TouchableOpacity>
                                             </View>
-                                            <TouchableOpacity onPress={() => buyProduct(item.subcategory, item.size, item.UserID, item.name)} style={styles.buttonBuy}>
+                                            <TouchableOpacity onPress={() => buyProduct(item.id, item.size, item.customerId, item.productId)} style={styles.buttonBuy}>
                                                 <Text style={styles.textBuy}>{t('buy-button')}</Text>
                                             </TouchableOpacity>
                                         </View>

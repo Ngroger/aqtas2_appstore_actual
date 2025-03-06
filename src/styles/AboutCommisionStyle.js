@@ -15,11 +15,11 @@ const styles = StyleSheet.create({
         zIndex: 1000,
         backgroundColor: '#fff',
         borderRadius: 10,
-        width: 250
+        width: '75%'
     },
     title: {
         fontFamily: 'Cambria',
-        fontSize: 20,
+        fontSize: 24,
         marginHorizontal: 10
     },
     navbar: {
@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Cambria',
         color: '#BDBDBD',
         fontSize: 18,
-        width: 250,
         paddingHorizontal: 20
     },
     firstInfo: {

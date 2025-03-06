@@ -229,9 +229,6 @@ function CreateProduct({ onClose }) {
         formData.append('UserID', userData.userId);
         formData.append('costumer', `${userData.fullname} ${userData.surname}`);
         formData.append('CustomerId', userData.userId);
-        bankCardData.map((card) => {
-            formData.append('customerBankNumber', card.number);
-        })
         sizes.map((size) => {
             formData.append('sizes', size)
         })

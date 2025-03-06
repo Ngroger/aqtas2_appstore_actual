@@ -46,15 +46,16 @@ const styles = StyleSheet.create({
     cardContainer: {
         flexDirection: 'row',
         display: 'flex',
+        justifyContent: 'space-between',
         padding: 10,
         borderBottomColor: '#BDBDBD',
         borderBottomWidth: 1,
         alignItems: 'center'
     },
     miniBankIcon: {
-        width: 45,
-        height: 27,
-        borderRadius: 5
+        width: 40,
+        height: 25,
+        borderRadius: 5,
     },
     number: {
         fontFamily: 'Cambria',
@@ -67,6 +68,22 @@ const styles = StyleSheet.create({
         margin: 10,
         textAlign: 'center',
         color: '#BDBDBD'
+    },
+    checkbox: {
+        borderWidth: 1.5,
+        borderColor: '#95E5FF',
+        width: 20,
+        height: 20,
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    dot: {
+        width: 10,
+        height: 10,
+        backgroundColor: '#95E5FF',
+        borderRadius: 100
+
     }
 });
 

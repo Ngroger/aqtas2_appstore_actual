@@ -164,6 +164,43 @@ const styles = ScaledSheet.create({
     fontSize: 20,
     color: '#141414',
     fontFamily: 'Cambria'
+  },
+  root: { flex: 1, padding: 20 },
+  codeFieldRoot: {
+    marginTop: 12,
+    marginHorizontal: 0
+  },
+  cell: {
+    width: 48,
+    height: 48,
+    lineHeight: 38,
+    fontSize: 24,
+    borderWidth: 2,
+    borderColor: '#FFF',
+    borderRadius: 12,
+    textAlign: 'center',
+    fontFamily: 'Cambria',
+    color: '#FFF',
+    paddingTop: 4
+  },
+  focusCell: {
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+  },
+  timer: {
+    fontSize: 28,
+    color: '#FFF',
+    fontFamily: 'CambriaBold',
+    textAlign: 'center',
+    marginTop: 10,
+    marginBottom: 6
+  },
+  resendText: {
+    fontSize: 20,
+    color: '#FFF',
+    fontFamily: 'CambriaBold',
+    textAlign: 'center',
+    marginTop: 10,
+    marginBottom: 6
   }
 });
 

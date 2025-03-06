@@ -1,23 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, TouchableOpacity, TextInput, Text, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { View, TouchableOpacity, TextInput, Text } from 'react-native';
 import styles from '../../styles/RegistrationScreenStyle';
-import { useNavigation } from '@react-navigation/native';
-import { storeToken, hasToken } from '../../store/tokenManager';
-import axios from 'axios';
-import { storeUserData } from '../../store/userDataManager';
 import { useTranslation } from 'react-i18next';
-import * as Notifications from 'expo-notifications';
-import * as Device from 'expo-device';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { toggleIsNewUser } from '../../store/NewUserStorage';
-
-Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: true,
-        shouldSetBadge: true,
-    }),
-});
 
 function ConfirmPassword(props) {
     const [password, setPassword] = useState('');
@@ -28,73 +13,8 @@ function ConfirmPassword(props) {
         confirmPassword: false,
     });
     const [showErrorText, setShowErrorText] = useState(false);
-    const [expoPushToken, setExpoPushToken] = useState('');
-    const [notification, setNotification] = useState(false);
-    const notificationListener = useRef();
-    const responseListener = useRef();
     const [isShowPass, setIsShowPass] = useState(true);
     const [isShowConfirmPass, setIsShowConfirmPass] = useState(true);
-
-    useEffect(() => {
-        registerForPushNotificationsAsync().then(token => {
-            setExpoPushToken(token);
-        });
-
-        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-            setNotification(notification);
-        });
-
-        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-
-        });
-
-        return () => {
-            Notifications.removeNotificationSubscription(notificationListener.current);
-            Notifications.removeNotificationSubscription(responseListener.current);
-        };
-    }, [expoPushToken]); // Include expoPushToken in the dependency array to use its updated value
-
-    async function schedulePushNotification() {
-        await Notifications.scheduleNotificationAsync({
-            content: {
-                title: "Сообщение",
-                body: `Добро пожаловать в AQTas!`,
-                data: { data: 'goes here' },
-            },
-            trigger: { seconds: 2 },
-        });
-    }
-
-    async function registerForPushNotificationsAsync() {
-        let token;
-
-        if (Platform.OS === 'android') {
-            await Notifications.setNotificationChannelAsync('default', {
-                name: 'default',
-                importance: Notifications.AndroidImportance.MAX,
-                vibrationPattern: [0, 250, 250, 250],
-                lightColor: '#FF231F7C',
-            });
-        }
-
-        if (Device.isDevice) {
-            const { status: existingStatus } = await Notifications.getPermissionsAsync();
-            let finalStatus = existingStatus;
-            if (existingStatus !== 'granted') {
-                const { status } = await Notifications.requestPermissionsAsync();
-                finalStatus = status;
-            }
-            if (finalStatus !== 'granted') {
-                alert('Failed to get push token for push notification!');
-                return;
-            }
-            token = (await Notifications.getExpoPushTokenAsync()).data;
-        } else {
-            alert('Must use physical device for Push Notifications');
-        }
-
-        return token;
-    }
 
     const updateErrors = () => {
         const updatedErrors = {
@@ -107,55 +27,33 @@ function ConfirmPassword(props) {
         setShowErrorText(hasErrors);
     };
 
-    const navigation = useNavigation();
-
-    const goToMain = () => {
-        navigation.navigate('MainTabs');
-    };
-
     const updateUserData = (field, value) => {
         const updatedUserData = { ...props.userData, [field]: value };
         props.updateUserDetails(updatedUserData);
     };
 
-    const sendDataToServer = () => {
-        if (password === confirmPassword) {
-            // Construct a user object to send to the server
-            const user = {
-                fullname: props.userData.fullname,
-                surname: props.userData.surname,
-                phoneNumber: props.userData.phoneNumber,
-                email: props.userData.email,
-                password: props.userData.password,
-                isBussinesAccount: props.userData.isBussinesAccount,
-                pushID: expoPushToken
+    const sendSms = async () => {
+        try {
+            const response = await fetch('https://aqtas.garcom.kz/api/sendSMS', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    phone: props.userData.phoneNumber
+                })
+            });
+
+            const responseJson = await response.json();
+
+            if (responseJson.success) {
+                props.onNextStep();
             };
 
-            storeUserData(props.userData);
-
-            // Send data to the server using Axios
-            axios.post('https://aqtas.garcom.kz/api/register', user)
-                .then((response) => {
-                    if (response.data.success) {
-                        const authToken = response.data.authToken;
-                        const userId = response.data.userId;
-
-                        storeToken(authToken);
-                        storeUserData({ ...props.userData, userId, photoUser: 'withoutPhoto.png', sex: 'Не укаказано', birthday: 'Не указано', address: 'Не указано' });
-                        toggleIsNewUser(false);
-                        hasToken();
-                        schedulePushNotification();
-                        goToMain();
-                        setShowErrorText(false)
-                    }
-                })
-                .catch((error) => {
-
-                });
-        } else {
-
+        } catch (error) {
+            console.log("send sms error: ", error);
         }
-    };
+    }
 
     return (
         <View style={{ width: '100%' }}>
@@ -208,7 +106,7 @@ function ConfirmPassword(props) {
                         const hasErrors = Object.values(errors).some((error) => error);
 
                         if (!hasErrors) {
-                            sendDataToServer();
+                            sendSms();
                         }
                     }}
                 >

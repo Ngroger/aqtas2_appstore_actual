@@ -1,10 +1,10 @@
 import { Text, View, TouchableOpacity } from 'react-native';
 import styles from '../../../styles/AboutCommisionStyle'
-import { Entypo } from '@expo/vector-icons'; 
+import { Entypo } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
 function AboutCommision({ onClose }) {
-    const {t} = useTranslation('');
+    const { t } = useTranslation('');
     const handleClose = () => {
         if (onClose) {
             onClose();
@@ -19,8 +19,8 @@ function AboutCommision({ onClose }) {
                     </TouchableOpacity>
                     <Text style={styles.title}>{t('what-is-comission-title')}</Text>
                 </View>
-                <View style={{ padding: 10 }}>
-                    <Text style={styles.description}>{t('about-comission-one')} <Text style={{ fontFamily: 'CambriaBold' }}>Spark</Text>, {t('about-comission-two')}</Text>
+                <View style={{ paddingVertical: 16 }}>
+                    <Text style={styles.description}>{t('about-comission-one')} <Text style={{ fontFamily: 'CambriaBold' }}>Маркетплейс</Text>, {t('about-comission-two')}</Text>
                 </View>
             </View>
         </View>

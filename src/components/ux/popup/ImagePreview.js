@@ -1,9 +1,10 @@
-import { Image, View, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import styles from '../../../styles/ImagePreviewStyles';
 import { StatusBar } from 'expo-status-bar';
+import { Image, TouchableOpacity, View } from 'react-native';
+import styles from '../../../styles/ImagePreviewStyles';
 
 function ImagePreview({ onClose, image }) {
+
     const handleClose = () => {
         if (onClose) {
             onClose();

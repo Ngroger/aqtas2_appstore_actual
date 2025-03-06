@@ -42,6 +42,8 @@ import MyBankAccount from '../../screens/Bussines/MyBankAccount';
 import { UnauthProvider } from '../../../context/UnauthProvider';
 import { getIsNewUser } from '../../../store/NewUserStorage';
 import { CategoriesProvider } from '../../../context/CategoriesProvider';
+import PolicyScreen from '../../screens/PolicyScreen';
+import PublicOfferScreen from '../../screens/PublicOfferScreen';
 
 export default function AppNavigationContainer() {
   const { t } = useTranslation();
@@ -164,6 +166,8 @@ export default function AppNavigationContainer() {
             <Stack.Screen name="AddPaypal" component={AddPaypalScreen} options={{ headerShown: false }} />
             <Stack.Screen name="MyBankAccount" component={MyBankAccount} options={{ headerShown: false }} />
             <Stack.Screen name="NoInternet" component={NoInternetMessage} options={{ headerShown: false }} />
+            <Stack.Screen name="Policy" component={PolicyScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="PublicOffer" component={PublicOfferScreen} options={{ headerShown: false }} />
           </Stack.Navigator>
         </CategoriesProvider>
       </UnauthProvider>

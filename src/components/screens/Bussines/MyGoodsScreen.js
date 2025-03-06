@@ -35,7 +35,7 @@ function MyGoodsScreen() {
     };
 
     const categories = [
-        { id: 1, name: 'Top', value: 'top' },
+        // { id: 1, name: 'Top', value: 'top' },
         { id: 2, name: t("my-products.canceled"), value: 'Отмена' },
         { id: 3, name: t("my-products.in-sale"), value: 'Продажа' },
     ];

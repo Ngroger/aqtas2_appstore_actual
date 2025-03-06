@@ -9,6 +9,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { toggleIsNewUser } from '../../store/NewUserStorage'
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import CodeConfrim from '../ux/CodeConfrim';
 
 function RegistrationScreen() {
     const [userData, setUserData] = useState({
@@ -34,7 +35,9 @@ function RegistrationScreen() {
     const skip = async () => {
         await toggleIsNewUser(false);
         navigation.navigate('MainTabs')
-    }
+    };
+
+
 
     return (
         <View style={styles.container}>
@@ -43,18 +46,27 @@ function RegistrationScreen() {
                 <Text style={styles.skipButtonText}>Пропустить</Text>
                 <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
             </TouchableOpacity>
-            {currentStep === 'SelectLanguage' ? (
+            {currentStep === 'SelectLanguage' && (
                 <SelectLanguage onNextStep={() => goToNextStep('Registration')} />
-            ) : currentStep === 'Registration' ? (
+            )}
+            {currentStep === 'Registration' && (
                 <Registration
                     userData={userData}
                     updateUserDetails={updateUserDetails}
                     onNextStep={() => goToNextStep('ConfirmPassword')}
                 />
-            ) : (
+            )}
+            {currentStep === 'ConfirmPassword' && (
                 <ConfrimPassword
                     userData={userData}
                     updateUserDetails={updateUserDetails}
+                    onNextStep={() => goToNextStep('CodeConfirm')}
+
+                />
+            )}
+            {currentStep === 'CodeConfirm' && (
+                <CodeConfrim
+                    userData={userData}
                 />
             )}
             <StatusBar translucent={true} backgroundColor='transparent' />

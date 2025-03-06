@@ -157,6 +157,9 @@ function ProfileScreen() {
                   {t('faq-profile-button')}
                 </Text>
               </TouchableOpacity>
+              <TouchableOpacity onPress={() => goToFinanceScreen()} style={styles.profileButton}>
+                <Text style={styles.profileButtonText}>{t("finacens-profile-button")}</Text>
+              </TouchableOpacity>
               {isBussinesAccount ? (
                 <TouchableOpacity onPress={goToBussines} style={styles.profileButton}>
                   <Text style={styles.profileButtonText}>{t('bussines-profile-button')}</Text>
@@ -168,6 +171,12 @@ function ProfileScreen() {
               )}
               <TouchableOpacity onPress={() => setShowAddBankCard(true)} style={styles.profileButton}>
                 <Text style={styles.profileButtonText}>{t('payment-methods-title')}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Policy')} style={styles.profileButton}>
+                <Text style={styles.profileButtonText}>{t('policy-screen.title')}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('PublicOffer')} style={styles.profileButton}>
+                <Text style={styles.profileButtonText}>{t('offer-screen.title')}</Text>
               </TouchableOpacity>
             </View>
           </>
