@@ -5,7 +5,7 @@ const styles = ScaledSheet.create({
         width: '100%',
         height: '100%',
         backgroundColor: '#fff',
-        paddingTop: 36
+        paddingTop: 38
     },
     categoryImage: {
         width: '80@vs',

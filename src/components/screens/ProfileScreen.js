@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StatusBar } from 'react-native';
-import { Feather, Entypo } from '@expo/vector-icons';
+import { Entypo, Feather } from '@expo/vector-icons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Image, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { scale } from 'react-native-size-matters';
+import { useUnauth } from '../../context/UnauthProvider';
+import { getUserData } from '../../store/userDataManager'; // Импортируйте функцию
 import styles from '../../styles/ProfileScreenStyle';
 import AddBankCard from '../ux/popup/AddBankCard';
-import { getUserData } from '../../store/userDataManager'; // Импортируйте функцию
 import ProfileMenu from '../ux/popup/ProfileMenu';
-import { useTranslation } from 'react-i18next';
-import { scale } from 'react-native-size-matters'
-import { useUnauth } from '../../context/UnauthProvider';
 
 function ProfileScreen() {
   const navigation = useNavigation();
@@ -115,7 +115,7 @@ function ProfileScreen() {
           <>
             <View>
               {userData && (
-                <View style={[styles.infoContainer, { justifyContent: 'space-between' }]}>
+                <View style={[styles.infoContainer, { justifyContent: 'space-between', marginTop: 20 }]}>
                   <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
                     <Image source={{ uri: `https://aqtas.garcom.kz/api/images/photoUsers/${userData?.photoUser}` }} style={styles.photo} />
                     <View>

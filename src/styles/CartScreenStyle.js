@@ -90,7 +90,7 @@ const styles = ScaledSheet.create({
     navbar: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 10,
+        marginTop: 20,
         justifyContent: 'space-between'
     },
     title: {

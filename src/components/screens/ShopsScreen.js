@@ -1,31 +1,25 @@
-import { View, Text, TouchableOpacity, Image, TextInput, ScrollView, FlatList, ActivityIndicator } from 'react-native';
-import styles from '../../styles/ShopsScreenStyle';
-import { AntDesign, EvilIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { Linking } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FlatList, Image, Linking, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
+import styles from '../../styles/ShopsScreenStyle';
 
 function ShopsScreen() {
     const navigation = useNavigation();
     const [shops, setShops] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
-    const [flatListData, setFlatListData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [search, onChangeSearch] = useState('');
     const [noResults, setNoResults] = useState(false);
     const { t } = useTranslation();
 
-    const goToMap = (item) => {
-        navigation.navigate('Map', { item })
-    }
-
     const categories = [
         { id: 1, value: 'ТРЦ', name: t('shopping-center-filter') },
         { id: 2, value: 'Магазины', name: t('shops-filter') },
         { id: 3, value: 'Базары', name: t('bazaars-filter') },
-        { id: 4, value: 'Барахолки', name: t('flea-markets-filter') },
+        { id: 4, value: 'Барахолка', name: t('flea-markets-filter') },
         { id: 5, value: 'Рынки', name: t('markets-filter') },
     ];
 
@@ -154,7 +148,6 @@ function ShopsScreen() {
             </View>
             {isLoading && (
                 <View style={styles.loadingIndicatorContainer}>
-                    <ActivityIndicator size="big" color="#95E5FF" />
                     <Text style={styles.textLoad}>{t('products-load-message')}</Text>
                 </View>
             )}

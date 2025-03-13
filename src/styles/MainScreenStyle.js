@@ -16,7 +16,7 @@ const styles = ScaledSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 20,
-        marginTop: 36
+        marginTop: 38
     },
     search: {
         flex: 1,

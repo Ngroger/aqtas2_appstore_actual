@@ -4,8 +4,8 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         backgroundColor: '#FFF',
-        padding: 20
-    }, 
+        padding: 20,
+    },
     titleContainer: {
         flexDirection: 'row',
         display: 'flex',

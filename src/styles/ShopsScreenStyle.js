@@ -16,7 +16,7 @@ const styles = ScaledSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 20,
-        marginTop: 36
+        marginTop: 38
     },
     search: {
         flex: 1,
@@ -50,14 +50,14 @@ const styles = ScaledSheet.create({
         borderRadius: 100,
         paddingHorizontal: 16,
         marginHorizontal: 5
-        
+
     },
     categoryTextActive: {
         fontFamily: 'CambriaBold',
         fontSize: '18@mvs',
         color: '#fff'
     },
-    
+
     category: {
         borderColor: '#95E5FF',
         borderWidth: 1,
