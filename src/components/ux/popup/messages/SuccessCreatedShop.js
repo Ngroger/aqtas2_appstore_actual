@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
-import styles from '../../../../styles/SuccessCreatedShopStyles';
-import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { BlurView } from 'expo-blur';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import styles from '../../../../styles/SuccessCreatedShopStyles';
 
 function SuccessCreatedShop({ onClose }) {
     const [showRules, setShowRules] = useState(false);
     const [isCheckBox, setIsCheckbox] = useState(false);
     const navigation = useNavigation();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     const agree = () => {
         setIsCheckbox(!isCheckBox)
@@ -38,7 +37,7 @@ function SuccessCreatedShop({ onClose }) {
                         <Text style={[styles.subtitle, { marginTop: 10, width: 300 }]}>5. {t('rule-five')}</Text>
                         <Text style={[styles.subtitle, { marginTop: 10, width: 300 }]}>6. {t('rule-six')}</Text>
                         <Text style={[styles.subtitle, { marginTop: 10, width: 300 }]}>7. {t('rule-seven')}</Text>
-                        <Text style={[styles.subtitle, { marginTop: 10, width: 300 }]}>8. {t('rule-eigth')}</Text>
+                        <Text style={[styles.subtitle, { marginTop: 10, width: 300 }]}>8. {t('rule-eight')}</Text>
                         <Text style={[styles.subtitle, { marginTop: 10, width: 300 }]}>9. {t('rule-nine')}</Text>
                         <Text style={[styles.subtitle, { marginTop: 10, width: 300 }]}>10. {t('rule-ten')}</Text>
                         <Text style={[styles.subtitle, { marginTop: 10, width: 300 }]}>11. {t('rule-eleven')}</Text>
@@ -46,7 +45,7 @@ function SuccessCreatedShop({ onClose }) {
                         <Text style={[styles.subtitle, { marginTop: 10, width: 300 }]}>13. {t('rule-thirteen')}</Text>
                         <View style={styles.checkboxContainer}>
                             <TouchableOpacity onPress={agree} style={styles.checkbox}>
-                                { isCheckBox && <View style={styles.dot}/>}
+                                {isCheckBox && <View style={styles.dot} />}
                             </TouchableOpacity>
                             <Text style={styles.checkboxText}>{t('i-agree-with-rules-title')}</Text>
                         </View>

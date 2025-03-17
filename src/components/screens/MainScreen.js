@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, ScrollView, ActivityIndicator, StatusBar, Alert } from 'react-native';
-import styles from '../../styles/MainScreenStyle';
 import { AntDesign } from '@expo/vector-icons';
-import Swiper from 'react-native-swiper'
 import { useNavigation } from '@react-navigation/native';
-import { FlatList } from 'react-native';
-import { getUserData } from '../../store/userDataManager';
-import SizeSelector from '../ux/popup/SizeSelector';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ActivityIndicator, Alert, FlatList, Image, SafeAreaView, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
-import { useUnauth } from '../../context/UnauthProvider';
-import { useCategories } from '../../context/CategoriesProvider';
+import Swiper from 'react-native-swiper';
 import { categories } from '../../categories';
+import { useCategories } from '../../context/CategoriesProvider';
+import { useUnauth } from '../../context/UnauthProvider';
+import { getUserData } from '../../store/userDataManager';
+import styles from '../../styles/MainScreenStyle';
+import SizeSelector from '../ux/popup/SizeSelector';
 
 function MainScreen() {
     const navigation = useNavigation();
@@ -176,7 +175,7 @@ function MainScreen() {
 
 
     return (
-        <View>
+        <SafeAreaView>
             <View style={styles.container}>
                 <View style={styles.navbar}>
                     <Image style={styles.logo} source={require('../../img/miniLogo.png')} />
@@ -220,89 +219,91 @@ function MainScreen() {
                 {!isLoading && (
                     <>
                         {products.length > 0 ? (
-                            <FlatList
-                                data={Object.keys(groupedProducts)}
-                                keyExtractor={(item) => item}
-                                renderItem={({ item }) => (
-                                    <View key={item}>
-                                        <Text style={styles.title}>{item}</Text>
-                                        <View style={styles.containerCart}>
-                                            {groupedProducts[item].map((product) => (
-                                                <View style={styles.cart} key={product.id}>
-                                                    <View style={styles.previewContainer}>
-                                                        {product.imagePreview1 && !product.imagePreview2 ? (
-                                                            <Image
-                                                                style={styles.cartPreview}
-                                                                source={{
-                                                                    uri: `https://aqtas.garcom.kz/api/images/imageProducts/${product.imagePreview1}`,
-                                                                }}
-                                                            />
-                                                        ) : (
-                                                            <Swiper
-                                                                showsButtons={false}
-                                                                style={{ width: 1000, height: 300, borderWidth: 1, borderColor: '#000' }}
-                                                                paginationStyle={styles.pagination}
-                                                                dotStyle={styles.dot}
-                                                                activeDotStyle={styles.activeDot}
-                                                            >
-                                                                {Array.from({ length: 5 }).map((_, index) => {
-                                                                    const imagePreviewKey = `imagePreview${index + 1}`;
-                                                                    const imagePreviewPath = product[imagePreviewKey];
+                            <>
+                                <FlatList
+                                    data={Object.keys(groupedProducts)}
+                                    keyExtractor={(item) => item}
+                                    renderItem={({ item }) => (
+                                        <View key={item}>
+                                            <Text style={styles.title}>{item}</Text>
+                                            <View style={styles.containerCart}>
+                                                {groupedProducts[item].map((product) => (
+                                                    <View style={styles.cart} key={product.id}>
+                                                        <View style={styles.previewContainer}>
+                                                            {product.imagePreview1 && !product.imagePreview2 ? (
+                                                                <Image
+                                                                    style={styles.cartPreview}
+                                                                    source={{
+                                                                        uri: `https://aqtas.garcom.kz/api/images/imageProducts/${product.imagePreview1}`,
+                                                                    }}
+                                                                />
+                                                            ) : (
+                                                                <Swiper
+                                                                    showsButtons={false}
+                                                                    style={{ width: 1000, height: 300, borderWidth: 1, borderColor: '#000' }}
+                                                                    paginationStyle={styles.pagination}
+                                                                    dotStyle={styles.dot}
+                                                                    activeDotStyle={styles.activeDot}
+                                                                >
+                                                                    {Array.from({ length: 5 }).map((_, index) => {
+                                                                        const imagePreviewKey = `imagePreview${index + 1}`;
+                                                                        const imagePreviewPath = product[imagePreviewKey];
 
-                                                                    if (imagePreviewPath) {
-                                                                        return (
-                                                                            <Image
-                                                                                key={imagePreviewKey}
-                                                                                style={styles.cartPreview}
-                                                                                source={{
-                                                                                    uri: `https://aqtas.garcom.kz/api/images/imageProducts/${imagePreviewPath}`,
-                                                                                }}
-                                                                            />
-                                                                        );
-                                                                    }
+                                                                        if (imagePreviewPath) {
+                                                                            return (
+                                                                                <Image
+                                                                                    key={imagePreviewKey}
+                                                                                    style={styles.cartPreview}
+                                                                                    source={{
+                                                                                        uri: `https://aqtas.garcom.kz/api/images/imageProducts/${imagePreviewPath}`,
+                                                                                    }}
+                                                                                />
+                                                                            );
+                                                                        }
 
-                                                                    return null;
-                                                                })}
-                                                            </Swiper>
-                                                        )}
-                                                        {product.isTOP ?
-                                                            <View style={styles.top}>
-                                                                <Text style={styles.textTop}>TOP</Text>
-                                                            </View> : null}
-                                                        {product.sale && (
-                                                            <View style={product.imagePreview1 && !product.imagePreview2 ? { ...styles.sale, bottom: 12 } : styles.sale}>
-                                                                <Text style={styles.saleText}>{product.sale}%</Text>
-                                                            </View>
-                                                        )}
-                                                    </View>
-                                                    <TouchableOpacity onPress={_ => (goToCard(product))}>
-                                                        <View style={product.imagePreview1 && !product.imagePreview2 ? { ...styles.costContainer, marginTop: 10 } : styles.costContainer}>
-                                                            <Text style={styles.cost}>{product.cost}тнг</Text>
-                                                            {product.oldCost && <Text style={styles.oldCost}>{product.oldCost}тнг</Text>}
+                                                                        return null;
+                                                                    })}
+                                                                </Swiper>
+                                                            )}
+                                                            {product.isTOP ?
+                                                                <View style={styles.top}>
+                                                                    <Text style={styles.textTop}>TOP</Text>
+                                                                </View> : null}
+                                                            {product.sale && (
+                                                                <View style={product.imagePreview1 && !product.imagePreview2 ? { ...styles.sale, bottom: 12 } : styles.sale}>
+                                                                    <Text style={styles.saleText}>{product.sale}%</Text>
+                                                                </View>
+                                                            )}
                                                         </View>
-                                                        <Text style={styles.name}>{product.name}</Text>
-                                                        <Text style={styles.description}>
-                                                            {product.description.length > 20
-                                                                ? product.description.slice(0, 20) + '...'
-                                                                : product.description
-                                                            }
-                                                        </Text>
-                                                        {product.subcategory === 'Одежда' ? (
-                                                            <TouchableOpacity onPress={() => toggleSetSize(product.id, product)} style={styles.addCart}>
-                                                                <Text style={styles.addCartText}>{t('add-cart-button')}</Text>
-                                                            </TouchableOpacity>
-                                                        ) : (
-                                                            <TouchableOpacity onPress={() => addToCart(product)} style={styles.addCart}>
-                                                                <Text style={styles.addCartText}>{t('add-cart-button')}</Text>
-                                                            </TouchableOpacity>
-                                                        )}
-                                                    </TouchableOpacity>
-                                                </View>
-                                            ))}
+                                                        <TouchableOpacity onPress={_ => (goToCard(product))}>
+                                                            <View style={product.imagePreview1 && !product.imagePreview2 ? { ...styles.costContainer, marginTop: 10 } : styles.costContainer}>
+                                                                <Text style={styles.cost}>{product.cost}тнг</Text>
+                                                                {product.oldCost && <Text style={styles.oldCost}>{product.oldCost}тнг</Text>}
+                                                            </View>
+                                                            <Text style={styles.name}>{product.name}</Text>
+                                                            <Text style={styles.description}>
+                                                                {product.description.length > 20
+                                                                    ? product.description.slice(0, 20) + '...'
+                                                                    : product.description
+                                                                }
+                                                            </Text>
+                                                            {product.subcategory === 'Одежда' ? (
+                                                                <TouchableOpacity onPress={() => toggleSetSize(product.id, product)} style={styles.addCart}>
+                                                                    <Text style={styles.addCartText}>{t('add-cart-button')}</Text>
+                                                                </TouchableOpacity>
+                                                            ) : (
+                                                                <TouchableOpacity onPress={() => addToCart(product)} style={styles.addCart}>
+                                                                    <Text style={styles.addCartText}>{t('add-cart-button')}</Text>
+                                                                </TouchableOpacity>
+                                                            )}
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                ))}
+                                            </View>
                                         </View>
-                                    </View>
-                                )}
-                            />
+                                    )}
+                                />
+                            </>
                         ) : (
                             <Text style={styles.noDataText}>{t('no-products-message')}</Text>
                         )}
@@ -311,7 +312,7 @@ function MainScreen() {
             </View>
             {isSizeSelect && <SizeSelector onClose={toggleSetSize} id={productId} productData={selectedProduct} />}
             <StatusBar backgroundColor="transparent" translucent={true} />
-        </View>
+        </SafeAreaView>
     );
 }
 

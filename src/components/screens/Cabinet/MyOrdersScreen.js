@@ -1,10 +1,10 @@
-import { useNavigation } from '@react-navigation/native';
-import { Text, View, FlatList, TouchableOpacity, StatusBar, Image } from 'react-native';
-import styles from '../../../styles/MyOrdersScreenStyle';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useState, useEffect } from 'react';
-import { getUserData } from '../../../store/userDataManager';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FlatList, Image, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { getUserData } from '../../../store/userDataManager';
+import styles from '../../../styles/MyOrdersScreenStyle';
 import WebViewModal from '../../ux/popup/WebViewModal';
 
 function MyOrdersScreen() {
@@ -22,16 +22,21 @@ function MyOrdersScreen() {
 
     const loadUserData = async () => {
         const userData = await getUserData();
-        setIsLoad(true);
 
         if (userData) {
+            try {
+                setIsLoad(true);
+                const response = await fetch(`https://aqtas.garcom.kz/api/myOrders/${userData.userId}`);
 
-            const response = await fetch(`https://aqtas.garcom.kz/api/myOrders/${userData.userId}`);
+                const responseJson = await response.json();
 
-            const responseJson = await response.json();
-
-            if (responseJson.success) {
-                setMyOrders(responseJson.orders);
+                if (responseJson.success) {
+                    setMyOrders(responseJson.orders);
+                    setIsLoad(false);
+                }
+            } catch (error) {
+                console.log("load user data error: ", error);
+            } finally {
                 setIsLoad(false);
             }
         }
@@ -105,7 +110,7 @@ function MyOrdersScreen() {
     };
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
                 <MaterialIcons name="arrow-back-ios" size={24} color="black" />
                 <Text style={styles.title}>{t('my-orders-profile-button')}</Text>
@@ -204,7 +209,7 @@ function MyOrdersScreen() {
                 onClose={() => setIsWebViewOpen(false)}
                 type='product'
             />
-        </View>
+        </SafeAreaView>
     )
 
 };

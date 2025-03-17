@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        padding: 10
+        marginTop: 20,
+        marginBottom: 8
     },
     title: {
         fontSize: 36,
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     },
     createButtonText: {
         fontFamily: 'CambriaBold',
-        fontSize: 28,
+        fontSize: 24,
         color: '#FFF'
     },
     photoContainer: {

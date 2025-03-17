@@ -1,17 +1,17 @@
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     container: {
         width: '100%',
         height: '100%',
         backgroundColor: '#FFF',
-        paddingHorizontal: 24
-    }, 
+        paddingHorizontal: 20
+    },
     titleContainer: {
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        marginTop: 24
+        marginTop: '36@msr'
     },
     productPreview: {
         width: 160,
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontFamily: 'Cambria',
-        fontSize: 28
+        fontSize: 36
     },
     data: {
         fontFamily: 'Cambria',
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     },
     categories: {
         paddingVertical: 16,
-        
+
     },
     categoriesContainer: {
         width: '100%',
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         paddingHorizontal: 16,
         marginHorizontal: 5
-        
+
     },
     categoryTextActive: {
         fontFamily: 'CambriaBold',

@@ -1,16 +1,15 @@
-import { Text, TouchableOpacity, View, StatusBar, Image, FlatList } from 'react-native';
-import styles from '../../../styles/SalesScreenStyle';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
-import ConfrimDelete from '../../ux/popup/ConfrimDelete';
-import { useState, useEffect } from 'react';
-import { getUserData } from '../../../store/userDataManager';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FlatList, Image, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
+import { getUserData } from '../../../store/userDataManager';
+import styles from '../../../styles/SalesScreenStyle';
 
-import Feather from '@expo/vector-icons/Feather';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import Feather from '@expo/vector-icons/Feather';
 
 function SalesScreen() {
     const navigation = useNavigation();
@@ -97,7 +96,7 @@ function SalesScreen() {
     };
 
     return (
-        <View>
+        <SafeAreaView>
             <View style={styles.container}>
                 <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
                     <MaterialIcons name="arrow-back-ios" size={scale(24)} color="black" />
@@ -151,7 +150,7 @@ function SalesScreen() {
                 )}
                 <StatusBar backgroundColor="transparent" translucent={true} />
             </View>
-        </View>
+        </SafeAreaView>
     )
 };
 

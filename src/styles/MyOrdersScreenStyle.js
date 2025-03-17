@@ -11,7 +11,7 @@ const styles = ScaledSheet.create({
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        padding: 10
+        marginTop: '16@msr'
     },
     productPreview: {
         width: 160,
@@ -139,7 +139,8 @@ const styles = ScaledSheet.create({
     loadText: {
         color: '#141414',
         fontFamily: 'Cambria',
-        fontSize: 20
+        fontSize: 20,
+        textAlign: 'center'
     },
     payBtn: {
         width: '100%',

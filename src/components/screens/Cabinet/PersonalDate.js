@@ -1,14 +1,14 @@
-import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
-import styles from '../../../styles/PersonalScreenStyle';
-import { MaterialIcons, EvilIcons, Feather, AntDesign } from '@expo/vector-icons';
+import { AntDesign, EvilIcons, Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useState } from 'react';
-import ChangePhone from '../../ux/popup/changePhone';
-import ChangePassword from '../../ux/popup/ChangePassword';
-import ChangeSex from '../../ux/popup/ChangeSex';
 import * as ImagePicker from 'expo-image-picker';
-import { updateUserData } from '../../../store/userDataManager';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Image, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { updateUserData } from '../../../store/userDataManager';
+import styles from '../../../styles/PersonalScreenStyle';
+import ChangePassword from '../../ux/popup/ChangePassword';
+import ChangePhone from '../../ux/popup/changePhone';
+import ChangeSex from '../../ux/popup/ChangeSex';
 
 function PersonalDate() {
     const navigation = useNavigation();
@@ -350,7 +350,7 @@ function PersonalDate() {
     };
 
     return (
-        <View style={{ width: '100%', height: '100%', backgroundColor: '#FFF' }}>
+        <SafeAreaView style={{ width: '100%', height: '100%', backgroundColor: '#FFF' }}>
             <ScrollView style={{ flex: 1 }}>
                 <View style={styles.container}>
                     <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
@@ -468,6 +468,7 @@ function PersonalDate() {
                         )}
                     </View>
                 </View>
+                <View style={{ marginBottom: 100 }} />
             </ScrollView>
             {isChangePhoneModal && <ChangePhone onClose={toggleChangePhoneModal} userId={userData.userId} phone={phone} />}
             {isPasswordModal && <ChangePassword onClose={togglePasswordModal} userId={userData.userId} />}
@@ -487,7 +488,7 @@ function PersonalDate() {
                     </View>
                 </View>
             }
-        </View>
+        </SafeAreaView>
     );
 }
 

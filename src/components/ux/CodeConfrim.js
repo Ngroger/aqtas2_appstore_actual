@@ -1,18 +1,18 @@
-import { Text, View, TouchableOpacity, TextInput, Platform } from 'react-native';
-import styles from '../../styles/RegistrationScreenStyle';
+import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Platform, Text, TouchableOpacity, View } from 'react-native';
 import {
   CodeField,
   Cursor,
 } from 'react-native-confirmation-code-field';
-import { useEffect, useState, useRef } from 'react';
-import axios from 'axios';
-import * as Notifications from 'expo-notifications';
-import * as Device from 'expo-device';
-import { storeUserData } from '../../store/userDataManager';
 import { toggleIsNewUser } from '../../store/NewUserStorage';
-import { storeToken, hasToken } from '../../store/tokenManager';
-import { useNavigation } from '@react-navigation/native';
+import { hasToken, storeToken } from '../../store/tokenManager';
+import { storeUserData } from '../../store/userDataManager';
+import styles from '../../styles/RegistrationScreenStyle';
 
 const CELL_COUNT = 6;
 

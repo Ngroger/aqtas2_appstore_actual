@@ -5,12 +5,12 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         backgroundColor: '#FFF',
-        padding: 30
-    }, 
+        padding: 20
+    },
     titleContainer: {
         flexDirection: 'row',
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     title: {
         fontSize: 36,

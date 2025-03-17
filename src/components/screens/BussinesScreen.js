@@ -1,14 +1,14 @@
-import React from 'react';
-import { Text, TouchableOpacity, View, StatusBar } from 'react-native';
-import styles from '../../styles/BussinesScreenStyles';
-import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
+import styles from '../../styles/BussinesScreenStyles';
 
 function BussinesScreen() {
     const navigation = useNavigation();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     const buttonsData = [
         { title: t('edit-info-bussines-button'), screen: 'EditBussines' },
@@ -24,10 +24,10 @@ function BussinesScreen() {
 
     const goToScreen = (screen) => {
         navigation.navigate(screen);
-    }; 
+    };
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
                 <MaterialIcons name="arrow-back-ios" size={scale(24)} color="black" />
                 <Text style={styles.title}>{t('bussines-profile-button')}</Text>
@@ -45,7 +45,7 @@ function BussinesScreen() {
                 ))}
             </View>
             <StatusBar backgroundColor="transparent" translucent={true} />
-        </View>
+        </SafeAreaView>
     );
 }
 

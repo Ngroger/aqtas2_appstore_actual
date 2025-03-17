@@ -2,7 +2,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, Image, Linking, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, Linking, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import styles from '../../styles/ShopsScreenStyle';
 
@@ -113,7 +113,7 @@ function ShopsScreen() {
     };
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.navbar}>
                 <Image style={styles.logo} source={require('../../img/miniLogo.png')} />
                 <View style={styles.search}>
@@ -201,7 +201,7 @@ function ShopsScreen() {
                     )}
                 </>
             )}
-        </View>
+        </SafeAreaView>
     )
 };
 

@@ -36,7 +36,7 @@ const styles = ScaledSheet.create({
     field: {
         borderWidth: 1,
         borderColor: '#95E5FF',
-        padding: 10,
+        padding: 12,
         borderRadius: 15,
         marginTop: 24
     },

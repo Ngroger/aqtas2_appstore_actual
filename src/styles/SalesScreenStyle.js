@@ -10,11 +10,11 @@ const styles = ScaledSheet.create({
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        marginTop: 28,
-        paddingHorizontal: 24
+        marginTop: '36@msr',
+        paddingHorizontal: 20
     },
     title: {
-        fontSize: '28@ms',
+        fontSize: 36,
         fontFamily: 'Cambria'
     },
     sale: {
@@ -102,7 +102,7 @@ const styles = ScaledSheet.create({
         position: 'absolute',
         zIndex: 100,
         bottom: 24,
-        paddingHorizontal: 24
+        paddingHorizontal: 20
     }
 });
 

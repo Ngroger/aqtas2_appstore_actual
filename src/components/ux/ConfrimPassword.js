@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, TextInput, Text } from 'react-native';
-import styles from '../../styles/RegistrationScreenStyle';
-import { useTranslation } from 'react-i18next';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import styles from '../../styles/RegistrationScreenStyle';
 
 function ConfirmPassword(props) {
     const [password, setPassword] = useState('');

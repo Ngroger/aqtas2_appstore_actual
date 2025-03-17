@@ -1,9 +1,9 @@
-import { Text, SafeAreaView, View, ScrollView, TouchableOpacity } from 'react-native';
-import styles from '../../styles/PolicyScreenStyles';
-import { StatusBar } from 'expo-status-bar';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import styles from '../../styles/PolicyScreenStyles';
 
 function PolicyScreen() {
   const navigation = useNavigation();

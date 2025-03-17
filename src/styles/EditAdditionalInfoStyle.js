@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 20,
         marginTop: 20,
-        padding: 10
+        padding: 12
     },
     titleField: {
         backgroundColor: '#FFF',

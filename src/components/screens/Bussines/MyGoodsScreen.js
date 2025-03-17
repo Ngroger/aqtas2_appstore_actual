@@ -1,12 +1,12 @@
-import { Text, TouchableOpacity, View, StatusBar, Image, FlatList, ScrollView } from 'react-native';
-import styles from '../../../styles/MyGoodsStyles';
-import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useState, useEffect } from 'react';
-import UpToTop from '../../ux/popup/EditProduct/UpToTop';
-import CreateProduct from '../../ux/popup/CreateProduct';
-import { getUserData } from '../../../store/userDataManager';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FlatList, Image, SafeAreaView, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { getUserData } from '../../../store/userDataManager';
+import styles from '../../../styles/MyGoodsStyles';
+import CreateProduct from '../../ux/popup/CreateProduct';
+import UpToTop from '../../ux/popup/EditProduct/UpToTop';
 
 function MyGoodsScreen() {
     const navigation = useNavigation();
@@ -134,7 +134,7 @@ function MyGoodsScreen() {
     };
 
     return (
-        <View>
+        <SafeAreaView>
             <View style={styles.container}>
                 <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
                     <MaterialIcons name="arrow-back-ios" size={24} color="black" />
@@ -276,7 +276,7 @@ function MyGoodsScreen() {
             <StatusBar backgroundColor="transparent" translucent={true} />
             {isUpToTop && <UpToTop onClose={toggleUpToTop} />}
             {isCreateProduct && <CreateProduct onClose={toggleCreateProduct} />}
-        </View>
+        </SafeAreaView>
     )
 };
 

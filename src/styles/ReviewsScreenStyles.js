@@ -13,11 +13,10 @@ const styles = ScaledSheet.create({
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        marginTop: 10,
-        paddingHorizontal: 18
+        marginTop: '20@msr',
     },
     title: {
-        fontSize: 28,
+        fontSize: 36,
         fontFamily: 'Cambria'
     },
     categories: {

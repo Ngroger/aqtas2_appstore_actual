@@ -1,9 +1,9 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native';
-import styles from '../../styles/CaregoriesScreenStyle';
-import { useTranslation } from 'react-i18next';
-import { useCategories } from '../../context/CategoriesProvider';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+import { Image, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { categories } from '../../categories';
+import { useCategories } from '../../context/CategoriesProvider';
+import styles from '../../styles/CaregoriesScreenStyle';
 
 const CategoriesScreen = () => {
     const { t } = useTranslation();
@@ -17,7 +17,7 @@ const CategoriesScreen = () => {
     }
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.containerCategories}>
                 {categories.map((category, index) => (
                     <TouchableOpacity
@@ -32,7 +32,7 @@ const CategoriesScreen = () => {
                     </TouchableOpacity>
                 ))}
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 

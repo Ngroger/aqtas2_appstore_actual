@@ -1,13 +1,12 @@
-import { Text, TouchableOpacity, View, StatusBar, FlatList, Image } from 'react-native';
-import styles from '../../../styles/OrderScreenStyles';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { MaterialIcons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
-import { Ionicons } from '@expo/vector-icons';
-import { useState, useEffect, useCallback } from 'react';
-import ReasonForDelete from '../../ux/popup/ReasonForDelete';
-import { getUserData } from '../../../store/userDataManager';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FlatList, Image, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { getUserData } from '../../../store/userDataManager';
+import styles from '../../../styles/OrderScreenStyles';
+import ReasonForDelete from '../../ux/popup/ReasonForDelete';
 
 function OrderScreen() {
     const navigation = useNavigation();
@@ -93,7 +92,7 @@ function OrderScreen() {
     };
 
     return (
-        <View>
+        <SafeAreaView>
             <View style={styles.container}>
                 <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
                     <MaterialIcons name="arrow-back-ios" size={24} color="black" />
@@ -169,7 +168,7 @@ function OrderScreen() {
                 <StatusBar backgroundColor="transparent" translucent={true} />
             </View>
             {isReasonForDelete && <ReasonForDelete onClose={toggleReasonForDelete} id={selectedOrderId} userId={userData.userId} buyerId={buyerId} />}
-        </View>
+        </SafeAreaView>
     )
 };
 

@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        marginTop: 38
+        marginTop: 42
     },
     title: {
         fontSize: 28,

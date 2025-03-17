@@ -1,17 +1,14 @@
-import { View, Text, StatusBar, Image, TouchableOpacity, ScrollView, FlatList } from 'react-native';
-import styles from '../../styles/CartScreenStyle';
 import { Feather } from '@expo/vector-icons';
-import { useState, useCallback } from 'react';
-import { getUserData } from '../../store/userDataManager';
-import NoCardMessage from '../ux/popup/messages/NoCardMessage';
-import SuccessOrder from '../ux/popup/messages/SuccessOrder';
-import { useTranslation } from 'react-i18next';
-import NoAddressMessage from '../ux/popup/messages/NoAddressMessage';
-import { useEffect } from 'react';
-import axios from 'axios';
-import { scale } from 'react-native-size-matters';
 import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FlatList, Image, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { scale } from 'react-native-size-matters';
 import { useUnauth } from '../../context/UnauthProvider';
+import { getUserData } from '../../store/userDataManager';
+import styles from '../../styles/CartScreenStyle';
+import NoAddressMessage from '../ux/popup/messages/NoAddressMessage';
+import SuccessOrder from '../ux/popup/messages/SuccessOrder';
 
 function CartScreen() {
     const [userData, setUserData] = useState({});
@@ -184,7 +181,7 @@ function CartScreen() {
     }
 
     return (
-        <View>
+        <SafeAreaView>
             <View style={styles.container}>
                 <View style={styles.navbar}>
                     <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -280,7 +277,7 @@ function CartScreen() {
             </View>
             {isSuccessOrder && <SuccessOrder clearCart={clearCart} updatedCart={() => loadUserData()} onClose={() => setSuccessOrder(false)} />}
             {isNoAddress && <NoAddressMessage />}
-        </View>
+        </SafeAreaView>
     )
 };
 

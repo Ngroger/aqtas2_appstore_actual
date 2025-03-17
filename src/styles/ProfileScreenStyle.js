@@ -5,12 +5,12 @@ const styles = ScaledSheet.create({
         backgroundColor: '#fff',
         width: '100%',
         height: '100%',
-        padding: 20
+        paddingHorizontal: 20
     },
     infoContainer: {
         flexDirection: 'row',
         display: 'flex',
-        marginTop: 10,
+        marginTop: '42@msr',
         alignItems: 'center'
     },
     bonusContainer: {
@@ -21,15 +21,14 @@ const styles = ScaledSheet.create({
         paddingVertical: 16
     },
     photo: {
-        width: '40@vs',
-        height: '40@vs',
+        width: '36@vs',
+        height: '36@vs',
         borderRadius: 100,
-        margin: 3
     },
     infoText: {
         fontFamily: 'Cambria',
-        fontSize: '24@ms',
-        left: 10
+        fontSize: '20@ms',
+        left: 6
     },
     sale: {
         backgroundColor: '#FF0000',

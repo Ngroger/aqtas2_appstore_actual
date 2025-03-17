@@ -65,11 +65,11 @@ const styles = StyleSheet.create({
     },
     photoPickButton: {
         backgroundColor: 'rgba(149, 229, 255, 0.35)',
-        width: 45, 
-        height: 45, 
-        borderRadius: 100, 
-        justifyContent: 'center', 
-        alignItems: 'center', 
+        width: 45,
+        height: 45,
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
         marginHorizontal: 50
     },
     swiperContent: {
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#95E5FF',
         margin: 10,
-        padding: 10,
+        padding: 12,
         borderRadius: 15,
         paddingHorizontal: 20
     },
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     },
     deleteButton: {
         backgroundColor: '#95E5FF',
-        borderRadius:  100,
+        borderRadius: 100,
         backgroundColor: 'rgba(149, 229, 255, 0.35)',
         width: 35,
         height: 35,
@@ -151,12 +151,12 @@ const styles = StyleSheet.create({
         position: 'absolute',
     },
     photoEmptyContainer: {
-        borderWidth: 3, 
-        padding: 10, 
-        width: 200, 
+        borderWidth: 3,
+        padding: 10,
+        width: 200,
         height: 250,
-        borderStyle: 'dashed', 
-        borderColor: '#95E5FF', 
+        borderStyle: 'dashed',
+        borderColor: '#95E5FF',
         borderRadius: 28
     },
     sizeContainer: {
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
 
         elevation: 5,
         margin: 5,
-        
+
     },
     sizeInput: {
         fontFamily: 'Cambria',

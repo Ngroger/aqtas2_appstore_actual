@@ -3,7 +3,7 @@ import { ScaledSheet } from 'react-native-size-matters';
 const styles = ScaledSheet.create({
     container: {
         backgroundColor: '#fff',
-        padding: 20,
+        paddingHorizontal: 20,
         width: '100%',
         height: '100%'
     },
@@ -90,7 +90,7 @@ const styles = ScaledSheet.create({
     navbar: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 20,
+        marginTop: '42@msr',
         justifyContent: 'space-between'
     },
     title: {

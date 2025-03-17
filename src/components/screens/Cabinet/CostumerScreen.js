@@ -1,17 +1,17 @@
+import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { Text, View, TouchableOpacity, TextInput, Image, ScrollView } from 'react-native';
-import styles from '../../../styles/CustomerScreenStyle';
-import { MaterialIcons, AntDesign, Feather } from '@expo/vector-icons';
-import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { getUserData } from '../../../store/userDataManager';
-import { useEffect } from 'react';
+import styles from '../../../styles/CustomerScreenStyle';
 import CategoryShop from '../../ux/popup/CategoryShop';
 import SuccessCreatedShop from '../../ux/popup/messages/SuccessCreatedShop';
-import { useTranslation } from 'react-i18next';
 
 function CustomerScreen() {
     const navigation = useNavigation();
+    const { t } = useTranslation();
 
     const [name, changeName] = useState('');
     const [isFocusName, setFocusName] = useState(false);
@@ -48,7 +48,23 @@ function CustomerScreen() {
 
     const [isErrorMessage, setIsErrorMessage] = useState(false);
 
-    const { t } = useTranslation();
+    const [isLoad, setIsLoad] = useState(false);
+    const [isSuccess, setSuccess] = useState(false);
+    const [isFailure, setIsFailure] = useState(false);
+
+    const getBtnTxt = _ => {
+        if (isSuccess) return "success-btn"
+        else if (isFailure) return "failure-btn"
+        else if (isLoad) return "in-proccess-btn"
+        else return "create-shop-btn"
+    };
+
+    const getBtnStyles = _ => {
+        if (isSuccess) return "#61c427"
+        else if (isFailure) return "#FF0000"
+        else if (isLoad) return "#95E5FF"
+        else return "#95E5FF"
+    };
 
     useEffect(() => {
         loadUserData();
@@ -74,7 +90,10 @@ function CustomerScreen() {
     }
 
     const createShop = async () => {
+        setIsLoad(true);
         if (!name || !phone || !adress || !image || !category || !bin || !iin) {
+            setIsLoad(false);
+            setIsFailure(true);
             setIsErrorMessage(true);
             setNameError(name.length <= 2);
             setIsPhoneError(phone.length !== 11);
@@ -85,7 +104,6 @@ function CustomerScreen() {
             setIsIinError(iin.length !== 12);
         } else {
             setIsErrorMessage(false);
-            // Создайте объект Date для получения текущей даты и времени
             const currentDate = new Date();
 
             const year = currentDate.getFullYear();
@@ -124,16 +142,33 @@ function CustomerScreen() {
                     },
                 });
 
-                if (response.status === 200) {
-                    toggleSetMessage()
+                const responseJson = await response.json();
+
+                if (responseJson.success) {
+                    toggleSetMessage();
+                    setIsLoad(false);
+                    setSuccess(true);
                 } else {
-                    // Обработка ошибки
-                    const errorData = await response.json();
-                }
+                    toggleSetMessage();
+                    setIsFailure(true);
+                    setIsLoad(false);
+                };
+
             } catch (error) {
+                setIsLoad(false);
+                setIsFailure(false);
+            } finally {
+                setIsLoad(false);
+                setSuccess(false);
+                setIsFailure(false);
             }
         }
     };
+
+    const handleBtn = _ => {
+        if (isSuccess) return handleGoBack();
+        else return createShop();
+    }
 
     const pickImage = async () => {
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -263,7 +298,7 @@ function CustomerScreen() {
                             {t("customer-screen.category-title")}
                         </Text>
                         <View style={isCategoryError ? styles.errorField : styles.field}>
-                            <Text style={styles.input}>{category}</Text>
+                            <TextInput value={category} style={styles.input} readOnly={true} />
                             <TouchableOpacity onPress={toggleCategoryModal}>
                                 <AntDesign name="right" size={24} color="#95E5FF" />
                             </TouchableOpacity>
@@ -320,9 +355,9 @@ function CustomerScreen() {
                         {isErrorMessage && <Text style={styles.error}>
                             {t("customer-screen.all-fields-request")}
                         </Text>}
-                        <TouchableOpacity onPress={createShop} style={styles.createButton}>
+                        <TouchableOpacity disabled={isLoad} onPress={() => handleBtn()} style={[styles.createButton, { backgroundColor: getBtnStyles() }]}>
                             <Text style={styles.createButtonText}>
-                                {t("customer-screen.create-shop-btn")}
+                                {t(`customer-screen.${getBtnTxt()}`)}
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -335,10 +370,10 @@ function CustomerScreen() {
                             <AntDesign name="close" size={32} color="black" />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={takeImage} style={styles.buttonChoiseImage}>
-                            <Text style={styles.buttonChoiseImageText}>Сделать фото</Text>
+                            <Text style={styles.buttonChoiseImageText}>{t("take-photo-button")}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={pickImage} style={styles.buttonChoiseImage}>
-                            <Text style={styles.buttonChoiseImageText}>Выбрать фото</Text>
+                            <Text style={styles.buttonChoiseImageText}>{t("pick-photo-button")}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

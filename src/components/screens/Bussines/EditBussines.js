@@ -1,11 +1,11 @@
-import { Text, TouchableOpacity, View, StatusBar, ActivityIndicator, TextInput } from 'react-native';
-import styles from '../../../styles/EditBussinesStyles';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { MaterialIcons, Feather, AntDesign } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
-import { getUserData } from '../../../store/userDataManager';
-import CategoryShop from '../../ux/popup/CategoryShop';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { getUserData } from '../../../store/userDataManager';
+import styles from '../../../styles/EditBussinesStyles';
+import CategoryShop from '../../ux/popup/CategoryShop';
 
 function EditBussinesScreen() {
     const navigation = useNavigation();
@@ -311,7 +311,7 @@ function EditBussinesScreen() {
     };
 
     return (
-        <View>
+        <SafeAreaView>
             <View style={styles.container}>
                 <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
                     <MaterialIcons name="arrow-back-ios" size={24} color="black" />
@@ -323,98 +323,100 @@ function EditBussinesScreen() {
                     </View>
                 )}
                 {!isLoad && (
-                    <View style={{ width: '100%', flex: 1, paddingHorizontal: 24 }}>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.firstInfo}>{t('name-of-shop-field-title')}:</Text>
-                            <View style={styles.field}>
-                                <TextInput value={shopName} onChangeText={(text) => handleShopNameChange(text)} style={styles.secondInfo} />
-                                {isShopNameChanged && (
-                                    <TouchableOpacity onPress={handleSavePressName} >
-                                        <AntDesign name="save" size={24} color="black" />
-                                    </TouchableOpacity>
+                    <>
+                        <ScrollView style={{ width: '100%', flex: 1, paddingHorizontal: 24 }}>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.firstInfo}>{t('name-of-shop-field-title')}:</Text>
+                                <View style={styles.field}>
+                                    <TextInput value={shopName} onChangeText={(text) => handleShopNameChange(text)} style={styles.secondInfo} />
+                                    {isShopNameChanged && (
+                                        <TouchableOpacity onPress={handleSavePressName} >
+                                            <AntDesign name="save" size={24} color="black" />
+                                        </TouchableOpacity>
+                                    )}
+                                </View>
+                                {showErrorShopName && (
+                                    <Text style={styles.error}>{t('above-two-symbol-message')}</Text>
                                 )}
                             </View>
-                            {showErrorShopName && (
-                                <Text style={styles.error}>{t('above-two-symbol-message')}</Text>
-                            )}
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.firstInfo}>{t('iin-become-customer-field')}:</Text>
-                            <View style={styles.field}>
-                                <TextInput maxLength={12} keyboardType='numeric' value={iin} onChangeText={handleShopIinChange} style={styles.secondInfo} />
-                                {isIinChanged && (
-                                    <TouchableOpacity onPress={handleSavePressIin} >
-                                        <AntDesign name="save" size={24} color="black" />
-                                    </TouchableOpacity>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.firstInfo}>{t('iin-become-customer-field')}:</Text>
+                                <View style={styles.field}>
+                                    <TextInput maxLength={12} keyboardType='numeric' value={iin} onChangeText={handleShopIinChange} style={styles.secondInfo} />
+                                    {isIinChanged && (
+                                        <TouchableOpacity onPress={handleSavePressIin} >
+                                            <AntDesign name="save" size={24} color="black" />
+                                        </TouchableOpacity>
+                                    )}
+                                </View>
+                                {showErrorIin && (
+                                    <Text style={styles.error}>{t('above-twenteen-symbol-message')}</Text>
                                 )}
                             </View>
-                            {showErrorIin && (
-                                <Text style={styles.error}>{t('above-twenteen-symbol-message')}</Text>
-                            )}
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.firstInfo}>{t('bin-become-customer-field')}:</Text>
-                            <View style={styles.field}>
-                                <TextInput maxLength={12} keyboardType='numeric' value={bin} onChangeText={handleShopBinChange} style={styles.secondInfo} />
-                                {isBinChanged && (
-                                    <TouchableOpacity onPress={handleSavePressBin} >
-                                        <AntDesign name="save" size={24} color="black" />
-                                    </TouchableOpacity>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.firstInfo}>{t('bin-become-customer-field')}:</Text>
+                                <View style={styles.field}>
+                                    <TextInput maxLength={12} keyboardType='numeric' value={bin} onChangeText={handleShopBinChange} style={styles.secondInfo} />
+                                    {isBinChanged && (
+                                        <TouchableOpacity onPress={handleSavePressBin} >
+                                            <AntDesign name="save" size={24} color="black" />
+                                        </TouchableOpacity>
+                                    )}
+                                </View>
+                                {showErrorBin && (
+                                    <Text style={styles.error}>{t('above-twenteen-symbol-message')}</Text>
                                 )}
                             </View>
-                            {showErrorBin && (
-                                <Text style={styles.error}>{t('above-twenteen-symbol-message')}</Text>
-                            )}
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.firstInfo}>{t('address-become-customer-field')}:</Text>
-                            <View style={styles.field}>
-                                <TextInput value={adress} onChangeText={handleAdressChange} style={styles.secondInfo} />
-                                {isAdressChanged && (
-                                    <TouchableOpacity onPress={handleSavePressAdress} >
-                                        <AntDesign name="save" size={24} color="black" />
-                                    </TouchableOpacity>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.firstInfo}>{t('address-become-customer-field')}:</Text>
+                                <View style={styles.field}>
+                                    <TextInput value={adress} onChangeText={handleAdressChange} style={styles.secondInfo} />
+                                    {isAdressChanged && (
+                                        <TouchableOpacity onPress={handleSavePressAdress} >
+                                            <AntDesign name="save" size={24} color="black" />
+                                        </TouchableOpacity>
+                                    )}
+                                </View>
+                                {showErrorAdress && (
+                                    <Text style={styles.error}>{t('above-two-symbol-message')}</Text>
                                 )}
                             </View>
-                            {showErrorAdress && (
-                                <Text style={styles.error}>{t('above-two-symbol-message')}</Text>
-                            )}
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.firstInfo}>{t('phone-number-become-customer-field')}:</Text>
-                            <View style={styles.field}>
-                                <TextInput value={phone} maxLength={11} keyboardType='numeric' onChangeText={handlePhoneChange} style={styles.secondInfo} />
-                                {isPhoneChanged && (
-                                    <TouchableOpacity onPress={handleSavePressPhone} >
-                                        <AntDesign name="save" size={24} color="black" />
-                                    </TouchableOpacity>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.firstInfo}>{t('phone-number-become-customer-field')}:</Text>
+                                <View style={styles.field}>
+                                    <TextInput value={phone} maxLength={11} keyboardType='numeric' onChangeText={handlePhoneChange} style={styles.secondInfo} />
+                                    {isPhoneChanged && (
+                                        <TouchableOpacity onPress={handleSavePressPhone} >
+                                            <AntDesign name="save" size={24} color="black" />
+                                        </TouchableOpacity>
+                                    )}
+                                </View>
+                                {showErrorPhone && (
+                                    <Text style={styles.error}>{t('above-eleven-symbol-message')}</Text>
                                 )}
                             </View>
-                            {showErrorPhone && (
-                                <Text style={styles.error}>{t('above-eleven-symbol-message')}</Text>
-                            )}
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.firstInfo}>{t('category-become-customer-field')}:</Text>
-                            <View style={[styles.field, { padding: 16, paddingHorizontal: 18 }]}>
-                                <Text style={styles.secondInfo}>{category}</Text>
-                                <TouchableOpacity onPress={toggleShowCategoryModal}>
-                                    <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
-                                </TouchableOpacity>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.firstInfo}>{t('category-become-customer-field')}:</Text>
+                                <View style={[styles.field, { padding: 16, paddingHorizontal: 18 }]}>
+                                    <Text style={styles.secondInfo}>{category}</Text>
+                                    <TouchableOpacity onPress={toggleShowCategoryModal}>
+                                        <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                        </View>
+                            <View style={{ marginBottom: 100 }} />
+                        </ScrollView>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity onPress={handleSaveCategory} disabled={!isSave} style={!isSave ? { ...styles.saveButton, opacity: 0.5 } : styles.saveButton}>
                                 <Text style={styles.saveButtonText}>{t('save-changes-button')}</Text>
                             </TouchableOpacity>
                         </View>
-                    </View>
-
+                    </>
                 )}
                 <StatusBar backgroundColor="transparent" translucent={true} />
             </View>
             {isCategoryShowModal && <CategoryShop onClose={toggleShowCategoryModal} onCategorySelect={handleCategoryShopySelect} />}
-        </View>
+        </SafeAreaView>
     )
 };
 

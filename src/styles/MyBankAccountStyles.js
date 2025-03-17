@@ -1,21 +1,21 @@
-import { StyleSheet } from "react-native";
+import { ScaledSheet } from "react-native-size-matters";
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     container: {
         width: '100%',
         height: '100%',
         backgroundColor: '#FFF',
-        padding: 20
+        paddingHorizontal: 20
     },
     titleContainer: {
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        marginTop: 10,
+        marginTop: '36@msr',
         justifyContent: 'space-between'
     },
     title: {
-        fontSize: 28,
+        fontSize: 36,
         fontFamily: 'Cambria'
     },
     containerMessage: {

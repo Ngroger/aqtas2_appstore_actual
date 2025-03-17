@@ -11,10 +11,10 @@ const styles = ScaledSheet.create({
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        marginTop: 10
+        marginTop: 20
     },
     title: {
-        fontSize: '28@ms',
+        fontSize: 36,
         fontFamily: 'Cambria'
     },
     button: {
