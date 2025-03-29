@@ -260,16 +260,18 @@ const styles = StyleSheet.create({
     addCart: {
         backgroundColor: '#95E5FF',
         borderRadius: 100,
-        width: 90,
+        width: 120,
         paddingVertical: 7,
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 9,
-        marginTop: 6
+        marginTop: 6,
+        marginBottom: 12
     },
     addCartText: {
         color: '#fff',
-        fontFamily: 'CambriaBold'
+        fontFamily: 'CambriaBold',
+        fontSize: 14
     },
     previewContainer: {
         position: 'relative'

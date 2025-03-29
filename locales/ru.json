@@ -302,6 +302,7 @@
         "title": "Добавить акцию",
         "photo-title": "Фотография акции",
         "name-title": "Название акции",
+        "name-placeholder": "Введите название акции",
         "name-limit": "Название должно быть свыше 2 символов",
         "description-title": "Описание",
         "description-placeholder": "Введите описание",

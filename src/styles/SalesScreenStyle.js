@@ -10,7 +10,6 @@ const styles = ScaledSheet.create({
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        marginTop: '36@msr',
         paddingHorizontal: 20
     },
     title: {

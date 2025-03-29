@@ -181,9 +181,12 @@ function CartScreen() {
     }
 
     return (
-        <SafeAreaView>
-            <View style={styles.container}>
-                <View style={styles.navbar}>
+        <SafeAreaView style={styles.container}>
+            <View style={{
+                paddingHorizontal: 20
+            }}>
+                <View style={styles.navbar
+                } >
                     <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={styles.title}>{t('cart-title')}</Text>
                         <Text style={styles.totalCost}>{t('total-cost-cart')}{totalCost}тнг</Text>
@@ -194,90 +197,95 @@ function CartScreen() {
                         </TouchableOpacity>
                     ) : null}
                 </View>
-                {cart.length > 0 ? (
-                    <FlatList
-                        data={cart}
-                        keyExtractor={(item, index) => index.toString()}
-                        renderItem={({ item }) => (
-                            <View style={styles.card}>
-                                <Image style={styles.productPreview} source={{ uri: `https://aqtas.garcom.kz/api/images/imageProducts/${item.imagePreview}` }} />
-                                <View style={{ flex: 1, marginLeft: 10 }}>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <View style={styles.costContainer}>
-                                            <Text style={styles.cost}>{item.newCost}тнг</Text>
-                                            {item.oldCost && <Text style={styles.oldCost}>{item.oldCost}тнг</Text>}
+                {
+                    cart.length > 0 ? (
+                        <FlatList
+                            data={cart}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={({ item }) => (
+                                <View style={styles.card}>
+                                    <Image style={styles.productPreview} source={{ uri: `https://aqtas.garcom.kz/api/images/imageProducts/${item.imagePreview}` }} />
+                                    <View style={{ flex: 1, marginLeft: 10 }}>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <View style={styles.costContainer}>
+                                                <Text style={styles.cost}>{item.newCost}тнг</Text>
+                                                {item.oldCost && <Text style={styles.oldCost}>{item.oldCost}тнг</Text>}
+                                            </View>
+                                            <TouchableOpacity onPress={() => selectItem(item.id)} style={selectedItems[item.id] ? styles.selectedCheckbox : styles.checkbox}>
+                                                {selectedItems[item.id] ? (
+                                                    <View style={styles.dot} />
+                                                ) : null}
+                                            </TouchableOpacity>
                                         </View>
-                                        <TouchableOpacity onPress={() => selectItem(item.id)} style={selectedItems[item.id] ? styles.selectedCheckbox : styles.checkbox}>
-                                            {selectedItems[item.id] ? (
-                                                <View style={styles.dot} />
-                                            ) : null}
-                                        </TouchableOpacity>
-                                    </View>
-                                    <View style={styles.infoContainer}>
+                                        <View style={styles.infoContainer}>
+                                            <View>
+                                                <Text style={styles.firstInfo}>{t('name-product-cart-info')}</Text>
+                                                <Text style={styles.firstInfo}>{t('description-product-cart-info')}</Text>
+                                                <Text style={styles.firstInfo}>{t('brend-cart-info')}</Text>
+                                                <Text style={styles.firstInfo}>{t('customer-product-cart-info')}</Text>
+                                                {item.size && <Text style={styles.firstInfo}>{t('size-cart-info')}</Text>}
+                                            </View>
+                                            <View>
+                                                <Text style={styles.secondInfo}>
+                                                    {item.name.length > 16
+                                                        ? item.name.substring(0, 13) + '...'
+                                                        : item.name
+                                                    }
+                                                </Text>
+                                                <Text style={styles.secondInfo}>
+                                                    {item.description.length > 16
+                                                        ? item.description.substring(0, 13) + '...'
+                                                        : item.description
+                                                    }
+                                                </Text>
+                                                <Text style={styles.secondInfo}>
+                                                    {item.brend.length > 16
+                                                        ? item.brend.substring(0, 13) + '...'
+                                                        : item.brend
+                                                    }
+                                                </Text>
+                                                <Text style={styles.secondInfo}>
+                                                    {item.costumer.length > 16
+                                                        ? item.costumer.substring(0, 13) + '...'
+                                                        : item.costumer
+                                                    }
+                                                </Text>
+                                                {item.size && <Text style={styles.secondInfo}>{item.size}</Text>}
+                                            </View>
+                                        </View>
                                         <View>
-                                            <Text style={styles.firstInfo}>{t('name-product-cart-info')}</Text>
-                                            <Text style={styles.firstInfo}>{t('description-product-cart-info')}</Text>
-                                            <Text style={styles.firstInfo}>{t('brend-cart-info')}</Text>
-                                            <Text style={styles.firstInfo}>{t('customer-product-cart-info')}</Text>
-                                            {item.size && <Text style={styles.firstInfo}>{t('size-cart-info')}</Text>}
-                                        </View>
-                                        <View>
-                                            <Text style={styles.secondInfo}>
-                                                {item.name.length > 16
-                                                    ? item.name.substring(0, 13) + '...'
-                                                    : item.name
-                                                }
-                                            </Text>
-                                            <Text style={styles.secondInfo}>
-                                                {item.description.length > 16
-                                                    ? item.description.substring(0, 13) + '...'
-                                                    : item.description
-                                                }
-                                            </Text>
-                                            <Text style={styles.secondInfo}>
-                                                {item.brend.length > 16
-                                                    ? item.brend.substring(0, 13) + '...'
-                                                    : item.brend
-                                                }
-                                            </Text>
-                                            <Text style={styles.secondInfo}>
-                                                {item.costumer.length > 16
-                                                    ? item.costumer.substring(0, 13) + '...'
-                                                    : item.costumer
-                                                }
-                                            </Text>
-                                            {item.size && <Text style={styles.secondInfo}>{item.size}</Text>}
-                                        </View>
-                                    </View>
-                                    <View>
-                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 12 }}>
-                                            <View style={styles.counterContainer}>
-                                                <TouchableOpacity onPress={() => decreaseCount(item.id)} style={styles.counterButton}>
-                                                    <Text style={styles.counterButtonText}>-</Text>
-                                                </TouchableOpacity>
-                                                <Text style={styles.count}>{item.count}</Text>
-                                                <TouchableOpacity onPress={() => increaseCount(item.id)} style={styles.counterButton}>
-                                                    <Text style={styles.counterButtonText}>+</Text>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 12 }}>
+                                                <View style={styles.counterContainer}>
+                                                    <TouchableOpacity onPress={() => decreaseCount(item.id)} style={styles.counterButton}>
+                                                        <Text style={styles.counterButtonText}>-</Text>
+                                                    </TouchableOpacity>
+                                                    <Text style={styles.count}>{item.count}</Text>
+                                                    <TouchableOpacity onPress={() => increaseCount(item.id)} style={styles.counterButton}>
+                                                        <Text style={styles.counterButtonText}>+</Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                                <TouchableOpacity onPress={() => buyProduct(item.id, item.size, item.customerId, item.productId)} style={styles.buttonBuy}>
+                                                    <Text style={styles.textBuy}>{t('buy-button')}</Text>
                                                 </TouchableOpacity>
                                             </View>
-                                            <TouchableOpacity onPress={() => buyProduct(item.id, item.size, item.customerId, item.productId)} style={styles.buttonBuy}>
-                                                <Text style={styles.textBuy}>{t('buy-button')}</Text>
-                                            </TouchableOpacity>
                                         </View>
                                     </View>
                                 </View>
-                            </View>
 
-                        )}
-                    />
-                ) : (
-                    <Text style={styles.noDataText}>{t('empty-cart-message')}</Text>
-                )}
+                            )}
+                        />
+                    ) : (
+                        <View style={{ height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={styles.noDataText}>{t('empty-cart-message')}</Text>
+                        </View>
+                    )
+                }
                 <StatusBar backgroundColor="transparent" translucent={true} />
-            </View>
-            {isSuccessOrder && <SuccessOrder clearCart={clearCart} updatedCart={() => loadUserData()} onClose={() => setSuccessOrder(false)} />}
+            </View >
+            {isSuccessOrder && <SuccessOrder clearCart={clearCart} updatedCart={() => loadUserData()} onClose={() => setSuccessOrder(false)} />
+            }
             {isNoAddress && <NoAddressMessage />}
-        </SafeAreaView>
+        </SafeAreaView >
     )
 };
 

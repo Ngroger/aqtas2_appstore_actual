@@ -27,7 +27,7 @@ const styles = ScaledSheet.create({
     position: 'absolute',
     zIndex: 11,
     bottom: 0,
-    padding: 12,
+    padding: 20,
     gap: 2
   },
   title: {

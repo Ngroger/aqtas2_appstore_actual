@@ -52,15 +52,14 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#95E5FF',
         borderRadius: 15,
-        padding: 10,
+        padding: 16,
         paddingHorizontal: 20,
-        marginTop: 2
     },
     errorField: {
         borderWidth: 1,
         borderColor: '#FF0000',
         borderRadius: 15,
-        padding: 10,
+        padding: 16,
         paddingHorizontal: 20,
         marginTop: 2
     },
@@ -83,14 +82,17 @@ const styles = StyleSheet.create({
     },
     background: {
         position: 'absolute',
-        zIndex: 100,
+        zIndex: 1000,
         width: '100%',
         height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.25)'
+        backgroundColor: 'rgba(0, 0, 0, 0.25)',
+        bottom: 0,
+        borderWidth: 1,
+        borderColor: '#000'
     },
     containerChoiseImage: {
         position: 'absolute',
-        zIndex: 200,
+        zIndex: 2000,
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
         backgroundColor: '#FFF',
@@ -116,10 +118,10 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         width: '100%',
-        position: 'absolute',
-        zIndex: 100,
-        bottom: 24,
-        paddingHorizontal: 24
+        bottom: 0,
+        paddingHorizontal: 20,
+        paddingTop: 12,
+        paddingBottom: 12
     }
 });
 

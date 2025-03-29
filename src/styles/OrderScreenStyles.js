@@ -11,7 +11,6 @@ const styles = ScaledSheet.create({
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        marginTop: '36@msr'
     },
     title: {
         fontSize: 36,
@@ -113,9 +112,7 @@ const styles = ScaledSheet.create({
         fontFamily: 'Cambria',
         fontSize: 24,
         color: '#BDBDBD',
-        marginLeft: '20%',
-        marginRight: '20%',
-        marginTop: '100%'
+        textAlign: 'center'
     },
     loadingIndicatorContainer: {
         width: '100%',

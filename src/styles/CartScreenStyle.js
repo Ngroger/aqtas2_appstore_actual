@@ -90,7 +90,7 @@ const styles = ScaledSheet.create({
     navbar: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: '42@msr',
+        marginTop: '24@msr',
         justifyContent: 'space-between'
     },
     title: {
@@ -130,9 +130,7 @@ const styles = ScaledSheet.create({
         fontFamily: 'Cambria',
         fontSize: 24,
         color: '#BDBDBD',
-        textAlign: 'center',
-        marginTop: '100%',
-        marginBottom: '100%'
+        textAlign: 'center'
     }
 });
 

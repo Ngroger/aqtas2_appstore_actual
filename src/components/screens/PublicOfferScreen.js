@@ -1,9 +1,9 @@
-import { Text, SafeAreaView, View, ScrollView, TouchableOpacity } from 'react-native';
-import styles from '../../styles/PolicyScreenStyles';
-import { StatusBar } from 'expo-status-bar';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import styles from '../../styles/PolicyScreenStyles';
 
 function PublicOfferScreen() {
   const navigation = useNavigation();
@@ -12,7 +12,7 @@ function PublicOfferScreen() {
   const info = t('offer-screen.info', { returnObjects: true });
 
   return (
-    <SafeAreaView style={styles.background}>
+    <View style={styles.background}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.header} onPress={() => navigation.goBack()}>
           <MaterialIcons name="arrow-back-ios" size={24} color="black" />
@@ -30,7 +30,7 @@ function PublicOfferScreen() {
         ))}
       </ScrollView>
       <StatusBar translucent={true} backgroundColor='transparent' />
-    </SafeAreaView>
+    </View>
   );
 };
 

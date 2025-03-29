@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { BlurView } from 'expo-blur';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, Image, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, Platform, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { getUserData } from '../../../store/userDataManager';
 import styles from '../../../styles/SalesScreenStyle';
@@ -96,62 +96,62 @@ function SalesScreen() {
     };
 
     return (
-        <SafeAreaView>
-            <View style={styles.container}>
-                <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
-                    <MaterialIcons name="arrow-back-ios" size={scale(24)} color="black" />
-                    <Text style={styles.title}>Акции</Text>
-                </TouchableOpacity>
-                {isLoad && (
-                    <View style={styles.loadingIndicatorContainer}>
-                        <Text style={styles.textLoad}>{t("products-load-message")}</Text>
-                    </View>
-                )}
-                {!isLoad && (
-                    <>
-                        {sales.length > 0 ? (
-                            <FlatList
-                                data={sales}
-                                style={{ paddingHorizontal: 24 }}
-                                keyExtractor={(item, index) => index.toString()}
-                                renderItem={({ item }) => (
-                                    <TouchableOpacity onPress={() => handlePress(item.id)} style={styles.sale}>
-                                        <Image style={styles.imageSale} source={{ uri: `https://aqtas.garcom.kz/api/images/imageSales/${item.imageSale}` }} />
-                                        <View style={styles.filter} />
-                                        <Text style={styles.textSale}>{item.name}</Text>
-                                        {selectedCard[item.id] ? (
-                                            <>
-                                                <BlurView intensity={100} tint="default" style={styles.deleteBackground} />
-                                                <View style={styles.deleteContainer}>
-                                                    <TouchableOpacity onPress={() => deleteSale(item.id)}>
-                                                        <Feather name="trash-2" size={50} color="#FC0005" />
-                                                    </TouchableOpacity>
-                                                    <View style={styles.line} />
-                                                    <TouchableOpacity onPress={() => cancel(item.id)}>
-                                                        <AntDesign name="close" size={50} color="#14FF00" />
-                                                    </TouchableOpacity>
-                                                </View>
-                                            </>
-                                        ) : null}
-                                    </TouchableOpacity>
-                                )}
-                            />
-                        ) : (
-                            <View style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={styles.noDataText}>Нет добавленных акций</Text>
-                            </View>
-                        )}
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity onPress={goToAddSale} style={styles.addSaleButton}>
-                                <Text style={styles.addSaleButtonText}>Добавить акцию</Text>
-                            </TouchableOpacity>
+        <SafeAreaView style={styles.container}>
+            <TouchableOpacity style={[styles.titleContainer, { marginTop: Platform.OS === 'android' && 36 }]} onPress={handleGoBack}>
+                <MaterialIcons name="arrow-back-ios" size={scale(24)} color="black" />
+                <Text style={styles.title}>Акции</Text>
+            </TouchableOpacity>
+            {isLoad && (
+                <View style={styles.loadingIndicatorContainer}>
+                    <Text style={styles.textLoad}>{t("products-load-message")}</Text>
+                </View>
+            )}
+            {!isLoad && (
+                <>
+                    {sales.length > 0 ? (
+                        <FlatList
+                            data={sales}
+                            style={{ paddingHorizontal: 24 }}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity onPress={() => handlePress(item.id)} style={styles.sale}>
+                                    <Image style={styles.imageSale} source={{ uri: `https://aqtas.garcom.kz/api/images/imageSales/${item.imageSale}` }} />
+                                    <View style={styles.filter} />
+                                    <Text style={styles.textSale}>{item.name}</Text>
+                                    {selectedCard[item.id] ? (
+                                        <>
+                                            <BlurView intensity={100} tint="default" style={styles.deleteBackground} />
+                                            <View style={styles.deleteContainer}>
+                                                <TouchableOpacity onPress={() => deleteSale(item.id)}>
+                                                    <Feather name="trash-2" size={50} color="#FC0005" />
+                                                </TouchableOpacity>
+                                                <View style={styles.line} />
+                                                <TouchableOpacity onPress={() => cancel(item.id)}>
+                                                    <AntDesign name="close" size={50} color="#14FF00" />
+                                                </TouchableOpacity>
+                                            </View>
+                                        </>
+                                    ) : null}
+                                </TouchableOpacity>
+                            )}
+                        />
+                    ) : (
+                        <View style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={styles.noDataText}>Нет добавленных акций</Text>
                         </View>
-                    </>
-                )}
-                <StatusBar backgroundColor="transparent" translucent={true} />
-            </View>
+                    )}
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={goToAddSale} style={styles.addSaleButton}>
+                            <Text style={styles.addSaleButtonText}>Добавить акцию</Text>
+                        </TouchableOpacity>
+                    </View>
+                </>
+            )}
+            <StatusBar backgroundColor="transparent" translucent={true} />
         </SafeAreaView>
     )
 };
 
 export default SalesScreen;
+
+

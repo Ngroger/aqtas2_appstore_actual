@@ -2,7 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import styles from '../../styles/BussinesScreenStyles';
 
@@ -27,7 +27,7 @@ function BussinesScreen() {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
                 <MaterialIcons name="arrow-back-ios" size={scale(24)} color="black" />
                 <Text style={styles.title}>{t('bussines-profile-button')}</Text>
@@ -45,7 +45,7 @@ function BussinesScreen() {
                 ))}
             </View>
             <StatusBar backgroundColor="transparent" translucent={true} />
-        </SafeAreaView>
+        </View>
     );
 }
 

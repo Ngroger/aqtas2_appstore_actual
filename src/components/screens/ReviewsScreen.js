@@ -1,14 +1,14 @@
-import { Text, TouchableOpacity, Image, View, ScrollView, SafeAreaView } from 'react-native';
-import styles from '../../styles/ReviewsScreenStyles';
-import { MaterialIcons, Entypo, AntDesign } from '@expo/vector-icons';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { useEffect, useState, useCallback } from 'react';
-import ImagePreview from '../ux/popup/ImagePreview';
-import WriteReview from '../ux/popup/WriteReview';
+import { AntDesign, Entypo, MaterialIcons } from '@expo/vector-icons';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Image, Platform, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useUnauth } from '../../context/UnauthProvider';
 import { getUserData } from '../../store/userDataManager';
-import { useTranslation } from 'react-i18next';
+import styles from '../../styles/ReviewsScreenStyles';
+import ImagePreview from '../ux/popup/ImagePreview';
+import WriteReview from '../ux/popup/WriteReview';
 
 function ReviewsScreen({ route }) {
     const navigation = useNavigation();
@@ -152,161 +152,162 @@ function ReviewsScreen({ route }) {
     };
 
     return (
-        <SafeAreaView style={{ width: '100%', height: '100%', backgroundColor: '#FFF' }}>
-            <SafeAreaView style={styles.header}>
-                <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
-                    <MaterialIcons name="arrow-back-ios" size={24} color="black" />
-                    <Text style={styles.title}>{t("reviews-screen.title")}</Text>
-                </TouchableOpacity>
-                <View style={styles.categoriesContainer}>
-                    <ScrollView style={styles.categories} horizontal={true}>
-                        {categories.map((category) => (
-                            <TouchableOpacity
-                                key={category.id}
-                                style={
-                                    activeCategory === category.id
-                                        ? styles.categoryActive
-                                        : styles.category
-                                }
-                                onPress={() => handleCategoryClick(category.id)}
-                            >
-                                <Text
+        <SafeAreaView style={{ backgroundColor: '#FFF' }}>
+            <View style={{ width: '100%', height: '100%' }}>
+                <View style={styles.header}>
+                    <TouchableOpacity style={[styles.titleContainer, { marginTop: Platform.OS === 'android' && 36 }]} onPress={handleGoBack}>
+                        <MaterialIcons name="arrow-back-ios" size={24} color="black" />
+                        <Text style={styles.title}>{t("reviews-screen.title")}</Text>
+                    </TouchableOpacity>
+                    <View style={styles.categoriesContainer}>
+                        <ScrollView style={styles.categories} horizontal={true}>
+                            {categories.map((category) => (
+                                <TouchableOpacity
+                                    key={category.id}
                                     style={
                                         activeCategory === category.id
-                                            ? styles.categoryTextActive
-                                            : styles.categoryText
+                                            ? styles.categoryActive
+                                            : styles.category
                                     }
+                                    onPress={() => handleCategoryClick(category.id)}
                                 >
-                                    {category.name}
-                                </Text>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
-                </View>
-            </SafeAreaView>
-            <View style={styles.container}>
-                {isLoading && (
-                    <View style={styles.noDataContainer}>
-                        <Text style={styles.noDataText}>{t("reviews-screen.load")}</Text>
-                    </View>
-                )}
-                {!isLoading && (
-                    <>
-                        {
-                            reviewsData.length > 0 ? (
-                                <ScrollView style={{ paddingHorizontal: 16 }}>
-                                    <View style={styles.reviewsStats}>
-                                        <Text style={{ fontFamily: 'Cambria', fontSize: 20 }}>{reviewsData.length} {t("reviews-screen.marks")}</Text>
-                                        <Text style={{ fontFamily: 'Cambria', marginLeft: 10, fontSize: 20 }}>{reviewsData.length} {t("reviews-screen.marks")}</Text>
-                                    </View>
-                                    <View style={styles.starsContainer}>
-                                        <Text style={[styles.title, { fontSize: 36 }]}>{averageRating}/5</Text>
-                                        <View style={{ alignItems: 'flex-end', marginTop: 10, right: 20 }}>
-                                            {[5, 4, 3, 2, 1].map(star => (
-                                                <View key={star} style={{ flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
-                                                    {starsRender(star)}
-                                                    <View style={{ width: '50%', marginLeft: 10 }}>
-                                                        <View style={{ width: `${starsRatePercentage(star)}%`, backgroundColor: '#FFD600', height: 3 }} />
-                                                    </View>
-                                                </View>
-                                            ))}
-                                        </View>
-                                    </View>
-                                    {reviewsData.map((review, index) => (
-                                        <View key={index}>
-                                            <View style={styles.imagesPreview}>
-                                                {[1, 2, 3].map(imageNumber => {
-                                                    const photoReviewKey = `photoReview${imageNumber}`;
-                                                    const photoReview = review[photoReviewKey];
-                                                    if (photoReview) {
-                                                        return (
-                                                            <TouchableOpacity
-                                                                key={photoReviewKey}
-                                                                onPress={() => handleImagePreview({ uri: `https://aqtas.garcom.kz/api/images/imageReviews/${photoReview}` })}
-                                                                style={{ marginLeft: 10 }}
-                                                            >
-                                                                <Image source={{ uri: `https://aqtas.garcom.kz/api/images/imageReviews/${photoReview}` }} style={styles.imageReview} />
-                                                            </TouchableOpacity>
-                                                        );
-                                                    }
-                                                    return null;
-                                                })}
-                                            </View>
-                                            <View style={styles.review}>
-                                                <View style={styles.reviewInfo}>
-                                                    <View style={{ display: 'flex', flexDirection: 'row' }}>
-                                                        <Image style={styles.imageReviewer} source={{ uri: `https://aqtas.garcom.kz/api/images/photoUsers/${review.photoReviewer}` }} />
-                                                        <View style={{ marginLeft: 10 }}>
-                                                            <Text style={styles.reviwerName}>{review.nameReviewer}</Text>
-                                                            <Text style={styles.reviewerDate}>
-                                                                {new Date(review.date).toLocaleDateString("ru-RU", {
-                                                                    day: "numeric",
-                                                                    month: "numeric",
-                                                                    year: "numeric",
-                                                                    hour: "2-digit",
-                                                                    minute: "2-digit",
-                                                                })}
-                                                            </Text>
-                                                        </View>
-                                                    </View>
-                                                    <View style={{ flexDirection: 'row', display: 'flex' }}>
-                                                        {Array(review.stars).fill().map((_, index) => (
-                                                            <Entypo key={index} name="star" size={20} color='#FFD600' />
-                                                        ))}
-                                                    </View>
-                                                </View>
-                                                <Text style={styles.reviewDescription}>{review.description}</Text>
-                                                <View style={styles.additionalInfo}>
-                                                    <View style={{ display: 'row', flexDirection: 'row' }}>
-                                                        <View>
-                                                            {review.size && <Text style={styles.firstInfo}>{t("reviews-screen.size")}</Text>}
-                                                            {review.color && <Text style={styles.firstInfo}>{t("reviews-screen.color")}</Text>}
-                                                        </View>
-                                                        <View style={{ left: 10 }}>
-                                                            {review.size && <Text style={styles.secondInfo}>{review.size}</Text>}
-                                                            {review.color && <Text style={styles.secondInfo}>{review.color}</Text>}
-                                                        </View>
-                                                    </View>
-                                                    <View style={styles.likeContainer}>
-                                                        <TouchableOpacity onPress={() => dislike(review.id)} style={styles.likeCounter}>
-                                                            <Text style={styles.likeCount}>{review.dislike}</Text>
-                                                            <AntDesign name={likes[review.id] === 'dislike' ? "dislike1" : "dislike2"} size={24} color="#95E5FF" />
-                                                        </TouchableOpacity>
-                                                        <TouchableOpacity onPress={() => like(review.id)} style={[styles.likeCounter, { marginLeft: 10 }]}>
-                                                            <Text style={styles.likeCount}>{review.like}</Text>
-                                                            <AntDesign name={likes[review.id] === 'like' ? "like1" : "like2"} size={24} color="#95E5FF" />
-                                                        </TouchableOpacity>
-                                                    </View>
-                                                </View>
-                                            </View>
-                                        </View>
-                                    ))}
-                                </ScrollView>
-                            ) : (
-                                <View style={styles.noDataContainer}>
-                                    <Text style={styles.noDataText}>
-                                        {t("reviews-screen.no-reviews")}
+                                    <Text
+                                        style={
+                                            activeCategory === category.id
+                                                ? styles.categoryTextActive
+                                                : styles.categoryText
+                                        }
+                                    >
+                                        {category.name}
                                     </Text>
-                                </View>
-                            )
-                        }
-
-                    </>
-                )}
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={toggleWriteReview} style={styles.writeReviewButton}>
-                        <Text style={styles.writeReviewButtonText}>{t("reviews-screen.write-review-btn")}</Text>
-                    </TouchableOpacity>
+                                </TouchableOpacity>
+                            ))}
+                        </ScrollView>
+                    </View>
                 </View>
-            </View>
-            {isShowImagePreview && <ImagePreview image={selectedImage} onClose={toggleShowImagePreview} />}
-            {isShowWriteReview &&
+                <View style={styles.container}>
+                    {isLoading && (
+                        <View style={styles.noDataContainer}>
+                            <Text style={styles.noDataText}>{t("reviews-screen.load")}</Text>
+                        </View>
+                    )}
+                    {!isLoading && (
+                        <>
+                            {
+                                reviewsData.length > 0 ? (
+                                    <ScrollView style={{ paddingHorizontal: 20 }}>
+                                        <View style={styles.reviewsStats}>
+                                            <Text style={{ fontFamily: 'Cambria', fontSize: 20 }}>{reviewsData.length} {t("reviews-screen.marks")}</Text>
+                                            <Text style={{ fontFamily: 'Cambria', marginLeft: 10, fontSize: 20 }}>{reviewsData.length} {t("reviews-screen.marks")}</Text>
+                                        </View>
+                                        <View style={styles.starsContainer}>
+                                            <Text style={[styles.title, { fontSize: 36 }]}>{averageRating}/5</Text>
+                                            <View style={{ alignItems: 'flex-end', marginTop: 10, right: 20 }}>
+                                                {[5, 4, 3, 2, 1].map(star => (
+                                                    <View key={star} style={{ flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
+                                                        {starsRender(star)}
+                                                        <View style={{ width: '50%', marginLeft: 10 }}>
+                                                            <View style={{ width: `${starsRatePercentage(star)}%`, backgroundColor: '#FFD600', height: 3 }} />
+                                                        </View>
+                                                    </View>
+                                                ))}
+                                            </View>
+                                        </View>
+                                        {reviewsData.map((review, index) => (
+                                            <View key={index}>
+                                                <View style={styles.imagesPreview}>
+                                                    {[1, 2, 3].map(imageNumber => {
+                                                        const photoReviewKey = `photoReview${imageNumber}`;
+                                                        const photoReview = review[photoReviewKey];
+                                                        if (photoReview) {
+                                                            return (
+                                                                <TouchableOpacity
+                                                                    key={photoReviewKey}
+                                                                    onPress={() => handleImagePreview({ uri: `https://aqtas.garcom.kz/api/images/imageReviews/${photoReview}` })}
+                                                                    style={{ marginLeft: 10 }}
+                                                                >
+                                                                    <Image source={{ uri: `https://aqtas.garcom.kz/api/images/imageReviews/${photoReview}` }} style={styles.imageReview} />
+                                                                </TouchableOpacity>
+                                                            );
+                                                        }
+                                                        return null;
+                                                    })}
+                                                </View>
+                                                <View style={styles.review}>
+                                                    <View style={styles.reviewInfo}>
+                                                        <View style={{ display: 'flex', flexDirection: 'row' }}>
+                                                            <Image style={styles.imageReviewer} source={{ uri: `https://aqtas.garcom.kz/api/images/photoUsers/${review.photoReviewer}` }} />
+                                                            <View style={{ marginLeft: 10 }}>
+                                                                <Text style={styles.reviwerName}>{review.nameReviewer}</Text>
+                                                                <Text style={styles.reviewerDate}>
+                                                                    {new Date(review.date).toLocaleDateString("ru-RU", {
+                                                                        day: "numeric",
+                                                                        month: "numeric",
+                                                                        year: "numeric",
+                                                                        hour: "2-digit",
+                                                                        minute: "2-digit",
+                                                                    })}
+                                                                </Text>
+                                                            </View>
+                                                        </View>
+                                                        <View style={{ flexDirection: 'row', display: 'flex' }}>
+                                                            {Array(review.stars).fill().map((_, index) => (
+                                                                <Entypo key={index} name="star" size={20} color='#FFD600' />
+                                                            ))}
+                                                        </View>
+                                                    </View>
+                                                    <Text style={styles.reviewDescription}>{review.description}</Text>
+                                                    <View style={styles.additionalInfo}>
+                                                        <View style={{ display: 'row', flexDirection: 'row' }}>
+                                                            <View>
+                                                                {review.size && <Text style={styles.firstInfo}>{t("reviews-screen.size")}</Text>}
+                                                                {review.color && <Text style={styles.firstInfo}>{t("reviews-screen.color")}</Text>}
+                                                            </View>
+                                                            <View style={{ left: 10 }}>
+                                                                {review.size && <Text style={styles.secondInfo}>{review.size}</Text>}
+                                                                {review.color && <Text style={styles.secondInfo}>{review.color}</Text>}
+                                                            </View>
+                                                        </View>
+                                                        <View style={styles.likeContainer}>
+                                                            <TouchableOpacity onPress={() => dislike(review.id)} style={styles.likeCounter}>
+                                                                <Text style={styles.likeCount}>{review.dislike}</Text>
+                                                                <AntDesign name={likes[review.id] === 'dislike' ? "dislike1" : "dislike2"} size={24} color="#95E5FF" />
+                                                            </TouchableOpacity>
+                                                            <TouchableOpacity onPress={() => like(review.id)} style={[styles.likeCounter, { marginLeft: 10 }]}>
+                                                                <Text style={styles.likeCount}>{review.like}</Text>
+                                                                <AntDesign name={likes[review.id] === 'like' ? "like1" : "like2"} size={24} color="#95E5FF" />
+                                                            </TouchableOpacity>
+                                                        </View>
+                                                    </View>
+                                                </View>
+                                            </View>
+                                        ))}
+                                    </ScrollView>
+                                ) : (
+                                    <View style={styles.noDataContainer}>
+                                        <Text style={styles.noDataText}>
+                                            {t("reviews-screen.no-reviews")}
+                                        </Text>
+                                    </View>
+                                )
+                            }
+
+                        </>
+                    )}
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={toggleWriteReview} style={styles.writeReviewButton}>
+                            <Text style={styles.writeReviewButtonText}>{t("reviews-screen.write-review-btn")}</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                {isShowImagePreview && <ImagePreview image={selectedImage} onClose={toggleShowImagePreview} />}
                 <WriteReview
                     onClose={toggleWriteReview}
                     productId={id}
                     product={product}
+                    modalVisible={isShowWriteReview}
                 />
-            }
+            </View>
         </SafeAreaView>
     )
 };

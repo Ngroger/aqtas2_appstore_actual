@@ -1,9 +1,10 @@
 import { AntDesign, EvilIcons, Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
+import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { updateUserData } from '../../../store/userDataManager';
 import styles from '../../../styles/PersonalScreenStyle';
 import ChangePassword from '../../ux/popup/ChangePassword';
@@ -350,9 +351,9 @@ function PersonalDate() {
     };
 
     return (
-        <SafeAreaView style={{ width: '100%', height: '100%', backgroundColor: '#FFF' }}>
-            <ScrollView style={{ flex: 1 }}>
-                <View style={styles.container}>
+        <SafeAreaView style={{ width: '100%', height: '100%', backgroundColor: '#FFF', }}>
+            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding" : "height"} style={{ flex: 1, marginTop: Platform.OS === 'android' && 36 }}>
+                <ScrollView style={styles.container}>
                     <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
                         <MaterialIcons name="arrow-back-ios" size={24} color="black" />
                         <Text style={styles.title}>{t('personal-data-profile-button')}</Text>
@@ -467,9 +468,8 @@ function PersonalDate() {
                             </TouchableOpacity>
                         )}
                     </View>
-                </View>
-                <View style={{ marginBottom: 100 }} />
-            </ScrollView>
+                </ScrollView>
+            </KeyboardAvoidingView>
             {isChangePhoneModal && <ChangePhone onClose={toggleChangePhoneModal} userId={userData.userId} phone={phone} />}
             {isPasswordModal && <ChangePassword onClose={togglePasswordModal} userId={userData.userId} />}
             {isSexModal && <ChangeSex onClose={toggleSexModal} userId={userData.userId} onChangeSex={onChangeSex} />}
@@ -488,6 +488,7 @@ function PersonalDate() {
                     </View>
                 </View>
             }
+            <StatusBar backgroundColor='transparent' translucent={true} />
         </SafeAreaView>
     );
 }

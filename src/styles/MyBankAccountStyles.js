@@ -11,7 +11,6 @@ const styles = ScaledSheet.create({
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        marginTop: '36@msr',
         justifyContent: 'space-between'
     },
     title: {
@@ -59,14 +58,14 @@ const styles = ScaledSheet.create({
     },
     buttonContainer: {
         width: '100%',
-        padding: 16,
+        padding: 20,
         position: 'absolute',
         zIndex: 100,
         bottom: 0
     },
     button: {
         width: '100%',
-        padding: 16,
+        padding: 20,
         backgroundColor: '#95E5FF',
         justifyContent: 'center',
         alignItems: 'center',

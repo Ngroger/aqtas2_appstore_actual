@@ -2,7 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, Image, SafeAreaView, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { getUserData } from '../../../store/userDataManager';
 import styles from '../../../styles/MyGoodsStyles';
 import CreateProduct from '../../ux/popup/CreateProduct';
@@ -15,7 +15,7 @@ function MyGoodsScreen() {
     const [userData, setUserData] = useState({});
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [activeCategory, setActiveCategory] = useState('Продажа');
+    const [activeCategory, setActiveCategory] = useState('Активен');
     const [selectedItems, setSelectedItems] = useState({});
     const { t } = useTranslation();
 
@@ -37,7 +37,7 @@ function MyGoodsScreen() {
     const categories = [
         // { id: 1, name: 'Top', value: 'top' },
         { id: 2, name: t("my-products.canceled"), value: 'Отмена' },
-        { id: 3, name: t("my-products.in-sale"), value: 'Продажа' },
+        { id: 3, name: t("my-products.in-sale"), value: 'Активен' },
     ];
 
     const loadUserData = async () => {
@@ -134,7 +134,7 @@ function MyGoodsScreen() {
     };
 
     return (
-        <SafeAreaView>
+        <View>
             <View style={styles.container}>
                 <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
                     <MaterialIcons name="arrow-back-ios" size={24} color="black" />
@@ -275,8 +275,8 @@ function MyGoodsScreen() {
             </View>
             <StatusBar backgroundColor="transparent" translucent={true} />
             {isUpToTop && <UpToTop onClose={toggleUpToTop} />}
-            {isCreateProduct && <CreateProduct onClose={toggleCreateProduct} />}
-        </SafeAreaView>
+            <CreateProduct onClose={toggleCreateProduct} modalVisible={isCreateProduct} />
+        </View>
     )
 };
 

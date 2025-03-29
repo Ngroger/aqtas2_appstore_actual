@@ -103,9 +103,8 @@ const styles = ScaledSheet.create({
     input: {
         fontFamily: 'Cambria',
         fontSize: 20,
-        marginTop: 10,
-        marginLeft: 20,
-        marginBottom: 10,
+
+        margin: 16,
         width: 300
     },
     titleInput: {

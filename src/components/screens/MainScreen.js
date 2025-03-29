@@ -2,7 +2,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActivityIndicator, Alert, FlatList, Image, SafeAreaView, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, FlatList, Image, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import Swiper from 'react-native-swiper';
 import { categories } from '../../categories';
@@ -175,7 +175,7 @@ function MainScreen() {
 
 
     return (
-        <SafeAreaView>
+        <View>
             <View style={styles.container}>
                 <View style={styles.navbar}>
                     <Image style={styles.logo} source={require('../../img/miniLogo.png')} />
@@ -312,7 +312,7 @@ function MainScreen() {
             </View>
             {isSizeSelect && <SizeSelector onClose={toggleSetSize} id={productId} productData={selectedProduct} />}
             <StatusBar backgroundColor="transparent" translucent={true} />
-        </SafeAreaView>
+        </View>
     );
 }
 

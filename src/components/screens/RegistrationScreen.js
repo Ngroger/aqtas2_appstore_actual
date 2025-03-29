@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
-import styles from '../../styles/RegistrationScreenStyle';
-import SelectLanguage from '../ux/selectLanguage';
-import Registration from '../ux/Registration';
-import ConfrimPassword from '../ux/ConfrimPassword';
-import { StatusBar } from 'expo-status-bar';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { toggleIsNewUser } from '../../store/NewUserStorage'
 import { useNavigation } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Image, KeyboardAvoidingView, Platform, Text, TouchableOpacity } from 'react-native';
+import { toggleIsNewUser } from '../../store/NewUserStorage';
+import styles from '../../styles/RegistrationScreenStyle';
 import CodeConfrim from '../ux/CodeConfrim';
+import ConfrimPassword from '../ux/ConfrimPassword';
+import Registration from '../ux/Registration';
+import SelectLanguage from '../ux/selectLanguage';
 
 function RegistrationScreen() {
     const [userData, setUserData] = useState({
@@ -40,7 +40,10 @@ function RegistrationScreen() {
 
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? "padding" : "height"}
+            style={styles.container}
+        >
             <Image style={styles.logo} source={require('../../img/logo.png')} />
             <TouchableOpacity onPress={() => skip()} style={styles.skipButton}>
                 <Text style={styles.skipButtonText}>Пропустить</Text>
@@ -70,7 +73,7 @@ function RegistrationScreen() {
                 />
             )}
             <StatusBar translucent={true} backgroundColor='transparent' />
-        </View>
+        </KeyboardAvoidingView>
     );
 };
 

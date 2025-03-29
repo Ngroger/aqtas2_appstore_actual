@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, TextInput, Text, Image } from 'react-native';
-import styles from '../../styles/RegistrationScreenStyle';
-import { useNavigation } from '@react-navigation/native';
-import { useTranslation } from 'react-i18next';
-import { storeUserData } from '../../store/userDataManager';
-import { storeToken, hasToken } from '../../store/tokenManager';
-import { s } from 'react-native-size-matters';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { toggleIsNewUser } from '../../store/NewUserStorage';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Image, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { s } from 'react-native-size-matters';
+import { toggleIsNewUser } from '../../store/NewUserStorage';
+import { hasToken, storeToken } from '../../store/tokenManager';
+import { storeUserData } from '../../store/userDataManager';
+import styles from '../../styles/RegistrationScreenStyle';
 
 function AuthorizationScreen(props) {
     const navigation = useNavigation();
@@ -115,7 +115,7 @@ function AuthorizationScreen(props) {
     };
 
     return (
-        <View style={{ width: '100%', padding: s(18), backgroundColor: '#95E5FF', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding" : "height"} style={{ width: '100%', padding: s(18), backgroundColor: '#95E5FF', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
             <Image style={styles.logo} source={require('../../img/logo.png')} />
             <Text style={styles.titleReg}>{t('auth-title')}</Text>
             <Text style={styles.description}>{t('reg-subtitle')}</Text>
@@ -162,7 +162,7 @@ function AuthorizationScreen(props) {
                     <Text style={styles.nextText}>{t('button-next')}</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </KeyboardAvoidingView>
     );
 }
 

@@ -2,8 +2,7 @@ import { ScaledSheet } from "react-native-size-matters";
 
 const styles = ScaledSheet.create({
     header: {
-        paddingHorizontal: 16,
-        marginTop: 24
+        paddingHorizontal: 20,
     },
     container: {
         width: '100%',
@@ -13,7 +12,6 @@ const styles = ScaledSheet.create({
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        marginTop: '20@msr',
     },
     title: {
         fontSize: 36,

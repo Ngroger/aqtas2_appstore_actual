@@ -10,7 +10,7 @@ const styles = ScaledSheet.create({
     infoContainer: {
         flexDirection: 'row',
         display: 'flex',
-        marginTop: '42@msr',
+
         alignItems: 'center'
     },
     bonusContainer: {

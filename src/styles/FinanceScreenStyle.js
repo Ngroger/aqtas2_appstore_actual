@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         backgroundColor: '#FFF',
-        padding: 20
+        paddingHorizontal: 20
     },
     titleContainer: {
         flexDirection: 'row',

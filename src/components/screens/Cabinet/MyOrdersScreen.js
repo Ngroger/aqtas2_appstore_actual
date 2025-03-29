@@ -2,7 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, Image, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, Platform, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { getUserData } from '../../../store/userDataManager';
 import styles from '../../../styles/MyOrdersScreenStyle';
 import WebViewModal from '../../ux/popup/WebViewModal';
@@ -111,97 +111,99 @@ function MyOrdersScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
-                <MaterialIcons name="arrow-back-ios" size={24} color="black" />
-                <Text style={styles.title}>{t('my-orders-profile-button')}</Text>
-            </TouchableOpacity>
-            {isLoad && (
-                <View style={styles.loadContainer}>
-                    <Text style={styles.loadText}>{t('reviews-screen.load')}</Text>
-                </View>
-            )}
-            {!isLoad && (
-                <>
-                    {myOrders && myOrders.length > 0 ? (
-                        <FlatList
-                            data={myOrders}
-                            keyExtractor={(_, index) => index.toString()}
-                            renderItem={({ item }) => (
-                                <View>
-                                    <Text style={styles.data}>{formatDate(item.created_at)}</Text>
-                                    <View style={styles.card}>
-                                        <Image
-                                            source={{
-                                                uri: `https://aqtas.garcom.kz/api/images/imageProducts/${item.imagePreview}`,
-                                            }}
-                                            style={styles.productPreview}
-                                        />
-                                        <View style={{ flex: 1 }}>
-                                            <View style={styles.costContainer}>
-                                                <Text style={styles.cost}>{item.cost}тнг</Text>
-                                                {item.oldCost && <Text style={styles.oldCost}>{item.oldCost}тнг</Text>}
-                                            </View>
-                                            <View style={{ padding: 0, flex: 1 }}>
-                                                <View>
-                                                    <View style={styles.infoContainer}>
-                                                        <Text style={styles.firstInfo}>{t('name-product-cart-info')}</Text>
-                                                        <Text style={styles.secondInfo}>{item.name}</Text>
-                                                    </View>
-                                                    <View style={styles.infoContainer}>
-                                                        <Text style={styles.firstInfo}>{t('description-product-cart-info')}</Text>
-                                                        <Text style={styles.secondInfo}>
-                                                            {item.description.length > 16
-                                                                ? item.description.substring(0, 13) + '...'
-                                                                : item.description
-                                                            }
-                                                        </Text>
-                                                    </View>
-                                                    <View style={styles.infoContainer}>
-                                                        <Text style={styles.firstInfo}>{t('brend-cart-info')}</Text>
-                                                        <Text style={styles.secondInfo}>{item.brend}</Text>
-                                                    </View>
-                                                    <View style={styles.infoContainer}>
-                                                        <Text style={styles.firstInfo}>{t('customer-product-cart-info')}</Text>
-                                                        <Text style={styles.secondInfo}>{item.costumer}</Text>
-                                                    </View>
-                                                    <View style={styles.infoContainer}>
-                                                        <Text style={styles.firstInfo}>{t('customer-product-cart-status')}</Text>
-                                                        <Text style={styles.secondInfo}>{t(`statuses-of-order.${item.status}`)}</Text>
-                                                    </View>
-                                                    {item.status === 'payment' && (
-                                                        <TouchableOpacity
-                                                            disabled={orderInProccess === item.id}
-                                                            onPress={() => pay(item.id, item.productId, item.sellerId, item.userID)}
-                                                            style={styles.payBtn}
-                                                        >
-                                                            <Text style={styles.payBtnText}>
-                                                                {orderInProccess === item.id ?
-                                                                    t("customer-product-cart-in-proccess") :
-                                                                    t("customer-product-cart-pay")
+            <View style={{ flex: 1, paddingHorizontal: 20 }}>
+                <TouchableOpacity style={[styles.titleContainer, { marginTop: Platform.OS === 'android' && 36 }]} onPress={handleGoBack}>
+                    <MaterialIcons name="arrow-back-ios" size={24} color="black" />
+                    <Text style={styles.title}>{t('my-orders-profile-button')}</Text>
+                </TouchableOpacity>
+                {isLoad && (
+                    <View style={styles.loadContainer}>
+                        <Text style={styles.loadText}>{t('reviews-screen.load')}</Text>
+                    </View>
+                )}
+                {!isLoad && (
+                    <>
+                        {myOrders && myOrders.length > 0 ? (
+                            <FlatList
+                                data={myOrders}
+                                keyExtractor={(_, index) => index.toString()}
+                                renderItem={({ item }) => (
+                                    <View>
+                                        <Text style={styles.data}>{formatDate(item.created_at)}</Text>
+                                        <View style={styles.card}>
+                                            <Image
+                                                source={{
+                                                    uri: `https://aqtas.garcom.kz/api/images/imageProducts/${item.imagePreview}`,
+                                                }}
+                                                style={styles.productPreview}
+                                            />
+                                            <View style={{ flex: 1 }}>
+                                                <View style={styles.costContainer}>
+                                                    <Text style={styles.cost}>{item.cost}тнг</Text>
+                                                    {item.oldCost && <Text style={styles.oldCost}>{item.oldCost}тнг</Text>}
+                                                </View>
+                                                <View style={{ padding: 0, flex: 1 }}>
+                                                    <View>
+                                                        <View style={styles.infoContainer}>
+                                                            <Text style={styles.firstInfo}>{t('name-product-cart-info')}</Text>
+                                                            <Text style={styles.secondInfo}>{item.name}</Text>
+                                                        </View>
+                                                        <View style={styles.infoContainer}>
+                                                            <Text style={styles.firstInfo}>{t('description-product-cart-info')}</Text>
+                                                            <Text style={styles.secondInfo}>
+                                                                {item.description.length > 16
+                                                                    ? item.description.substring(0, 13) + '...'
+                                                                    : item.description
                                                                 }
                                                             </Text>
-                                                        </TouchableOpacity>
-                                                    )}
+                                                        </View>
+                                                        <View style={styles.infoContainer}>
+                                                            <Text style={styles.firstInfo}>{t('brend-cart-info')}</Text>
+                                                            <Text style={styles.secondInfo}>{item.brend}</Text>
+                                                        </View>
+                                                        <View style={styles.infoContainer}>
+                                                            <Text style={styles.firstInfo}>{t('customer-product-cart-info')}</Text>
+                                                            <Text style={styles.secondInfo}>{item.costumer}</Text>
+                                                        </View>
+                                                        <View style={styles.infoContainer}>
+                                                            <Text style={styles.firstInfo}>{t('customer-product-cart-status')}</Text>
+                                                            <Text style={styles.secondInfo}>{t(`statuses-of-order.${item.status}`)}</Text>
+                                                        </View>
+                                                        {item.status === 'payment' && (
+                                                            <TouchableOpacity
+                                                                disabled={orderInProccess === item.id}
+                                                                onPress={() => pay(item.id, item.productId, item.sellerId, item.userID)}
+                                                                style={styles.payBtn}
+                                                            >
+                                                                <Text style={styles.payBtnText}>
+                                                                    {orderInProccess === item.id ?
+                                                                        t("customer-product-cart-in-proccess") :
+                                                                        t("customer-product-cart-pay")
+                                                                    }
+                                                                </Text>
+                                                            </TouchableOpacity>
+                                                        )}
 
-                                                    {item.status === 'delivery' && (
-                                                        <TouchableOpacity onPress={() => finishedOrder(item.id)} style={styles.payBtn}>
-                                                            <Text style={styles.payBtnText}>
-                                                                {t("customer-product-cart-complete")}
-                                                            </Text>
-                                                        </TouchableOpacity>
-                                                    )}
+                                                        {item.status === 'delivery' && (
+                                                            <TouchableOpacity onPress={() => finishedOrder(item.id)} style={styles.payBtn}>
+                                                                <Text style={styles.payBtnText}>
+                                                                    {t("customer-product-cart-complete")}
+                                                                </Text>
+                                                            </TouchableOpacity>
+                                                        )}
+                                                    </View>
                                                 </View>
                                             </View>
                                         </View>
                                     </View>
-                                </View>
-                            )}
-                        />
-                    ) : (
-                        <Text style={styles.noDataText}>{t('products-story-empty')}</Text>
-                    )}
-                </>
-            )}
+                                )}
+                            />
+                        ) : (
+                            <Text style={styles.noDataText}>{t('products-story-empty')}</Text>
+                        )}
+                    </>
+                )}
+            </View>
             <StatusBar backgroundColor="transparent" translucent={true} />
             <WebViewModal
                 url={url}

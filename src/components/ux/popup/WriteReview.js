@@ -1,13 +1,12 @@
-import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
-import { Feather, Entypo } from '@expo/vector-icons';
-import styles from '../../../styles/WriteReviewsStyles';
-import { MaterialIcons, AntDesign } from '@expo/vector-icons';
-import { useState, useEffect } from 'react';
+import { AntDesign, Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { getUserData } from '../../../store/userDataManager';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Image, KeyboardAvoidingView, Modal, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { getUserData } from '../../../store/userDataManager';
+import styles from '../../../styles/WriteReviewsStyles';
 
-function WriteReview({ product, onClose, productId }) {
+function WriteReview({ product, onClose, productId, modalVisible }) {
     const [rating, setRating] = useState(0);
     const [isChoiseImage, setChoiseImage] = useState(false);
     const [selectedImages, setSelectedImages] = useState([]);
@@ -136,8 +135,14 @@ function WriteReview({ product, onClose, productId }) {
     };
 
     return (
-        <View style={styles.background}>
-            <View style={styles.container}>
+        <Modal
+            transparent={true}
+            animationType='fade'
+            visible={modalVisible}
+            statusBarTranslucent={true}
+        >
+            <TouchableOpacity onPress={onClose} style={styles.background} />
+            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
                 <TouchableOpacity onPress={handleClose} style={styles.navbar}>
                     <MaterialIcons name="arrow-back-ios" size={24} color="black" />
                     <Text style={styles.title}>{t("write-review.title")}</Text>
@@ -208,7 +213,7 @@ function WriteReview({ product, onClose, productId }) {
                 <TouchableOpacity onPress={publishReview} style={styles.publicButton}>
                     <Text style={styles.publicButtonText}>{t("write-review.publish-btn")}</Text>
                 </TouchableOpacity>
-            </View>
+            </KeyboardAvoidingView>
             {isChoiseImage && (
                 <View style={styles.backgroundContainer}>
                     <View style={styles.containerChoiseImage}>
@@ -224,7 +229,7 @@ function WriteReview({ product, onClose, productId }) {
                     </View>
                 </View>
             )}
-        </View>
+        </Modal>
     );
 }
 

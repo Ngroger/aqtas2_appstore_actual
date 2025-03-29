@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { getUserData } from '../../../store/userDataManager';
 import styles from '../../../styles/CustomerScreenStyle';
 import CategoryShop from '../../ux/popup/CategoryShop';
@@ -217,10 +217,10 @@ function CustomerScreen() {
     };
 
     return (
-        <View>
-            <ScrollView>
-                <View style={styles.container}>
-                    <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
+        <View style={{ backgroundColor: '#FFF' }}>
+            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding" : "height"}>
+                <ScrollView style={styles.container}>
+                    <TouchableOpacity style={[styles.titleContainer, { marginTop: 38 }]} onPress={handleGoBack}>
                         <MaterialIcons name="arrow-back-ios" size={24} color="black" />
                         <Text style={styles.title}>{t("customer-screen.title")}</Text>
                     </TouchableOpacity>
@@ -351,7 +351,7 @@ function CustomerScreen() {
                             </Text>
                         }
                     </View>
-                    <View style={{ marginTop: 40 }}>
+                    <View style={{ marginTop: 16, marginBottom: 16 }}>
                         {isErrorMessage && <Text style={styles.error}>
                             {t("customer-screen.all-fields-request")}
                         </Text>}
@@ -361,8 +361,8 @@ function CustomerScreen() {
                             </Text>
                         </TouchableOpacity>
                     </View>
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </KeyboardAvoidingView>
             {isChoiseImage &&
                 <View style={styles.background}>
                     <View style={styles.containerChoiseImage}>

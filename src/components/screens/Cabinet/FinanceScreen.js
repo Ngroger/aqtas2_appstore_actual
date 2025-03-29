@@ -2,7 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { getUserData } from '../../../store/userDataManager';
 import styles from '../../../styles/FinanceScreenStyle';
 
@@ -84,8 +84,8 @@ function FinanceScreen() {
 
 
     return (
-        <SafeAreaView style={styles.container}>
-            <TouchableOpacity style={[styles.titleContainer, { marginTop: 20 }]} onPress={handleGoBack}>
+        <View style={styles.container}>
+            <TouchableOpacity style={[styles.titleContainer, { marginTop: 38 }]} onPress={handleGoBack}>
                 <MaterialIcons name="arrow-back-ios" size={24} color="black" />
                 <Text style={styles.title}>{t('finacens-profile-button')}</Text>
             </TouchableOpacity>
@@ -133,7 +133,7 @@ function FinanceScreen() {
                     <Text style={styles.noDataText}>{t('finances-story-empty')}</Text>
                 )}
             </View>
-        </SafeAreaView>
+        </View>
     )
 
 };

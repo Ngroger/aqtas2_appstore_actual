@@ -1,19 +1,17 @@
-import { View, TouchableOpacity, TextInput, Text, ScrollView, Image } from 'react-native';
-import styles from '../../../styles/CreateProductStyle';
-import { AntDesign, Feather } from '@expo/vector-icons';
-import ChangeColor from './ChangeColor';
-import EditDelivery from './EditProduct/EditDelivery';
-import EditCategory from './EditProduct/EditCategory';
-import { useState, useEffect } from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
+import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { Image, KeyboardAvoidingView, Modal, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { getUserData } from '../../../store/userDataManager';
-import NoCardMessage from './messages/NoCardMessage';
+import styles from '../../../styles/CreateProductStyle';
+import ChangeColor from './ChangeColor';
+import EditCategory from './EditProduct/EditCategory';
+import EditDelivery from './EditProduct/EditDelivery';
 import EditSubcategory from './EditProduct/EditSubcategory';
+import NoCardMessage from './messages/NoCardMessage';
 import SelectSeason from './SelectSeason';
 
-function CreateProduct({ onClose }) {
+function CreateProduct({ modalVisible, onClose }) {
     const [isChangeColor, setChangeColor] = useState(false);
     const [isChangeCategory, setChangeCategory] = useState(false);
     const [isChangeDelivery, setChangeDelivery] = useState(false);
@@ -260,15 +258,21 @@ function CreateProduct({ onClose }) {
 
 
     return (
-        <View style={styles.background}>
-            <View style={styles.container}>
+        <Modal
+            transparent={true}
+            statusBarTranslucent={true}
+            visible={modalVisible}
+            animationType='fade'
+        >
+            <TouchableOpacity onPress={onClose} style={styles.background} />
+            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
                 <View style={styles.navbar}>
                     <TouchableOpacity onPress={handleClose}>
                         <AntDesign name="close" size={24} color="black" />
                     </TouchableOpacity>
                     <Text style={styles.title}>Создать товар</Text>
                 </View>
-                <ScrollView>
+                <ScrollView style={{ height: 400 }}>
                     <View style={styles.photoContainer}>
                         <ScrollView horizontal={true} style={{ width: '70%', padding: 10 }}>
                             {selectedImages.length > 0 ? (
@@ -399,7 +403,7 @@ function CreateProduct({ onClose }) {
                         <Text style={styles.publicButtonText}>Опубликовать</Text>
                     </TouchableOpacity>
                 </ScrollView>
-            </View>
+            </KeyboardAvoidingView>
             {isChangeColor && <ChangeColor onColorSelect={handleColorSelect} onClose={toggleChangeColor} />}
             {isChangeCategory && <EditCategory onCategorySelect={handleCategorySelect} onClose={toggleChangeCategory} />}
             {isChangeDelivery && <EditDelivery onDeliverySelect={handleDeliverySelect} onClose={toggleChangeDelivery} />}
@@ -421,7 +425,7 @@ function CreateProduct({ onClose }) {
                     </View>
                 </View>
             }
-        </View>
+        </Modal>
     )
 };
 

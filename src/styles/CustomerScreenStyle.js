@@ -4,13 +4,12 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         backgroundColor: '#FFF',
-        padding: 20,
+        paddingHorizontal: 20
     },
     titleContainer: {
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        marginTop: 20,
         marginBottom: 8
     },
     title: {
@@ -30,7 +29,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 10
+        padding: 14
     },
     input: {
         fontFamily: 'Cambria',
@@ -90,7 +89,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 14,
-        marginTop: 10
     },
     createButtonText: {
         fontFamily: 'CambriaBold',

@@ -2,7 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import styles from '../../styles/PolicyScreenStyles';
 
 function PolicyScreen() {
@@ -12,7 +12,7 @@ function PolicyScreen() {
   const info = t('policy-screen.info', { returnObjects: true });
 
   return (
-    <SafeAreaView style={styles.background}>
+    <View style={styles.background}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.header} onPress={() => navigation.goBack()}>
           <MaterialIcons name="arrow-back-ios" size={24} color="black" />
@@ -30,7 +30,7 @@ function PolicyScreen() {
         ))}
       </ScrollView>
       <StatusBar translucent={true} backgroundColor='transparent' />
-    </SafeAreaView>
+    </View>
   );
 };
 

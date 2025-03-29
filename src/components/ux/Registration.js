@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, TextInput, Text, Platform } from 'react-native';
-import styles from '../../styles/RegistrationScreenStyle';
 import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import styles from '../../styles/RegistrationScreenStyle';
 
 function Registration(props) {
     const navigation = useNavigation();

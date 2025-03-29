@@ -5,13 +5,13 @@ const styles = ScaledSheet.create({
         width: '100%',
         height: '100%',
         backgroundColor: '#FFF',
-        padding: 20
+        paddingHorizontal: 20
     },
     titleContainer: {
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        marginTop: 20
+        marginTop: 40
     },
     title: {
         fontSize: 36,

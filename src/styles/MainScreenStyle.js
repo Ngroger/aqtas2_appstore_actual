@@ -16,13 +16,13 @@ const styles = ScaledSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 20,
-        marginTop: '42@msr'
+        marginTop: '48@msr'
     },
     search: {
         flex: 1,
         borderWidth: 1,
         borderColor: '#95E5FF',
-        padding: '6@ms',
+        padding: '12@ms',
         borderRadius: 10,
         marginLeft: 12,
         display: 'flex',

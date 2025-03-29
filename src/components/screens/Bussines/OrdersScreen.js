@@ -3,7 +3,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { BlurView } from 'expo-blur';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, Image, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, Platform, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { getUserData } from '../../../store/userDataManager';
 import styles from '../../../styles/OrderScreenStyles';
 import ReasonForDelete from '../../ux/popup/ReasonForDelete';
@@ -92,9 +92,9 @@ function OrderScreen() {
     };
 
     return (
-        <SafeAreaView>
-            <View style={styles.container}>
-                <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
+        <SafeAreaView style={styles.container}>
+            <View style={{ flex: 1, paddingHorizontal: 20 }}>
+                <TouchableOpacity style={[styles.titleContainer, { marginTop: Platform.OS === 'android' && 36 }]} onPress={handleGoBack}>
                     <MaterialIcons name="arrow-back-ios" size={24} color="black" />
                     <Text style={styles.title}>Заказы Доставка</Text>
                 </TouchableOpacity>
@@ -106,7 +106,7 @@ function OrderScreen() {
                 {!isLoad && (
                     <>
                         {orders.length === 0 ? (
-                            <View>
+                            <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
                                 <Text style={styles.noDataText}>У вас пока нет заказов</Text>
                             </View>
                         ) : (

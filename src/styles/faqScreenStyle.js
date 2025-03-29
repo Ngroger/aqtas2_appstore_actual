@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         backgroundColor: '#FFF',
-        padding: 24
+        paddingHorizontal: 20
     },
     titleContainer: {
         flexDirection: 'row',
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 24
+        marginTop: 16
     },
     topicText: {
         fontFamily: 'Cambria',

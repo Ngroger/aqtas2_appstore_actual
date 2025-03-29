@@ -302,6 +302,7 @@
         "title": "Акция қосу",
         "photo-title": "Акцияның фотосы",
         "name-title": "Акцияның атауы",
+        "name-placeholder": "Акция атауын енгізіңіз",
         "name-limit": "Атау міндетті түрде 2 таңбадан көп болуы керек",
         "description-title": "Сипаттама",
         "description-placeholder": "Сипаттаманы енгізіңіз",

@@ -1,9 +1,9 @@
-import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import styles from '../../../styles/faqScreenStyle';
 import { useNavigation } from '@react-navigation/native';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Platform, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import styles from '../../../styles/faqScreenStyle';
 
 function FaqScreen() {
     const navigation = useNavigation();
@@ -95,24 +95,26 @@ function FaqScreen() {
 
 
     return (
-        <View style={styles.container}>
-            <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
-                <MaterialIcons name="arrow-back-ios" size={24} color="black" />
-                <Text style={styles.title}>{t('faq-title')}</Text>
-            </TouchableOpacity>
-            <View>
-                {topics.map((topic, index) => (
-                    <TouchableOpacity
-                        key={index}
-                        onPress={() => navigateToAccordion(topic)}
-                        style={styles.topic}
-                    >
-                        <Text style={styles.topicText}>{topic.topic}</Text>
-                        <MaterialIcons name="arrow-forward-ios" size={20} color="black" />
-                    </TouchableOpacity>
-                ))}
+        <SafeAreaView style={styles.container}>
+            <View style={{ flex: 1, paddingHorizontal: 20 }}>
+                <TouchableOpacity style={[styles.titleContainer, { marginTop: Platform.OS === 'android' && 36 }]} onPress={handleGoBack}>
+                    <MaterialIcons name="arrow-back-ios" size={24} color="black" />
+                    <Text style={styles.title}>{t('faq-title')}</Text>
+                </TouchableOpacity>
+                <View>
+                    {topics.map((topic, index) => (
+                        <TouchableOpacity
+                            key={index}
+                            onPress={() => navigateToAccordion(topic)}
+                            style={styles.topic}
+                        >
+                            <Text style={styles.topicText}>{topic.topic}</Text>
+                            <MaterialIcons name="arrow-forward-ios" size={20} color="black" />
+                        </TouchableOpacity>
+                    ))}
+                </View>
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 

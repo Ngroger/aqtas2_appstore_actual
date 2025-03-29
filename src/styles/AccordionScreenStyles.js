@@ -1,17 +1,16 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '100%',
         backgroundColor: '#FFF',
-        padding: 24
     },
     titleContainer: {
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        marginTop: 10
+        marginTop: Platform.OS === 'android' && 36
     },
     title: {
         fontSize: 28,

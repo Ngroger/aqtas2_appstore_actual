@@ -11,7 +11,6 @@ const styles = ScaledSheet.create({
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        marginTop: '16@msr'
     },
     productPreview: {
         width: 160,

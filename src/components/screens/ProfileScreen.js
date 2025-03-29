@@ -2,7 +2,7 @@ import { Entypo, Feather } from '@expo/vector-icons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { useUnauth } from '../../context/UnauthProvider';
 import { getUserData } from '../../store/userDataManager'; // Импортируйте функцию
@@ -109,13 +109,18 @@ function ProfileScreen() {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: '#FFF' }}>
       <View style={styles.container}>
+        {isLoad && (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={styles.textLoad}>{t("products-load-message")}</Text>
+          </View>
+        )}
         {!isLoad && (
           <>
             <View>
               {userData && (
-                <View style={[styles.infoContainer, { justifyContent: 'space-between' }]}>
+                <View style={[styles.infoContainer, { justifyContent: 'space-between', marginTop: Platform.OS === 'android' && 36 }]}>
                   <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
                     <Image source={{ uri: `https://aqtas.garcom.kz/api/images/photoUsers/${userData?.photoUser}` }} style={styles.photo} />
                     <View>

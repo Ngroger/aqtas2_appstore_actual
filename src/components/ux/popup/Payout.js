@@ -1,9 +1,9 @@
-import { Text, View, Modal, SafeAreaView, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-import styles from '../../../styles/PayoutStyle';
-import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { KeyboardAvoidingView, Modal, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { getUserData } from '../../../store/userDataManager';
+import styles from '../../../styles/PayoutStyle';
 
 function Payout({ modalVisible, onClose, fetchBalance }) {
   const { t } = useTranslation();
@@ -128,7 +128,7 @@ function Payout({ modalVisible, onClose, fetchBalance }) {
   return (
     <Modal animationType='fade' transparent={true} visible={modalVisible}>
       <TouchableOpacity style={styles.closeBtn} onPress={closeModal} />
-      <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <Text style={styles.title}>{t("payout-modal.title")}</Text>
         <View style={styles.field}>
           <TextInput
@@ -195,7 +195,7 @@ function Payout({ modalVisible, onClose, fetchBalance }) {
         <Text style={styles.description}>
           {t("payout-modal.description")}
         </Text>
-      </SafeAreaView>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
