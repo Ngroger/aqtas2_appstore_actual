@@ -11,7 +11,7 @@ export const getIsNewUser = async () => {
     const value = await AsyncStorage.getItem(NEW_USER_STORAGE);
     return value === null ? true : JSON.parse(value);
   } catch (error) {
-    console.error('Ошибка при получении состояния isNewUser:', error);
+    console.log('Ошибка при получении состояния isNewUser:', error);
     return true; // По умолчанию считаем пользователя новым
   }
 };
@@ -25,6 +25,6 @@ export const toggleIsNewUser = async (newValue) => {
   try {
     await AsyncStorage.setItem(NEW_USER_STORAGE, JSON.stringify(newValue));
   } catch (error) {
-    console.error('Ошибка при переключении состояния isNewUser:', error);
+    console.log('Ошибка при переключении состояния isNewUser:', error);
   }
 };

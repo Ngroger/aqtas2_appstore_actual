@@ -41,7 +41,7 @@ function RegistrationScreen() {
 
     return (
         <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? "padding" : "height"}
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
             style={styles.container}
         >
             <Image style={styles.logo} source={require('../../img/logo.png')} />

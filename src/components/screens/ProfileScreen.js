@@ -77,7 +77,7 @@ function ProfileScreen() {
         openModal(t("unauth-modal.title"), t("unauth-modal.description-profile"))
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
       setIsLoad(false);
     } finally {
       setIsLoad(false);

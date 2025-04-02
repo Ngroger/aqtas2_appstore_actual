@@ -211,6 +211,7 @@ function CodeConfirm({ userData }) {
       ) : (
         <Text style={styles.timer}>{formatTime(timer)}</Text>
       )}
+      <Text style={styles.warn}>{t("sms-warn")}</Text>
       <TouchableOpacity
         onPress={verifySmsCode}
         style={styles.nextButton}

@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
         height: '100%',
         position: 'absolute',
         zIndex: 101,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)'
     },
     addCardContainer: {
         position: 'absolute',
@@ -22,7 +21,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         top: 50,
         right: 10,
-        borderRadius: 5
+        borderRadius: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        elevation: 5,
     },
     exitButton: {
         fontFamily: 'Cambria',
@@ -39,7 +47,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 1,
         backgroundColor: '#BDBDBD',
-        marginVertical:5
+        marginVertical: 5
     }
 });
 

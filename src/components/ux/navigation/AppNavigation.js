@@ -1,49 +1,50 @@
-import * as React from 'react';
-import { useRef } from 'react';
-import { NavigationContainer, CommonActions } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Ionicons, Entypo, AntDesign, Feather } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { AntDesign, Entypo, Feather, Ionicons } from '@expo/vector-icons';
 import NetInfo from '@react-native-community/netinfo';
-import { useEffect } from 'react';
-import { s, vs } from 'react-native-size-matters';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { CommonActions, NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import * as React from 'react';
+import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { vs } from 'react-native-size-matters';
 
-import WelcomeSliderScreen from '../../screens/WelcomeSliderScreen';
-import MainScreen from '../../screens/MainScreen';
-import CategoriesScreen from '../../screens/CategoriesScreen';
-import ShopsScreen from '../../screens/ShopsScreen';
-import CartScreen from '../../screens/CartScreen';
-import ProfileScreen from '../../screens/ProfileScreen';
-import RegistrationScreen from '../../screens/RegistrationScreen';
-import AuthorizationScreen from '../../screens/AuthorizationScreen';
-import NoInternetMessage from '../../screens/NoInternetScreen';
-import PersonalDate from '../../screens/Cabinet/PersonalDate';
-import MyOrdersScreen from '../../screens/Cabinet/MyOrdersScreen';
-import FaqScreen from '../../screens/Cabinet/faqScreen';
-import FinanceScreen from '../../screens/Cabinet/FinanceScreen';
-import CustomerScreen from '../../screens/Cabinet/CostumerScreen';
-import AccordionScreen from '../../screens/AccordionsScreen';
-import AddCardScreen from '../../screens/AddCardScreen';
-import MapScreen from '../../screens/MapScreen';
-import ProductCardScreen from '../../screens/ProductCardScreen';
-import ReviewsScreen from '../../screens/ReviewsScreen';
-import BussinesScreen from '../../screens/BussinesScreen';
-import EditBussinesScreen from '../../screens/Bussines/EditBussines';
-import MyGoodsScreen from '../../screens/Bussines/MyGoodsScreen';
-import SalesScreen from '../../screens/Bussines/SalesScreen';
-import OrderScreen from '../../screens/Bussines/OrdersScreen';
-import StatScreen from '../../screens/Bussines/StatScreen';
-import AddSaleScreen from '../../screens/Bussines/AddSaleScreen';
-import EditProductScreen from '../../screens/EditProductScreen';
-import AddPaymentsMethod from '../../screens/AddPaymentsMethod';
-import AddPaypalScreen from '../../screens/AddPaypalScreen';
-import MyBankAccount from '../../screens/Bussines/MyBankAccount';
+import { CategoriesProvider } from '../../../context/CategoriesProvider';
 import { UnauthProvider } from '../../../context/UnauthProvider';
 import { getIsNewUser } from '../../../store/NewUserStorage';
-import { CategoriesProvider } from '../../../context/CategoriesProvider';
+import { getUserData } from '../../../store/userDataManager';
+import AccordionScreen from '../../screens/AccordionsScreen';
+import AddCardScreen from '../../screens/AddCardScreen';
+import AddPaymentsMethod from '../../screens/AddPaymentsMethod';
+import AddPaypalScreen from '../../screens/AddPaypalScreen';
+import AuthorizationScreen from '../../screens/AuthorizationScreen';
+import BanScreen from '../../screens/BanScreen';
+import AddSaleScreen from '../../screens/Bussines/AddSaleScreen';
+import EditBussinesScreen from '../../screens/Bussines/EditBussines';
+import MyBankAccount from '../../screens/Bussines/MyBankAccount';
+import MyGoodsScreen from '../../screens/Bussines/MyGoodsScreen';
+import OrderScreen from '../../screens/Bussines/OrdersScreen';
+import SalesScreen from '../../screens/Bussines/SalesScreen';
+import StatScreen from '../../screens/Bussines/StatScreen';
+import BussinesScreen from '../../screens/BussinesScreen';
+import CustomerScreen from '../../screens/Cabinet/CostumerScreen';
+import FaqScreen from '../../screens/Cabinet/faqScreen';
+import FinanceScreen from '../../screens/Cabinet/FinanceScreen';
+import MyOrdersScreen from '../../screens/Cabinet/MyOrdersScreen';
+import PersonalDate from '../../screens/Cabinet/PersonalDate';
+import CartScreen from '../../screens/CartScreen';
+import CategoriesScreen from '../../screens/CategoriesScreen';
+import EditProductScreen from '../../screens/EditProductScreen';
+import MainScreen from '../../screens/MainScreen';
+import MapScreen from '../../screens/MapScreen';
+import NoInternetMessage from '../../screens/NoInternetScreen';
 import PolicyScreen from '../../screens/PolicyScreen';
+import ProductCardScreen from '../../screens/ProductCardScreen';
+import ProfileScreen from '../../screens/ProfileScreen';
 import PublicOfferScreen from '../../screens/PublicOfferScreen';
+import RegistrationScreen from '../../screens/RegistrationScreen';
+import ReviewsScreen from '../../screens/ReviewsScreen';
+import ShopsScreen from '../../screens/ShopsScreen';
+import WelcomeSliderScreen from '../../screens/WelcomeSliderScreen';
 
 export default function AppNavigationContainer() {
   const { t } = useTranslation();
@@ -97,18 +98,28 @@ export default function AppNavigationContainer() {
     try {
       const isNewUser = await getIsNewUser();
       console.log("isNewUser: ", isNewUser);
+
       if (navigationRef.current) {
         if (isNewUser) {
           customNavigate('Welcome');
-          console.log("isNewUser: ", isNewUser);
         } else {
-          customNavigate('MainTabs');
+          const userData = await getUserData();
+          if (userData) {
+            const isBanned = await checkIsBanedUser();
+            if (isBanned) return; // ❌ Не пускать дальше
+
+            customNavigate('MainTabs'); // ✅ Пускаем только если не забанен
+          } else {
+            customNavigate('Authorization');
+          }
         }
       }
     } catch (error) {
       console.log("check is new user: ", error);
     }
   };
+
+
 
   const customNavigate = (screen) => {
     if (navigationRef.current) {
@@ -124,6 +135,41 @@ export default function AppNavigationContainer() {
       )
     }
   };
+
+  const checkIsBanedUser = async () => {
+    try {
+      const userData = await getUserData();
+
+      if (userData) {
+        const response = await fetch(`https://aqtas.garcom.kz/api/checkIsBaned/${userData.userId}`);
+        const responseJson = await response.json();
+
+        if (responseJson.success && responseJson.blocked_at) {
+          console.log("reason: ", responseJson.reason);
+
+          navigationRef.current.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                {
+                  name: 'BanScreen',
+                  params: { reason: responseJson.reason }
+                }
+              ]
+            })
+          );
+
+          return true; // Забанен
+        }
+      }
+    } catch (error) {
+      console.log('Check Is Baned Error: ', error);
+    }
+
+    return false; // Не забанен
+  };
+
+
 
   const TabNavigator = () => (
     <Tab.Navigator initialRouteName={t('main-name-bottom-tab')} screenOptions={screenOptions}>
@@ -141,6 +187,7 @@ export default function AppNavigationContainer() {
         <CategoriesProvider>
           <Stack.Navigator>
             <Stack.Screen name="MainTabs" component={TabNavigator} options={{ headerShown: false }} />
+            <Stack.Screen name="BanScreen" component={BanScreen} options={{ headerShown: false }} />
             <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Welcome" component={WelcomeSliderScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Authorization" component={AuthorizationScreen} options={{ headerShown: false }} />

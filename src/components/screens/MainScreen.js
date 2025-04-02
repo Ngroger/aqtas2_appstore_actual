@@ -61,7 +61,7 @@ function MainScreen() {
             setIsLoading(true);
 
             const url = type === 'categories'
-                ? `https://aqtas.garcom.kz/api/products/${category}`
+                ? `https://aqtas.garcom.kz/api/products?category=${category}`
                 : 'https://aqtas.garcom.kz/api/products';
 
             console.log("url: ", url);
@@ -137,7 +137,7 @@ function MainScreen() {
                 Alert.alert(`${t("title-no-card-message")}`, `${t("product-exist-in-cart")}`);
             }
         } catch (error) {
-            console.error('add to cart error:', error);
+            console.log('add to cart error:', error);
         }
     };
 
@@ -169,7 +169,7 @@ function MainScreen() {
             })
             .catch((error) => {
                 setIsLoading(false);
-                console.error('Search error:', error);
+                console.log('Search error:', error);
             });
     };
 

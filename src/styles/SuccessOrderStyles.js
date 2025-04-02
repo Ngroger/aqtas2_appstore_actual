@@ -5,11 +5,10 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         position: 'absolute',
-        zIndex: 1000,
+        zIndex: 100,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#rgba(0, 0, 0, 0.1)',
-        overflow: 'hidden',
+        backgroundColor: 'rgba(0, 0, 0, 0.25)'
     },
     container: {
         backgroundColor: '#FFF',

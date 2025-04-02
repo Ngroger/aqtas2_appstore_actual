@@ -3,7 +3,6 @@ import { ScaledSheet } from 'react-native-size-matters';
 const styles = ScaledSheet.create({
     container: {
         backgroundColor: '#fff',
-        paddingHorizontal: 20,
         width: '100%',
         height: '100%'
     },

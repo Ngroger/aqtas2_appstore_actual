@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
-import styles from '../../styles/AddCardScreenStyle';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { getUserData } from '../../store/userDataManager';
-import { useTranslation } from 'react-i18next';
-import WebViewModal from '../ux/popup/WebViewModal';
 import { StatusBar } from 'expo-status-bar';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ActivityIndicator, Image, KeyboardAvoidingView, Platform, SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { getUserData } from '../../store/userDataManager';
+import styles from '../../styles/AddCardScreenStyle';
+import WebViewModal from '../ux/popup/WebViewModal';
 
 function AddCardScreen() {
   const navigation = useNavigation();
@@ -60,6 +60,7 @@ function AddCardScreen() {
       });
 
       const responseJson = await response.json();
+      console.log("responseJson: ", responseJson);
 
       if (responseJson.success) {
         setIsLoad(false);
@@ -72,7 +73,7 @@ function AddCardScreen() {
       }
 
     } catch (error) {
-      console.error('handleAddCard error:', error);
+      console.log('handleAddCard error:', error);
       setErrorMessage(t('add-payment-screen.error-msg'));
     } finally {
       setIsLoad(false);
@@ -80,51 +81,57 @@ function AddCardScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.titleContainer} onPress={navigation.goBack}>
-        <MaterialIcons name="arrow-back-ios" size={24} color="black" />
-        <Text style={styles.title}>{t('add-payment-method-title')}</Text>
-      </TouchableOpacity>
+    <SafeAreaView style={{ width: '100%', height: '100%', backgroundColor: '#FFF' }}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 20 : 0}
+      >
+        <TouchableOpacity style={[styles.titleContainer, { marginTop: Platform.OS === 'android' && 36 }]} onPress={navigation.goBack}>
+          <MaterialIcons name="arrow-back-ios" size={24} color="black" />
+          <Text style={styles.title}>{t('add-payment-method-title')}</Text>
+        </TouchableOpacity>
 
-      <View style={{ paddingHorizontal: 24 }}>
-        <View style={styles.field}>
-          <Text style={styles.fieldTitle}>{t('number-card-payment-field')}</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <TextInput
-              keyboardType="numeric"
-              maxLength={19}
-              style={styles.input}
-              placeholder={t('number-card-payment-placeholder')}
-              onChangeText={formatCardNumber}
-              value={cardNumber}
-            />
-            {getCardImage() && (
-              <View style={{ borderLeftWidth: 1, borderLeftColor: '#95E5FF', paddingHorizontal: 10 }}>
-                <Image resizeMode="contain" style={styles.cardImage} source={getCardImage()} />
-              </View>
-            )}
+        <View style={{ paddingHorizontal: 20 }}>
+          <View style={styles.field}>
+            <Text style={styles.fieldTitle}>{t('number-card-payment-field')}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <TextInput
+                keyboardType="numeric"
+                maxLength={19}
+                style={styles.input}
+                placeholder={t('number-card-payment-placeholder')}
+                onChangeText={formatCardNumber}
+                value={cardNumber}
+              />
+              {getCardImage() && (
+                <View style={{ borderLeftWidth: 1, borderLeftColor: '#95E5FF', paddingHorizontal: 10 }}>
+                  <Image resizeMode="contain" style={styles.cardImage} source={getCardImage()} />
+                </View>
+              )}
+            </View>
           </View>
         </View>
-      </View>
 
-      <View style={styles.buttonContainer}>
-        {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
+        <View style={styles.buttonContainer}>
+          {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
 
-        {isLoad ? (
-          <View style={styles.activAddCardButton}>
-            <ActivityIndicator size="small" color="#FFF" />
-          </View>
-        ) : (
-          <TouchableOpacity
-            style={[styles.activAddCardButton, isSuccess && { backgroundColor: '#59e327' }]}
-            onPress={isSuccess ? () => navigation.navigate(t('profile-name-bottom-tab')) : handleAddCard}
-          >
-            <Text style={styles.activeAddCardText}>
-              {isSuccess ? t('success-payment-button') : t('add-payment-button')}
-            </Text>
-          </TouchableOpacity>
-        )}
-      </View>
+          {isLoad ? (
+            <View style={styles.activAddCardButton}>
+              <ActivityIndicator size="small" color="#FFF" />
+            </View>
+          ) : (
+            <TouchableOpacity
+              style={[styles.activAddCardButton, isSuccess && { backgroundColor: '#59e327' }]}
+              onPress={isSuccess ? () => navigation.navigate(t('profile-name-bottom-tab')) : handleAddCard}
+            >
+              <Text style={styles.activeAddCardText}>
+                {isSuccess ? t('success-payment-button') : t('add-payment-button')}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </KeyboardAvoidingView>
 
       <WebViewModal
         url={url}
@@ -133,7 +140,7 @@ function AddCardScreen() {
         type='card'
       />
       <StatusBar translucent backgroundColor="transparent" />
-    </View>
+    </SafeAreaView>
   );
 }
 

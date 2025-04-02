@@ -8,9 +8,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: '18@s',
-    borderWidth: 1,
-    borderColor: '#000'
+    padding: 20,
   },
   accordion: {
     width: '100%',
@@ -201,6 +199,13 @@ const styles = ScaledSheet.create({
     textAlign: 'center',
     marginTop: 10,
     marginBottom: 6
+  },
+  warn: {
+    fontSize: '12@s',
+    color: '#000',
+    opacity: 0.5,
+    fontFamily: 'Cambria',
+    textAlign: 'center'
   }
 });
 

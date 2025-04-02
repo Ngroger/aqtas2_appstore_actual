@@ -1,12 +1,12 @@
-import { View, TouchableOpacity, TextInput, Text } from 'react-native';
-import styles from '../../../../styles/EditAdditionalInfoStyle';
 import { MaterialIcons } from '@expo/vector-icons';
-import EditDelivery from './EditDelivery';
-import { useState, useEffect } from 'react';
-import EditCategory from './EditCategory';
-import ChangeColor from '../ChangeColor';
-import { getUserData } from '../../../../store/userDataManager';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { getUserData } from '../../../../store/userDataManager';
+import styles from '../../../../styles/EditAdditionalInfoStyle';
+import ChangeColor from '../ChangeColor';
+import EditCategory from './EditCategory';
+import EditDelivery from './EditDelivery';
 
 function EditAdditionalInfo({ data, onClose, productId }) {
     const [isChangeDelivery, setChangeDelivery] = useState(false);
@@ -95,7 +95,7 @@ function EditAdditionalInfo({ data, onClose, productId }) {
                 onClose();
             })
             .catch(error => {
-                console.error("Ошибка при сохранении изменений:", error);
+                console.log("Ошибка при сохранении изменений:", error);
                 setMessage(t("edit-info.server-error"));
             });
     };

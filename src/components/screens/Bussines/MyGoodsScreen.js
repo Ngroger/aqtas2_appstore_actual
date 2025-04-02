@@ -38,6 +38,7 @@ function MyGoodsScreen() {
         // { id: 1, name: 'Top', value: 'top' },
         { id: 2, name: t("my-products.canceled"), value: 'Отмена' },
         { id: 3, name: t("my-products.in-sale"), value: 'Активен' },
+        { id: 3, name: t("my-products.blocked"), value: 'Заблокировано' },
     ];
 
     const loadUserData = async () => {

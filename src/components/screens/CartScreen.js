@@ -158,19 +158,28 @@ function CartScreen() {
         }
 
         try {
-            for (const productId of selectedProductIds) {
-                const response = await fetch(`https://aqtas.garcom.kz/api/removeFromCart/${userData.userId}/${productId}`, {
-                    method: 'DELETE',
-                });
+            const response = await fetch(`https://aqtas.garcom.kz/api/removeFromCart/${userData.userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    productIds: selectedProductIds
+                })
+            });
 
-                if (response.ok) {
-                    const updatedCart = cart.filter(item => item.id !== productId);
-                    setCart(updatedCart);
-                    setSelectedItems({}); // Очищаем выбранные товары
-                } else {
-                }
+            const responseJson = await response.json();
+            console.log("responseJson: ", responseJson);
+
+            if (responseJson.success) {
+                console.log("selectedProductIds: ", selectedProductIds);
+                const updatedCart = cart.filter(item => !selectedProductIds.includes(item.id.toString()));
+                console.log("updatedCart: ", updatedCart);
+                setCart(updatedCart);
+                setSelectedItems({});
             }
         } catch (error) {
+            console.log("Remove Selected Cart Error: ", error);
         }
     };
 
@@ -182,11 +191,8 @@ function CartScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{
-                paddingHorizontal: 20
-            }}>
-                <View style={styles.navbar
-                } >
+            <View style={{ paddingHorizontal: 20 }}>
+                <View style={styles.navbar}>
                     <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={styles.title}>{t('cart-title')}</Text>
                         <Text style={styles.totalCost}>{t('total-cost-cart')}{totalCost}тнг</Text>
@@ -280,10 +286,9 @@ function CartScreen() {
                         </View>
                     )
                 }
-                <StatusBar backgroundColor="transparent" translucent={true} />
             </View >
-            {isSuccessOrder && <SuccessOrder clearCart={clearCart} updatedCart={() => loadUserData()} onClose={() => setSuccessOrder(false)} />
-            }
+            <StatusBar backgroundColor="transparent" translucent={true} />
+            {isSuccessOrder && <SuccessOrder clearCart={clearCart} updatedCart={() => loadUserData()} onClose={() => setSuccessOrder(false)} />}
             {isNoAddress && <NoAddressMessage />}
         </SafeAreaView >
     )

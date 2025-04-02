@@ -10,8 +10,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
-        paddingHorizontal: 24,
-        marginTop: 24
+        paddingHorizontal: 20,
     },
     title: {
         fontSize: 32,
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#95E5FF',
         padding: 12,
-        paddingHorizontal: 20,
+        paddingHorizontal: 16,
         marginTop: 20
     },
     fieldTitle: {
@@ -93,10 +92,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         width: '100%',
-        position: 'absolute',
-        zIndex: 100,
-        bottom: 0,
-        padding: 24
+        padding: 20
     },
     checkboxContainer: {
         display: 'flex',

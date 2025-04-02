@@ -124,7 +124,7 @@ function WriteReview({ product, onClose, productId, modalVisible }) {
                 setMessage(responseJson.message);
             }
         } catch (error) {
-            console.error('Error publishing review:', error);
+            console.log('Error publishing review:', error);
         }
     };
 
