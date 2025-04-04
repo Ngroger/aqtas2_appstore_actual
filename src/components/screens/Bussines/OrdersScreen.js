@@ -48,7 +48,6 @@ function OrderScreen() {
             try {
                 const response = await fetch(`https://aqtas.garcom.kz/api/orders/${userData.userId}`);
                 const responseJson = await response.json();
-                console.log("responseJson: ", responseJson);
                 if (responseJson.success) {
                     setOrders(responseJson.orders);
                     setIsLoad(false);
@@ -93,10 +92,10 @@ function OrderScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{ flex: 1, paddingHorizontal: 20 }}>
+            <View style={{ flex: 1 }}>
                 <TouchableOpacity style={[styles.titleContainer, { marginTop: Platform.OS === 'android' && 36 }]} onPress={handleGoBack}>
                     <MaterialIcons name="arrow-back-ios" size={24} color="black" />
-                    <Text style={styles.title}>Заказы Доставка</Text>
+                    <Text style={styles.title}>{t("orders-screen.title")}</Text>
                 </TouchableOpacity>
                 {isLoad && (
                     <View style={styles.loadingIndicatorContainer}>
@@ -121,26 +120,26 @@ function OrderScreen() {
                                                 <View style={{ left: 10 }}>
                                                     <Text style={styles.nameOrder}>{item.name}</Text>
                                                     <Text style={styles.infoOrder}>{item.nameProduct}</Text>
-                                                    <Text style={styles.infoOrder}>Кол-во: {item.count}</Text>
-                                                    <Text style={styles.infoOrder}>Адрес: {item.address}</Text>
-                                                    {item.size && <Text style={styles.infoOrder}>Размер: {item.size}</Text>}
+                                                    <Text style={styles.infoOrder}>{t("orders-screen.count")}: {item.count}</Text>
+                                                    <Text style={styles.infoOrder}>{t("orders-screen.address")}: {item.address}</Text>
+                                                    {item.size && <Text style={styles.infoOrder}>{t("orders-screen.size")} {item.size}</Text>}
                                                 </View>
                                             </View>
                                         </View>
                                         {item.availability ? null : (
                                             <>
                                                 <View style={styles.productAvailability}>
-                                                    <Text style={styles.quenstion}>Есть товар в наличии?</Text>
+                                                    <Text style={styles.quenstion}>{t("orders-screen.is-availability")}</Text>
                                                     <View style={styles.answer}>
                                                         <TouchableOpacity onPress={_ => updateOrderAvailability(item.id, 1, item.productId, item.userID)}>
-                                                            <Text style={styles.yes}>ДА</Text>
+                                                            <Text style={styles.yes}>{t("orders-screen.yes")}</Text>
                                                         </TouchableOpacity>
                                                         <View style={styles.line} />
                                                         <TouchableOpacity onPress={_ => updateOrderAvailability(item.id, 0, item.productId, item.userID)}>
-                                                            <Text style={styles.no}>НЕТ</Text>
+                                                            <Text style={styles.no}>{t("orders-screen.no")}</Text>
                                                         </TouchableOpacity>
                                                     </View>
-                                                    <Text style={styles.time}>Оставшееся время на ответ: {formatTime(item.timer)}</Text>
+                                                    <Text style={styles.time}>{t("orders-screen.time")} {formatTime(item.timer)}</Text>
                                                 </View>
                                             </>
                                         )}

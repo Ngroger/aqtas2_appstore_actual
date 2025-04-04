@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     container: {
         width: '100%',
         height: '100%',
@@ -14,6 +14,48 @@ const styles = StyleSheet.create({
     pagination: {
         position: 'absolute', // Добавляем абсолютное позиционирование
         zIndex: 15, // Устанавливаем высокий zIndex, чтобы точки были поверх InfoBlock
+    },
+    goBackBtn: {
+        width: 36,
+        height: 36,
+        borderRadius: 100,
+        backgroundColor: '#FFF',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        elevation: 5,
+        position: 'absolute',
+        zIndex: 100,
+        left: 20,
+        top: 36,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    saveBtn: {
+        width: 36,
+        height: 36,
+        borderRadius: 100,
+        backgroundColor: '#FFF',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        elevation: 5,
+        position: 'absolute',
+        zIndex: 100,
+        right: 20,
+        top: 36,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     dot: {
         width: 9,
@@ -93,7 +135,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingBottom: 10
-        
+
     },
     firstInfo: {
         fontFamily: 'Cambria',
@@ -191,7 +233,7 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     reviewerDate: {
-        color: '#BDBDBD', 
+        color: '#BDBDBD',
         fontFamily: 'Cambria',
         fontSize: 18
     },
@@ -354,13 +396,14 @@ const styles = StyleSheet.create({
         borderColor: '#95E5FF'
     },
     photoPickButton: {
-        backgroundColor: 'rgba(149, 229, 255, 0.5)',
-        width: 45, 
-        height: 45, 
-        borderRadius: 100, 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        marginHorizontal: 50
+        backgroundColor: 'rgba(149, 229, 255, 0.25)',
+        width: 45,
+        height: 45,
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#95E5FF'
     },
     swiperContent: {
         alignItems: 'center', // Центрирование содержимого по горизонтали
@@ -421,6 +464,13 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: '#95E5FF'
     },
+    loadTxt: {
+        color: '#000',
+        opacity: 0.5,
+        fontSize: '16@s',
+        textAlign: 'center',
+        fontFamily: 'Cambria'
+    }
 });
 
 export default styles

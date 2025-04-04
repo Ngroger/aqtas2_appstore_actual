@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, SafeAreaView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { getUserData } from '../../../../store/userDataManager';
 import styles from '../../../../styles/EditAdditionalInfoStyle';
 import ChangeColor from '../ChangeColor';
@@ -104,83 +104,76 @@ function EditAdditionalInfo({ data, onClose, productId }) {
 
 
     return (
-        <View style={styles.background}>
-            <View style={styles.container}>
-                <View style={styles.navbar}>
-                    <Text style={styles.title}>{t("edit-info.title")}</Text>
-                    <Text style={styles.subtitle}>{t("edit-info.description-second")}</Text>
-                </View>
-                <View>
-                    <View style={styles.field}>
-                        <Text style={styles.titleField}>{t("edit-info.manufacturer-title")}</Text>
-                        <TextInput
-                            value={manufacturer}
-                            onChangeText={onChangeManufacturer}
-                            style={styles.input}
-                            placeholder={t("edit-info.manufacturer-placeholder")}
-                        />
+        <SafeAreaView style={styles.background}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
+                    <View style={styles.navbar}>
+                        <Text style={styles.title}>{t("edit-info.title")}</Text>
+                        <Text style={styles.subtitle}>{t("edit-info.description-second")}</Text>
                     </View>
-                </View>
-                <View>
-                    <View style={styles.field}>
-                        <Text style={styles.titleField}>{t("edit-info.color-title")}</Text>
-                        <TextInput
-                            value={color}
-                            editable={false}
-                            style={styles.input}
-                        />
-                        <TouchableOpacity onPress={toggleChangeColor}>
-                            <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
+                    <View>
+                        <View style={styles.field}>
+                            <Text style={styles.titleField}>{t("edit-info.manufacturer-title")}</Text>
+                            <TextInput
+                                value={manufacturer}
+                                onChangeText={onChangeManufacturer}
+                                style={styles.input}
+                                placeholder={t("edit-info.manufacturer-placeholder")}
+                            />
+                        </View>
+                    </View>
+                    <View>
+                        <View style={styles.field}>
+                            <Text style={styles.titleField}>{t("edit-info.color-title")}</Text>
+                            <TextInput
+                                value={color}
+                                editable={false}
+                                style={styles.input}
+                            />
+                            <TouchableOpacity onPress={toggleChangeColor}>
+                                <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View>
+                        <View style={styles.field}>
+                            <Text style={styles.titleField}>{t("edit-info.brend-title")}</Text>
+                            <TextInput
+                                value={brend}
+                                onChangeText={onChangeBrend}
+                                style={styles.input}
+                                placeholder={t("edit-info.brend-placeholder")}
+                            />
+                        </View>
+                    </View>
+                    <View>
+                        <View style={styles.field}>
+                            <Text style={styles.titleField}>{t("edit-info.category-title")}</Text>
+                            <TextInput
+                                value={category}
+                                editable={false}
+                                style={styles.input}
+                            />
+                            <TouchableOpacity onPress={toggleChangeCategory}>
+                                <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <Text style={styles.error}>{message}</Text>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={saveChanges} style={styles.saveButton}>
+                            <Text style={styles.saveButtonText}>{t("edit-info.save-btn")}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={handleClose} style={styles.cancelButton}>
+                            <Text style={styles.cancelButtonText}>{t("edit-info.cancel-btn")}</Text>
                         </TouchableOpacity>
                     </View>
-                </View>
-                <View>
-                    <View style={styles.field}>
-                        <Text style={styles.titleField}>{t("edit-info.brend-title")}</Text>
-                        <TextInput
-                            value={brend}
-                            onChangeText={onChangeBrend}
-                            style={styles.input}
-                            placeholder={t("edit-info.brend-placeholder")}
-                        />
-                    </View>
-                </View>
-                <View>
-                    <View style={styles.field}>
-                        <Text style={styles.titleField}>{t("edit-info.category-title")}</Text>
-                        <TextInput
-                            value={category}
-                            editable={false}
-                            style={styles.input}
-                        />
-                        <TouchableOpacity onPress={toggleChangeCategory}>
-                            <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                {/* <View>
-                    <View style={styles.field}>
-                        <Text style={styles.titleField}>Доставка</Text>
-                        <Text style={styles.input}>{delivery}</Text>
-                        <TouchableOpacity onPress={toggleChangeDelivery}>
-                            <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
-                        </TouchableOpacity>
-                    </View>
-                </View> */}
-                <Text style={styles.error}>{message}</Text>
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={saveChanges} style={styles.saveButton}>
-                        <Text style={styles.saveButtonText}>{t("edit-info.save-btn")}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={handleClose} style={styles.cancelButton}>
-                        <Text style={styles.cancelButtonText}>{t("edit-info.cancel-btn")}</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+                </KeyboardAvoidingView>
+            </TouchableWithoutFeedback>
             {isChangeDelivery && <EditDelivery onDeliverySelect={handleDeliverySelect} onClose={toggleChangeDelivery} />}
             {isChangeCategory && <EditCategory onCategorySelect={handleCategorySelect} onClose={toggleChangeCategory} />}
             {isChangeColor && <ChangeColor onColorSelect={handleColorSelect} onClose={toggleChangeColor} />}
-        </View>
+        </SafeAreaView>
     )
 };
 

@@ -4,13 +4,13 @@ const styles = ScaledSheet.create({
     container: {
         width: '100%',
         height: '100%',
-        backgroundColor: '#FFF',
-        padding: 20
+        backgroundColor: '#FFF'
     },
     titleContainer: {
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
+        marginBottom: 6
     },
     productPreview: {
         width: 160,

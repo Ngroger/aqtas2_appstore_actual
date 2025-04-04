@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
         width: '90%',
-        padding: 10,
+        padding: 16,
         borderRadius: 16,
         position: 'absolute',
         zIndex: 1000,
@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     navbar: {
         borderBottomColor: '#BDBDBD',
         borderBottomWidth: 1,
-        padding: 10,
-        paddingVertical: 12
+        paddingHorizontal: 8,
+        paddingBottom: 16
     },
     title: {
         fontFamily: 'Cambria',
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         display: 'flex',
         justifyContent: 'space-between',
+        marginBottom: 16
     },
     saveButton: {
         justifyContent: 'center',

@@ -14,9 +14,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         width: '90%',
         padding: 16,
-        borderRadius: 16,
-        position: 'absolute',
-        zIndex: 1000,
+        borderRadius: 16
     },
     navbar: {
         borderBottomColor: '#BDBDBD',

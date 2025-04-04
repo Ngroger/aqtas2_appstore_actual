@@ -104,7 +104,6 @@ const styles = ScaledSheet.create({
         height: 9,
         borderRadius: 100,
         marginHorizontal: 100,
-        borderWidth: 1,
         borderColor: '#95E5FF',
         backgroundColor: 'transparent'
     },

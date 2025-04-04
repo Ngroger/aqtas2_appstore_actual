@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, SafeAreaView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { getUserData } from '../../../../store/userDataManager';
 import styles from '../../../../styles/EditInfoStyles';
 
@@ -66,57 +66,61 @@ function EditInfo({ data, onClose, productId }) {
 
 
     return (
-        <View style={styles.background}>
-            <View style={styles.container}>
-                <View style={styles.navbar}>
-                    <Text style={styles.title}>{t("edit-info.title")}</Text>
-                    <Text style={styles.subtitle}>{t("edit-info.description")}</Text>
-                </View>
-                <View style={styles.field}>
-                    <Text style={styles.titleField}>{t("edit-info.cost-title")}</Text>
-                    <TextInput
-                        value={cost}
-                        onChangeText={onChangeCost}
-                        keyboardType='numeric'
-                        style={[styles.input, { width: '80%' }]}
-                        placeholder={t("edit-info.cost-placeholder")}
-                    />
-                    <Text style={styles.currency}>тнг</Text>
-                </View>
-                <View>
-                    <View style={styles.field}>
-                        <Text style={styles.titleField}>{t("edit-info.name-title")}</Text>
-                        <TextInput
-                            value={name}
-                            onChangeText={onChangeName}
-                            style={styles.input}
-                            placeholder={t("edit-info.name-placeholder")}
-                        />
+        <SafeAreaView style={styles.background}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                    <View style={styles.container}>
+                        <View style={styles.navbar}>
+                            <Text style={styles.title}>{t("edit-info.title")}</Text>
+                            <Text style={styles.subtitle}>{t("edit-info.description")}</Text>
+                        </View>
+                        <View style={styles.field}>
+                            <Text style={styles.titleField}>{t("edit-info.cost-title")}</Text>
+                            <TextInput
+                                value={cost}
+                                onChangeText={onChangeCost}
+                                keyboardType='numeric'
+                                style={[styles.input, { width: '80%' }]}
+                                placeholder={t("edit-info.cost-placeholder")}
+                            />
+                            <Text style={styles.currency}>тнг</Text>
+                        </View>
+                        <View>
+                            <View style={styles.field}>
+                                <Text style={styles.titleField}>{t("edit-info.name-title")}</Text>
+                                <TextInput
+                                    value={name}
+                                    onChangeText={onChangeName}
+                                    style={styles.input}
+                                    placeholder={t("edit-info.name-placeholder")}
+                                />
+                            </View>
+                        </View>
+                        <View>
+                            <View style={styles.field}>
+                                <Text style={styles.titleField}>{t("edit-info.description-title")}</Text>
+                                <TextInput
+                                    value={description}
+                                    onChangeText={onChangeDescription}
+                                    style={[styles.input, { height: 150, textAlignVertical: 'top' }]}
+                                    placeholder={t("edit-info.description-placeholder")}
+                                    multiline={true}
+                                />
+                            </View>
+                        </View>
+                        <Text style={styles.error}>{message}</Text>
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity onPress={saveChanges} style={styles.saveButton}>
+                                <Text style={styles.saveButtonText}>{t("edit-info.save-btn")}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={handleClose} style={styles.cancelButton}>
+                                <Text style={styles.cancelButtonText}>{t("edit-info.cancel-btn")}</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
-                <View>
-                    <View style={styles.field}>
-                        <Text style={styles.titleField}>{t("edit-info.description-title")}</Text>
-                        <TextInput
-                            value={description}
-                            onChangeText={onChangeDescription}
-                            style={[styles.input, { height: 150, textAlignVertical: 'top' }]}
-                            placeholder={t("edit-info.description-placeholder")}
-                            multiline={true}
-                        />
-                    </View>
-                </View>
-                <Text style={styles.error}>{message}</Text>
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={saveChanges} style={styles.saveButton}>
-                        <Text style={styles.saveButtonText}>{t("edit-info.save-btn")}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={handleClose} style={styles.cancelButton}>
-                        <Text style={styles.cancelButtonText}>{t("edit-info.cancel-btn")}</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </View>
+                </KeyboardAvoidingView>
+            </TouchableWithoutFeedback>
+        </SafeAreaView>
     )
 };
 

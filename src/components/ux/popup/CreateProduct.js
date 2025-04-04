@@ -8,7 +8,6 @@ import ChangeColor from './ChangeColor';
 import EditCategory from './EditProduct/EditCategory';
 import EditDelivery from './EditProduct/EditDelivery';
 import EditSubcategory from './EditProduct/EditSubcategory';
-import NoCardMessage from './messages/NoCardMessage';
 import SelectSeason from './SelectSeason';
 
 function CreateProduct({ modalVisible, onClose }) {
@@ -29,12 +28,15 @@ function CreateProduct({ modalVisible, onClose }) {
     const [cost, onChangeCost] = useState('');
     const [brend, onChangeBrend] = useState('');
     const [isNoCardMessage, setIsNoCardMessage] = useState(false);
-    const [bankCardData, setBankCardData] = useState('');
     const [sizes, setSizes] = useState([]);
     const [newSize, setNewSize] = useState('');
     const [deleteSizeVisible, setDeleteSizeVisible] = useState(null);
     const [seasonSelected, setSeasonSelected] = useState();
     const [isShowSelectSeason, setIsShowSelectSeason] = useState();
+
+    const [isLoad, setIsLoad] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [isFailure, setIsFailure] = useState(false);
 
     const toggleShowSelectSeason = () => {
         setIsShowSelectSeason(!isShowSelectSeason);
@@ -151,22 +153,6 @@ function CreateProduct({ modalVisible, onClose }) {
         const userData = await getUserData();
         if (userData) {
             setUresData(userData);
-            // Выполните запрос к серверу для получения данных о финансах
-            try {
-                const response = await fetch(`https://aqtas.garcom.kz/api/bankCards/${userData.userId}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.length === 0) {
-                        setIsNoCardMessage(true);
-                    } else {
-                        setIsNoCardMessage(false)
-                        setBankCardData(data);
-                    }
-                } else {
-                }
-            } catch (error) {
-
-            }
         }
     };
 
@@ -204,6 +190,7 @@ function CreateProduct({ modalVisible, onClose }) {
     };
 
     const publishProduct = async () => {
+        setIsLoad(true);
         const renamedImages = [];
 
         for (let i = 0; i < selectedImages.length; i++) {
@@ -248,13 +235,40 @@ function CreateProduct({ modalVisible, onClose }) {
             });
 
             if (response.ok) {
-                handleClose();
+                setIsLoad(false);
+                setIsSuccess(true)
+                setIsFailure(false);
             } else {
-                const errorMessage = await response.text(); // or response.json() if the error message is in JSON format
+                setIsLoad(false);
+                setIsSuccess(false);
+                setIsFailure(true);
+
             }
         } catch (error) {
+            setIsLoad(false);
+            setIsSuccess(false);
+            setIsFailure(true);
         }
     };
+
+    const handleClick = _ => {
+        if (isSuccess) onClose()
+        else publishProduct();
+    }
+
+    const getBtnTxt = _ => {
+        if (isSuccess) return 'Успех'
+        else if (isFailure) return 'Произошла ошибка'
+        else if (isLoad) return 'В процессе'
+        else return 'Опубликовать'
+    }
+
+    const getBtnStyle = _ => {
+        if (isSuccess) return "#61c427"
+        else if (isFailure) return "#FF0000"
+        else if (isLoad) return "#95E5FF"
+        else return "#95E5FF"
+    }
 
 
     return (
@@ -399,15 +413,20 @@ function CreateProduct({ modalVisible, onClose }) {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <TouchableOpacity onPress={publishProduct} style={styles.publicButton}>
-                        <Text style={styles.publicButtonText}>Опубликовать</Text>
+                    <TouchableOpacity
+                        disabled={isLoad}
+                        onPress={() => handleClick()}
+                        style={[styles.publicButton, { backgroundColor: getBtnStyle() }]}
+                    >
+                        <Text style={styles.publicButtonText}>
+                            {getBtnTxt()}
+                        </Text>
                     </TouchableOpacity>
                 </ScrollView>
             </KeyboardAvoidingView>
             {isChangeColor && <ChangeColor onColorSelect={handleColorSelect} onClose={toggleChangeColor} />}
             {isChangeCategory && <EditCategory onCategorySelect={handleCategorySelect} onClose={toggleChangeCategory} />}
             {isChangeDelivery && <EditDelivery onDeliverySelect={handleDeliverySelect} onClose={toggleChangeDelivery} />}
-            {isNoCardMessage && <NoCardMessage />}
             {isChangeSubcategory && <EditSubcategory onSubcategorySelect={handleSubcategorySelect} onClose={toggleChangeSubcategory} />}
             {isShowSelectSeason && <SelectSeason onClose={toggleShowSelectSeason} onSeasonSelect={toggleSetSeasonSelected} />}
             {isChoiseImage &&

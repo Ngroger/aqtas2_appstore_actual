@@ -1,6 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, Image, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { getUserData } from '../../../store/userDataManager';
@@ -19,9 +19,11 @@ function MyGoodsScreen() {
     const [selectedItems, setSelectedItems] = useState({});
     const { t } = useTranslation();
 
-    useEffect(() => {
-        loadUserData();
-    }, [activeCategory]);
+    useFocusEffect(
+        useCallback(() => {
+            loadUserData();
+        }, [activeCategory])
+    )
 
     const selectItem = (index) => {
         setSelectedItems(prevSelectedItems => ({
@@ -38,7 +40,8 @@ function MyGoodsScreen() {
         // { id: 1, name: 'Top', value: 'top' },
         { id: 2, name: t("my-products.canceled"), value: 'Отмена' },
         { id: 3, name: t("my-products.in-sale"), value: 'Активен' },
-        { id: 3, name: t("my-products.blocked"), value: 'Заблокировано' },
+        { id: 4, name: t("my-products.blocked"), value: 'Заблокировано' },
+        { id: 5, name: t("my-products.moderation"), value: 'Модерация' },
     ];
 
     const loadUserData = async () => {
@@ -253,11 +256,11 @@ function MyGoodsScreen() {
                     {Object.keys(selectedItems).some((itemId) => selectedItems[itemId]) ? (
                         <View style={{ flexDirection: 'row', display: 'flex', justifyContent: 'space-between' }}>
                             <TouchableOpacity
-                                onPress={() => actionSelectedFromCart(activeCategory === 'Продажа' ? 'Отмена' : 'Продажа')}
+                                onPress={() => actionSelectedFromCart(activeCategory === 'Активен' ? 'Отмена' : 'Активен')}
                                 style={styles.buttonActionProduct}
                             >
                                 <Text style={styles.buttonActionProductText}>
-                                    {activeCategory === 'Продажа' ?
+                                    {activeCategory === 'Активен' ?
                                         t("my-products.cancel-btn") :
                                         t("my-products.public-btn")
                                     }

@@ -4,20 +4,21 @@ const styles = ScaledSheet.create({
     container: {
         width: '100%',
         height: '100%',
-        backgroundColor: '#FFF',
-        paddingHorizontal: 20
+        backgroundColor: '#FFF'
     },
     titleContainer: {
         flexDirection: 'row',
         display: 'flex',
         alignItems: 'center',
+        marginBottom: 6,
+        paddingHorizontal: 20
     },
     title: {
         fontSize: 36,
         fontFamily: 'Cambria'
     },
     order: {
-        marginHorizontal: 10,
+        marginHorizontal: 20,
         marginVertical: 10,
         backgroundColor: '#fff',
         shadowColor: "#000",

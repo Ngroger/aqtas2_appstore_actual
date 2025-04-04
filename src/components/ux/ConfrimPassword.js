@@ -86,7 +86,7 @@ function ConfirmPassword(props) {
                         secureTextEntry={isShowConfirmPass}
                     />
                     <TouchableOpacity onPress={() => setIsShowConfirmPass(!isShowConfirmPass)} style={{ position: 'absolute', zIndex: 10, right: 12 }}>
-                        <Ionicons name={isShowPass ? "eye-outline" : "eye-off-outline"} size={20} color="#141414" />
+                        <Ionicons name={isShowConfirmPass ? "eye-outline" : "eye-off-outline"} size={20} color="#141414" />
                     </TouchableOpacity>
                 </View>
             </View>

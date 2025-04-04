@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-import styles from '../../../../styles/NoCardMessageStyles';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, TouchableOpacity } from 'react-native';
 import { BlurView } from 'expo-blur';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Text, TouchableOpacity, View } from 'react-native';
+import styles from '../../../../styles/NoCardMessageStyles';
 
-function NoCardMessage() {
+function NoCardMessage({ onClose, closeModal }) {
     const navigation = useNavigation();
-    const {t} = useTranslation();
-    
+    const { t } = useTranslation();
+
     const goToAddCard = () => {
+        closeModal();
+        onClose();
         navigation.navigate('AddCard');
     }
 

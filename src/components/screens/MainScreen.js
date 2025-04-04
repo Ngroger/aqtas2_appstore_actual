@@ -240,7 +240,7 @@ function MainScreen() {
                                                             ) : (
                                                                 <Swiper
                                                                     showsButtons={false}
-                                                                    style={{ width: 1000, height: 300, borderWidth: 1, borderColor: '#000' }}
+                                                                    style={{ width: 1000, height: 300 }}
                                                                     paginationStyle={styles.pagination}
                                                                     dotStyle={styles.dot}
                                                                     activeDotStyle={styles.activeDot}

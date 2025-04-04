@@ -43,6 +43,7 @@ function SuccessCreatedShop({ onClose }) {
                         <Text style={[styles.subtitle, { marginTop: 10, width: 300 }]}>11. {t('rule-eleven')}</Text>
                         <Text style={[styles.subtitle, { marginTop: 10, width: 300 }]}>12. {t('rule-twelve')}</Text>
                         <Text style={[styles.subtitle, { marginTop: 10, width: 300 }]}>13. {t('rule-thirteen')}</Text>
+                        <Text style={[styles.subtitle, { marginTop: 10, width: 300 }]}>14. {t('rule-fourteen')}</Text>
                         <View style={styles.checkboxContainer}>
                             <TouchableOpacity onPress={agree} style={styles.checkbox}>
                                 {isCheckBox && <View style={styles.dot} />}
