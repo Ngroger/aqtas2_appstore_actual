@@ -35,7 +35,7 @@ const styles = ScaledSheet.create({
     },
     field: {
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         padding: 12,
         borderRadius: 15,
         marginTop: 24
@@ -50,7 +50,7 @@ const styles = ScaledSheet.create({
         zIndex: 1000,
         top: -16,
         left: 10,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     input: {
         color: 'rgba(0, 0, 0, 0.5)',
@@ -59,7 +59,7 @@ const styles = ScaledSheet.create({
         marginLeft: 6
     },
     saveButton: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 15,
         marginTop: 20,
         justifyContent: 'center',

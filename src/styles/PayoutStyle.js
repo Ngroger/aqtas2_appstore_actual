@@ -53,7 +53,7 @@ const styles = ScaledSheet.create({
     padding: 16,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#95E5FF'
+    backgroundColor: '#26CFFF'
   },
   btnText: {
     fontSize: '16@s',
@@ -78,7 +78,7 @@ const styles = ScaledSheet.create({
     padding: 12,
     paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: "#95E5FF",
+    borderColor: "#26CFFF",
     borderRadius: 16,
     marginBottom: 12
   },

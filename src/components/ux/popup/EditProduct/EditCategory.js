@@ -1,20 +1,42 @@
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, ActivityIndicator, ScrollView } from "react-native";
 import styles from "../../../../styles/EditCategoryStyle";
 import { AntDesign } from '@expo/vector-icons'; 
+import { useEffect, useState } from "react";
+import i18next from "../../../../i18next";
 
-function EditCategory({ onClose, onCategorySelect  }) {
+function EditCategory({ onClose, onCategorySelect }) {
+    const [categories, setCategories] = useState([]);
+    const [isLoad, setIsLoad] = useState(true);
+    const [lang, setLang] = useState(i18next.language);
+
     const handleClose = () => {
-        if (onClose) {
-            onClose();
+        if (onClose) onClose();
+    };
+
+    const handleCategorySelect = (selectedCategory, id) => {
+        onCategorySelect(selectedCategory, id);
+        if (onClose) onClose();
+    };
+
+    const fetchCategories = async () => {
+        try {
+            setIsLoad(true);
+            const response = await fetch('https://aqtas.garcom.kz/api/categories');
+            const result = await response.json();
+
+            if (result.success) {
+                setCategories(result.categories);
+            }
+        } catch (error) {
+            console.log('Fetch Categories Error:', error);
+        } finally {
+            setIsLoad(false);
         }
     };
 
-    const handleCategorySelect = (selectedCategory) => {
-        onCategorySelect(selectedCategory);
-        if (onClose) {
-            onClose();
-        }
-    };
+    useEffect(() => {
+        fetchCategories();
+    }, []);
 
     return (
         <View style={styles.background}>
@@ -25,33 +47,27 @@ function EditCategory({ onClose, onCategorySelect  }) {
                     </TouchableOpacity>
                     <Text style={styles.title}>Изменить категорию</Text>
                 </View>
-                <TouchableOpacity onPress={() => handleCategorySelect('Женское')} style={styles.button}>
-                    <Text style={styles.buttonText}>Женское</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleCategorySelect('Мужское')} style={styles.button}>
-                    <Text style={styles.buttonText}>Мужское</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleCategorySelect('Техника')} style={styles.button}>
-                    <Text style={styles.buttonText}>Техника</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleCategorySelect('Акксесуары')} style={styles.button}>
-                    <Text style={styles.buttonText}>Акксесуары</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleCategorySelect('Дом')} style={styles.button}>
-                    <Text style={styles.buttonText}>Дом</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleCategorySelect('Детское')} style={styles.button}>
-                    <Text style={styles.buttonText}>Детское</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleCategorySelect('Спорт')} style={styles.button}>
-                    <Text style={styles.buttonText}>Спорт</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleCategorySelect('Игрушки')} style={styles.button}>
-                    <Text style={styles.buttonText}>Игрушки</Text>
-                </TouchableOpacity>
+
+                {isLoad ? (
+                    <ActivityIndicator style={{ marginVertical: 24 }} size={24} color='#26CFFF' />
+                ) : (
+                    <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
+                        {categories.map((category, index) => (
+                            <TouchableOpacity 
+                                key={index}
+                                onPress={() => handleCategorySelect(category.name_ru, category.id)}
+                                style={styles.button}
+                            >
+                                <Text style={styles.buttonText}>
+                                    {lang === 'kz' ? category.name_kz : category.name_ru}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+                )}
             </View>
         </View>
-    )
-};
+    );
+}
 
-export default EditCategory
+export default EditCategory;

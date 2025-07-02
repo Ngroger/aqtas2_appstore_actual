@@ -7,6 +7,7 @@ import { getUserData } from '../../../store/userDataManager';
 import styles from '../../../styles/MyGoodsStyles';
 import CreateProduct from '../../ux/popup/CreateProduct';
 import UpToTop from '../../ux/popup/EditProduct/UpToTop';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function MyGoodsScreen() {
     const navigation = useNavigation();
@@ -18,6 +19,7 @@ function MyGoodsScreen() {
     const [activeCategory, setActiveCategory] = useState('Активен');
     const [selectedItems, setSelectedItems] = useState({});
     const { t } = useTranslation();
+    const insets = useSafeAreaInsets();
 
     useFocusEffect(
         useCallback(() => {
@@ -252,7 +254,7 @@ function MyGoodsScreen() {
                         )}
                     </>
                 )}
-                <View style={styles.buttonsContainer}>
+                <View style={[styles.buttonsContainer, { marginBottom: insets.bottom }]}>
                     {Object.keys(selectedItems).some((itemId) => selectedItems[itemId]) ? (
                         <View style={{ flexDirection: 'row', display: 'flex', justifyContent: 'space-between' }}>
                             <TouchableOpacity

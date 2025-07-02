@@ -105,7 +105,7 @@ function AddCardScreen() {
                 value={cardNumber}
               />
               {getCardImage() && (
-                <View style={{ borderLeftWidth: 1, borderLeftColor: '#95E5FF', paddingHorizontal: 10 }}>
+                <View style={{ borderLeftWidth: 1, borderLeftColor: '#26CFFF', paddingHorizontal: 10 }}>
                   <Image resizeMode="contain" style={styles.cardImage} source={getCardImage()} />
                 </View>
               )}

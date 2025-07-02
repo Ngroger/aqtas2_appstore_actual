@@ -8,6 +8,7 @@ import { getUserData } from '../../../store/userDataManager';
 import styles from '../../../styles/CustomerScreenStyle';
 import CategoryShop from '../../ux/popup/CategoryShop';
 import SuccessCreatedShop from '../../ux/popup/messages/SuccessCreatedShop';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function CustomerScreen() {
     const navigation = useNavigation();
@@ -52,6 +53,8 @@ function CustomerScreen() {
     const [isSuccess, setSuccess] = useState(false);
     const [isFailure, setIsFailure] = useState(false);
 
+    const insets = useSafeAreaInsets();
+
     const getBtnTxt = _ => {
         if (isSuccess) return "success-btn"
         else if (isFailure) return "failure-btn"
@@ -62,8 +65,8 @@ function CustomerScreen() {
     const getBtnStyles = _ => {
         if (isSuccess) return "#61c427"
         else if (isFailure) return "#FF0000"
-        else if (isLoad) return "#95E5FF"
-        else return "#95E5FF"
+        else if (isLoad) return "#26CFFF"
+        else return "#26CFFF"
     };
 
     useEffect(() => {
@@ -234,11 +237,11 @@ function CustomerScreen() {
                             )}
                             {image === null ? (
                                 <TouchableOpacity onPress={toggleChoiseImageModal} style={styles.photoButton}>
-                                    <Feather name="camera" size={30} color="#95E5FF" />
+                                    <Feather name="camera" size={30} color="#26CFFF" />
                                 </TouchableOpacity>
                             ) : (
                                 <TouchableOpacity onPress={toggleChoiseImageModal} style={styles.photoButton}>
-                                    <AntDesign name="close" size={30} color="#95E5FF" />
+                                    <AntDesign name="close" size={30} color="#26CFFF" />
                                 </TouchableOpacity>
                             )}
                         </View>
@@ -300,7 +303,7 @@ function CustomerScreen() {
                         <View style={isCategoryError ? styles.errorField : styles.field}>
                             <TextInput value={category} style={styles.input} readOnly={true} />
                             <TouchableOpacity onPress={toggleCategoryModal}>
-                                <AntDesign name="right" size={24} color="#95E5FF" />
+                                <AntDesign name="right" size={24} color="#26CFFF" />
                             </TouchableOpacity>
                         </View>
                         {isCategoryError && <Text style={styles.error}>{t("customer-screen.category-request")}</Text>}
@@ -355,7 +358,7 @@ function CustomerScreen() {
                         {isErrorMessage && <Text style={styles.error}>
                             {t("customer-screen.all-fields-request")}
                         </Text>}
-                        <TouchableOpacity disabled={isLoad} onPress={() => handleBtn()} style={[styles.createButton, { backgroundColor: getBtnStyles() }]}>
+                        <TouchableOpacity disabled={isLoad} onPress={() => handleBtn()} style={[styles.createButton, { backgroundColor: getBtnStyles(), marginBottom: insets.bottom }]}>
                             <Text style={styles.createButtonText}>
                                 {t(`customer-screen.${getBtnTxt()}`)}
                             </Text>
@@ -365,7 +368,7 @@ function CustomerScreen() {
             </KeyboardAvoidingView>
             {isChoiseImage &&
                 <View style={styles.background}>
-                    <View style={styles.containerChoiseImage}>
+                    <View style={[styles.containerChoiseImage, { paddingBottom: insets.bottom }]}>
                         <TouchableOpacity onPress={toggleChoiseImageModal}>
                             <AntDesign name="close" size={32} color="black" />
                         </TouchableOpacity>

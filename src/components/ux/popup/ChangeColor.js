@@ -1,7 +1,7 @@
-import { Text, View, TouchableOpacity } from "react-native";
-import styles from "../../../styles/EditCategoryStyle";
-import { AntDesign, Feather  } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 import { useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+import styles from "../../../styles/EditCategoryStyle";
 
 function ChangeColor({ onClose, onColorSelect }) {
     const [isSelectedColor, setSelectedColor] = useState(false)
@@ -33,104 +33,104 @@ function ChangeColor({ onClose, onColorSelect }) {
                 </View>
                 <View style={styles.colorsContainer}>
                     <TouchableOpacity onPress={() => handleColorSelect('Красный')} style={styles.colorContainer}>
-                        <View style={[styles.color, { backgroundColor: '#FF0000' }]}/>
+                        <View style={[styles.color, { backgroundColor: '#FF0000' }]} />
                         {isSelectedColor ? (
                             <>
-                            <View style={styles.filter}>
-                                <View style={styles.dot}/>
-                            </View>
+                                <View style={styles.filter}>
+                                    <View style={styles.dot} />
+                                </View>
                             </>
                         ) : null}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleColorSelect('Оранжевый')} style={styles.colorContainer}>
-                        <View style={[styles.color, { backgroundColor: '#FFA500' }]}/>
+                        <View style={[styles.color, { backgroundColor: '#FFA500' }]} />
                         {isSelectedColor ? (
                             <>
-                            <View style={styles.filter}>
-                                <View style={styles.dot}/>
-                            </View>
+                                <View style={styles.filter}>
+                                    <View style={styles.dot} />
+                                </View>
                             </>
                         ) : null}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleColorSelect('Желтый')} style={styles.colorContainer}>
-                        <View style={[styles.color, { backgroundColor: '#FFFF00' }]}/>
+                        <View style={[styles.color, { backgroundColor: '#FFFF00' }]} />
                         {isSelectedColor ? (
                             <>
-                            <View style={styles.filter}>
-                                <View style={styles.dot}/>
-                            </View>
+                                <View style={styles.filter}>
+                                    <View style={styles.dot} />
+                                </View>
                             </>
                         ) : null}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleColorSelect('Зеленый')} style={styles.colorContainer}>
-                        <View style={[styles.color, { backgroundColor: '#008000' }]}/>
+                        <View style={[styles.color, { backgroundColor: '#008000' }]} />
                         {isSelectedColor ? (
                             <>
-                            <View style={styles.filter}>
-                                <View style={styles.dot}/>
-                            </View>
+                                <View style={styles.filter}>
+                                    <View style={styles.dot} />
+                                </View>
                             </>
                         ) : null}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleColorSelect('Синий')} style={styles.colorContainer}>
-                        <View style={[styles.color, { backgroundColor: '#0000FF' }]}/>
+                        <View style={[styles.color, { backgroundColor: '#0000FF' }]} />
                         {isSelectedColor ? (
                             <>
-                            <View style={styles.filter}>
-                                <View style={styles.dot}/>
-                            </View>
+                                <View style={styles.filter}>
+                                    <View style={styles.dot} />
+                                </View>
                             </>
                         ) : null}
                     </TouchableOpacity>
                 </View>
                 <View style={styles.colorsContainer}>
                     <TouchableOpacity onPress={() => handleColorSelect('Голубой')} style={styles.colorContainer}>
-                        <View style={[styles.color, { backgroundColor: '#95E5FF' }]}/>
+                        <View style={[styles.color, { backgroundColor: '#26CFFF' }]} />
                         {isSelectedColor ? (
                             <>
-                            <View style={styles.filter}>
-                                <View style={styles.dot}/>
-                            </View>
+                                <View style={styles.filter}>
+                                    <View style={styles.dot} />
+                                </View>
                             </>
                         ) : null}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleColorSelect('Фиолетовый')} style={styles.colorContainer}>
-                        <View style={[styles.color, { backgroundColor: '#800080' }]}/>
+                        <View style={[styles.color, { backgroundColor: '#800080' }]} />
                         {isSelectedColor ? (
                             <>
-                            <View style={styles.filter}>
-                                <View style={styles.dot}/>
-                            </View>
+                                <View style={styles.filter}>
+                                    <View style={styles.dot} />
+                                </View>
                             </>
                         ) : null}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleColorSelect('Черный')} style={styles.colorContainer}>
-                        <View style={[styles.color, { backgroundColor: '#000' }]}/>
+                        <View style={[styles.color, { backgroundColor: '#000' }]} />
                         {isSelectedColor ? (
                             <>
-                            <View style={styles.filter}>
-                                <View style={styles.dot}/>
-                            </View>
+                                <View style={styles.filter}>
+                                    <View style={styles.dot} />
+                                </View>
                             </>
                         ) : null}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleColorSelect('Серый')} style={styles.colorContainer}>
-                        <View style={[styles.color, { backgroundColor: '#BDBDBD' }]}/>
+                        <View style={[styles.color, { backgroundColor: '#BDBDBD' }]} />
                         {isSelectedColor ? (
                             <>
-                            <View style={styles.filter}>
-                                <View style={styles.dot}/>
-                            </View>
+                                <View style={styles.filter}>
+                                    <View style={styles.dot} />
+                                </View>
                             </>
                         ) : null}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleColorSelect('Белый')} style={styles.colorContainer}>
-                        <View style={[styles.color, { backgroundColor: '#fff', borderWidth: 1 }]}/>
+                        <View style={[styles.color, { backgroundColor: '#fff', borderWidth: 1 }]} />
                         {isSelectedColor ? (
                             <>
-                            <View style={styles.filter}>
-                                <View style={styles.dot}/>
-                            </View>
+                                <View style={styles.filter}>
+                                    <View style={styles.dot} />
+                                </View>
                             </>
                         ) : null}
                     </TouchableOpacity>

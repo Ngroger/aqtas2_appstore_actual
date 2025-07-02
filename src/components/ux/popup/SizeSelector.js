@@ -9,6 +9,7 @@ function SizeSelector({ onClose, id, productData }) {
     const [sizes, setSizes] = useState([]);
     const [userData, setUserData] = useState({});
     const { t } = useTranslation();
+    const [entity, setEntity] = useState(null);
 
     const handleClose = () => {
         if (onClose) {
@@ -64,27 +65,29 @@ function SizeSelector({ onClose, id, productData }) {
 
     useEffect(() => {
         loadUserData();
-        try {
-            fetch(`https://aqtas.garcom.kz/api/sizes/${id}`)
-                .then((response) => response.json())
-                .then((data) => {
-                    // Создаем массив непустых размеров
-                    const nonNullSizes = [];
 
-                    // Перебираем все размеры в первой записи (может быть несколько, в зависимости от структуры базы данных)
-                    for (const key in data[0]) {
-                        if (key.startsWith('size') && data[0][key] !== null) {
-                            nonNullSizes.push(data[0][key]);
-                        }
-                    }
+        fetch(`https://aqtas.garcom.kz/api/sizes/${id}`)
+            .then((response) => response.json())
+            .then((data) => {
+            const nonNullSizes = [];
 
-                    // Устанавливаем непустые размеры в состояние sizes
-                    setSizes(nonNullSizes);
-                })
-                .catch((error) => {
-                });
-        } catch (error) {
-        }
+            // Достаём объект sizes
+            const sizeData = data.sizes;
+
+            console.log("sizeData: ", sizeData);
+
+            for (const key in sizeData) {
+                if (key.startsWith('size') && sizeData[key] !== null) {
+                nonNullSizes.push(sizeData[key]);
+                }
+            }
+                console.log("nonNullSizes: ", nonNullSizes);
+                setSizes(nonNullSizes);
+                setEntity(data.entity);
+            })
+            .catch((error) => {
+                console.error("Ошибка при загрузке размеров:", error);
+            });
     }, []);
 
     const loadUserData = async () => {
@@ -101,7 +104,10 @@ function SizeSelector({ onClose, id, productData }) {
                     <TouchableOpacity onPress={handleClose}>
                         <AntDesign name='close' color='#000' size={24} />
                     </TouchableOpacity>
-                    <Text style={styles.title}>Выберите размер</Text>
+                    <View style={styles.header}>
+                        <Text style={styles.title}>Выберите размер</Text>
+                        <Text style={[styles.title, { opacity: 0.5, fontSize: 18 }]}>{entity}</Text>
+                    </View>
                 </View>
                 <View style={styles.sizeContainer}>
                     {sizes.map((size, index) => (

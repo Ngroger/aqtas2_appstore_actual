@@ -22,7 +22,7 @@ function AboutCostumer({ onClose, data }) {
                     <Text style={styles.title}>{data[0]?.shop}</Text>
                     {data[0].verify && (
                         <View style={styles.status}>
-                            <Feather name="check" size={18} color="#95E5FF" />
+                            <Feather name="check" size={18} color="#26CFFF" />
                         </View>
                     )}
                 </View>

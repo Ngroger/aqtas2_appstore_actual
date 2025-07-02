@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     field: {
         borderRadius: 15,
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         padding: 12,
         paddingHorizontal: 16,
         marginTop: 20
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         left: 10,
         paddingHorizontal: 6,
         fontFamily: 'Cambria',
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     input: {
         fontFamily: 'Cambria',
@@ -52,14 +52,14 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 15,
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         padding: 10,
         paddingHorizontal: 20,
         marginTop: 20
     },
     addCardButton: {
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 12,
@@ -69,10 +69,10 @@ const styles = StyleSheet.create({
     addCardText: {
         fontFamily: 'CambriaBold',
         fontSize: 24,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     activAddCardButton: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 16,
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
         borderWidth: 1.5,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 6
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     dot: {
         width: 12,
         height: 12,
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 100
     }
 });

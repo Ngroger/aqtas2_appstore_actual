@@ -71,7 +71,7 @@ const styles = ScaledSheet.create({
         width: 100,
         height: 100,
         borderWidth: 3,
-        borderColor: "#95E5FF",
+        borderColor: "#26CFFF",
         borderRadius: 15,
         borderStyle: 'dashed',
         marginHorizontal: 10,
@@ -95,7 +95,7 @@ const styles = ScaledSheet.create({
     },
     reviewContainer: {
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         marginTop: 10,
         borderRadius: 15,
         marginBottom: 10
@@ -114,13 +114,13 @@ const styles = ScaledSheet.create({
         position: 'absolute',
         zIndex: 1000,
         fontFamily: 'Cambria',
-        color: '#95E5FF',
+        color: '#26CFFF',
         fontSize: 18,
         top: -12,
         left: 20
     },
     publicButton: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 12,
@@ -167,7 +167,7 @@ const styles = ScaledSheet.create({
     buttonChoiseImageText: {
         fontFamily: 'Cambria',
         fontSize: 24,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     deleteImage: {
         backgroundColor: 'rgba(149, 229, 255, 0.35)',

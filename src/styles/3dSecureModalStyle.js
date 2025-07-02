@@ -46,7 +46,7 @@ const styles = ScaledSheet.create({
   field: {
     width: '100%',
     borderWidth: 1,
-    borderColor: '#95E5FF',
+    borderColor: '#26CFFF',
     padding: 10,
     paddingHorizontal: 12,
     borderRadius: 16
@@ -60,7 +60,7 @@ const styles = ScaledSheet.create({
     width: '100%',
     padding: 16,
     borderRadius: 16,
-    backgroundColor: '#95E5FF',
+    backgroundColor: '#26CFFF',
     justifyContent: 'center',
     alignItems: 'center'
   },

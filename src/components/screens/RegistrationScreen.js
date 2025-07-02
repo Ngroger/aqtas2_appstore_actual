@@ -1,9 +1,9 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, KeyboardAvoidingView, Platform, Text, TouchableOpacity } from 'react-native';
+import { Image, KeyboardAvoidingView, Platform, Text, TouchableOpacity, Animated, Easing, Keyboard, View } from 'react-native';
 import { toggleIsNewUser } from '../../store/NewUserStorage';
 import styles from '../../styles/RegistrationScreenStyle';
 import CodeConfrim from '../ux/CodeConfrim';
@@ -20,6 +20,31 @@ function RegistrationScreen() {
         password: '',
         isBussinesAccount: false,
     });
+    const keyboardHeight = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        const showSub = Keyboard.addListener('keyboardDidShow', (e) => {
+            Animated.timing(keyboardHeight, {
+                toValue: e.endCoordinates.height,
+                duration: 10,
+                useNativeDriver: false,
+                easing: Easing.out(Easing.poly(5))
+            }).start();
+        });
+        const hideSub = Keyboard.addListener('keyboardDidHide', () => {
+            Animated.timing(keyboardHeight, {
+                toValue: 0,
+                duration: 10,
+                useNativeDriver: false,
+                easing: Easing.out(Easing.poly(5))
+            }).start();
+        });
+
+        return () => {
+            showSub.remove();
+            hideSub.remove();
+        };
+    }, []);
     const [currentStep, setCurrentStep] = useState('SelectLanguage');
     const navigation = useNavigation();
     const { t } = useTranslation();
@@ -40,14 +65,13 @@ function RegistrationScreen() {
 
 
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-            style={styles.container}
+        <Animated.View
+            style={[styles.container, { paddingBottom: keyboardHeight }]}
         >
-            <Image style={styles.logo} source={require('../../img/logo.png')} />
+            <Image style={styles.logo} source={require('../../img/logo_white.png')} />
             <TouchableOpacity onPress={() => skip()} style={styles.skipButton}>
                 <Text style={styles.skipButtonText}>Пропустить</Text>
-                <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
+                <MaterialIcons name="keyboard-arrow-right" size={24} color="#FFF" />
             </TouchableOpacity>
             {currentStep === 'SelectLanguage' && (
                 <SelectLanguage onNextStep={() => goToNextStep('Registration')} />
@@ -72,8 +96,8 @@ function RegistrationScreen() {
                     userData={userData}
                 />
             )}
-            <StatusBar translucent={true} backgroundColor='transparent' />
-        </KeyboardAvoidingView>
+            <StatusBar style='dark' />
+        </Animated.View>
     );
 };
 

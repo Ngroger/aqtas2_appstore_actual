@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     container: {
         width: '100%',
         height: '100%',
@@ -124,10 +124,10 @@ const styles = StyleSheet.create({
     buttonChoiseImageText: {
         fontFamily: 'Cambria',
         fontSize: 28,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     saveButton: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         width: '100%',
         borderRadius: 15,
         justifyContent: 'center',
@@ -140,7 +140,13 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: '#FFF',
     },
-
+    mapBtn: {},
+    mapBtnTxt: {
+        color: '#000',
+        opacity: 0.5,
+        fontFamily: 'Cambria',
+        fontSize: '14@s'
+    },
 });
 
 export default styles;

@@ -1,5 +1,9 @@
 {
     "change-language": "Выберите язык",
+    "select-language": "Выбор языка",
+    "select-language-modal": {
+        "title": "Выберите язык"
+    },
     "russian-language": "Русский",
     "kaz-language": "Казахский",
     "language": "Русский",
@@ -44,9 +48,24 @@
     "add-cart-button": "В КОРЗИНУ",
     "shopping-center-filter": "ТРЦ",
     "shops-filter": "Магазины",
-    "bazaars-filter": "Базары",
-    "flea-markets-filter": "Барахолки",
-    "markets-filter": "Рынки",
+    "official-brand-shops-filter": "Официальные магазины брендов",
+    "online-shops-filter": "Интернет-магазины",
+    "manufacturer-shops-filter": "Магазины производителей",
+    "chinese-shops-filter": "Магазины из Китая",
+    "specialized-shops-filter": "Специализированные магазины",
+    "electronics-shops-filter": "Магазины электроники",
+    "clothing-shoes-shops-filter": "Магазины одежды и обуви",
+    "cosmetics-shops-filter": "Магазины косметики и парфюмерии",
+    "home-goods-shops-filter": "Магазины товаров для дома",
+    "sports-shops-filter": "Магазины спортивных товаров",
+    "toy-shops-filter": "Магазины игрушек",
+    "antique-shops-filter": "Антикварные магазины",
+    "secondhand-shops-filter": "Секонд-хенды",
+    "eco-shops-filter": "Эко-магазины",
+    "pet-shops-filter": "Магазины для животных",
+    "book-shops-filter": "Книжные магазины",
+    "gift-shops-filter": "Магазины подарков и сувениров",
+    "wholesale-shops-filter": "Оптовые магазины",
     "name-shop-info": "Название",
     "address-shop-info": "Адрес",
     "phone-number-shop-info": "Телефон",
@@ -67,6 +86,7 @@
     "sex-personal-data": "Пол",
     "birthday-personal-data": "День рождения",
     "address-personal-data": "Адрес",
+    "map-btn-txt": "Карта",
     "undefined-personal-data": "Не указано",
     "all-finances-filter": "Все",
     "replenishment-finances-filter": "Пополнение",
@@ -521,5 +541,17 @@
         "count": "Кол-во",
         "address": "Адрес: ",
         "size": "Размер: "
+    },
+    "select-address-screen": {
+        "title": "Выберите адрес",
+        "placeholder": "Начните вводить адрес",
+        "alert-title": "Уведомление",
+        "alert-subtitle": "Пожалуйста, убедитесь, что у вас включена геолокация",
+        "load-txt": "Это может занять немного времени",
+        "not-fount-txt": "Не найдено подходящих адресов",
+        "save-btn": "Сохранить",
+        "in-proccess": "В обработке",
+        "success-title": "Успешно",
+        "success-subtitle": "Адрес упешно сохранился"
     }
 }

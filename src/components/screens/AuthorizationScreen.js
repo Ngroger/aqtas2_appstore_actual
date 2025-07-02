@@ -1,9 +1,9 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, View, Keyboard, Animated, Easing } from 'react-native';
 import { s } from 'react-native-size-matters';
 import { toggleIsNewUser } from '../../store/NewUserStorage';
 import { hasToken, storeToken } from '../../store/tokenManager';
@@ -24,6 +24,31 @@ function AuthorizationScreen(props) {
     const { t } = useTranslation();
     const [serverMessage, setServerMessage] = useState();
     const [isShowPass, setIsShowPass] = useState(true);
+    const keyboardHeight = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        const showSub = Keyboard.addListener('keyboardDidShow', (e) => {
+            Animated.timing(keyboardHeight, {
+                toValue: e.endCoordinates.height,
+                duration: 10,
+                useNativeDriver: false,
+                easing: Easing.out(Easing.poly(5))
+            }).start();
+        });
+        const hideSub = Keyboard.addListener('keyboardDidHide', () => {
+            Animated.timing(keyboardHeight, {
+                toValue: 0,
+                duration: 10,
+                useNativeDriver: false,
+                easing: Easing.out(Easing.poly(5))
+            }).start();
+        });
+
+        return () => {
+            showSub.remove();
+            hideSub.remove();
+        };
+    }, []);
 
     const updateErrors = () => {
         const { login, password, errors } = state;
@@ -115,13 +140,13 @@ function AuthorizationScreen(props) {
     };
 
     return (
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding" : "height"} style={{ width: '100%', padding: s(18), backgroundColor: '#95E5FF', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-            <Image style={styles.logo} source={require('../../img/logo.png')} />
+        <Animated.View style={{ width: '100%', padding: s(18), backgroundColor: '#26CFFF', height: '100%', justifyContent: 'center', alignItems: 'center', paddingBottom: keyboardHeight }}>
+            <Image style={styles.logo} source={require('../../img/logo_white.png')} />
             <Text style={styles.titleReg}>{t('auth-title')}</Text>
             <Text style={styles.description}>{t('reg-subtitle')}</Text>
             <TouchableOpacity onPress={() => skip()} style={styles.skipButton}>
                 <Text style={styles.skipButtonText}>Пропустить</Text>
-                <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
+                <MaterialIcons name="keyboard-arrow-right" size={24} color="#FFF" />
             </TouchableOpacity>
             <View style={{ marginTop: 40, width: '100%' }}>
                 <Text style={state.errors.login ? styles.inputTitleError : styles.inputTitle}>{t('email-or-phone-title')}</Text>
@@ -143,7 +168,7 @@ function AuthorizationScreen(props) {
                         }}
                     />
                     <TouchableOpacity onPress={() => setIsShowPass(!isShowPass)} style={{ position: 'absolute', zIndex: 10, right: 12 }}>
-                        <Ionicons name={isShowPass ? "eye-outline" : "eye-off-outline"} size={20} color="#141414" />
+                        <Ionicons name={isShowPass ? "eye-outline" : "eye-off-outline"} size={20} color="#FFF" />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -162,7 +187,7 @@ function AuthorizationScreen(props) {
                     <Text style={styles.nextText}>{t('button-next')}</Text>
                 </TouchableOpacity>
             </View>
-        </KeyboardAvoidingView>
+        </Animated.View>
     );
 }
 

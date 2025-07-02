@@ -8,6 +8,11 @@ const styles = StyleSheet.create({
         position: 'absolute',
         zIndex: 1000
     },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
     container: {
         backgroundColor: '#FFF',
         borderTopLeftRadius: 16,
@@ -37,8 +42,8 @@ const styles = StyleSheet.create({
     size: {
         backgroundColor: '#fff',
         borderRadius: 10,
-        width: 35,
-        height: 35,
+        width: 48,
+        height: 48,
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: "#000",
@@ -54,7 +59,7 @@ const styles = StyleSheet.create({
     },
     sizeText: {
         fontFamily: 'Cambria',
-        fontSize: 24,
+        fontSize: 28,
         color: '#BDBDBD'
     }
 });

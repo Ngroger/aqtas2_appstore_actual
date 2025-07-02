@@ -29,7 +29,7 @@ function PolicyScreen() {
           </View>
         ))}
       </ScrollView>
-      <StatusBar translucent={true} backgroundColor='transparent' />
+      <StatusBar style='dark' />
     </View>
   );
 };

@@ -24,7 +24,7 @@ const styles = ScaledSheet.create({
     },
     counterContainer: {
         flexDirection: 'row',
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         padding: '2@msr',
         paddingHorizontal: '12@msr',
         borderRadius: 100,
@@ -43,7 +43,7 @@ const styles = ScaledSheet.create({
     },
     buttonBuy: {
         flexDirection: 'row',
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderWidth: 1,
         padding: '2@msr',
         paddingHorizontal: '10@msr',
@@ -54,13 +54,13 @@ const styles = ScaledSheet.create({
     },
     textBuy: {
         fontFamily: 'CambriaBold',
-        color: '#95E5FF',
+        color: '#26CFFF',
         fontSize: '18@ms'
     },
     cost: {
         fontFamily: 'Cambria',
         fontSize: '20@ms',
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     oldCost: {
         fontFamily: 'Cambria',
@@ -112,7 +112,7 @@ const styles = ScaledSheet.create({
     },
     selectedCheckbox: {
         borderWidth: 2,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderRadius: 5,
         width: '20@ms',
         height: '20@ms',
@@ -120,7 +120,7 @@ const styles = ScaledSheet.create({
         alignItems: 'center'
     },
     dot: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         width: '12@ms',
         height: '12@ms',
         borderRadius: 100
@@ -130,6 +130,28 @@ const styles = ScaledSheet.create({
         fontSize: 24,
         color: '#BDBDBD',
         textAlign: 'center'
+    },
+    buttonContainer: {
+        width: '100%',
+        padding: 20,
+        position: 'absolute',
+        zIndex: 100,
+        bottom: 0
+    },
+    orderBtn: {
+        width: '100%',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#26CFFF',
+        borderRadius: 12
+    },
+    orderBtnTxt: {
+        fontSize: '18@s',
+        color: '#FFF',
+        fontFamily: 'CambriaBold'
     }
 });
 

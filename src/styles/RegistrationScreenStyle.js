@@ -2,7 +2,7 @@ import { ScaledSheet } from 'react-native-size-matters';
 
 const styles = ScaledSheet.create({
   container: {
-    backgroundColor: '#95E5FF',
+    backgroundColor: '#26CFFF',
     width: '100%',
     height: '100%',
     alignItems: 'center',
@@ -14,7 +14,7 @@ const styles = ScaledSheet.create({
     width: '100%',
     padding: 10,
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: '#FFF',
     display: 'flex',
     flexDirection: 'row',
     borderRadius: 10,
@@ -25,16 +25,18 @@ const styles = ScaledSheet.create({
     fontFamily: 'Cambria',
     fontSize: 18,
     bottom: 10,
+    color: "#FFF"
   },
   language: {
     fontFamily: 'Cambria',
     fontSize: '16@s',
     borderWidth: 1,
-    borderColor: 'transparent'
+    borderColor: 'transparent',
+    color: '#FFF'
   },
   openAccordion: {
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: '#FFF',
     padding: 10,
     borderTopWidth: 0,
     borderBottomRightRadius: 10,
@@ -42,7 +44,7 @@ const styles = ScaledSheet.create({
   },
   line: {
     height: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#FFF',
     width: '100%',
     marginTop: 10,
     marginBottom: 10
@@ -72,12 +74,14 @@ const styles = ScaledSheet.create({
     fontSize: '16@s',
     fontFamily: 'CambriaBold',
     textAlign: 'center',
+    color: '#FFF'
   },
   description: {
     fontFamily: 'Cambria',
     fontSize: '14@s',
     textAlign: 'center',
-    marginTop: 6
+    marginTop: 6,
+    color: '#FFF'
   },
   inputContainer: {
     flexDirection: 'row',
@@ -87,7 +91,7 @@ const styles = ScaledSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: '#FFF',
     borderRadius: 10,
     padding: 14,
     width: '100%',
@@ -98,12 +102,13 @@ const styles = ScaledSheet.create({
   inputTitle: {
     fontFamily: 'Cambria',
     fontSize: 16,
-    backgroundColor: '#95E5FF',
+    backgroundColor: '#26CFFF',
     paddingHorizontal: 10,
     position: 'absolute',
     top: -10,
     zIndex: 20,
-    left: 10
+    left: 10,
+    color: '#FFF'
   },
   inputError: {
     borderWidth: 1,
@@ -118,7 +123,7 @@ const styles = ScaledSheet.create({
   inputTitleError: {
     fontFamily: 'Cambria',
     fontSize: 16,
-    backgroundColor: '#95E5FF',
+    backgroundColor: '#26CFFF',
     paddingHorizontal: 10,
     position: 'absolute',
     top: -10,
@@ -130,7 +135,8 @@ const styles = ScaledSheet.create({
     fontFamily: 'Cambria',
     textAlign: 'center',
     fontSize: 18,
-    marginTop: 10
+    marginTop: 10,
+    color: '#FFF'
   },
   error: {
     fontFamily: 'CambriaBold',
@@ -142,6 +148,7 @@ const styles = ScaledSheet.create({
     width: '200@vs',
     height: '100@vs',
     objectFit: 'contain',
+    marginBottom: 12
   },
   fieldContainr: {
     width: '100%',
@@ -160,7 +167,7 @@ const styles = ScaledSheet.create({
   },
   skipButtonText: {
     fontSize: 20,
-    color: '#141414',
+    color: '#FFF',
     fontFamily: 'Cambria'
   },
   root: { flex: 1, padding: 20 },
@@ -202,7 +209,7 @@ const styles = ScaledSheet.create({
   },
   warn: {
     fontSize: '12@s',
-    color: '#000',
+    color: '#FFF',
     opacity: 0.5,
     fontFamily: 'Cambria',
     textAlign: 'center'

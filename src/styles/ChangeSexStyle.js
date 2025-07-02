@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         margin: 10,
         fontSize: 24,
         fontFamily: 'Cambria',
-        color: '#95E5FF',
+        color: '#26CFFF',
         textAlign: 'center'
     },
     line: {

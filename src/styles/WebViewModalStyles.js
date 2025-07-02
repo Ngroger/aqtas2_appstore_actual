@@ -5,7 +5,7 @@ const styles = ScaledSheet.create({
     flex: 1
   },
   closeModal: {
-    backgroundColor: '#95E5FF',
+    backgroundColor: '#26CFFF',
     width: 50,
     height: 50,
     justifyContent: 'center',

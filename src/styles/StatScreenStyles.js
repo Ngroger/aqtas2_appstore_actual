@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     },
     categories: {
         paddingVertical: 16,
-        
+
     },
     categoriesContainer: {
         width: '100%',
@@ -27,12 +27,12 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
     },
     categoryActive: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         padding: 8,
         borderRadius: 100,
         paddingHorizontal: 16,
         marginHorizontal: 5
-        
+
     },
     categoryTextActive: {
         fontFamily: 'CambriaBold',
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         color: '#fff'
     },
     category: {
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderWidth: 1,
         padding: 8,
         borderRadius: 100,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     categoryText: {
         fontFamily: 'CambriaBold',
         fontSize: 18,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
 });
 

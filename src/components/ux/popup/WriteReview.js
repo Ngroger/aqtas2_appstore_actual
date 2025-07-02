@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Image, KeyboardAvoidingView, Modal, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { getUserData } from '../../../store/userDataManager';
 import styles from '../../../styles/WriteReviewsStyles';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function WriteReview({ product, onClose, productId, modalVisible }) {
     const [rating, setRating] = useState(0);
@@ -16,6 +17,7 @@ function WriteReview({ product, onClose, productId, modalVisible }) {
     const [size, onChangeSize] = useState('');
     const [message, setMessage] = useState();
     const { t } = useTranslation();
+    const insets = useSafeAreaInsets();
 
     console.log("product: ", product);
 
@@ -156,7 +158,7 @@ function WriteReview({ product, onClose, productId, modalVisible }) {
                                 <View key={index} style={[styles.image, { borderWidth: 0 }]}>
                                     <Image source={{ uri: imageUri }} style={{ width: '100%', height: '100%', borderRadius: 15 }} />
                                     <TouchableOpacity style={styles.deleteImage} onPress={() => toggleDeleteImage(index)}>
-                                        <AntDesign name="close" size={24} color="#95E5FF" />
+                                        <AntDesign name="close" size={24} color="#26CFFF" />
                                     </TouchableOpacity>
                                 </View>
                             ))}
@@ -164,7 +166,7 @@ function WriteReview({ product, onClose, productId, modalVisible }) {
                     )}
                     {selectedImages.length < 3 && (
                         <TouchableOpacity onPress={toggleChoiseImage} style={styles.addPhotoButton}>
-                            <Feather name="camera" size={24} color="#95E5FF" />
+                            <Feather name="camera" size={24} color="#26CFFF" />
                         </TouchableOpacity>
                     )}
                 </View>
@@ -210,13 +212,13 @@ function WriteReview({ product, onClose, productId, modalVisible }) {
                     </>
                 )}
                 {message && <Text style={styles.error}>{message}</Text>}
-                <TouchableOpacity onPress={publishReview} style={styles.publicButton}>
+                <TouchableOpacity onPress={publishReview} style={[styles.publicButton, { marginBottom: insets.bottom }]}>
                     <Text style={styles.publicButtonText}>{t("write-review.publish-btn")}</Text>
                 </TouchableOpacity>
             </KeyboardAvoidingView>
             {isChoiseImage && (
                 <View style={styles.backgroundContainer}>
-                    <View style={styles.containerChoiseImage}>
+                    <View style={[styles.containerChoiseImage, { paddingBottom: insets.bottom }]}>
                         <TouchableOpacity onPress={toggleChoiseImage}>
                             <AntDesign name="close" size={32} color="black" />
                         </TouchableOpacity>

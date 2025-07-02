@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         width: 'auto',
         margin: 5,
         borderWidth: 2,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderRadius: 16,
         padding: 8,
         paddingHorizontal: 14,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         left: 10,
         fontFamily: 'Cambria',
         fontSize: 20,
-        color: '#95E5FF',
+        color: '#26CFFF',
         paddingHorizontal: 6
     },
     formInput: {
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         padding: 6,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         margin: 5,
         borderRadius: 16,
         marginTop: 10

@@ -66,7 +66,7 @@ const styles = ScaledSheet.create({
     button: {
         width: '100%',
         padding: 20,
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 12

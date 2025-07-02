@@ -9,6 +9,7 @@ import { getUserData } from '../../store/userDataManager';
 import styles from '../../styles/ReviewsScreenStyles';
 import ImagePreview from '../ux/popup/ImagePreview';
 import WriteReview from '../ux/popup/WriteReview';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function ReviewsScreen({ route }) {
     const navigation = useNavigation();
@@ -22,6 +23,7 @@ function ReviewsScreen({ route }) {
     const [reviewsData, setReviews] = useState([]);
     const { openModal } = useUnauth();
     const { t } = useTranslation();
+    const insets = useSafeAreaInsets();
 
     const categories = [
         { id: 1, name: t('reviews-screen.positive-rate'), value: '5' },
@@ -271,11 +273,11 @@ function ReviewsScreen({ route }) {
                                                         <View style={styles.likeContainer}>
                                                             <TouchableOpacity onPress={() => dislike(review.id)} style={styles.likeCounter}>
                                                                 <Text style={styles.likeCount}>{review.dislike}</Text>
-                                                                <AntDesign name={likes[review.id] === 'dislike' ? "dislike1" : "dislike2"} size={24} color="#95E5FF" />
+                                                                <AntDesign name={likes[review.id] === 'dislike' ? "dislike1" : "dislike2"} size={24} color="#26CFFF" />
                                                             </TouchableOpacity>
                                                             <TouchableOpacity onPress={() => like(review.id)} style={[styles.likeCounter, { marginLeft: 10 }]}>
                                                                 <Text style={styles.likeCount}>{review.like}</Text>
-                                                                <AntDesign name={likes[review.id] === 'like' ? "like1" : "like2"} size={24} color="#95E5FF" />
+                                                                <AntDesign name={likes[review.id] === 'like' ? "like1" : "like2"} size={24} color="#26CFFF" />
                                                             </TouchableOpacity>
                                                         </View>
                                                     </View>
@@ -294,7 +296,7 @@ function ReviewsScreen({ route }) {
 
                         </>
                     )}
-                    <View style={styles.buttonContainer}>
+                    <View style={[styles.buttonContainer, { marginBottom: insets.bottom }]}>
                         <TouchableOpacity onPress={toggleWriteReview} style={styles.writeReviewButton}>
                             <Text style={styles.writeReviewButtonText}>{t("reviews-screen.write-review-btn")}</Text>
                         </TouchableOpacity>

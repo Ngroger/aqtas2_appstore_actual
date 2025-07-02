@@ -1,10 +1,9 @@
-import React, { Component, useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
-import styles from '../../../styles/AddPaypalStyles';
-import { Ionicons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import HowWorkPayPal from './messages/HowWorkPayPal';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { useEffect, useState } from 'react';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { getUserData } from '../../../store/userDataManager';
+import styles from '../../../styles/AddPaypalStyles';
+import HowWorkPayPal from './messages/HowWorkPayPal';
 
 function AddPaypal({ onClose }) {
     const [isShowHowItWork, setShowHowItWork] = useState(false);
@@ -69,7 +68,7 @@ function AddPaypal({ onClose }) {
                     </TouchableOpacity>
                     <Text style={styles.title}>Добавить PayPal</Text>
                     <TouchableOpacity onPress={toggleOpenHowItWork} style={styles.infoContainer}>
-                        <AntDesign name="question" size={24} color="#95E5FF" />
+                        <AntDesign name="question" size={24} color="#26CFFF" />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.form}>
@@ -79,7 +78,7 @@ function AddPaypal({ onClose }) {
                 <View style={styles.buttonContainer}>
                     <Text style={styles.link}>Нет аккаунте?</Text>
                     <TouchableOpacity>
-                        <Text style={[styles.link, { color: '#95E5FF', marginLeft: 4 }]}>Создайте</Text>
+                        <Text style={[styles.link, { color: '#26CFFF', marginLeft: 4 }]}>Создайте</Text>
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity onPress={addPayPal} style={styles.addPayPal}>

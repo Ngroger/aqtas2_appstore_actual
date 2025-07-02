@@ -10,6 +10,7 @@ import styles from '../../../styles/PersonalScreenStyle';
 import ChangePassword from '../../ux/popup/ChangePassword';
 import ChangePhone from '../../ux/popup/changePhone';
 import ChangeSex from '../../ux/popup/ChangeSex';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function PersonalDate() {
     const navigation = useNavigation();
@@ -31,7 +32,6 @@ function PersonalDate() {
     const [isPasswordModal, setPasswordModal] = useState(false);
     const [isSexModal, setSexModal] = useState(false);
 
-    const [password, onChangePassword] = useState('*****');
     const [sex, onChangeSex] = useState(userData.sex);
 
     const [birthday, onChangeBirthday] = useState(userData.birthday)
@@ -43,6 +43,8 @@ function PersonalDate() {
     const [showErrorAddress, setShowErrorAddress] = useState(false);
 
     const [isChoiseImage, setChoiseImage] = useState(false);
+
+    const insets = useSafeAreaInsets();
 
     const { t } = useTranslation();
 
@@ -310,34 +312,6 @@ function PersonalDate() {
         }
     };
 
-    const handleSavePressAddress = () => {
-        if (address.length < 2) {
-            setShowErrorAddress(true);
-        } else {
-            // Сохранить имя и выполнить соответствующие действия
-            setIsAddressChanged(false);
-            setShowErrorAddress(false);
-            const userID = userData.userId;
-            fetch('https://aqtas.garcom.kz/api/changeAddress', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ userID, address: address }), // Используйте newName вместо fullname
-            })
-                .then((response) => response.json())
-                .then(async (data) => {
-                    if (data.success) {
-                        // Обновите имя в UserManager или локальном хранилище
-                        const updatedUserData = await updateUserData({ address: address });
-                    } else {
-                    }
-                })
-                .catch((error) => {
-                });
-        }
-    };
-
     const toggleChangePhoneModal = () => {
         setChangePhoneModal(!isChangePhoneModal);
     };
@@ -457,16 +431,14 @@ function PersonalDate() {
                     <View style={styles.infoContainer}>
                         <View>
                             <Text style={styles.firstInfo}>{t('address-personal-data')}:</Text>
-                            <TextInput value={address} onChangeText={handleAddressChange} style={styles.secondInfo} />
+                            <TextInput value={address} readOnly={true} style={styles.secondInfo} />
                             {showErrorAddress && (
                                 <Text style={styles.error}>{t('above-two-symbol-message')}</Text>
                             )}
                         </View>
-                        {isAddressChanged && (
-                            <TouchableOpacity onPress={handleSavePressAddress} >
-                                <AntDesign name="save" size={24} color="black" />
-                            </TouchableOpacity>
-                        )}
+                        <TouchableOpacity onPress={() => navigation.navigate('SelectAddress')} style={styles.mapBtn}>
+                            <Text style={styles.mapBtnTxt}>Карта</Text>
+                        </TouchableOpacity>
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
@@ -475,7 +447,7 @@ function PersonalDate() {
             {isSexModal && <ChangeSex onClose={toggleSexModal} userId={userData.userId} onChangeSex={onChangeSex} />}
             {isChoiseImage &&
                 <View style={styles.background}>
-                    <View style={styles.containerChoiseImage}>
+                    <View style={[styles.containerChoiseImage, { paddingBottom: insets.bottom }]}>
                         <TouchableOpacity onPress={toggleChoiseImage}>
                             <AntDesign name="close" size={32} color="black" />
                         </TouchableOpacity>

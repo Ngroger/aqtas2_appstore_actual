@@ -1,21 +1,21 @@
-import { View, Text, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native';
-import styles from '../../styles/ProductCardScreenStyles';
-import Swiper from 'react-native-swiper'
-import { Entypo, MaterialIcons, Feather, AntDesign } from '@expo/vector-icons';
-import AboutCommision from '../ux/popup/AboutCommistion';
-import AboutCostumer from '../ux/popup/AboutCostumer';
-import { useEffect, useRef, useState } from 'react';
+import { AntDesign, Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import SizeSelector from '../ux/popup/SizeSelector';
-import { getUserData } from '../../store/userDataManager';
-import NoCardMessage from '../ux/popup/messages/NoCardMessage';
-import PaymentMethod from '../ux/popup/PaymentMethod';
-import SuccessOrder from '../ux/popup/messages/SuccessOrder';
-import NoAddressMessage from '../ux/popup/messages/NoAddressMessage';
+import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import Swiper from 'react-native-swiper';
 import { useUnauth } from '../../context/UnauthProvider';
+import { getUserData } from '../../store/userDataManager';
+import styles from '../../styles/ProductCardScreenStyles';
+import AboutCommision from '../ux/popup/AboutCommistion';
+import AboutCostumer from '../ux/popup/AboutCostumer';
+import NoAddressMessage from '../ux/popup/messages/NoAddressMessage';
+import NoCardMessage from '../ux/popup/messages/NoCardMessage';
+import SuccessOrder from '../ux/popup/messages/SuccessOrder';
+import PaymentMethod from '../ux/popup/PaymentMethod';
 import PhotoPreview from '../ux/popup/PhotoPreview';
+import SizeSelector from '../ux/popup/SizeSelector';
 
 function ProductCardScreen({ route }) {
     const [reviews, setReviews] = useState([]);
@@ -42,10 +42,11 @@ function ProductCardScreen({ route }) {
     const { openModal } = useUnauth();
     const scrollRef = useRef();
 
+    console.log("product: ", product);
+
     const toggleSetSize = async (id, product) => {
         const userData = await getUserData();
         if (userData) {
-            console.log("test 1");
             setIsSizeSelector(!isSizeSelect);
             setProductId(id);
             setSelectedProduct(product);
@@ -214,34 +215,6 @@ function ProductCardScreen({ route }) {
         }
     }
 
-    const buyNow = async (subcategory) => {
-        if (subcategory === 'Одежда') {
-            if (selectedSize === null) {
-                alert('Вы не выбрали размер');
-            } else {
-                checkPayment();
-                if (userData.address === 'Не указано') {
-                    setIsNoAddress(true);
-                } else {
-                    setIsNoAddress(false)
-                    if (checkPayment) {
-                        setPaymentsMethod(true);
-                    }
-                }
-            }
-        } else {
-            checkPayment();
-            if (userData.address === 'Не указано') {
-                setIsNoAddress(true);
-            } else {
-                setIsNoAddress(false)
-                if (checkPayment) {
-                    setPaymentsMethod(true);
-                }
-            }
-        }
-    }
-
     const toggleSetPaymentsMethod = () => {
         setPaymentsMethod(!isPaymentsMethod);
     }
@@ -279,7 +252,7 @@ function ProductCardScreen({ route }) {
     return (
         <>
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.goBackBtn}>
-                <Feather name="chevron-left" size={38} color="#95E5FF" />
+                <Feather name="chevron-left" size={38} color="#26CFFF" />
             </TouchableOpacity>
             <ScrollView ref={scrollRef} style={styles.container}>
 
@@ -310,7 +283,7 @@ function ProductCardScreen({ route }) {
                                 <>
                                     <Text style={styles.commission}>+{product.deliveryCost}тг</Text>
                                     <TouchableOpacity onPress={() => setShowAboutComission(true)} style={styles.commisionButton}>
-                                        <AntDesign name="question" size={16} color="#95E5FF" />
+                                        <AntDesign name="question" size={16} color="#26CFFF" />
                                     </TouchableOpacity>
                                 </>
                             )}
@@ -318,42 +291,41 @@ function ProductCardScreen({ route }) {
                         <Text style={styles.title}>{product.name}</Text>
                         <Text style={styles.description}>{product.description}</Text>
                     </View>
-                    {product.subcategory === 'Одежда' ? (
-                        <View style={[styles.infoContainer, { paddingVertical: 10 }]}>
-                            <Text style={styles.title}>Таблица размеров</Text>
-                            <View style={styles.sizeContainer}>
-                                {sizes.length == 0 ? (
-                                    <View>
-                                        <Text style={{ fontFamily: 'Cambria', fontSize: 20, color: '#BDBDBD', marginVertical: 5 }}>Продавец не добавил размеры</Text>
-                                    </View>
-                                ) : (
-                                    <>
-                                        {sizes.length === 0 ? (
-                                            <View>
-                                                <Text style={{ fontFamily: 'Cambria', fontSize: 20, color: '#BDBDBD', marginVertical: 5 }}>Продавец не добавил размеры</Text>
-                                            </View>
-                                        ) : (
-                                            <>
-                                                {sizes.map((size, index) => (
-                                                    <TouchableOpacity
-                                                        key={index}
-                                                        style={[
-                                                            styles.size,
-                                                            selectedSize === size ? styles.selectedSize : null,
-                                                        ]}
-                                                        onPress={() => selectSize(size)}
-                                                    >
-                                                        <Text style={styles.sizeText}>{size}</Text>
-                                                        {selectedSize === size && <View style={styles.sizeSelected} />}
-                                                    </TouchableOpacity>
-                                                ))}
-                                            </>
-                                        )}
-                                    </>
-                                )}
-                            </View>
+                    <View style={[styles.infoContainer, { paddingVertical: 10 }]}>
+                        <Text style={styles.title}>Таблица размеров</Text>
+                        <View style={styles.sizeContainer}>
+                            {sizes.length == 0 ? (
+                                <View>
+                                    <Text style={{ fontFamily: 'Cambria', fontSize: 20, color: '#BDBDBD', marginVertical: 5 }}>Продавец не добавил размеры</Text>
+                                </View>
+                            ) : (
+                                <>
+                                    {sizes.length === 0 ? (
+                                        <View>
+                                            <Text style={{ fontFamily: 'Cambria', fontSize: 20, color: '#BDBDBD', marginVertical: 5 }}>Продавец не добавил размеры</Text>
+                                        </View>
+                                    ) : (
+                                        <>
+                                            {sizes.map((size, index) => (
+                                                <TouchableOpacity
+                                                    key={index}
+                                                    style={[
+                                                        styles.size,
+                                                        selectedSize === size ? styles.selectedSize : null,
+                                                    ]}
+                                                    onPress={() => selectSize(size)}
+                                                >
+                                                    <Text style={styles.sizeText}>{size}</Text>
+                                                    {selectedSize === size && <View style={styles.sizeSelected} />}
+                                                </TouchableOpacity>
+                                            ))}
+                                        </>
+                                    )}
+                                </>
+                            )}
                         </View>
-                    ) : null}
+                        { product.sizeImages && <Image source={{ uri: `https://aqtas.garcom.kz/api/images/imageProducts/${product.sizeImages}` }} style={styles.tableImage}/> }
+                    </View>
                     <View style={styles.infoContainer}>
                         <Text style={[styles.title, { fontSize: 20, marginTop: 10 }]}>{t('additional-card-info')}</Text>
                         <View style={styles.additionInfo}>
@@ -361,16 +333,22 @@ function ProductCardScreen({ route }) {
                                 <Text style={styles.firstInfo}>{t('manufacture-card-info')}</Text>
                                 <Text style={styles.firstInfo}>{t('color-card-info')}</Text>
                                 <Text style={styles.firstInfo}>{t('category-card-info')}</Text>
+                                <Text style={styles.firstInfo}>Подкатегория</Text>
+                                <Text style={styles.firstInfo}>Тип продукта</Text>
                                 <Text style={styles.firstInfo}>{t('brend-card-info')}</Text>
                                 <Text style={styles.firstInfo}>{t('delivery-card-info')}</Text>
+                                <Text style={styles.firstInfo}>Единица измерения</Text>
                                 <Text style={styles.firstInfo}>Сезон</Text>
                             </View>
                             <View>
                                 <Text style={styles.secondInfo}>{product.manufacturer}</Text>
                                 <Text style={styles.secondInfo}>{product.color}</Text>
                                 <Text style={styles.secondInfo}>{product.category}</Text>
+                                <Text style={styles.secondInfo}>{product.subcategory}</Text>
+                                <Text style={styles.secondInfo}>{product.type}</Text>
                                 <Text style={styles.secondInfo}>{product.brend}</Text>
                                 <Text style={styles.secondInfo}>{product.delivery}</Text>
+                                <Text style={styles.secondInfo}>{product.entity}</Text>
                                 <Text style={styles.secondInfo}>{product.season}</Text>
                             </View>
                         </View>
@@ -383,7 +361,7 @@ function ProductCardScreen({ route }) {
                                     <View style={{ display: 'flex', flexDirection: 'row' }}>
                                         <Text style={[styles.title, { fontSize: 16, color: '#BDBDBD' }]}>{customerData[0]?.fullname}</Text>
                                         <TouchableOpacity onPress={toggleShowCostumer} style={[styles.commisionButton, { left: 7 }]}>
-                                            <Text style={{ fontFamily: 'Cambria', color: '#95E5FF', fontSize: 18 }}>!</Text>
+                                            <Text style={{ fontFamily: 'Cambria', color: '#26CFFF', fontSize: 18 }}>!</Text>
                                         </TouchableOpacity>
                                     </View>
                                     <View style={styles.statsContainer}>
@@ -551,15 +529,9 @@ function ProductCardScreen({ route }) {
                                                         ? item.description.slice(0, 20) + '...'
                                                         : item.description}
                                                 </Text>
-                                                {item.subcategory === 'Одежда' ? (
-                                                    <TouchableOpacity onPress={() => toggleSetSize(item.id, item)} style={styles.addCart}>
-                                                        <Text style={styles.addCartText}>{t('add-cart-button')}</Text>
-                                                    </TouchableOpacity>
-                                                ) : (
-                                                    <TouchableOpacity onPress={() => addToCart(item)} style={styles.addCart}>
-                                                        <Text style={styles.addCartText}>{t('add-cart-button')}</Text>
-                                                    </TouchableOpacity>
-                                                )}
+                                                <TouchableOpacity onPress={() => toggleSetSize(item.id, item)} style={styles.addCart}>
+                                                    <Text style={styles.addCartText}>{t('add-cart-button')}</Text>
+                                                </TouchableOpacity>
                                             </TouchableOpacity>
                                         </View>
                                     );
@@ -571,15 +543,9 @@ function ProductCardScreen({ route }) {
                         {/* <TouchableOpacity onPress={() => buyNow(product.subcategory)} style={styles.buyNow}>
                             <Text style={styles.buyNowText}>{t('buy-now-button')}</Text>
                         </TouchableOpacity> */}
-                        {product.subcategory === 'Одежда' ? (
-                            <TouchableOpacity onPress={() => toggleSetSize(product.id, product)} style={styles.addToCartButtons}>
-                                <Text style={styles.addToCartButtonText}>{t('add-to-card-from-card-screen')}</Text>
-                            </TouchableOpacity>
-                        ) : (
-                            <TouchableOpacity onPress={() => addToCart(product)} style={styles.addToCartButtons}>
-                                <Text style={styles.addToCartButtonText}>{t('add-to-card-from-card-screen')}</Text>
-                            </TouchableOpacity>
-                        )}
+                        <TouchableOpacity onPress={() => toggleSetSize(product.id, product)} style={styles.addToCartButtons}>
+                            <Text style={styles.addToCartButtonText}>{t('add-to-card-from-card-screen')}</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>

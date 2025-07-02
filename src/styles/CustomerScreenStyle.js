@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     },
     field: {
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderRadius: 15,
         flexDirection: 'row',
         display: 'flex',
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         padding: 2,
         backgroundColor: '#FFF',
-        color: '#95E5FF',
+        color: '#26CFFF',
         paddingHorizontal: 6,
         position: 'absolute',
         zIndex: 1000,
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     createButton: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     },
     photoBorder: {
         borderWidth: 2,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderStyle: 'dashed',
         borderRadius: 15,
         width: 200,
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     buttonChoiseImageText: {
         fontFamily: 'Cambria',
         fontSize: 24,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
 });
 

@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Cambria',
         fontSize: 24,
         width: 250,
-        
+
     },
     subtitle: {
         fontFamily: 'Cambria',
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     nextButton: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     },
     checkbox: {
         borderWidth: 2,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderRadius: 7,
         width: 25,
         height: 25,
@@ -75,10 +75,10 @@ const styles = StyleSheet.create({
         fontSize: 20,
         width: 250,
         marginLeft: 10
-    }, 
+    },
     dot: {
         borderRadius: 100,
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         width: 12,
         height: 12
     }

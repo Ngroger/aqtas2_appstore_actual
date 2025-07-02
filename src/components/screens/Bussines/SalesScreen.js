@@ -10,6 +10,7 @@ import styles from '../../../styles/SalesScreenStyle';
 
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function SalesScreen() {
     const navigation = useNavigation();
@@ -22,6 +23,7 @@ function SalesScreen() {
     const [selectedCard, setSelected] = useState([]);
     const [isLoad, setIsLoad] = useState(false);
     const { t } = useTranslation();
+    const insets = useSafeAreaInsets();
 
     const loadUserData = async () => {
         const userData = await getUserData();
@@ -140,7 +142,7 @@ function SalesScreen() {
                             <Text style={styles.noDataText}>Нет добавленных акций</Text>
                         </View>
                     )}
-                    <View style={styles.buttonContainer}>
+                    <View style={[styles.buttonContainer, { marginBottom: insets.bottom }]}>
                         <TouchableOpacity onPress={goToAddSale} style={styles.addSaleButton}>
                             <Text style={styles.addSaleButtonText}>Добавить акцию</Text>
                         </TouchableOpacity>

@@ -19,7 +19,7 @@ const styles = ScaledSheet.create({
     },
     button: {
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         padding: '12@msr',
         marginTop: 16,
         borderRadius: 15,

@@ -7,8 +7,9 @@ const styles = ScaledSheet.create({
         backgroundColor: '#fff'
     },
     logo: {
-        width: '110@ms',
-        height: "30@ms"
+        width: '80@ms',
+        height: "50@ms",
+        objectFit: 'contain'
     },
     navbar: {
         display: 'flex',
@@ -21,7 +22,7 @@ const styles = ScaledSheet.create({
     search: {
         flex: 1,
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         padding: '12@ms',
         borderRadius: 10,
         marginLeft: 12,
@@ -45,7 +46,7 @@ const styles = ScaledSheet.create({
         paddingHorizontal: 20
     },
     categoryActive: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         padding: '8@ms',
         borderRadius: 100,
         paddingHorizontal: 16,
@@ -59,7 +60,7 @@ const styles = ScaledSheet.create({
     },
 
     category: {
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderWidth: 1,
         padding: '8@ms',
         borderRadius: 100,
@@ -69,7 +70,7 @@ const styles = ScaledSheet.create({
     categoryText: {
         fontFamily: 'CambriaBold',
         fontSize: '18@mvs',
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     image: {
         width: '170@ms',
@@ -108,7 +109,7 @@ const styles = ScaledSheet.create({
         fontFamily: 'Cambria',
         textAlign: 'center',
         marginTop: 6,
-        color: '#95E5FF',
+        color: '#26CFFF',
         fontSize: '16@ms0.3'
     },
     loadingIndicatorContainer: {

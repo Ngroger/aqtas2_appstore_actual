@@ -3,7 +3,6 @@ import NetInfo from '@react-native-community/netinfo';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { CommonActions, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { vs } from 'react-native-size-matters';
@@ -45,6 +44,7 @@ import RegistrationScreen from '../../screens/RegistrationScreen';
 import ReviewsScreen from '../../screens/ReviewsScreen';
 import ShopsScreen from '../../screens/ShopsScreen';
 import WelcomeSliderScreen from '../../screens/WelcomeSliderScreen';
+import SelectAddressScreen from '../../screens/Cabinet/SelectAddressScreen';
 
 export default function AppNavigationContainer() {
   const { t } = useTranslation();
@@ -58,7 +58,7 @@ export default function AppNavigationContainer() {
     tabBarIcon: ({ focused }) => {
       const iconProps = {
         size: focused ? vs(20) : vs(20),
-        color: focused ? '#95E5FF' : '#BDBDBD',
+        color: focused ? '#26CFFF' : '#BDBDBD',
       };
       switch (route.name) {
         case t('main-name-bottom-tab'):
@@ -76,7 +76,7 @@ export default function AppNavigationContainer() {
       }
     },
     tabBarInactiveTintColor: '#BDBDBD',
-    tabBarActiveTintColor: '#95E5FF',
+    tabBarActiveTintColor: '#26CFFF',
     tabBarLabelStyle: { fontSize: vs(10) },
   });
 
@@ -118,8 +118,6 @@ export default function AppNavigationContainer() {
       console.log("check is new user: ", error);
     }
   };
-
-
 
   const customNavigate = (screen) => {
     if (navigationRef.current) {
@@ -215,6 +213,7 @@ export default function AppNavigationContainer() {
             <Stack.Screen name="NoInternet" component={NoInternetMessage} options={{ headerShown: false }} />
             <Stack.Screen name="Policy" component={PolicyScreen} options={{ headerShown: false }} />
             <Stack.Screen name="PublicOffer" component={PublicOfferScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="SelectAddress" component={SelectAddressScreen} options={{ headerShown: false }} />
           </Stack.Navigator>
         </CategoriesProvider>
       </UnauthProvider>

@@ -7,6 +7,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 0
     },
+    tableImage: {
+        width: '100%',
+        height: 200,
+        borderRadius: 15,
+        marginTop: 12,
+        backgroundColor: '#F6F6F6'
+    },
     goBackBtn: {
         width: 52,
         height: 52,
@@ -42,7 +49,7 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         marginHorizontal: 100,
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         backgroundColor: 'transparent'
     },
     activeDot: {
@@ -50,7 +57,7 @@ const styles = StyleSheet.create({
         height: 9,
         borderRadius: 100,
         marginHorizontal: 3,
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
     },
     oldCost: {
         fontFamily: 'Cambria',
@@ -66,7 +73,7 @@ const styles = StyleSheet.create({
     cost: {
         fontFamily: 'Cambria',
         fontSize: 24,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     commission: {
         left: 10,
@@ -258,7 +265,7 @@ const styles = StyleSheet.create({
         marginTop: 2
     },
     addCart: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 100,
         width: 120,
         paddingVertical: 7,
@@ -293,7 +300,7 @@ const styles = StyleSheet.create({
     sale: {
         position: 'absolute',
         zIndex: 10,
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 100,
         padding: 3,
         paddingHorizontal: 9,
@@ -314,7 +321,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     buyNow: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 100,
         padding: 16,
         alignItems: 'center',
@@ -328,7 +335,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     addToCartButtons: {
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderWidth: 1,
         borderRadius: 100,
         padding: 16,
@@ -339,7 +346,7 @@ const styles = StyleSheet.create({
     },
     addToCartButtonText: {
         fontFamily: 'CambriaBold',
-        color: '#95E5FF',
+        color: '#26CFFF',
         fontSize: 18,
     },
     noDataText: {

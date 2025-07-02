@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontFamily: 'Cambria',
-        fontSize: 24      
+        fontSize: 24
     },
     subtitle: {
         fontFamily: 'Cambria',
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     addCard: {
         width: '100%',
         padding: 10,
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 16,
         justifyContent: 'center',
         alignItems: 'center',

@@ -1,7 +1,7 @@
 import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { useEffect, useState } from 'react';
-import { Image, KeyboardAvoidingView, Modal, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useEffect, useState, useRef } from 'react';
+import { Image, KeyboardAvoidingView, Modal, Platform, ScrollView, Text, TextInput, TouchableOpacity, View, Keyboard, Animated, Easing } from 'react-native';
 import { getUserData } from '../../../store/userDataManager';
 import styles from '../../../styles/CreateProductStyle';
 import ChangeColor from './ChangeColor';
@@ -9,17 +9,26 @@ import EditCategory from './EditProduct/EditCategory';
 import EditDelivery from './EditProduct/EditDelivery';
 import EditSubcategory from './EditProduct/EditSubcategory';
 import SelectSeason from './SelectSeason';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import EditType from './EditProduct/EditType';
+import EditEntity from './EditProduct/EditEntity';
 
 function CreateProduct({ modalVisible, onClose }) {
     const [isChangeColor, setChangeColor] = useState(false);
     const [isChangeCategory, setChangeCategory] = useState(false);
+    const [isChangeType, setIsChangeType] = useState(false);
     const [isChangeDelivery, setChangeDelivery] = useState(false);
+    const [isChangeEntity, setChangeEntity] = useState(false);
     const [isChoiseImage, setChoiseImage] = useState(false);
     const [isChangeSubcategory, setIsChangeSubcategory] = useState(false);
     const [userData, setUresData] = useState({});
     const [selectedImages, setSelectedImages] = useState([]);
+    const [tableImage, setTableImage] = useState(null);
     const [category, setCategory] = useState('Выберите категорию');
+    const [entity, setEntity] = useState('Выберите ед.измерения');
+    const [categoryId, setCategoryId] = useState(null);
     const [subcategory, setSubcategory] = useState('Выберите подкатегорию');
+    const [type, setType] = useState('Выберите тип товара');
     const [color, setColor] = useState('Выберите цвет');
     const [delivry, setDelivery] = useState('Выберите доставку');
     const [name, onChangeName] = useState('');
@@ -31,12 +40,39 @@ function CreateProduct({ modalVisible, onClose }) {
     const [sizes, setSizes] = useState([]);
     const [newSize, setNewSize] = useState('');
     const [deleteSizeVisible, setDeleteSizeVisible] = useState(null);
-    const [seasonSelected, setSeasonSelected] = useState();
+    const [seasonSelected, setSeasonSelected] = useState('Выберите сезон');
     const [isShowSelectSeason, setIsShowSelectSeason] = useState();
+    const keyboardHeight = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        const showSub = Keyboard.addListener('keyboardDidShow', (e) => {
+            Animated.timing(keyboardHeight, {
+                toValue: e.endCoordinates.height,
+                duration: 10,
+                useNativeDriver: false,
+                easing: Easing.out(Easing.poly(5))
+            }).start();
+        });
+        const hideSub = Keyboard.addListener('keyboardDidHide', () => {
+            Animated.timing(keyboardHeight, {
+                toValue: 0,
+                duration: 10,
+                useNativeDriver: false,
+                easing: Easing.out(Easing.poly(5))
+            }).start();
+        });
+
+        return () => {
+            showSub.remove();
+            hideSub.remove();
+        };
+    }, []);
 
     const [isLoad, setIsLoad] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [isFailure, setIsFailure] = useState(false);
+
+    const insets = useSafeAreaInsets();
 
     const toggleShowSelectSeason = () => {
         setIsShowSelectSeason(!isShowSelectSeason);
@@ -45,9 +81,6 @@ function CreateProduct({ modalVisible, onClose }) {
     const toggleSetSeasonSelected = (season) => {
         setSeasonSelected(season);
     }
-
-
-
     const showDeleteSizeComponent = (index) => {
         setDeleteSizeVisible(index);
     };
@@ -82,17 +115,27 @@ function CreateProduct({ modalVisible, onClose }) {
         }
     };
 
-    const handleCategorySelect = (selectedCategory) => {
+    const handleCategorySelect = (selectedCategory, id) => {
         setCategory(selectedCategory);
+        setCategoryId(id);
     };
 
     const handleSubcategorySelect = (selectedCategory) => {
         setSubcategory(selectedCategory);
     };
 
+    const handleEntitySelect = (entity) => {
+        setEntity(entity);
+    };
+
     const handleDeliverySelect = (selectedDelivery) => {
         setDelivery(selectedDelivery);
     };
+
+    const handleTypeSelect = (type) => {
+        setType(type);
+        setIsChangeType(false);
+    }
 
     const handleColorSelect = (selectedColor) => {
         setColor(selectedColor);
@@ -112,12 +155,10 @@ function CreateProduct({ modalVisible, onClose }) {
         }
 
         let result = await ImagePicker.launchCameraAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ['images'],
             allowsEditing: true,
             quality: 1,
         });
-
-        console.log("ImagePicker result:", result.assets[0].uri);
 
         if (!result.canceled) {
             setChoiseImage(false);
@@ -125,6 +166,23 @@ function CreateProduct({ modalVisible, onClose }) {
         }
     };
 
+    const pickTablePhoto = async () => {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+            alert('Permission to access the camera roll is required!');
+            return;
+        }
+
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ['images'],
+            allowsEditing: true,
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            setTableImage(result.assets[0].uri);
+        }
+    }
 
     const pickPhoto = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -134,7 +192,7 @@ function CreateProduct({ modalVisible, onClose }) {
         }
 
         const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            mediaTypes: ['images'],
             allowsEditing: true,
             quality: 1,
         });
@@ -160,8 +218,16 @@ function CreateProduct({ modalVisible, onClose }) {
         setChangeCategory(!isChangeCategory);
     }
 
+    const toggleChangeEntity = () => {
+        setChangeEntity(!isChangeEntity);
+    }
+
     const toggleChangeSubcategory = () => {
         setIsChangeSubcategory(!isChangeSubcategory);
+    }
+
+    const toggleChangeType = () => {
+        setIsChangeType(!isChangeType);
     }
 
     const toggleChangeDelivery = () => {
@@ -214,9 +280,9 @@ function CreateProduct({ modalVisible, onClose }) {
         formData.append('UserID', userData.userId);
         formData.append('costumer', `${userData.fullname} ${userData.surname}`);
         formData.append('CustomerId', userData.userId);
-        sizes.map((size) => {
-            formData.append('sizes', size)
-        })
+        formData.append('type', type);
+        formData.append('entity', entity);
+        formData.append('sizes', JSON.stringify(sizes));
         formData.append('season', seasonSelected);
 
 
@@ -225,6 +291,14 @@ function CreateProduct({ modalVisible, onClose }) {
                 uri: selectedImages[i],
                 name: 'image.jpg',
                 type: 'image/jpeg',
+            });
+        };
+
+        if (tableImage) {
+            formData.append('sizeImages', {
+                uri: tableImage,
+                name: 'table.jpg',
+                type: 'image/jpeg'
             });
         }
 
@@ -266,8 +340,8 @@ function CreateProduct({ modalVisible, onClose }) {
     const getBtnStyle = _ => {
         if (isSuccess) return "#61c427"
         else if (isFailure) return "#FF0000"
-        else if (isLoad) return "#95E5FF"
-        else return "#95E5FF"
+        else if (isLoad) return "#26CFFF"
+        else return "#26CFFF"
     }
 
 
@@ -279,7 +353,7 @@ function CreateProduct({ modalVisible, onClose }) {
             animationType='fade'
         >
             <TouchableOpacity onPress={onClose} style={styles.background} />
-            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
+            <Animated.View style={[styles.container, { paddingBottom: keyboardHeight }]}>
                 <View style={styles.navbar}>
                     <TouchableOpacity onPress={handleClose}>
                         <AntDesign name="close" size={24} color="black" />
@@ -295,7 +369,7 @@ function CreateProduct({ modalVisible, onClose }) {
                                         <View key={index} style={styles.photoPickContainer}>
                                             <Image key={index} source={{ uri: image }} style={styles.photoPickFront} />
                                             <TouchableOpacity onPress={() => deletePhoto(index)} style={styles.deleteButton}>
-                                                <AntDesign name='close' color='#95E5FF' size={28} />
+                                                <AntDesign name='close' color='#26CFFF' size={28} />
                                             </TouchableOpacity>
                                         </View>
                                     ))}
@@ -305,57 +379,78 @@ function CreateProduct({ modalVisible, onClose }) {
                             )}
                         </ScrollView>
                         {selectedImages.length === 5 ? null : (<TouchableOpacity onPress={toggleChoiseImage} style={styles.photoPickButton}>
-                            <Feather name="camera" size={24} color="#95E5FF" />
+                            <Feather name="camera" size={24} color="#26CFFF" />
                         </TouchableOpacity>)}
                     </View>
                     <View>
-                        {subcategory === 'Одежда' && (
-                            <View style={styles.sizeContainer}>
-                                {sizes.map((size, index) => (
-                                    <TouchableOpacity
-                                        key={index}
-                                        style={styles.size}
-                                        onPress={() => showDeleteSizeComponent(index)}
-                                    >
-                                        <TextInput
-                                            keyboardType='numeric'
-                                            style={styles.sizeInput}
-                                            value={size.toString()}
-                                            editable={false}
-                                        />
-                                        {deleteSizeVisible === index && (
-                                            <View style={styles.deleteSize}>
-                                                <TouchableOpacity onPress={() => handleDeleteSize(index)}>
-                                                    <AntDesign name='close' size={24} color='#fff' />
-                                                </TouchableOpacity>
-                                            </View>
-                                        )}
-                                    </TouchableOpacity>
-                                ))}
-                                <View style={styles.size}>
+                        <View style={styles.sizeContainer}>
+                            {sizes.map((size, index) => (
+                                <TouchableOpacity
+                                    key={index}
+                                    style={styles.size}
+                                    onPress={() => showDeleteSizeComponent(index)}
+                                >
                                     <TextInput
                                         keyboardType='numeric'
                                         style={styles.sizeInput}
-                                        value={newSize}
-                                        onChangeText={(text) => setNewSize(text)}
-                                        maxLength={3}
+                                        value={size.toString()}
+                                        editable={false}
                                     />
-                                </View>
-                                {sizes.length >= 10 ? null : (
-                                    <>
-                                        {newSize !== '' ? (
-                                            <TouchableOpacity style={styles.size} onPress={handleSaveSize}>
-                                                <Feather name='save' size={24} color='#000' />
+                                    {deleteSizeVisible === index && (
+                                        <View style={styles.deleteSize}>
+                                            <TouchableOpacity onPress={() => handleDeleteSize(index)}>
+                                                <AntDesign name='close' size={24} color='#fff' />
                                             </TouchableOpacity>
-                                        ) : (
-                                            <TouchableOpacity style={styles.size} onPress={handleAddSize}>
-                                                <Feather name='plus' size={24} color='#000' />
-                                            </TouchableOpacity>
-                                        )}
-                                    </>
-                                )}
+                                        </View>
+                                    )}
+                                </TouchableOpacity>
+                            ))}
+                            <View style={styles.size}>
+                                <TextInput
+                                    keyboardType='numeric'
+                                    style={styles.sizeInput}
+                                    value={newSize}
+                                    onChangeText={(text) => setNewSize(text)}
+                                    maxLength={3}
+                                />
                             </View>
-                        )}
+                            {sizes.length >= 10 ? null : (
+                                <>
+                                    {newSize !== '' ? (
+                                        <TouchableOpacity style={styles.size} onPress={handleSaveSize}>
+                                            <Feather name='save' size={24} color='#26CFFF' />
+                                        </TouchableOpacity>
+                                    ) : (
+                                        <TouchableOpacity style={styles.size} onPress={handleAddSize}>
+                                            <Feather name='plus' size={24} color='#26CFFF' />
+                                        </TouchableOpacity>
+                                    )}
+                                </>
+                            )}
+                        </View>
+                        <Text style={styles.tableTitle}>Таблица размеров</Text>
+                        <View style={styles.tableContainer}>
+                            
+                            { tableImage ? (
+                                <>
+                                    <Image source={{ uri: tableImage }} style={styles.tableImage}/>
+                                    <TouchableOpacity onPress={() => setTableImage(null)} style={styles.tablePickButton}>
+                                        <AntDesign name='close' color='#26CFFF' size={28} />
+                                    </TouchableOpacity>
+                                </>
+                            ) : (
+                                <TouchableOpacity onPress={pickTablePhoto} style={styles.tablePickButton}>
+                                    <Feather name="camera" size={24} color="#26CFFF" />
+                                </TouchableOpacity>
+                            ) }
+                        </View>
+                        <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }]}>
+                            <Text style={styles.titleInput}>Ед.измерения</Text>
+                            <TextInput style={styles.input} readOnly={true} value={entity}/>
+                            <TouchableOpacity onPress={toggleChangeEntity}>
+                                <MaterialIcons name="arrow-forward-ios" size={24} color="#26CFFF" />
+                            </TouchableOpacity>
+                        </View>
                         <View style={styles.field}>
                             <Text style={styles.titleInput}>Название продукта</Text>
                             <TextInput value={name} onChangeText={onChangeName} style={styles.input} placeholder='Введите название продукта' />
@@ -364,7 +459,7 @@ function CreateProduct({ modalVisible, onClose }) {
                             <Text style={styles.titleInput}>Описание</Text>
                             <TextInput value={description} onChangeText={onChangeDescription} style={styles.input} placeholder='Введите описание продукта' />
                         </View>
-                        <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }]}>
+                        <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between', alignItems: 'center', alignItems: 'center' }]}>
                             <Text style={styles.titleInput}>Цена</Text>
                             <TextInput value={cost} onChangeText={onChangeCost} keyboardType='numeric' style={styles.input} placeholder='Введите цене продукта' />
                             <Text style={styles.currency}>тнг</Text>
@@ -373,65 +468,74 @@ function CreateProduct({ modalVisible, onClose }) {
                             <Text style={styles.titleInput}>Производитель</Text>
                             <TextInput value={manufacturer} onChangeText={onChangeManufacturer} style={styles.input} placeholder='Введите производителя' />
                         </View>
-                        <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between' }]}>
+                        <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }]}>
                             <Text style={styles.titleInput}>Цвет</Text>
-                            <Text style={styles.input}>{color}</Text>
+                            <TextInput style={styles.input} readOnly={true} value={color}/>
                             <TouchableOpacity onPress={toggleChangeColor}>
-                                <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
+                                <MaterialIcons name="arrow-forward-ios" size={24} color="#26CFFF" />
                             </TouchableOpacity>
                         </View>
                         <View style={styles.field}>
                             <Text style={styles.titleInput}>Бренд</Text>
                             <TextInput value={brend} onChangeText={onChangeBrend} style={styles.input} placeholder='Введите бренд' />
                         </View>
-                        <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between' }]}>
+                        <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }]}>
                             <Text style={styles.titleInput}>Категория</Text>
-                            <Text style={styles.input}>{category}</Text>
+                            <TextInput style={styles.input} readOnly={true} value={category}/>
                             <TouchableOpacity onPress={toggleChangeCategory}>
-                                <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
+                                <MaterialIcons name="arrow-forward-ios" size={24} color="#26CFFF" />
                             </TouchableOpacity>
                         </View>
-                        <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between' }]}>
+                        <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }]}>
                             <Text style={styles.titleInput}>Подкатегория</Text>
-                            <Text style={styles.input}>{subcategory}</Text>
+                            <TextInput style={styles.input} readOnly={true} value={subcategory}/>
                             <TouchableOpacity onPress={toggleChangeSubcategory}>
-                                <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
+                                <MaterialIcons name="arrow-forward-ios" size={24} color="#26CFFF" />
                             </TouchableOpacity>
                         </View>
-                        <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between' }]}>
+                        <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }]}>
+                            <Text style={styles.titleInput}>Тип товара</Text>
+                            <TextInput style={styles.input} readOnly={true} value={type}/>
+                            <TouchableOpacity onPress={toggleChangeType}>
+                                <MaterialIcons name="arrow-forward-ios" size={24} color="#26CFFF" />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }]}>
                             <Text style={styles.titleInput}>Доставка</Text>
-                            <Text style={styles.input}>{delivry}</Text>
+                            <TextInput style={styles.input} readOnly={true} value={delivry}/>
                             <TouchableOpacity onPress={toggleChangeDelivery}>
-                                <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
+                                <MaterialIcons name="arrow-forward-ios" size={24} color="#26CFFF" />
                             </TouchableOpacity>
                         </View>
-                        <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between' }]}>
+                        <View style={[styles.field, { flexDirection: 'row', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }]}>
                             <Text style={styles.titleInput}>Сезон</Text>
-                            <Text style={styles.input}>{seasonSelected == null ? 'Выберите сезон' : seasonSelected}</Text>
+                            <TextInput style={styles.input} readOnly={true} value={seasonSelected}/>
                             <TouchableOpacity onPress={toggleShowSelectSeason}>
-                                <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
+                                <MaterialIcons name="arrow-forward-ios" size={24} color="#26CFFF" />
                             </TouchableOpacity>
                         </View>
                     </View>
                     <TouchableOpacity
                         disabled={isLoad}
                         onPress={() => handleClick()}
-                        style={[styles.publicButton, { backgroundColor: getBtnStyle() }]}
+                        style={[styles.publicButton, { backgroundColor: getBtnStyle(), marginBottom: insets.bottom }]}
                     >
                         <Text style={styles.publicButtonText}>
                             {getBtnTxt()}
                         </Text>
                     </TouchableOpacity>
                 </ScrollView>
-            </KeyboardAvoidingView>
+            </Animated.View>
             {isChangeColor && <ChangeColor onColorSelect={handleColorSelect} onClose={toggleChangeColor} />}
             {isChangeCategory && <EditCategory onCategorySelect={handleCategorySelect} onClose={toggleChangeCategory} />}
             {isChangeDelivery && <EditDelivery onDeliverySelect={handleDeliverySelect} onClose={toggleChangeDelivery} />}
-            {isChangeSubcategory && <EditSubcategory onSubcategorySelect={handleSubcategorySelect} onClose={toggleChangeSubcategory} />}
+            { isChangeType && <EditType onClose={() => setIsChangeType(false)} onTypeSelect={handleTypeSelect}/> }
+            {isChangeSubcategory && <EditSubcategory id={categoryId} onSubcategorySelect={handleSubcategorySelect} onClose={toggleChangeSubcategory} />}
             {isShowSelectSeason && <SelectSeason onClose={toggleShowSelectSeason} onSeasonSelect={toggleSetSeasonSelected} />}
+            { isChangeEntity && <EditEntity onEntitySelect={handleEntitySelect} onClose={toggleChangeEntity}/> }
             {isChoiseImage &&
                 <View style={styles.background}>
-                    <View style={styles.containerChoiseImage}>
+                    <View style={[styles.containerChoiseImage, { paddingBottom: insets.bottom }]}>
                         <TouchableOpacity onPress={toggleChoiseImage}>
                             <AntDesign name="close" size={32} color="black" />
                         </TouchableOpacity>

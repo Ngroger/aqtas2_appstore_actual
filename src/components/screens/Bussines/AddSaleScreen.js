@@ -4,6 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getUserData } from '../../../store/userDataManager';
 import styles from '../../../styles/AddSaleScreenStyles';
 import SelectSeason from '../../ux/popup/SelectSeason';
@@ -27,6 +28,8 @@ function AddSaleScreen() {
     const [isSelectedSeasonError, setSelectedSeasonError] = useState(false);
 
     const [isErrorMessage, setIsErrorMessage] = useState(false);
+
+    const insets = useSafeAreaInsets();
 
     const { t } = useTranslation();
 
@@ -162,7 +165,7 @@ function AddSaleScreen() {
                             <View style={image ? { ...styles.photoPick, borderWidth: 0 } : styles.photoPick}>
                                 <Image source={{ uri: image }} style={{ width: '100%', height: '100%', borderRadius: 15 }} />
                                 <TouchableOpacity onPress={image ? deleteImage : choiseImage} style={styles.photoPickButton}>
-                                    {image ? <AntDesign name="close" size={30} color="#95E5FF" /> : <Feather name="camera" size={30} color="#95E5FF" />}
+                                    {image ? <AntDesign name="close" size={30} color="#26CFFF" /> : <Feather name="camera" size={30} color="#26CFFF" />}
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -233,7 +236,7 @@ function AddSaleScreen() {
                                     readOnly={true}
                                 />
                                 <TouchableOpacity onPress={toggleSetSeasonShowMenu}>
-                                    <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
+                                    <MaterialIcons name="arrow-forward-ios" size={24} color="#26CFFF" />
                                 </TouchableOpacity>
                             </View>
                             {isSelectedSeasonError &&
@@ -259,7 +262,7 @@ function AddSaleScreen() {
             </KeyboardAvoidingView>
             {isChoiseImage &&
                 <View style={styles.background}>
-                    <View style={styles.containerChoiseImage}>
+                    <View style={[styles.containerChoiseImage, { paddingBottom: insets.bottom }]}>
                         <TouchableOpacity onPress={choiseImage}>
                             <AntDesign name="close" size={32} color="black" />
                         </TouchableOpacity>

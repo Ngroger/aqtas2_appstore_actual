@@ -1,5 +1,9 @@
 {
     "change-language": "Тілді таңдаңыз",
+    "select-language": "Тілді таңдау",
+    "select-language-modal": {
+        "title": "Тілді таңдаңыз"
+    },
     "russian-language": "Орыс",
     "kaz-language": "Қазақ",
     "language": "Орыс",
@@ -44,9 +48,24 @@
     "add-cart-button": "СЕБЕТКЕ",
     "shopping-center-filter": "Сауда орталығы",
     "shops-filter": "Дүкендер",
-    "bazaars-filter": "Базарлар",
-    "flea-markets-filter": "Ескі заттар нарығы",
-    "markets-filter": "Нарықтар",
+    "official-brand-shops-filter": "Ресми бренд дүкендері",
+    "online-shops-filter": "Онлайн дүкендер",
+    "manufacturer-shops-filter": "Өндіруші дүкендері",
+    "chinese-shops-filter": "Қытай дүкендері",
+    "specialized-shops-filter": "Мамандандырылған дүкендер",
+    "electronics-shops-filter": "Электроника дүкендері",
+    "clothing-shoes-shops-filter": "Киім мен аяқ киім дүкендері",
+    "cosmetics-shops-filter": "Косметика және парфюмерия дүкендері",
+    "home-goods-shops-filter": "Үйге арналған тауарлар дүкендері",
+    "sports-shops-filter": "Спорт тауарлары дүкендері",
+    "toy-shops-filter": "Ойыншықтар дүкендері",
+    "antique-shops-filter": "Антиквариат дүкендері",
+    "secondhand-shops-filter": "Секонд-хенд дүкендері",
+    "eco-shops-filter": "Эко-дүкендер",
+    "pet-shops-filter": "Жануарларға арналған дүкендер",
+    "book-shops-filter": "Кітап дүкендері",
+    "gift-shops-filter": "Сыйлық пен сувенир дүкендері",
+    "wholesale-shops-filter": "Көтерме дүкендер",
     "name-shop-info": "Атауы",
     "address-shop-info": "Мекен-жайы",
     "phone-number-shop-info": "Телефон",
@@ -67,6 +86,7 @@
     "sex-personal-data": "Жыныс",
     "birthday-personal-data": "Туған күн",
     "address-personal-data": "Мекен-жайы",
+    "map-btn-txt": "Карта",
     "undefined-personal-data": "Көрсетілмеген",
     "all-finances-filter": "Барлығы",
     "replenishment-finances-filter": "Толықтыру",
@@ -521,5 +541,17 @@
         "count": "Саны",
         "address": "Мекенжайы: ",
         "size": "Өлшемі: "
+    },
+    "select-address-screen": {
+        "title": "Мекенжайды таңдаңыз",
+        "placeholder": "Мекенжайды енгізуді бастаңыз",
+        "alert-title": "Хабарлама",
+        "alert-subtitle": "Орналасқан жер қызметі қосылғанына көз жеткізіңіз",
+        "load-txt": "Бұл біраз уақыт алуы мүмкін",
+        "not-fount-txt": "Сәйкес мекенжай табылмады",
+        "save-btn": "Сақтау",
+        "in-proccess": "Өңделуде",
+        "success-title": "Сәтті",
+        "success-subtitle": "Мекенжай сәтті сақталды"
     }
 }

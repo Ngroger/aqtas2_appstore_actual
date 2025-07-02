@@ -1,11 +1,10 @@
-import React, { useRef } from 'react';
-import { View, TouchableOpacity, Text, Image, Easing, Animated, StatusBar } from 'react-native';
-import styles from '../../styles/NoInternetScreenStyles';
 import { AntDesign } from '@expo/vector-icons';
-import { useTranslation } from 'react-i18next';
 import NetInfo from '@react-native-community/netinfo';
-import { hasToken } from '../../store/tokenManager';
 import { useNavigation } from '@react-navigation/native';
+import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Animated, Easing, Image, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import styles from '../../styles/NoInternetScreenStyles';
 
 function NoInternetMessage() {
     const { t } = useTranslation();
@@ -46,7 +45,7 @@ function NoInternetMessage() {
             <Text style={styles.title}>Не удалось подключиться к интернету.</Text>
             <TouchableOpacity style={styles.button} onPress={reloadInternetConnection}>
                 <Animated.View style={{ transform: [{ rotate: spin }] }}>
-                    <AntDesign name="reload1" size={24} color="#95E5FF" />
+                    <AntDesign name="reload1" size={24} color="#26CFFF" />
                 </Animated.View>
             </TouchableOpacity>
             <StatusBar backgroundColor="transparent" translucent={true} />

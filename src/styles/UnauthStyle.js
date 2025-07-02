@@ -54,7 +54,7 @@ const styles = ScaledSheet.create({
   },
   buttonText: {
     fontSize: '14@s',
-    color: '#95E5FF',
+    color: '#26CFFF',
     fontFamily: 'CambriaBold'
   }
 });

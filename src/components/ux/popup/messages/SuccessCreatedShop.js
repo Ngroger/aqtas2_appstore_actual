@@ -59,7 +59,7 @@ function SuccessCreatedShop({ onClose }) {
                         <Text style={styles.title}>{t('success-created-shop-title')}</Text>
                         <Text style={styles.subtitle}>
                             {t('success-created-shop-subtitle-one')}{' '}
-                            <Text style={{ fontFamily: 'CambriaBold', color: '#95E5FF' }}>AQTas.</Text>
+                            <Text style={{ fontFamily: 'CambriaBold', color: '#26CFFF' }}>AQTas.</Text>
                             {t('success-created-shop-subtitle-two')}
                         </Text>
                         <TouchableOpacity style={styles.nextButton} onPress={() => setShowRules(true)}>

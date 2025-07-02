@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getUserData } from '../../store/userDataManager';
 import styles from '../../styles/EditProductStyles';
 import AboutCostumer from '../ux/popup/AboutCostumer';
@@ -31,6 +32,8 @@ function EditProductScreen() {
     const [selectedImageIndex, setSelectedImageIndex] = useState(null);
     const [isProccessUpdate, setIsProccessUpdate] = useState(false);
     const [isSavePhotos, setIsSavePhotos] = useState(false);
+
+    const insets = useSafeAreaInsets();
 
     useEffect(() => {
         const hasChanges = productImages.some((uri, i) => uri !== (productData[`imagePreview${i + 1}`] ?? null));
@@ -226,7 +229,7 @@ function EditProductScreen() {
         return (
             <View>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.goBackBtn}>
-                    <Feather name="chevron-left" size={24} color="#95E5FF" />
+                    <Feather name="chevron-left" size={24} color="#26CFFF" />
                 </TouchableOpacity>
                 {isSavePhotos && (
                     <TouchableOpacity
@@ -234,7 +237,7 @@ function EditProductScreen() {
                         onPress={() => updatePhotos()}
                         style={styles.saveBtn}
                     >
-                        <Feather name={isProccessUpdate ? 'upload-cloud' : 'save'} size={18} color="#95E5FF" />
+                        <Feather name={isProccessUpdate ? 'upload-cloud' : 'save'} size={18} color="#26CFFF" />
                     </TouchableOpacity>
                 )}
                 <ScrollView style={styles.container}>
@@ -252,13 +255,13 @@ function EditProductScreen() {
                                                         source={{ uri: uri.startsWith('file://') ? uri : `https://aqtas.garcom.kz/api/images/imageProducts/${uri}` }}
                                                     />
                                                     <TouchableOpacity onPress={() => deletePhoto(index)} style={styles.deletePhoto}>
-                                                        <AntDesign name="close" size={18} color="#95E5FF" />
+                                                        <AntDesign name="close" size={18} color="#26CFFF" />
                                                     </TouchableOpacity>
                                                 </View>
                                             ) : (
-                                                <View style={[styles.photo, { backgroundColor: 'transparent', borderWidth: 1, borderColor: '#95E5FF', borderStyle: 'dashed', justifyContent: 'center', alignItems: 'center' }]}>
+                                                <View style={[styles.photo, { backgroundColor: 'transparent', borderWidth: 1, borderColor: '#26CFFF', borderStyle: 'dashed', justifyContent: 'center', alignItems: 'center' }]}>
                                                     <TouchableOpacity onPress={() => handleChoiseImage(index)} style={styles.photoPickButton}>
-                                                        <Feather name="camera" size={18} color="#95E5FF" />
+                                                        <Feather name="camera" size={18} color="#26CFFF" />
                                                     </TouchableOpacity>
                                                 </View>
                                             )}
@@ -339,7 +342,7 @@ function EditProductScreen() {
                                     <View style={{ display: 'flex', flexDirection: 'row' }}>
                                         <Text style={[styles.title, { fontSize: 18, color: '#BDBDBD' }]}>{item.fullname} {item.surname}</Text>
                                         <TouchableOpacity onPress={toggleShowCostumer} style={[styles.commisionButton, { left: 7 }]}>
-                                            <Text style={{ fontFamily: 'Cambria', color: '#95E5FF', fontSize: 18 }}>!</Text>
+                                            <Text style={{ fontFamily: 'Cambria', color: '#26CFFF', fontSize: 18 }}>!</Text>
                                         </TouchableOpacity>
                                     </View>
                                     <View style={styles.statsContainer}>
@@ -363,7 +366,7 @@ function EditProductScreen() {
                 </ScrollView>
                 {isChoiseImage && (
                     <View style={styles.background}>
-                        <View style={styles.containerChoiseImage}>
+                        <View style={[styles.containerChoiseImage, { paddingBottom: insets.bottom }]}>
                             <TouchableOpacity onPress={() => setIsChoiseImage(false)}>
                                 <AntDesign name="close" size={32} color="black" />
                             </TouchableOpacity>
@@ -380,7 +383,7 @@ function EditProductScreen() {
                 {isShowEditInfo && <EditInfo data={productData} productId={editProductId} onClose={toggleShowEditInfo} />}
                 {isShowEditAddtionalInfo && <EditAdditionalInfo data={productData} productId={editProductId} onClose={toggleShowAdditionalInfo} />}
                 {isUpToTop && <UpToTop onClose={toggleUpToTop} />}
-                <StatusBar translucent={true} backgroundColor='transparent' />
+                <StatusBar style='dark' />
             </View>
         )
     }

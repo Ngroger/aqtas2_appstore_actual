@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         width: 200,
         height: 200,
         borderWidth: 2,
-        borderColor: "#95E5FF",
+        borderColor: "#26CFFF",
         borderRadius: 15,
         borderStyle: 'dashed',
         marginTop: 10,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     },
     field: {
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderRadius: 15,
         padding: 16,
         paddingHorizontal: 20,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     },
     addSaleButton: {
         borderRadius: 15,
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         padding: 14,
         justifyContent: 'center',
         alignItems: 'center',
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     buttonChoiseImageText: {
         fontFamily: 'Cambria',
         fontSize: 24,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     error: {
         fontFamily: 'Cambria',

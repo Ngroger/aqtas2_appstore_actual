@@ -27,7 +27,7 @@ const styles = ScaledSheet.create({
         borderBottomWidth: 1,
     },
     categoryActive: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         padding: 8,
         borderRadius: 100,
         paddingHorizontal: 16,
@@ -40,7 +40,7 @@ const styles = ScaledSheet.create({
         color: '#fff'
     },
     category: {
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderWidth: 1,
         padding: 8,
         borderRadius: 100,
@@ -53,7 +53,7 @@ const styles = ScaledSheet.create({
     categoryText: {
         fontFamily: 'CambriaBold',
         fontSize: 18,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     aboutCostumer: {
         padding: 16,
@@ -179,7 +179,7 @@ const styles = ScaledSheet.create({
         fontFamily: 'Cambria',
         fontSize: 24,
         marginHorizontal: 5,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     imagesPreview: {
         flexDirection: 'row',
@@ -197,7 +197,7 @@ const styles = ScaledSheet.create({
         padding: 16
     },
     writeReviewButton: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 15,
         padding: 10,
         justifyContent: "center",

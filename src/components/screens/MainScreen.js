@@ -1,23 +1,23 @@
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Alert, FlatList, Image, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import Swiper from 'react-native-swiper';
-import { categories } from '../../categories';
 import { useCategories } from '../../context/CategoriesProvider';
 import { useUnauth } from '../../context/UnauthProvider';
 import { getUserData } from '../../store/userDataManager';
 import styles from '../../styles/MainScreenStyle';
 import SizeSelector from '../ux/popup/SizeSelector';
+import i18next from '../../i18next';
 
 function MainScreen() {
     const navigation = useNavigation();
     const [products, setProducts] = useState([]);
     const [userData, setUserData] = useState({});
 
-    const { selectedCategory, selectCategoryContext } = useCategories();
+    const { selectedCategory, selectedSubcategory, selectCategoryContext, selectSubcategoryContext } = useCategories();
 
     const [isLoading, setIsLoading] = useState(false);
     const [search, onChangeSearch] = useState('');
@@ -27,11 +27,37 @@ function MainScreen() {
     const { t } = useTranslation();
     const { openModal } = useUnauth();
 
+    const [categories, setCategories] = useState([]);
+    const [lang, setLang] = useState(null);
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+    const fetchCategories = async _ => {
+        try {
+            const language = i18next.language;
+            if (language) {
+                setLang(language);
+                const response = await fetch('https://aqtas.garcom.kz/api/categories');
+
+                const responseJson = await response.json();
+
+                if (responseJson.success) {
+                    setCategories(responseJson.categories);
+                }
+            }
+        } catch (error) {
+            console.log("Fetch Categories Error: ", error);
+        }
+    }
+
     useEffect(() => {
         loadUserData();
         // Здесь вы вызываете fetchProducts при изменении selectedCategory
-        fetchProducts(selectedCategory ? 'categories' : 'all', selectedCategory);
-    }, [selectedCategory]);
+        console.log("params:", selectedCategory ? 'categories' : 'all', selectedCategory, selectedSubcategory);
+        fetchProducts(selectedCategory ? 'categories' : 'all', selectedCategory, selectedSubcategory);
+    }, [selectedCategory, selectedSubcategory]);
 
     const toggleSetSize = async (id, product) => {
         const userData = await getUserData();
@@ -46,22 +72,23 @@ function MainScreen() {
     };
 
     const selectCategory = async (category) => {
-        console.log("selected category: ", category);
         if (selectedCategory === category) {
             selectCategoryContext(null);
+            selectSubcategoryContext(null);
             await fetchProducts('all');
         } else {
             selectCategoryContext(category);
-            await fetchProducts('categories', category);
+            selectSubcategoryContext(null);
+            await fetchProducts('categories', category, null);
         }
     };
 
-    const fetchProducts = async (type, category) => {
+    const fetchProducts = async (type, category, subcategory) => {
         try {
             setIsLoading(true);
 
             const url = type === 'categories'
-                ? `https://aqtas.garcom.kz/api/products?category=${category}`
+                ? `https://aqtas.garcom.kz/api/products?category=${category}&subcategory=${subcategory}`
                 : 'https://aqtas.garcom.kz/api/products';
 
             console.log("url: ", url);
@@ -94,53 +121,6 @@ function MainScreen() {
             setUserData(userData);
         }
     };
-
-    const addToCart = async (product) => {
-        console.log("test");
-        console.log("addToCart product LOG: ", product);
-        if (!userData || !userData.userId) {
-            openModal("Предупреждение", "Для того, чтоб добавить товар в корзину нужно авторизорваться");
-            return;
-        }
-
-        try {
-            const cartItem = {
-                name: product.name,
-                oldCost: product.oldCost,
-                newCost: product.cost,
-                description: product.description,
-                brend: product.brend,
-                costumer: product.costumer,
-                imagePreview: product.imagePreview1,
-                UserID: userData.userId,
-                count: 1,
-                customerId: product.CustomerId,
-                productId: product.id
-            };
-
-            console.log("test");
-            console.log("product: ", product);
-
-            const response = await fetch('https://aqtas.garcom.kz/api/addToCart', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(cartItem),
-            });
-
-            const responseJson = await response.json();
-
-            if (responseJson.success) {
-                Alert.alert(`${t("message-title")}`, `${t("product-success")}`);
-            } else if (responseJson.error === 'Этот товар уже есть в корзине') {
-                Alert.alert(`${t("title-no-card-message")}`, `${t("product-exist-in-cart")}`);
-            }
-        } catch (error) {
-            console.log('add to cart error:', error);
-        }
-    };
-
 
     const groupedProducts = {};
     if (Array.isArray(products)) {
@@ -189,21 +169,17 @@ function MainScreen() {
                         {categories.map((category, index) => (
                             <TouchableOpacity
                                 key={index}
-                                style={
-                                    selectedCategory === category.value
-                                        ? styles.categoryActive
-                                        : styles.category
+                                style={ selectedCategory === category.name_ru ? 
+                                    [styles.category, { opacity: 0.25 }] :
+                                    styles.category
                                 }
-                                onPress={() => selectCategory(category.value)}
+                                onPress={() => selectCategory(category.name_ru)}
                             >
+                                <Image style={styles.categoryImage} source={{ uri: `https://aqtas.garcom.kz/api/categories/${category.photo_url}` }}/>
                                 <Text
-                                    style={
-                                        selectedCategory === category.value
-                                            ? styles.categoryTextActive
-                                            : styles.categoryText
-                                    }
+                                    style={styles.categoryText}
                                 >
-                                    {t(`${category.label}`)}
+                                    {t(`${category.name_ru}`)}
                                 </Text>
                             </TouchableOpacity>
                         ))}
@@ -211,11 +187,10 @@ function MainScreen() {
                 </View>
                 {isLoading && (
                     <View style={styles.loadingIndicatorContainer}>
-                        <ActivityIndicator size="large" color="#95E5FF" />
+                        <ActivityIndicator size="large" color="#26CFFF" />
                         <Text style={[styles.textLoad, { color: '#000' }]}>{t('products-load-message')}</Text>
                     </View>
                 )}
-
                 {!isLoading && (
                     <>
                         {products.length > 0 ? (
@@ -287,15 +262,9 @@ function MainScreen() {
                                                                     : product.description
                                                                 }
                                                             </Text>
-                                                            {product.subcategory === 'Одежда' ? (
-                                                                <TouchableOpacity onPress={() => toggleSetSize(product.id, product)} style={styles.addCart}>
-                                                                    <Text style={styles.addCartText}>{t('add-cart-button')}</Text>
-                                                                </TouchableOpacity>
-                                                            ) : (
-                                                                <TouchableOpacity onPress={() => addToCart(product)} style={styles.addCart}>
-                                                                    <Text style={styles.addCartText}>{t('add-cart-button')}</Text>
-                                                                </TouchableOpacity>
-                                                            )}
+                                                            <TouchableOpacity onPress={() => toggleSetSize(product.id, product)} style={styles.addCart}>
+                                                                <Text style={styles.addCartText}>{t('add-cart-button')}</Text>
+                                                            </TouchableOpacity>
                                                         </TouchableOpacity>
                                                     </View>
                                                 ))}
@@ -305,7 +274,9 @@ function MainScreen() {
                                 />
                             </>
                         ) : (
-                            <Text style={styles.noDataText}>{t('no-products-message')}</Text>
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={styles.noDataText}>{t('no-products-message')}</Text>
+                            </View>
                         )}
                     </>
                 )}

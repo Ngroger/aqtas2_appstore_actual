@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     },
     topic: {
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         padding: 12,
         alignContent: 'center',
         borderRadius: 15,

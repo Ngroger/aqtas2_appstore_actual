@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginLeft: 10
     },
-    root: {flex: 1, padding: 20},
-    codeFieldRoot: {marginTop: 20},
+    root: { flex: 1, padding: 20 },
+    codeFieldRoot: { marginTop: 20 },
     cell: {
         width: 40,
         height: 40,
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 5
     },
     focusCell: {
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
     },
     time: {
         color: 'rgba(0, 0, 0, 0.3)',
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     buttonConfrim: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 15,
         width: '100%',
         padding: 10,

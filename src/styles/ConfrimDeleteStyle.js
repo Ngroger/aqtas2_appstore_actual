@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         padding: 2
     },
     buttonText: {
-        color: '#95E5FF',
+        color: '#26CFFF',
         fontFamily: 'CambriaBold',
         fontSize: 28
     },

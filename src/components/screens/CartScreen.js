@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, Image, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
@@ -9,6 +9,7 @@ import { getUserData } from '../../store/userDataManager';
 import styles from '../../styles/CartScreenStyle';
 import NoAddressMessage from '../ux/popup/messages/NoAddressMessage';
 import SuccessOrder from '../ux/popup/messages/SuccessOrder';
+import OrderModal from '../ux/popup/OrderModal';
 
 function CartScreen() {
     const [userData, setUserData] = useState({});
@@ -19,6 +20,8 @@ function CartScreen() {
     const [isNoAddress, setIsNoAddress] = useState(false);
     const { t } = useTranslation();
     const { openModal } = useUnauth();
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [isOpenOrder, setIsOpenOrder] = useState(false);
 
     const selectItem = (index) => {
         setSelectedItems(prevSelectedItems => ({
@@ -31,16 +34,34 @@ function CartScreen() {
         setSuccessOrder(!isSuccessOrder);
     };
 
+    useEffect(() => {
+        countTotalPrice();
+    }, [selectedItems, cart]);
+
+
+    const countTotalPrice = () => {
+        const selectedIds = Object.entries(selectedItems)
+            .filter(([_, isSelected]) => isSelected)
+            .map(([id]) => parseInt(id));
+
+        const total = cart.reduce((acc, item) => {
+            if (selectedIds.includes(item.id)) {
+                return acc + (item.newCost * item.count);
+            }
+            return acc;
+        }, 0);
+
+        setTotalPrice(total);
+    };
+
     useFocusEffect(
         useCallback(() => {
             loadUserData();
         }, [])
     );
 
-
-    const buyProduct = async (id, size, CustomerId, productId) => {
+    const buyProducts = async (id, size, CustomerId, productId) => {
         try {
-            console.log("productId: ", productId);
             const requestData = {
                 name: userData.fullname,
                 address: userData.address,
@@ -66,7 +87,6 @@ function CartScreen() {
             const responseJson = await response.json();
 
             if (responseJson.success) {
-                toggleSetSuccessOrder();
                 deleteProductByCard(productId);
             }
         } catch (error) {
@@ -208,6 +228,7 @@ function CartScreen() {
                         <FlatList
                             data={cart}
                             keyExtractor={(item, index) => index.toString()}
+                            contentContainerStyle={{ paddingBottom: 120 }}
                             renderItem={({ item }) => (
                                 <View style={styles.card}>
                                     <Image style={styles.productPreview} source={{ uri: `https://aqtas.garcom.kz/api/images/imageProducts/${item.imagePreview}` }} />
@@ -270,9 +291,6 @@ function CartScreen() {
                                                         <Text style={styles.counterButtonText}>+</Text>
                                                     </TouchableOpacity>
                                                 </View>
-                                                <TouchableOpacity onPress={() => buyProduct(item.id, item.size, item.customerId, item.productId)} style={styles.buttonBuy}>
-                                                    <Text style={styles.textBuy}>{t('buy-button')}</Text>
-                                                </TouchableOpacity>
                                             </View>
                                         </View>
                                     </View>
@@ -287,10 +305,27 @@ function CartScreen() {
                     )
                 }
             </View >
+            {Object.values(selectedItems).includes(true) && (
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity onPress={() => setIsOpenOrder(true)} style={styles.orderBtn}>
+                        <Text style={styles.orderBtnTxt}>К оформлению</Text>
+                        <Text style={styles.orderBtnTxt}>{totalPrice}тг</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
             <StatusBar backgroundColor="transparent" translucent={true} />
             {isSuccessOrder && <SuccessOrder clearCart={clearCart} updatedCart={() => loadUserData()} onClose={() => setSuccessOrder(false)} />}
             {isNoAddress && <NoAddressMessage />}
-        </SafeAreaView >
+            <OrderModal 
+                totalPrice={totalPrice} 
+                modalVisible={isOpenOrder} 
+                onClose={() => setIsOpenOrder(false)} 
+                orders={selectedItems}
+                onBuy={buyProducts}
+                cart={cart}
+                onClear={() => setSelectedItems({})}
+            />
+        </SafeAreaView> 
     )
 };
 

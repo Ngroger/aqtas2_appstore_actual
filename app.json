@@ -6,7 +6,7 @@
       "ios",
       "android"
     ],
-    "version": "2.6.2",
+    "version": "2.6.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -14,65 +14,41 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#95E5FF"
+      "backgroundColor": "#26CFFF"
     },
     "ios": {
       "deploymentTarget": "14.0",
       "supportsTablet": false,
       "bundleIdentifier": "com.bogdandev3444456.aqtas",
-      "buildNumber": "2.2.4",
+      "buildNumber": "2.2.5",
       "icon": "./assets/icon.png",
       "infoPlist": {
         "NSCameraUsageDescription": "This app needs access to your camera to take photos.",
         "NSPhotoLibraryUsageDescription": "This app needs access to your photo library to select images.",
-        "CFBundleIconFiles": [
-          "icon-20",
-          "icon-20@2x",
-          "icon-20@3x",
-          "icon-29",
-          "icon-29@2x",
-          "icon-29@3x",
-          "icon-40",
-          "icon-40@2x",
-          "icon-40@3x",
-          "icon-60@2x",
-          "icon-60@3x",
-          "icon-76",
-          "icon-76@2x",
-          "icon-83.5@2x",
-          "icon-1024"
-        ],
-        "CFBundleIcons": {
-          "CFBundlePrimaryIcon": {
-            "CFBundleIconFiles": [
-              "icon-20",
-              "icon-20@2x",
-              "icon-20@3x",
-              "icon-29",
-              "icon-29@2x",
-              "icon-29@3x",
-              "icon-40",
-              "icon-40@2x",
-              "icon-40@3x",
-              "icon-60@2x",
-              "icon-60@3x",
-              "icon-76",
-              "icon-76@2x",
-              "icon-83.5@2x",
-              "icon-1024"
-            ],
-            "UIPrerenderedIcon": true
-          }
-        }
+        "NSLocationWhenInUseUsageDescription": "This app needs your location to show nearby services.",
+        "NSLocationAlwaysUsageDescription": "Location is used for background geolocation.",
+        "NSPhotoLibraryAddUsageDescription": "This app saves photos to your photo library.",
+        "NSMotionUsageDescription": "This app may use motion sensors for better interaction.",
+        "NSUserTrackingUsageDescription": "This identifier is used to deliver personalized ads."
       }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#95E5FF"
+        "backgroundColor": "#26CFFF"
       },
       "permissions": [
-        "CAMERA"
+          "CAMERA",        
+          "READ_EXTERNAL_STORAGE",
+          "WRITE_EXTERNAL_STORAGE",
+          "ACCESS_FINE_LOCATION",
+          "ACCESS_COARSE_LOCATION",
+          "ACCESS_NETWORK_STATE",
+          "INTERNET",         
+          "FOREGROUND_SERVICE",
+          "VIBRATE",
+          "WAKE_LOCK",
+          "RECEIVE_BOOT_COMPLETED"
       ],
       "versionCode": 26,
       "package": "com.bogdandev3444456.aqtas"
@@ -84,6 +60,25 @@
       "eas": {
         "projectId": "7fad48ab-d7cc-4664-9516-5cef055527dc"
       }
-    }
+    },
+    "plugins": [
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "ios": {
+            "backgroundColor": "#26CFFF",
+            "image": "./assets/splash-icon.png",
+            "imageWidth": 200,
+            "resizeMode": "cover"
+          },
+          "android": {
+            "backgroundColor": "#26CFFF",
+            "image": "./assets/splash-icon.png",
+            "imageWidth": 200
+          }
+        }
+      ]
+    ]
   }
 }

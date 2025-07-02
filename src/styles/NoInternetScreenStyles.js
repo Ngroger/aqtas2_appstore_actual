@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Cambria',
         fontSize: 28,
         textAlign: 'center',
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     subtitle: {
         fontFamily: 'Cambria',

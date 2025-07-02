@@ -63,7 +63,7 @@ const styles = ScaledSheet.create({
         borderRadius: 100,
         marginHorizontal: 100,
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         backgroundColor: 'transparent'
     },
     activeDot: {
@@ -71,7 +71,7 @@ const styles = ScaledSheet.create({
         height: 9,
         borderRadius: 100,
         marginHorizontal: 3,
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
     },
     oldCost: {
         fontFamily: 'Cambria',
@@ -87,7 +87,7 @@ const styles = ScaledSheet.create({
     cost: {
         fontFamily: 'Cambria',
         fontSize: 24,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     commission: {
         left: 10,
@@ -279,7 +279,7 @@ const styles = ScaledSheet.create({
         marginTop: 2
     },
     addCart: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 100,
         width: 100,
         paddingVertical: 7,
@@ -312,7 +312,7 @@ const styles = ScaledSheet.create({
     sale: {
         position: 'absolute',
         zIndex: 10,
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 100,
         padding: 3,
         paddingHorizontal: 9,
@@ -333,7 +333,7 @@ const styles = ScaledSheet.create({
         justifyContent: 'space-between'
     },
     buyNow: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 100,
         padding: 16,
         alignItems: 'center',
@@ -347,7 +347,7 @@ const styles = ScaledSheet.create({
         fontSize: 18,
     },
     addToCartButtons: {
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderWidth: 1,
         borderRadius: 100,
         padding: 16,
@@ -358,7 +358,7 @@ const styles = ScaledSheet.create({
     },
     addToCartButtonText: {
         fontFamily: 'CambriaBold',
-        color: '#95E5FF',
+        color: '#26CFFF',
         fontSize: 18,
     },
     photoContainer: {
@@ -393,7 +393,7 @@ const styles = ScaledSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: '#95E5FF'
+        borderColor: '#26CFFF'
     },
     photoPickButton: {
         backgroundColor: 'rgba(149, 229, 255, 0.25)',
@@ -403,7 +403,7 @@ const styles = ScaledSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: '#95E5FF'
+        borderColor: '#26CFFF'
     },
     swiperContent: {
         alignItems: 'center', // Центрирование содержимого по горизонтали
@@ -413,7 +413,7 @@ const styles = ScaledSheet.create({
         padding: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 100,
         marginTop: 20
     },
@@ -427,13 +427,13 @@ const styles = ScaledSheet.create({
         padding: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderWidth: 1,
         borderRadius: 100,
         marginTop: 20
     },
     saveButtonText: {
-        color: '#95E5FF',
+        color: '#26CFFF',
         fontFamily: 'CambriaBold',
         fontSize: 24,
     },
@@ -462,7 +462,7 @@ const styles = ScaledSheet.create({
     buttonChoiseImageText: {
         fontFamily: 'Cambria',
         fontSize: 24,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     loadTxt: {
         color: '#000',

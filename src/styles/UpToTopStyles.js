@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         padding: 10,
         flexDirection: 'row',
         display: 'flex',
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderWidth: 1,
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -49,10 +49,10 @@ const styles = StyleSheet.create({
     currency: {
         fontFamily: 'Cambria',
         fontSize: 18,
-        borderLeftColor: '#95E5FF',
+        borderLeftColor: '#26CFFF',
         borderLeftWidth: 1,
         paddingLeft: 10,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
 });
 

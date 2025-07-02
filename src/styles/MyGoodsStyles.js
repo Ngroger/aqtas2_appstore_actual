@@ -76,7 +76,7 @@ const styles = ScaledSheet.create({
         top: 10
     },
     buttonAddProduct: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 16,
@@ -92,7 +92,7 @@ const styles = ScaledSheet.create({
         flexDirection: 'row'
     },
     topButton: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 6,
@@ -105,7 +105,7 @@ const styles = ScaledSheet.create({
         color: '#fff',
     },
     editButton: {
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 6,
@@ -117,7 +117,7 @@ const styles = ScaledSheet.create({
     editButtonText: {
         fontFamily: 'CambriaBold',
         fontSize: 12,
-        color: '#95E5FF',
+        color: '#26CFFF',
     },
     checkbox: {
         width: 20,
@@ -133,7 +133,7 @@ const styles = ScaledSheet.create({
         borderWidth: 2,
         borderRadius: 5,
         marginLeft: 12,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -143,12 +143,12 @@ const styles = ScaledSheet.create({
         borderWidth: 2,
         borderRadius: 5,
         marginLeft: 12,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         justifyContent: 'center',
         alignItems: 'center'
     },
     dot: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 100,
         padding: 5
     },
@@ -162,7 +162,7 @@ const styles = ScaledSheet.create({
         borderBottomWidth: 1,
     },
     categoryActive: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         padding: 8,
         borderRadius: 100,
         paddingHorizontal: 16,
@@ -175,7 +175,7 @@ const styles = ScaledSheet.create({
         color: '#fff'
     },
     category: {
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderWidth: 1,
         padding: 8,
         borderRadius: 100,
@@ -185,7 +185,7 @@ const styles = ScaledSheet.create({
     categoryText: {
         fontFamily: 'CambriaBold',
         fontSize: 18,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     loadingIndicatorContainer: {
         width: '100%',
@@ -209,7 +209,7 @@ const styles = ScaledSheet.create({
     },
     buttonActionProduct: {
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 12,
@@ -219,10 +219,10 @@ const styles = ScaledSheet.create({
     buttonActionProductText: {
         fontFamily: 'CambriaBold',
         fontSize: 20,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     buttonDeleteProduct: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 12,

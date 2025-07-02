@@ -1,7 +1,7 @@
-import { Modal, View, TouchableOpacity, Text, TextInput } from 'react-native';
-import styles from '../../../styles/3dSecureModalStyle';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useState } from 'react';
+import { Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import styles from '../../../styles/3dSecureModalStyle';
 
 function SecureModal({ data, onClose, modalVisible, transactionId, amount }) {
   const [paReq, onChangePaReq] = useState();
@@ -16,7 +16,7 @@ function SecureModal({ data, onClose, modalVisible, transactionId, amount }) {
       statusBarTranslucent={true}
     >
       <TouchableOpacity onPress={onClose} style={styles.goBackBtn}>
-        <AntDesign name="close" size={38} color="#95E5FF" />
+        <AntDesign name="close" size={38} color="#26CFFF" />
       </TouchableOpacity>
       <View style={styles.container}>
         <View>

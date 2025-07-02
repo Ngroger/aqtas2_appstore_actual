@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     field: {
         borderWidth: 1,
         borderRadius: 15,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         padding: 2,
         paddingHorizontal: 6,
-        color: '#95E5FF',
+        color: '#26CFFF',
         position: 'absolute',
         zIndex: 100,
         top: -10,
@@ -59,12 +59,12 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     currency: {
-        borderLeftColor: '#95E5FF',
+        borderLeftColor: '#26CFFF',
         borderLeftWidth: 1,
         fontFamily: 'Cambria',
         paddingLeft: 10,
         fontSize: 20,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     buttonContainer: {
         flexDirection: 'row',
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
         width: '48%',
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 100
 
     },
@@ -91,14 +91,14 @@ const styles = StyleSheet.create({
         padding: 10,
         width: '48%',
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderRadius: 100
 
     },
     cancelButtonText: {
         fontFamily: 'CambriaBold',
         fontSize: 20,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     fieldContainer: {
         flexDirection: 'row',

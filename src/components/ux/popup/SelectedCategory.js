@@ -1,11 +1,11 @@
-import { Text, TouchableOpacity, View, TextInput, FlatList, Image, ActivityIndicator } from 'react-native';
-import { useState, useEffect } from 'react';
-import styles from '../../../styles/SelectedCategoryStyles'
-import { MaterialIcons, EvilIcons } from '@expo/vector-icons';
-import Swiper from 'react-native-swiper'
-import { getUserData } from '../../../store/userDataManager';
+import { EvilIcons, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ActivityIndicator, FlatList, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Swiper from 'react-native-swiper';
+import { getUserData } from '../../../store/userDataManager';
+import styles from '../../../styles/SelectedCategoryStyles';
 
 function SelectedCategory({ onClose, category, title }) {
     const navigation = useNavigation();
@@ -102,7 +102,7 @@ function SelectedCategory({ onClose, category, title }) {
             </View>
             {isLoading && (
                 <View style={styles.loadingIndicatorContainer}>
-                    <ActivityIndicator size="big" color="#95E5FF" />
+                    <ActivityIndicator size="big" color="#26CFFF" />
                     <Text style={styles.textLoad}>{t('products-load-message')}</Text>
                 </View>
             )}

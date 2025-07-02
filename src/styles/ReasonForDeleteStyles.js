@@ -56,16 +56,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 2,
         borderRadius: 5,
-        borderColor: '#95E5FF'
+        borderColor: '#26CFFF'
     },
     dot: {
         padding: 6,
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 100
     },
     deleteButton: {
         borderRadius: 15,
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,

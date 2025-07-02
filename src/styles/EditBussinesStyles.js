@@ -6,6 +6,31 @@ const styles = ScaledSheet.create({
         height: '100%',
         backgroundColor: '#FFF',
     },
+    photoContainer: {
+        width: '100%',
+        height: 200,
+        borderRadius: 15,
+        borderColor: '#26CFFF',
+        borderWidth: 1,
+        borderStyle: 'dashed',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    imageShop: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 15
+    },
+    pickPhotoBtn: {
+        width: 50,
+        height: 50,
+        backgroundColor: '#26CFFF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 1000,
+        position: 'absolute',
+        zIndex: 100
+    },
     textLoad: {
         width: '85%',
         textAlign: 'center',
@@ -27,7 +52,7 @@ const styles = ScaledSheet.create({
     },
     input: {
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         width: '100%',
         padding: 10,
         alignItems: 'center',
@@ -65,7 +90,7 @@ const styles = ScaledSheet.create({
         width: '100%',
         borderWidth: 1,
         borderRadius: 15,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         padding: 12,
         paddingHorizontal: 18,
         flexDirection: 'row',
@@ -127,10 +152,10 @@ const styles = ScaledSheet.create({
     buttonChoiseImageText: {
         fontFamily: 'Cambria',
         fontSize: 24,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     saveButton: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         width: '100%',
         borderRadius: 15,
         justifyContent: 'center',

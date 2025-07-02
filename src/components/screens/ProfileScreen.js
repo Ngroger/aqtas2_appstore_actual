@@ -9,6 +9,7 @@ import { getUserData } from '../../store/userDataManager'; // Импортиру
 import styles from '../../styles/ProfileScreenStyle';
 import AddBankCard from '../ux/popup/AddBankCard';
 import ProfileMenu from '../ux/popup/ProfileMenu';
+import LanguageSelector from '../ux/popup/LanguageSelector';
 
 function ProfileScreen() {
   const navigation = useNavigation();
@@ -20,6 +21,8 @@ function ProfileScreen() {
   const { t } = useTranslation();
   const [isLoad, setIsLoad] = useState(true);
   const { openModal } = useUnauth();
+  
+  const [isOpenLang, setIsOpenLang] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -104,10 +107,6 @@ function ProfileScreen() {
     navigation.navigate('Bussines'); // Переход на экран "Bussines"
   };
 
-  const goToAddPayments = () => {
-    navigation.navigate('AddPayments'); // Переход на экран "Bussines"
-  };
-
   return (
     <SafeAreaView style={{ backgroundColor: '#FFF' }}>
       <View style={styles.container}>
@@ -138,14 +137,6 @@ function ProfileScreen() {
                   </View>
                 </View>
               )}
-              {/* <View style={styles.bonusContainer}>
-                <View style={styles.sale}>
-                  <Text style={styles.saleText}>До 35%</Text>
-                </View>
-                <View style={styles.seasonSale}>
-                  <Text style={styles.seasonSaleText}>Осенняя распродажа</Text>
-                </View>
-              </View> */}
             </View>
             <View>
               <TouchableOpacity style={styles.profileButton}>
@@ -183,6 +174,9 @@ function ProfileScreen() {
               <TouchableOpacity onPress={() => navigation.navigate('PublicOffer')} style={styles.profileButton}>
                 <Text style={styles.profileButtonText}>{t('offer-screen.title')}</Text>
               </TouchableOpacity>
+              <TouchableOpacity onPress={() => setIsOpenLang(true)} style={styles.profileButton}>
+                <Text style={styles.profileButtonText}>{t('select-language')}</Text>
+              </TouchableOpacity>
             </View>
           </>
         )}
@@ -190,6 +184,7 @@ function ProfileScreen() {
       </View>
       {showAddBankCard && <AddBankCard onClose={toggleAddBankCard} />}
       {showMenu && <ProfileMenu onClose={toggleShowMenu} />}
+      <LanguageSelector modalVisible={isOpenLang} onClose={() => setIsOpenLang(false)}/>
     </SafeAreaView>
   );
 }

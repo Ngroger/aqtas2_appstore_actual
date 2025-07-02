@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         borderBottomColor: '#BDBDBD'
     },
     activeFilter: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         padding: 8,
         paddingHorizontal: 10,
         borderRadius: 100,
@@ -38,14 +38,14 @@ const styles = StyleSheet.create({
     filter: {
         borderWidth: 1,
         borderRadius: 100,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         padding: 8,
         paddingHorizontal: 10,
         marginHorizontal: 5
     },
     filterText: {
         fontFamily: 'CambriaBold',
-        color: '#95E5FF',
+        color: '#26CFFF',
         fontSize: 18,
     },
     dataContainer: {
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         padding: 14,
         borderWidth: 1,
-        borderColor: "#95E5FF",
+        borderColor: "#26CFFF",
         borderRadius: 15,
         justifyContent: 'space-between',
         paddingHorizontal: 16,

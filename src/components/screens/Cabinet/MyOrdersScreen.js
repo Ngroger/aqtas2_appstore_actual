@@ -6,6 +6,7 @@ import { FlatList, Image, Platform, SafeAreaView, StatusBar, Text, TouchableOpac
 import { getUserData } from '../../../store/userDataManager';
 import styles from '../../../styles/MyOrdersScreenStyle';
 import WebViewModal from '../../ux/popup/WebViewModal';
+import ReturnProduct from '../../ux/popup/ReturnProduct';
 
 function MyOrdersScreen() {
     const navigation = useNavigation();
@@ -15,6 +16,8 @@ function MyOrdersScreen() {
     const [orderInProccess, setOrderInProccess] = useState();
     const [isWebViewOpen, setIsWebViewOpen] = useState(false);
     const [url, setUrl] = useState();
+    const [selectedId, setSelectedId] = useState();
+    const [isReturnProduct, setIsReturnProduct] = useState(false);
 
     useEffect(() => {
         loadUserData();
@@ -52,7 +55,6 @@ function MyOrdersScreen() {
     };
 
     const pay = async (order_id, product_id, seller_id, user_id) => {
-        console.log({ order_id, product_id, seller_id, user_id })
         try {
             setOrderInProccess(order_id);
             const response = await fetch('https://aqtas.garcom.kz/api/paymentInit', {
@@ -109,6 +111,11 @@ function MyOrdersScreen() {
         }
     };
 
+    const returnProduct = (id) => {
+        setSelectedId(id);
+        setIsReturnProduct(true);
+    } 
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={{ flex: 1, paddingHorizontal: 20 }}>
@@ -127,6 +134,7 @@ function MyOrdersScreen() {
                             <FlatList
                                 data={myOrders}
                                 keyExtractor={(_, index) => index.toString()}
+                                contentContainerStyle={{ paddingBottom: 120 }}
                                 renderItem={({ item }) => (
                                     <View>
                                         <Text style={styles.data}>{formatDate(item.created_at)}</Text>
@@ -185,11 +193,19 @@ function MyOrdersScreen() {
                                                         )}
 
                                                         {item.status === 'delivery' && (
-                                                            <TouchableOpacity onPress={() => finishedOrder(item.id)} style={styles.payBtn}>
-                                                                <Text style={styles.payBtnText}>
-                                                                    {t("customer-product-cart-complete")}
-                                                                </Text>
-                                                            </TouchableOpacity>
+                                                            <>
+                                                                <TouchableOpacity onPress={() => finishedOrder(item.id)} style={styles.payBtn}>
+                                                                    <Text style={styles.payBtnText}>
+                                                                        {t("customer-product-cart-complete")}
+                                                                    </Text>
+                                                                </TouchableOpacity>
+                                                                <TouchableOpacity onPress={() => returnProduct(item.productId)} style={styles.payBtn}>
+                                                                    <Text style={styles.payBtnText}>
+                                                                        Возврат товара
+                                                                    </Text>
+                                                                </TouchableOpacity>
+                                                            </>
+                                                            
                                                         )}
                                                     </View>
                                                 </View>
@@ -205,6 +221,7 @@ function MyOrdersScreen() {
                 )}
             </View>
             <StatusBar backgroundColor="transparent" translucent={true} />
+            <ReturnProduct modalVisible={isReturnProduct} onClose={() => setIsReturnProduct(false)} product_id={selectedId}/>
             <WebViewModal
                 url={url}
                 modalVisible={isWebViewOpen}

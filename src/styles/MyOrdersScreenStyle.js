@@ -34,7 +34,7 @@ const styles = ScaledSheet.create({
     counterContainer: {
         display: 'flex',
         flexDirection: 'row',
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         padding: 4,
         paddingHorizontal: 12,
         borderRadius: 100,
@@ -55,7 +55,7 @@ const styles = ScaledSheet.create({
     buttonBuy: {
         display: 'flex',
         flexDirection: 'row',
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderWidth: 1,
         padding: 4,
         paddingHorizontal: 20,
@@ -68,13 +68,13 @@ const styles = ScaledSheet.create({
     },
     textBuy: {
         fontFamily: 'CambriaBold',
-        color: '#95E5FF',
+        color: '#26CFFF',
         fontSize: 18
     },
     cost: {
         fontFamily: 'Cambria',
         fontSize: 24,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     oldCost: {
         fontFamily: 'Cambria',
@@ -145,7 +145,7 @@ const styles = ScaledSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 100,
         padding: 6,
         marginTop: 6

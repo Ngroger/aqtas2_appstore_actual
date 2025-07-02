@@ -1,11 +1,13 @@
-import { AntDesign, MaterialIcons } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
 import { getUserData } from '../../../store/userDataManager';
 import styles from '../../../styles/EditBussinesStyles';
 import CategoryShop from '../../ux/popup/CategoryShop';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as ImagePicker from 'expo-image-picker';
 
 function EditBussinesScreen() {
     const navigation = useNavigation();
@@ -35,6 +37,7 @@ function EditBussinesScreen() {
 
     const [category, setCategory] = useState();
     const [isCategoryShowModal, setIsCategoryShowModal] = useState(false);
+    const insets = useSafeAreaInsets();
 
     const [isSave, setIsSave] = useState(false);
 
@@ -310,6 +313,56 @@ function EditBussinesScreen() {
             });
     };
 
+    const updateImage = async () => {
+        try {
+            const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (status !== 'granted') {
+                alert('Нужен доступ к галерее');
+                return;
+            }
+
+            const result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: 'images',
+                allowsEditing: true,
+                quality: 1,
+            });
+
+            if (!result.canceled) {
+            const uri = result.assets[0].uri;
+
+            const formData = new FormData();
+            formData.append('shop_id', shopInfo.id);
+            formData.append('imageSale', {
+                uri,
+                name: 'image.jpg',
+                type: 'image/jpeg',
+            });
+
+            const response = await fetch('https://aqtas.garcom.kz/api/shop/update', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            const data = await response.json();
+            console.log("Ответ от сервера:", data);
+
+            if (data.success) {
+                alert('Фото обновлено');
+                loadUserData();
+                
+            } else {
+                alert('Ошибка: ' + data.error);
+            }
+            }
+        } catch (error) {
+            console.error("Ошибка при обновлении фото:", error);
+            alert('Произошла ошибка при обновлении фото');
+        }
+    };
+
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
             <TouchableOpacity style={styles.titleContainer} onPress={handleGoBack}>
@@ -323,7 +376,13 @@ function EditBussinesScreen() {
             )}
             {!isLoad && (
                 <>
-                    <ScrollView style={{ width: '100%', flex: 1, paddingHorizontal: 24 }}>
+                    <ScrollView style={{ width: '100%', flex: 1, paddingHorizontal: 24, paddingBottom: 120 }}>
+                        <View style={styles.photoContainer}>
+                            <Image style={styles.imageShop} source={{ uri: `https://aqtas.garcom.kz/api/images/imageShop/${shopInfo.imageShop}` }}/>
+                            <TouchableOpacity onPress={() => updateImage()} style={styles.pickPhotoBtn}>
+                                <FontAwesome name="file-photo-o" size={24} color="#FFF" />
+                            </TouchableOpacity>
+                        </View>
                         <View style={styles.infoContainer}>
                             <Text style={styles.firstInfo}>{t('name-of-shop-field-title')}:</Text>
                             <View style={styles.field}>
@@ -399,12 +458,12 @@ function EditBussinesScreen() {
                             <View style={[styles.field, { padding: 16, paddingHorizontal: 18 }]}>
                                 <Text style={styles.secondInfo}>{category}</Text>
                                 <TouchableOpacity onPress={toggleShowCategoryModal}>
-                                    <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
+                                    <MaterialIcons name="arrow-forward-ios" size={24} color="#26CFFF" />
                                 </TouchableOpacity>
                             </View>
                         </View>
                     </ScrollView>
-                    <View style={styles.buttonContainer}>
+                    <View style={[styles.buttonContainer, { marginBottom: insets.bottom }]}>
                         <TouchableOpacity onPress={handleSaveCategory} disabled={!isSave} style={!isSave ? { ...styles.saveButton, opacity: 0.5 } : styles.saveButton}>
                             <Text style={styles.saveButtonText}>{t('save-changes-button')}</Text>
                         </TouchableOpacity>

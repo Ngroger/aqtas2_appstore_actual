@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     },
     checkbox: {
         borderWidth: 1.5,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         width: 20,
         height: 20,
         borderRadius: 100,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     dot: {
         width: 10,
         height: 10,
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 100
 
     }

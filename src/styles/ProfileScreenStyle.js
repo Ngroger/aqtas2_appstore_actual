@@ -55,7 +55,7 @@ const styles = ScaledSheet.create({
     },
     profileButton: {
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         padding: '12@msr',
         marginTop: 16,
         borderRadius: 15
@@ -69,7 +69,7 @@ const styles = ScaledSheet.create({
         height: '60@vs'
     },
     faqButton: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 15,
         padding: '16@msr',
         display: 'flex',

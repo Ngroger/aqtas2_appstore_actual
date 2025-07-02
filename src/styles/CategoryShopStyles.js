@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     buttonText: {
         fontFamily: 'CambriaBold',
         fontSize: 24,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     line: {
         width: '100%',

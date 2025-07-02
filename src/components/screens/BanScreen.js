@@ -22,7 +22,7 @@ function BanScreen() {
                <Text style={[styles.additionalTxt, { textDecorationLine: 'underline' }]}>aqtas.office@gmail.com</Text>
             </TouchableOpacity>
          </View>
-         <StatusBar translucent={true} backgroundColor='transparent' />
+         <StatusBar style='dark' />
       </View>
    )
 };

@@ -66,7 +66,7 @@ const styles = ScaledSheet.create({
     },
     addSaleButton: {
         borderRadius: 15,
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         padding: 16,
         justifyContent: 'center',
         alignItems: 'center'

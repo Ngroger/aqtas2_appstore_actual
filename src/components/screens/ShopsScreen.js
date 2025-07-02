@@ -16,12 +16,27 @@ function ShopsScreen() {
     const { t } = useTranslation();
 
     const categories = [
-        { id: 1, value: 'ТРЦ', name: t('shopping-center-filter') },
-        { id: 2, value: 'Магазины', name: t('shops-filter') },
-        { id: 3, value: 'Базары', name: t('bazaars-filter') },
-        { id: 4, value: 'Барахолка', name: t('flea-markets-filter') },
-        { id: 5, value: 'Рынки', name: t('markets-filter') },
+        { id: 1, value: 'Магазины', name: t('shops-filter') },
+        { id: 2, value: 'Официальные магазины брендов', name: t('official-brand-shops-filter') },
+        { id: 3, value: 'Интернет-магазины', name: t('online-shops-filter') },
+        { id: 4, value: 'Магазины производителей', name: t('manufacturer-shops-filter') },
+        { id: 5, value: 'Магазины из Китая', name: t('chinese-shops-filter') },
+        { id: 6, value: 'Специализированные магазины', name: t('specialized-shops-filter') },
+        { id: 7, value: 'Магазины электроники', name: t('electronics-shops-filter') },
+        { id: 8, value: 'Магазины одежды и обуви', name: t('clothing-shoes-shops-filter') },
+        { id: 9, value: 'Магазины косметики и парфюмерии', name: t('cosmetics-shops-filter') },
+        { id: 10, value: 'Магазины товаров для дома', name: t('home-goods-shops-filter') },
+        { id: 11, value: 'Магазины спортивных товаров', name: t('sports-shops-filter') },
+        { id: 12, value: 'Магазины игрушек', name: t('toy-shops-filter') },
+        { id: 13, value: 'Антикварные магазины', name: t('antique-shops-filter') },
+        { id: 14, value: 'Секонд-хенды', name: t('secondhand-shops-filter') },
+        { id: 15, value: 'Эко-магазины', name: t('eco-shops-filter') },
+        { id: 16, value: 'Магазины для животных', name: t('pet-shops-filter') },
+        { id: 17, value: 'Книжные магазины', name: t('book-shops-filter') },
+        { id: 18, value: 'Магазины подарков и сувениров', name: t('gift-shops-filter') },
+        { id: 19, value: 'Оптовые магазины', name: t('wholesale-shops-filter') },
     ];
+
 
     const handleCategoryClick = (categoryId) => {
         if (activeCategory === categoryId) {

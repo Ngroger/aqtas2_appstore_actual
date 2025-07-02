@@ -1,9 +1,9 @@
-import { Text, View, Modal, TouchableOpacity } from 'react-native';
-import styles from '../../../../styles/UnauthStyle';
+import { useNavigation } from '@react-navigation/native';
 import { BlurView } from 'expo-blur';
 import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
-import { useNavigation } from '@react-navigation/native';
+import { Modal, Text, TouchableOpacity, View } from 'react-native';
+import styles from '../../../../styles/UnauthStyle';
 
 function Unauth({ modalVisible, onClose, description, title }) {
   const navigation = useNavigation();
@@ -38,7 +38,7 @@ function Unauth({ modalVisible, onClose, description, title }) {
           </View>
         </View>
       </View>
-      <StatusBar translucent={true} backgroundColor='transparent' />
+      <StatusBar style='dark' />
     </Modal>
   )
 };

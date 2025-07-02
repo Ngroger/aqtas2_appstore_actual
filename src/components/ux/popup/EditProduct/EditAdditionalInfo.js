@@ -131,7 +131,7 @@ function EditAdditionalInfo({ data, onClose, productId }) {
                                 style={styles.input}
                             />
                             <TouchableOpacity onPress={toggleChangeColor}>
-                                <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
+                                <MaterialIcons name="arrow-forward-ios" size={24} color="#26CFFF" />
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -155,7 +155,7 @@ function EditAdditionalInfo({ data, onClose, productId }) {
                                 style={styles.input}
                             />
                             <TouchableOpacity onPress={toggleChangeCategory}>
-                                <MaterialIcons name="arrow-forward-ios" size={24} color="#95E5FF" />
+                                <MaterialIcons name="arrow-forward-ios" size={24} color="#26CFFF" />
                             </TouchableOpacity>
                         </View>
                     </View>

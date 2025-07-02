@@ -28,7 +28,7 @@ const styles = ScaledSheet.create({
   titleInfo: {
     fontSize: '18@s',
     fontFamily: 'CambriaBold',
-    color: '#95E5FF'
+    color: '#26CFFF'
   },
   textInfo: {
     fontSize: '16@s',

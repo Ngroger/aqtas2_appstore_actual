@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     background: {
         backgroundColor: '#FFF',
         width: '100%',
@@ -20,8 +20,9 @@ const styles = StyleSheet.create({
         fontFamily: 'Cambria'
     },
     logo: {
-        width: '100%',
-        height: 30
+        width: '80@ms',
+        height: "50@ms",
+        objectFit: 'contain'
     },
     navbar: {
         display: 'flex',
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     },
     search: {
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         padding: 5,
         borderRadius: 10,
         display: 'flex',
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         marginHorizontal: 100,
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         backgroundColor: 'transparent'
     },
     activeDot: {
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
         height: 9,
         borderRadius: 100,
         marginHorizontal: 3,
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
     },
     costContainer: {
         display: 'flex',
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     cost: {
         fontFamily: 'Cambria',
         fontSize: 24,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     oldCost: {
         fontFamily: 'Cambria',
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
         marginTop: 2
     },
     addCart: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 100,
         width: 100,
         paddingVertical: 7,
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
     sale: {
         position: 'absolute',
         zIndex: 10,
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 100,
         padding: 3,
         paddingHorizontal: 9,

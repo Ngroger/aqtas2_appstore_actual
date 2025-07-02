@@ -4,7 +4,7 @@ const styles = ScaledSheet.create({
    container: {
       width: '100%',
       height: '100%',
-      backgroundColor: '#95E5FF',
+      backgroundColor: '#26CFFF',
       justifyContent: 'center',
       alignItems: 'center',
       gap: 8,

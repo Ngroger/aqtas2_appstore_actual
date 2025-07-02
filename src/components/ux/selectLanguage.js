@@ -56,7 +56,7 @@ function SelectLanguage(props) {
                     <MaterialIcons
                         name={isOpen ? "arrow-drop-up" : "arrow-drop-down"}
                         size={s(24)}
-                        color="black"
+                        color="#FFF"
                     />
                 </TouchableOpacity>
             </View>

@@ -8,6 +8,33 @@ const styles = StyleSheet.create({
         position: 'absolute',
         zIndex: 100
     },
+    tableContainer: {
+        borderWidth: 1,
+        borderColor: '#26CFFF',
+        margin: 10,
+        borderRadius: 15,
+        flexWrap: 'wrap',
+        borderStyle: 'dashed',
+        flexDirection: 'row',
+        height: 150,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'relative'
+    },
+    tableTitle: {
+        backgroundColor: '#FFF',
+        color: '#26CFFF',
+        textAlign: 'left',
+        fontFamily: 'Cambria',
+        fontSize: 20
+    },
+    tableImage: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 15,
+        position: 'absolute',
+        zIndex: -10
+    },
     container: {
         position: 'absolute',
         padding: 10,
@@ -35,7 +62,7 @@ const styles = StyleSheet.create({
     currency: {
         fontFamily: 'Cambria',
         fontSize: 18,
-        borderLeftColor: '#95E5FF',
+        borderLeftColor: '#26CFFF',
         borderLeftWidth: 1,
         paddingLeft: 10,
     },
@@ -71,12 +98,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 50
     },
+    tablePickButton: {
+        backgroundColor: 'rgba(149, 229, 255, 0.35)',
+        width: 45,
+        height: 45,
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        zIndex: 100
+    },
     swiperContent: {
         alignItems: 'center', // Центрирование содержимого по горизонтали
     },
     field: {
         borderWidth: 1,
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         margin: 10,
         padding: 12,
         borderRadius: 15,
@@ -86,7 +123,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         paddingHorizontal: 6,
         padding: 2,
-        color: '#95E5FF',
+        color: '#26CFFF',
         position: 'absolute',
         zIndex: 1000,
         top: -14,
@@ -100,7 +137,7 @@ const styles = StyleSheet.create({
         color: 'rgba(0, 0, 0, 0.5)'
     },
     publicButton: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
@@ -137,10 +174,10 @@ const styles = StyleSheet.create({
     buttonChoiseImageText: {
         fontFamily: 'Cambria',
         fontSize: 24,
-        color: '#95E5FF'
+        color: '#26CFFF'
     },
     deleteButton: {
-        backgroundColor: '#95E5FF',
+        backgroundColor: '#26CFFF',
         borderRadius: 100,
         backgroundColor: 'rgba(149, 229, 255, 0.35)',
         width: 35,
@@ -155,12 +192,12 @@ const styles = StyleSheet.create({
         width: 200,
         height: 250,
         borderStyle: 'dashed',
-        borderColor: '#95E5FF',
+        borderColor: '#26CFFF',
         borderRadius: 28
     },
     sizeContainer: {
         borderWidth: 1,
-        borderColor: '#000',
+        borderColor: '#26CFFF',
         margin: 10,
         borderRadius: 15,
         flexWrap: 'wrap',

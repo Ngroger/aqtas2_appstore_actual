@@ -1,6 +1,5 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
@@ -40,7 +39,7 @@ function BussinesScreen() {
                         style={styles.button}
                     >
                         <Text style={styles.buttonText}>{button.title}</Text>
-                        <MaterialIcons name="arrow-forward-ios" size={scale(24)} color="#95E5FF" />
+                        <MaterialIcons name="arrow-forward-ios" size={scale(24)} color="#26CFFF" />
                     </TouchableOpacity>
                 ))}
             </View>

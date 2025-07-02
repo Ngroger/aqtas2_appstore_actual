@@ -5,11 +5,13 @@ import { Platform, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 
 import { getUserData } from '../../../store/userDataManager';
 import styles from '../../../styles/MyBankAccountStyles';
 import Payout from '../../ux/popup/Payout';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function MyBankAccount() {
     const navigation = useNavigation();
     const [balance, setBalance] = useState(0);
     const [isOpenPayout, setIsOpenPayout] = useState(false);
+    const insets = useSafeAreaInsets();
 
     useFocusEffect(
         useCallback(() => {
@@ -39,28 +41,30 @@ function MyBankAccount() {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={{ flex: 1, paddingHorizontal: 20 }}>
-                <View style={[styles.titleContainer, { marginTop: Platform.OS === 'android' && 36 }]}>
-                    <TouchableOpacity onPress={handleGoBack} style={{ flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
-                        <MaterialIcons name="arrow-back-ios" size={24} color="black" />
-                        <Text style={styles.title}>Мой счёт</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.myBalance}>{balance} тг</Text>
+        <>
+            <SafeAreaView style={styles.container}>
+                <View style={{ flex: 1, paddingHorizontal: 20 }}>
+                    <View style={[styles.titleContainer, { marginTop: Platform.OS === 'android' && 36 }]}>
+                        <TouchableOpacity onPress={handleGoBack} style={{ flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
+                            <MaterialIcons name="arrow-back-ios" size={24} color="black" />
+                            <Text style={styles.title}>Мой счёт</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.myBalance}>{balance} тг</Text>
+                    </View>
                 </View>
-            </View>
-            <View style={styles.buttonContainer}>
+                <StatusBar backgroundColor="transparent" translucent={true} />
+                <Payout
+                    modalVisible={isOpenPayout}
+                    onClose={() => setIsOpenPayout(false)}
+                    fetchBalance={() => fetchMyBalance()}
+                />
+            </SafeAreaView>
+            <View style={[styles.buttonContainer, { marginBottom: insets.bottom }]}>
                 <TouchableOpacity onPress={() => setIsOpenPayout(true)} style={styles.button}>
                     <Text style={styles.buttonText}>Вывести средства</Text>
                 </TouchableOpacity>
             </View>
-            <StatusBar backgroundColor="transparent" translucent={true} />
-            <Payout
-                modalVisible={isOpenPayout}
-                onClose={() => setIsOpenPayout(false)}
-                fetchBalance={() => fetchMyBalance()}
-            />
-        </SafeAreaView>
+        </>
     )
 };
 
